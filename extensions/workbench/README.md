@@ -74,6 +74,9 @@ uv run --locked python scripts/verify_voice_delivery.py --output runs/voice-chec
 
 Tests check original upstream hashes, real simulated grasps/returns/gestures,
 honest task outcomes, invalid recordings and transcription isolation. The live
+recorder probes also exercise the default browser fetch receiver, not only an
+injected network substitute. Real in-app Speak → Finish capture has been observed
+to display a recognized utterance and elicit a normal assistant response. The live
 voice check separately recognizes an actual saved spoken request, submits it to
 the unchanged task bus, and measures physical delivery. Synthetic speech tests
 cannot establish accuracy for a user's own microphone or room acoustics.

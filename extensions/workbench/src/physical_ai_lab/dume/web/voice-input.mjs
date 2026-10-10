@@ -2,7 +2,7 @@
 export class MicrophoneInput {
   constructor({button, cancel, note, heard, onText, onError, stopSpeech,
                mediaDevices=navigator.mediaDevices, Recorder=globalThis.MediaRecorder,
-               fetchAudio=fetch}) {
+               fetchAudio=(...args)=>globalThis.fetch(...args)}) {
     Object.assign(this, {button,cancel,note,heard,onText,onError,stopSpeech,
                         mediaDevices,Recorder,fetchAudio});
     this.mode='idle'; this.ready=false; this.generation=0;
