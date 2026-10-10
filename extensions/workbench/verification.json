@@ -1,0 +1,35 @@
+{
+  "source": "native Mac synthesized speech, not user's microphone",
+  "recognition": {
+    "text": "Bring me the screwdriver, please.",
+    "audio_seconds": 2.0945,
+    "recognition_seconds": 1.284,
+    "model": "mlx-community/whisper-small.en-mlx",
+    "local": true
+  },
+  "actual_position_m": [
+    0.6344529439749955,
+    -0.17153145207172668,
+    0.021844874683753762
+  ],
+  "target_m": [
+    0.64,
+    -0.16
+  ],
+  "observed_lift_m": 0.20533461792038787,
+  "distance_m": 0.01279625794625398,
+  "silence_status": 422,
+  "fork": "https://github.com/lhassa8/Dum-E",
+  "branch": "codex/local-voice-simulation",
+  "upstream_revision": "f09a96827ea60e4b18a55fa67e2acb97800dc46b",
+  "lab_tests_passed": 62,
+  "extension_tests_passed": 45,
+  "voice_capture_unit_probes": 6,
+  "browser": {
+    "in_app_capture_started": true,
+    "microphone_permission": "user allowed",
+    "cancel_observed": true,
+    "user_voice_accuracy": "not yet measured"
+  },
+  "raw_evidence": "runs/voice-delivery-002/verification.json"
+}
