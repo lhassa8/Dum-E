@@ -1,0 +1,187 @@
+[
+  {
+    "name": "fresh_screwdriver_wrench",
+    "message": "Bring me the screwdriver and the wrench.",
+    "history": [],
+    "actions": [
+      "clarify"
+    ],
+    "object": null
+  },
+  {
+    "name": "fresh_screwdriver_hammer",
+    "message": "Bring me the screwdriver and the hammer.",
+    "history": [],
+    "actions": [
+      "clarify"
+    ],
+    "object": null
+  },
+  {
+    "name": "fresh_wrench_hammer",
+    "message": "Bring me the wrench and the hammer.",
+    "history": [],
+    "actions": [
+      "clarify"
+    ],
+    "object": null
+  },
+  {
+    "name": "after_capabilities_screwdriver_wrench",
+    "message": "Bring me the screwdriver and the wrench.",
+    "history": [
+      {
+        "role": "user",
+        "content": "What can you help me with?"
+      },
+      {
+        "role": "assistant",
+        "content": "I can bring a screwdriver, wrench or hammer to the handoff tray, put it back, and wave hello. Say stop to pause, then resume to continue. We're in simulation."
+      }
+    ],
+    "actions": [
+      "clarify"
+    ],
+    "object": null
+  },
+  {
+    "name": "after_capabilities_screwdriver_hammer",
+    "message": "Bring me the screwdriver and the hammer.",
+    "history": [
+      {
+        "role": "user",
+        "content": "What can you help me with?"
+      },
+      {
+        "role": "assistant",
+        "content": "I can bring a screwdriver, wrench or hammer to the handoff tray, put it back, and wave hello. Say stop to pause, then resume to continue. We're in simulation."
+      }
+    ],
+    "actions": [
+      "clarify"
+    ],
+    "object": null
+  },
+  {
+    "name": "after_capabilities_wrench_hammer",
+    "message": "Bring me the wrench and the hammer.",
+    "history": [
+      {
+        "role": "user",
+        "content": "What can you help me with?"
+      },
+      {
+        "role": "assistant",
+        "content": "I can bring a screwdriver, wrench or hammer to the handoff tray, put it back, and wave hello. Say stop to pause, then resume to continue. We're in simulation."
+      }
+    ],
+    "actions": [
+      "clarify"
+    ],
+    "object": null
+  },
+  {
+    "name": "after_fetch_and_decline_screwdriver_wrench",
+    "message": "Bring me the screwdriver and the wrench.",
+    "history": [
+      {
+        "role": "user",
+        "content": "I need something for turning screws."
+      },
+      {
+        "role": "assistant",
+        "content": "I'll bring you the screwdriver."
+      },
+      {
+        "role": "user",
+        "content": "Don't bring me the wrench."
+      },
+      {
+        "role": "assistant",
+        "content": "Okay. I won't fetch a tool."
+      }
+    ],
+    "actions": [
+      "clarify"
+    ],
+    "object": null
+  },
+  {
+    "name": "after_fetch_and_decline_screwdriver_hammer",
+    "message": "Bring me the screwdriver and the hammer.",
+    "history": [
+      {
+        "role": "user",
+        "content": "I need something for turning screws."
+      },
+      {
+        "role": "assistant",
+        "content": "I'll bring you the screwdriver."
+      },
+      {
+        "role": "user",
+        "content": "Don't bring me the wrench."
+      },
+      {
+        "role": "assistant",
+        "content": "Okay. I won't fetch a tool."
+      }
+    ],
+    "actions": [
+      "clarify"
+    ],
+    "object": null
+  },
+  {
+    "name": "after_fetch_and_decline_wrench_hammer",
+    "message": "Bring me the wrench and the hammer.",
+    "history": [
+      {
+        "role": "user",
+        "content": "I need something for turning screws."
+      },
+      {
+        "role": "assistant",
+        "content": "I'll bring you the screwdriver."
+      },
+      {
+        "role": "user",
+        "content": "Don't bring me the wrench."
+      },
+      {
+        "role": "assistant",
+        "content": "Okay. I won't fetch a tool."
+      }
+    ],
+    "actions": [
+      "clarify"
+    ],
+    "object": null
+  },
+  {
+    "name": "single_alternative",
+    "message": "Bring me the wrench instead of the hammer.",
+    "actions": [
+      "fetch"
+    ],
+    "object": "wrench"
+  },
+  {
+    "name": "two_tool_information",
+    "message": "What is the difference between a wrench and a hammer?",
+    "actions": [
+      "answer"
+    ],
+    "object": null
+  },
+  {
+    "name": "two_tool_negative",
+    "message": "Don't bring me either the wrench or the hammer.",
+    "actions": [
+      "answer",
+      "clarify",
+      "unsupported"
+    ],
+    "object": null
+  }
+]

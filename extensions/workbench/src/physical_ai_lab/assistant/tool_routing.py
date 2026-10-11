@@ -83,8 +83,8 @@ def familiar_intent(text):
             "answer",
             None,
             None,
-            "I can bring a screwdriver, wrench or hammer to the handoff tray, put it back, "
-            "and wave hello. Say stop to pause, then resume to continue. We're in simulation.",
+            "In simulation, I can bring and return tools, pause and resume tasks, "
+            "wave hello, and chat while working.",
         )
     return None
 

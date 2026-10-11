@@ -314,3 +314,94 @@ Next active loop A4:
 - Limit model tuning to two evidence-driven attempts; if still unreliable, keep
   accepted model and advance noise/perception/learning/hardware slices instead
   of turning the product goal into an indefinite language-model benchmark.
+
+A4 execution — clarify ambiguity and shorten truthful replies:
+- Previous goal turn classification: progress. A3 measurements, retained failures
+  and public commit changed the model-selection decision; accepted model restored.
+- [O] Current prompt already says multiple tools require clarification, but names
+  "current sensor data" elsewhere despite simulator-only inputs. That conflicting
+  wording can invite vague sensing claims; exact causal effect is unproven.
+- [S] Preserve one-tool ambiguity, factual capability/scene explanations, existing
+  speech interruption and physical outcome checks. [D] A concise reply instruction
+  is a replaceable implementation choice, not a new user-facing feature.
+- Frozen 12 new pair/context cases before mutation: three supported pairs under
+  fresh, capabilities and fetch/decline history, plus single preference, information
+  and negated pair controls. First collect large/small unchanged-prompt probes;
+  then one bounded wording change. At most two evidence-driven revisions.
+- Hypothesis: explicit current-utterance selection and complete clarification JSON,
+  consistent simulator terminology and a short spoken reply budget improve decision
+  clarity and response time. Judge native fixed fixtures/actual replies, then same
+  30 speech cases and independent Stop/physics before accepting a change. Rollback
+  is accepted A2 prompt/model; no parser fallback, threshold or fixture relaxation.
+
+- Unchanged accepted model: 12/12 pair/control decisions correct. First response
+  after the existing app's idle interval took 17.263s despite model_ready; later
+  responses .761–1.303s. This is a loaded-model long-idle observation, not a fresh
+  startup claim. Paging/kernel residency is a hypothesis, not proven causation.
+- Unchanged small model fails 6/12, including fresh screwdriver+wrench and multiple
+  prior-chat combinations; fresh wrench+hammer alone passes. Both pair and history
+  affect outcomes. Cache-disabled control fails 7/12 with the same contract; cache
+  reuse is not a sufficient explanation. This strengthens a model/decision-contract
+  diagnosis rather than a recognizer or simply stale-cache diagnosis.
+- Attempt 1 changes only instruction wording and familiar capabilities reply:
+  complete multi-tool clarification JSON, current-utterance selection, preference
+  vs requested pair, coherent simulator-only terminology, explicit chat capability
+  and an aim of one short sentence/25 words. No output truncation, parser fallback
+  or weakened intent expectation. The new paired example is screwdriver+wrench;
+  other pairs/histories still judge generalization.
+
+- Attempt 1: pair fixture 36/36, context 18/18, quality intent/schema 30/30;
+  original fixture fails 3/45: casual chat incorrectly selects a wave. Actual
+  quality reading finds three capabilities omissions (conversation), and three
+  success-denial replies wrongly allow a request alone to establish delivery.
+  Kept all failures. Attempt 2 explicitly limits gestures to greetings/requests,
+  gives a complete short abilities reply, and says only verified controller
+  results establish success. Same fixtures, complete JSON and motion judges.
+
+- Attempt 2 native decisions: pairs 36/36, original 45/45, context 18/18,
+  quality schema 30/30. Actual reply review still finds three abilities replies
+  omit simulation and three denials describe an incorrect request-or-movement
+  success condition (no actual false delivery was asserted). These remain
+  partials, not clean factual passes. No third prompt revision; finish the
+  matched speech observation and retain a conservative default decision.
+
+- A4 final: both models pass original45/context18/pairs36/quality-schema30
+  and current UI speech30. Large actual quality30/30 complete; small24/30
+  complete,6 factual partials. Keep large default and adopt the tested concise
+  prompt. Small remains experimental; no third wording revision or new model.
+- Kept model speech common median/p95 1.174/1.247s; general 1.688/2.341s,
+  guards1.711/2.350s. General tails improve modestly vs preceding matched study;
+  only six trials per category. No audible-onset/live-room claim. Large startup
+  sample20.451s; prefix11.604s. Long-idle17.263s still unsolved.
+- Independent original pending-reply Stop passes:593ms end-of-voice to POST,
+  late reply superseded, task cancelled, grip retained, drift3.56e-7rad. Full
+  speech/physics journey passes: rack6.20mm, handoff7.16mm, withdrawn hammer
+  rack16.30mm. Moving joke3.186s (first token2.593s), still a bottleneck.
+- Fresh full regressions141lab/122fork, Ruff/format pass. Original46file hashes
+  intact. Evidence: dialogue-revision-audit.md/evidence.json, figure and browser
+  proof. Public app restored on accepted large model; goal remains active.
+
+Next active slice D1 — grounded simulated camera observations:
+- Previous goal turn classification: progress. Bounded language study completed,
+  errors retained, prompt accepted, unsafe default switch rejected. Advance a
+  different required capability rather than repeat model tuning indefinitely.
+- [O] Tool localization currently calls privileged simulator positions; RGB
+  overview rendering already works but no camera-derived tool estimates exist.
+  [S] Adopted milestone D requires camera-informed operation and varied layouts.
+- Hypothesis: calibrated rendered RGB (and depth if justified) can identify and
+  localize the supported tools well enough to support later retrieval. Start with
+  an offline perception baseline and measure before trusting it for movement.
+- Boundary: modular frame/calibration inputs, a small reproducible varied-layout
+  dataset, detector/localizer and error/occlusion visualization. No webcam/mic
+  permission, real arm, giant model download or changes to accepted manipulation.
+  Select classical geometry/color or a small learned baseline from measured
+  evidence; report markers/known-geometry assumptions if used.
+- Judge: separate fixed held-out scenes, actual rendered RGB/depth inputs only;
+  simulator positions/IDs allowed in dataset labels and evaluation, never in
+  detection or a silent miss fallback. Report misses, wrong identities, mm
+  localization error and confidence under occlusion/varied layouts. Freeze
+  examples and provisional criteria before tuning; integrate motion only after
+  independent accuracy and physical checks. Keep existing Stop/task regressions.
+- Rollback: accepted A4 runtime. Camera baseline does not itself complete D.
+  Learned-model usefulness, failure recovery, acoustic/noise testing, hardware
+  adapter/plan and the convincing human live demonstration remain required.

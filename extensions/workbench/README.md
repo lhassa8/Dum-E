@@ -100,6 +100,15 @@ Tool manipulation starts directly rather than waiting through pre/post nods;
 greeting and conversation gestures remain. See `docs/responsiveness-audit.md` for
 the benchmark, failure cases, cold behavior and remaining scope.
 
+The latest bounded dialogue revision keeps the tested large model, shortens replies
+and clearly identifies simulator observations. All 30 current-UI saved-speech
+decisions pass: familiar requests median/p95 1.174/1.247 seconds; general wording
+1.688/2.341 seconds. Spoken Stop during a real pending reply reaches cancellation
+in 593ms, with grip retained. Full task changes/returns and 122 fork tests pass.
+The smaller experimental model selects the right actions but still gives factual
+partials, so it is not the default. See `docs/dialogue-revision-audit.md` for retained
+failures, measured boundaries, startup/idle limits and actual browser/physics proof.
+
 ```sh
 uv run --locked pytest -q
 uv run --locked ruff check src tests scripts
