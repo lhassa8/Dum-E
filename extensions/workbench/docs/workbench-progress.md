@@ -234,3 +234,83 @@ Next active loop A3:
 - Rollback: accepted A2 source/model; restore current model if the candidate does
   not pass. Then broaden speech/noise evidence and advance camera/learning/hardware
   slices. This is a replaceable implementation choice, not new required scope.
+
+A3 execution — smaller local dialogue model:
+- Previous turn classification: progress. A2 code, regression evidence and public
+  feature branch were committed; the app is Ready with voice available.
+- Primary model card and existing backend code identify a bounded candidate:
+  Qwen3.5-4B, converted by mlx-community as Qwen3.5-4B-MLX-4bit. Apache 2.0;
+  pinned revision 32f3e8ecf65426fc3306969496342d504bfa13f3; weights 3,034,300,695
+  bytes. Download only public data/tokenizer files, never custom Python/remote code.
+  Installed MLX-LM has the Qwen3.5 text implementation; vision weights are stripped
+  by this text backend. This experiment does not add camera perception.
+- Prediction: less memory pressure/prefill cost; quality is unknown. Preserve
+  original 45 and mixed-history 18 judges plus the complete speech/physics checks.
+  Added 10 fixed reply-quality cases before testing candidate: truthful abilities,
+  no camera/feelings/hardware claims, information vs action, remembered dialogue,
+  no invented outcome and unsupported repair. Review actual replies as well as
+  schema/actions. A fast wrong model will not become the default.
+- A first large-model quality run passed 10/10 action/schema cases and manual
+  reading found 9 passes and one partial abilities reply (omits conversation and
+  an explicit simulation qualifier). First response took 14.53s while the
+  candidate download was running; retain it, but do not call that an isolated
+  long-idle latency or include it in the matched fresh-start comparison.
+- Benchmark now retains HTTP intent/schema errors as failed cases so a smaller
+  model's malformed response cannot truncate or disappear from the comparison.
+
+- Candidate download completed after 258.45s; LFS SHA256 matches, no custom code.
+  A bounded HTTP range probe worked while Xet kept its output file at zero bytes;
+  the confirmed live process then completed normally. No restart/retry was needed.
+- Matched fresh large-model control: original 45/45 (median/p95 .900/1.187s),
+  context 18/18 (.881/1.247s), quality schema 30/30 (1.071/1.571s). Actual reply
+  review: 27 pass, 3 partial abilities answers omit conversation; preserve criterion.
+  Current-UI saved speech: 30/30; overall 1.172/2.655s, common 1.172/1.257s,
+  general 1.743/2.609s. Model preparation 15.638s, peak allocation 20.441GB.
+- First candidate result: original 45/45, .986/1.318s, peak 3.415GB and preparation
+  5.502s. It reads the remaining prompt faster, but generates about 45 tokens/s
+  and sometimes longer replies. This contradicts the simple smaller-means-faster
+  steady-response hypothesis. Do not switch defaults on memory savings alone;
+  finish context/reply/speech evidence before deciding.
+
+- Candidate context 18/18 (.807/1.023s); quality schema 30/30 (1.267/1.557s).
+  Actual reply review: 24 pass, 6 partial (abilities omissions; webcam answer
+  describes sensed tool positions without saying simulator-derived). Original
+  expectations retained. These are lead-agent reviews, not a human approval gate.
+- Current-UI candidate replay failed 3/30: all "Bring me the wrench and the hammer"
+  cases selected fetch/wrench instead of clarification. ASR recognized the exact
+  words. This is a decision regression, not transcription. The native fixture used a
+  different tool pair; dialogue history also differs. Their respective causal
+  effects have not been isolated. Common requests
+  18/18 at median/p95 1.162/1.205s; general 6/6 at 1.552/2.091s. The lower latency
+  does not justify unintended tool selection. Restore accepted model; do not
+  change defaults, add a fallback parser or weaken the multiple-tool judge.
+- A3 candidate rejected for default use. Fixed native tests were too narrow to
+  represent the complete dialogue route. Preserve its actual failure and same
+  public-speech judge. Next hypothesis: explicit ambiguity/capability handling
+  and concise replies may help, but test every pair of supported tools in realistic
+  prior conversation before any new model/default decision. No additional model
+  download is needed to investigate this observed failure.
+
+- Restored browser independently answers the wrench/hammer ambiguity after
+  capabilities chat with "Which tool would you like first?" Native job null,
+  zero physical tasks, maximum tool drift 1.65e-8m. Tray reset clears pending
+  clarification. App Ready with voice and active-work listening restored.
+  Session: extensions/workbench/runs/model-restored-runtime-001. Evidence and
+  real screenshots: model-comparison-audit.md/evidence.json and model-restored-browser.png.
+- A3 bounded comparison complete; candidate rejected, full goal still active.
+  No runtime/prompt/default/dependency/vendor change. Added a reusable quality
+  fixture and benchmark error retention; saved measured successes and failures.
+
+Next active loop A4:
+- Isolate the multi-tool ambiguity across all supported pairs and prior dialogue.
+  Native fixture used screwdriver+hammer; speech used wrench+hammer with retained
+  chat, so do not assume a single cause. Preserve all original cases/expectations.
+- Investigate concise, explicit capability/perception instructions using the
+  current downloaded models; no additional download yet. Prediction: fewer
+  unnecessary tokens and clearer factual replies without losing correct intent.
+- Judge: original 45, mixed-history 18, quality 30 actual replies, same current-UI
+  30 saved speech, then independent Stop and real physical regressions before
+  accepting any model/prompt change. Accepted A2 default is the rollback.
+- Limit model tuning to two evidence-driven attempts; if still unreliable, keep
+  accepted model and advance noise/perception/learning/hardware slices instead
+  of turning the product goal into an indefinite language-model benchmark.

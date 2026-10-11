@@ -44,15 +44,28 @@ for repeat in range(args.repeat):
             json={"message": case["message"], "history": case.get("history", [])},
         )
         elapsed = (time.perf_counter() - started) * 1000
-        response.raise_for_status()
-        result = response.json()
-        intent = result["intent"]
-        correct = intent["action"] in case["actions"] and intent["object"] == case["object"]
+        # A candidate that returns malformed intent is a failed case, not a
+        # reason to lose the remainder of the fixed comparison or its evidence.
+        try:
+            result = response.json()
+        except ValueError:
+            result = {"unparsed_response": response.text[:2000]}
+        if not isinstance(result, dict):
+            result = {"invalid_response": result}
+        intent = result.get("intent")
+        if not isinstance(intent, dict):
+            intent = {}
+        correct = (
+            response.is_success
+            and intent.get("action") in case["actions"]
+            and intent.get("object") == case["object"]
+        )
         row = {
             "repeat": repeat,
             "name": case["name"],
             "elapsed_ms": elapsed,
             "correct": correct,
+            "http_status": response.status_code,
             "result": result,
         }
         rows.append(row)
