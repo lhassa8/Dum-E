@@ -4,7 +4,7 @@ import {MicrophoneInput,PauseDetector,isStopRequest} from '../src/physical_ai_la
 
 const element=()=>({textContent:'',hidden:false,disabled:false,setAttribute(){}});
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
-function setup({permission,fetchAudio,useDefaultFetch=false,text='Bring me the screwdriver.',monitor}={}) {
+function setup({permission,fetchAudio,useDefaultFetch=false,text='Bring me the screwdriver.',monitor,converse=false,echo=false}={}) {
   let releases=0,submitted=[],stops=0,paused=null;
   const stream={getTracks:()=>[{stop:()=>releases++}]};
   class Recorder {
@@ -15,7 +15,8 @@ function setup({permission,fetchAudio,useDefaultFetch=false,text='Bring me the s
   }
   const ui={button:element(),cancel:element(),note:element(),heard:element()};
   const mic=new MicrophoneInput({...ui,mediaDevices:{getUserMedia:permission||(()=>Promise.resolve(stream))},
-    Recorder,fetchAudio:useDefaultFetch?undefined:fetchAudio||(()=>Promise.resolve({ok:true,json:async()=>({text})})),
+    Recorder,fetchAudio:useDefaultFetch?undefined:fetchAudio||(()=>Promise.resolve({ok:true,json:async()=>({text,likely_echo:echo})})),
+    onDuringWork:converse?async text=>submitted.push(text):undefined,
     monitor:monitor||((stream,detector,onPause)=>{paused=onPause;return ()=>{};}),onStop:async()=>stops++,stopSpeech:async()=>{},onText:async text=>submitted.push(text),onError:message=>ui.error=message});
   mic.setReady(true);
   return {mic,ui,stream,submitted,releases:()=>releases,stops:()=>stops,pause:()=>paused()};
@@ -81,3 +82,21 @@ assert.equal(switched.mic.mode,'idle');assert.equal(switched.releases(),1);
 const ended=setup();ended.mic.setWorking(true);await tick();ended.mic.setWorking(false);
 assert.equal(ended.mic.mode,'idle');assert.equal(ended.releases(),1);
 console.log('PASS: pause thresholds, automatic Finish, strict Stop, motion-only rearming, non-stop suppression, cancel, disable and task-end cleanup.');
+
+const conversation=setup({text:'What are you doing?',converse:true});
+conversation.mic.setWorking(true);await tick();conversation.pause();await tick();
+assert.deepEqual(conversation.submitted,['What are you doing?']);
+assert.equal(conversation.releases(),1);assert.equal(conversation.stops(),0);
+const spokenEcho=setup({text:"I'll bring you the wrench.",converse:true,echo:true});
+spokenEcho.mic.setWorking(true);await tick();spokenEcho.pause();await tick();
+assert.equal(spokenEcho.submitted.length,0);
+const stopThroughEcho=setup({text:'Stop!',converse:true,echo:true});
+stopThroughEcho.mic.setWorking(true);await tick();stopThroughEcho.pause();await tick();
+assert.equal(stopThroughEcho.stops(),1);
+let lateAnswer;
+const finishedSpeech=setup({converse:true,fetchAudio:()=>new Promise(r=>lateAnswer=r)});
+finishedSpeech.mic.setWorking(true);await tick();finishedSpeech.pause();finishedSpeech.mic.setWorking(false);
+lateAnswer({ok:true,json:async()=>({text:'Bring me the hammer.'})});await tick();
+assert.deepEqual(finishedSpeech.submitted,['Bring me the hammer.']);
+assert.equal(finishedSpeech.releases(),1);assert.equal(finishedSpeech.mic.mode,'idle');
+console.log('PASS: opt-in conversation during movement, echo rejection with independent Stop, and pending recognition preserved when work ends.');

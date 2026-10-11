@@ -1,7 +1,7 @@
 // Local pause detection and bounded motion-only listening. ASR remains on the Mac.
 export function isStopRequest(text) {
   const words=text.toLowerCase().replace(/[^a-z\s]/g,' ').replace(/\s+/g,' ').trim();
-  return /^(?:(?:please|dum e|dume|dummy) )?(?:stop|halt|cancel)(?: (?:please|now))?$/.test(words);
+  return /^(?:(?:please|dum e|dume|dummy|can you|could you) )?(?:stop|halt|cancel)(?: (?:moving|the arm|everything))?(?: (?:please|now))?$/.test(words);
 }
 
 export class PauseDetector {
@@ -35,10 +35,10 @@ export function monitorMicrophone(stream,detector,onPause) {
 }
 
 export class MicrophoneInput {
-  constructor({button,cancel,note,heard,onText,onStop,onError,stopSpeech,
+  constructor({button,cancel,note,heard,onText,onStop,onDuringWork,onError,stopSpeech,
                mediaDevices=navigator.mediaDevices,Recorder=globalThis.MediaRecorder,
                fetchAudio=(...args)=>globalThis.fetch(...args),monitor=monitorMicrophone}) {
-    Object.assign(this,{button,cancel,note,heard,onText,onStop,onError,stopSpeech,
+    Object.assign(this,{button,cancel,note,heard,onText,onStop,onDuringWork,onError,stopSpeech,
                        mediaDevices,Recorder,fetchAudio,monitor});
     this.mode='idle';this.ready=false;this.generation=0;this.working=false;
     this.interruptEnabled=true;this.held=false;this.closed=false;this.kind='request';
@@ -52,7 +52,13 @@ export class MicrophoneInput {
   }
   setWorking(working) {
     const ended=this.working&&!working;this.working=working;
-    if(ended){this.held=false;if(this.kind==='interrupt'&&this.mode!=='idle')this.abort(false);}
+    if(ended){
+      this.held=false;
+      if(this.kind==='interrupt'&&this.mode!=='idle') {
+        if(this.onDuringWork&&this.mode==='recording'&&this.detector?.heardSpeech)this.finish();
+        else if(!(this.onDuringWork&&this.mode==='transcribing'))this.abort(false);
+      }
+    }
     this.maybeListen();
   }
   setInterruptEnabled(enabled) {
@@ -113,7 +119,7 @@ export class MicrophoneInput {
       this.detector=new PauseDetector({pauseMs:kind==='interrupt'?350:900});
       recorder.start();this.mode='recording';
       this.stopMonitor=this.monitor(stream,this.detector,()=>this.finish());
-      this.note.textContent=kind==='interrupt'?'Listening for “stop” while the arm works…':
+      this.note.textContent=kind==='interrupt'?(this.onDuringWork?'Listening while I work. Ask a question, change tools, or say “stop”…':'Listening for “stop” while the arm works…'):
         'Listening… speak normally. I’ll finish when you pause.';
       this.paint();
       this.timer=setTimeout(()=>{
@@ -148,18 +154,23 @@ export class MicrophoneInput {
       if(generation!==this.generation)return;
       if(!response.ok)throw Error(result.detail||'Transcription failed.');
       const text=result.text?.trim();if(!text)throw Error('I didn’t hear a request. Please try again.');
-      if(kind==='request'||isStopRequest(text))this.heard.textContent='Heard: “'+text+'”';
+      if(result.likely_echo&&!isStopRequest(text)) {
+        this.note.textContent='Listening while working…';this.mode='idle';this.paint();return;
+      }
+      if(kind==='request'||isStopRequest(text)||this.onDuringWork)this.heard.textContent='Heard: “'+text+'”';
       if(isStopRequest(text)) {
         this.held=true;this.note.textContent='Stopping the arm…';
         await this.onStop();
       } else if(kind==='request') {
         this.note.textContent='Request recognized. Sending to Dum-E…';await this.onText(text);
+      } else if(this.onDuringWork) {
+        this.note.textContent='Request recognized. Responding while working…';await this.onDuringWork(text);
       } else {this.note.textContent='Only “stop” is accepted while the arm is working.';}
       if(generation===this.generation){this.mode='idle';this.paint();}
     } catch(error) {
       if(generation!==this.generation||error.name==='AbortError')return;
       this.mode='idle';this.paint();this.note.textContent=error.message;
-      if(kind==='request')this.onError(error.message);
+      if(kind==='request'||this.onDuringWork)this.onError(error.message);
     }
   }
 }

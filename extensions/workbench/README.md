@@ -34,16 +34,23 @@ for remembered tasks. Reset clears recovery. Original cancelled tasks stay cance
 recovery creates a new task. The remaining path uses current physical measurements,
 including the settled offset of a tool between the fingers.
 
-Conversation replies include brief nods or curious tilts; delivery starts with a
-short acknowledgement and ends with a completion nod only after placement passes.
-Gestures are interruptible, do not claim tool success, and stay off while holding
-a paused tool. Resume or return it before asking for unrelated movement.
+Delivery starts promptly without waiting through decorative movements. Idle
+conversation can include brief nods or curious tilts. Gestures stay off during
+manipulation and while holding a paused tool; they never imply physical success.
 
-With **Voice stop on**, the microphone listens only while Dum-E is working. Say
-**“stop”** to cancel directly through the physical Stop endpoint, bypassing the
-language model. Those clips finish after a 350 ms pause. Other speech is ignored,
-including negations such as “don't stop.” Turn Voice stop off to disable motion
-listening. There is no always-on idle microphone or wake word.
+With **Listen while working on**, the microphone listens only while Dum-E is
+working. Ask **“What are you doing?”** without interrupting the current task, or
+say **“Actually bring me the wrench instead.”** A change returns the old tool to
+its rack and checks placement before retrieving the new one. **“Don't bring me
+the screwdriver”** withdraws that specific request and returns the tool. Questions
+and task changes also work through the enabled text box while the arm moves.
+
+Say **“stop”** to cancel directly through the physical Stop endpoint, bypassing the
+language model. Motion-time clips finish after a 350 ms pause. **“Don't stop”**
+leaves movement alone. Turn **Listen while working off** to disable motion
+listening. There is no always-on idle microphone or wake word. Longer internal
+pauses, room noise and the assistant's own speech need further live evaluation;
+the current echo filter is a bounded text heuristic, not acoustic echo cancellation.
 
 **Stop** cancels motion, speech, recording and pending browser transcription.
 **Cancel recording** discards the recording and suspends automatic listening for
@@ -77,6 +84,10 @@ determine success; tools are never teleported or welded to the gripper. The gree
 tray stands in for the user's pickup location; no human handoff is simulated.
 This is not yet a camera-based VLA policy, learned grasping or a real SO-101 driver.
 Tool geometry/masses/friction are approximate. Hardware purchases remain deferred.
+The tool scene uses doubled gripper servo stiffness to prevent observed hammer
+slip, preserving its original gap mapping and force cap. That measured simulation
+setting needs separate calibration on hardware. See `docs/interaction-audit.md`
+for the force comparison, rejected approaches and complete interaction evidence.
 
 ## Verification
 
@@ -99,6 +110,10 @@ node scripts/check_voice_capture.mjs
 uv run --locked python scripts/verify_voice_delivery.py --output runs/voice-check-001
 # Shipped JS controller + native ASR/physics: pause completion, negation and Stop
 node scripts/verify_automatic_voice.mjs runs/automatic-voice-check-001
+# Enable the shipped conversation callback during the negative Stop probe
+node scripts/verify_automatic_voice.mjs runs/conversation-stop-check-001 conversation
+# Saved speech, task changes, contextual clarification and observed placements
+uv run --locked python scripts/verify_interaction.py runs/interaction-check-001
 # Repeat identical saved speech to measure responsiveness before/after a change
 node scripts/benchmark_responsiveness.mjs runs/latency-check-001 runs/latency-fixtures-001
 # Saved speech -> Stop/recovery tasks -> physical placement, speech and expression

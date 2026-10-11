@@ -7,6 +7,7 @@ import {spawnSync} from 'node:child_process';
 import {MicrophoneInput} from '../src/physical_ai_lab/dume/web/voice-input.mjs';
 
 const output=process.argv[2];assert.ok(output,'Pass a fresh evidence directory');
+const conversationMode=process.argv[3]==='conversation';
 fs.mkdirSync(output,{recursive:false});
 const base='http://127.0.0.1:8766';
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
@@ -62,6 +63,7 @@ mic=new MicrophoneInput({button:element(),cancel:element(),note:element(),heard:
  },
  stopSpeech:()=>post('/speech-stop'),
  onText:async text=>{assert.equal(taskId,null,'Unexpected second motion request');taskId=(await post('/chat',{message:text})).task_id;},
+ onDuringWork:conversationMode?async text=>{const before=await state();const answer=await post('/interact',{message:text,source:'voice'});const after=await state();assert.equal(answer.mode,'conversation');assert.equal(after.job_id,before.job_id);assert.ok(after.busy,'Negative Stop interrupted the task');}:undefined,
  onStop:async()=>{const before=await state();assert.ok(before.busy,'Stop must interrupt active work');voiceStopPosted=performance.now();await post('/stop');stops++;},
  onError:text=>{if(text)errors.push(text);},
 });
@@ -84,6 +86,7 @@ await sleep(500);const settled=(await state()).robot_joints;await sleep(600);con
 assert.equal(later.tasks.find(t=>t.task_id===taskId).status,'cancelled');
 const drift=Math.max(...settled.map((v,i)=>Math.abs(v-later.robot_joints[i])));assert.ok(drift<.03,'Arm did not settle after Stop');
 const evidence={capture:'saved native speech plus actual waveform pause detection, not live microphone',
+ conversation_mode:conversationMode,
  recognized,task_id:taskId,negative_stop_ignored:negations,stop_commands:stops,capture_releases:captureReleases,
  stop_speech_to_post_ms:Math.round(voiceStopPosted-stopStarted),settled_joint_drift_rad:drift,
  stop_end_to_post_ms:Math.round(voiceStopPosted-stopLastSpeech),

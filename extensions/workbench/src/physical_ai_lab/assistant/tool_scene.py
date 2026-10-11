@@ -2,6 +2,9 @@
 
 import xml.etree.ElementTree as ET
 
+import mujoco
+import numpy as np
+
 from physical_ai_lab.assistant.scene import Workbench, scene_xml
 
 TOOLS = {"screwdriver": (0.43, -0.23), "wrench": (0.45, 0.0), "hammer": (0.43, 0.23)}
@@ -92,3 +95,32 @@ def tool_scene_xml():
 class ToolWorkbench(Workbench):
     def __init__(self, seed=42):
         super().__init__(seed, xml=tool_scene_xml(), objects=TOOLS, targets=HANDOFF)
+        # The vendor's positional gripper servo produces only ~2.3 N in these
+        # handles. Double its stiffness (and scale damping by sqrt(2)) to keep
+        # an asymmetric tool from slipping during a redirected carry. Preserve
+        # the 0..255 gap mapping and original actuator force limits. This is a
+        # measured simulation control setting; real grippers need calibration.
+        self.model.actuator_gainprm[7, 0] *= 2
+        self.model.actuator_biasprm[7, 1] *= 2
+        self.model.actuator_biasprm[7, 2] *= np.sqrt(2)
+
+    def tool_support_height(self, name):
+        """Body-center clearance for the currently tilted tool's lowest geometry.
+
+        Privileged simulator pose/geometry, not a camera-derived estimate.
+        Used to release above the table without driving a tilted tip into it.
+        """
+        body = self.model.body(name).id
+        first, count = self.model.body_geomadr[body], self.model.body_geomnum[body]
+        bottom = float("inf")
+        for geom in range(first, first + count):
+            rotation = self.data.geom_xmat[geom].reshape(3, 3)
+            size = self.model.geom_size[geom]
+            if self.model.geom_type[geom] == mujoco.mjtGeom.mjGEOM_BOX:
+                extent = np.abs(rotation[2]) @ size
+            elif self.model.geom_type[geom] == mujoco.mjtGeom.mjGEOM_CAPSULE:
+                extent = size[0] + size[1] * abs(rotation[2, 2])
+            else:
+                raise ValueError("Unsupported tool geometry for placement clearance")
+            bottom = min(bottom, self.data.geom_xpos[geom, 2] - extent)
+        return float(self.observe()[name][2] - bottom)

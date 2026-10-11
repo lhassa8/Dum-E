@@ -40,9 +40,26 @@ class ToolDelivery(PickPlace):
         return self
 
     def plan(self):
-        if not self.carrying:
-            return super().plan()
-        return self._carry_plan()
+        if self.carrying:
+            yield from self._carry_plan()
+            return
+        for step in super().plan():
+            if step.phase == "Placing block":
+                # A newly grasped tool can also settle inside the fingers. The
+                # same measured offset used after a paused hold prevents pushing
+                # it into the table when arriving from a different previous task.
+                offset = (
+                    self.bench.data.site_xpos[self.bench.tcp] - self.bench.observe()[self.object]
+                )
+                target = np.array(
+                    [
+                        *self.targets[self.destination],
+                        max(0.026, self.bench.tool_support_height(self.object)),
+                    ]
+                )
+                yield Step(step.phase, step.gripper, target + offset + [0, 0, 0.008])
+            else:
+                yield step
 
     def _carry_plan(self):
         # After a hold, the tool can settle lower within the fingers. Observe its
@@ -54,6 +71,7 @@ class ToolDelivery(PickPlace):
         offset = self.bench.data.site_xpos[self.bench.tcp] - self.bench.observe()[self.object]
         yield Step("Moving to target", 0, target + offset + [0, 0, 0.20])
         offset = self.bench.data.site_xpos[self.bench.tcp] - self.bench.observe()[self.object]
+        target[2] = max(0.026, self.bench.tool_support_height(self.object))
         yield Step("Placing tool", 0, target + offset + [0, 0, 0.008])
         yield Step("Releasing", 255, ticks=28)
         yield Step("Withdrawing gripper", 255, target + [0, 0, 0.20])
@@ -158,8 +176,16 @@ class ToolPerformance:
         self.bench = bench
         # A serial nod used to delay pickup by ~2 seconds and release the task
         # ~2 seconds late. Speech acknowledges handling; manipulation takes priority.
-        self.current = self.delivery
-        self.stage = "delivery"
+        # Different preceding skills can leave a very different IK branch. An
+        # empty gripper takes a bounded elevated transit to the known ready pose
+        # before a fresh grasp. This is motion preparation, not a social gesture.
+        transit = (
+            bench.data.ctrl[7] >= 128
+            and not self.delivery.carrying
+            and np.max(np.abs(bench.data.qpos[:7] - HOME)) > 0.4
+        )
+        self.current = EmptyTransit(bench) if transit else self.delivery
+        self.stage = "transit" if transit else "delivery"
         self.outcome = None
         self.notifications = []
 
@@ -199,10 +225,145 @@ class ToolPerformance:
             self.bench, self.object, returning=True, delivery=self.delivery.redirect_to_rack()
         )
 
+    def redirect_to_handoff(self):
+        self.delivery.returning, self.delivery.destination = False, "handoff"
+        self.delivery._replan()
+        return ToolPerformance(self.bench, self.object, delivery=self.delivery)
+
     def advance(self):
         if self.outcome:
             return False
         if self.current.advance():
             return True
+        if self.stage == "transit":
+            self.current, self.stage = self.delivery, "delivery"
+            return True
         self.outcome = self.delivery.outcome
+        return False
+
+
+class EmptyTransit:
+    """Move an empty hand to the elevated ready pose without a decorative detour."""
+
+    def __init__(self, bench):
+        if bench.data.ctrl[7] < 128:
+            raise ValueError("Ready-pose transit requires an open, empty grip")
+        self.bench = bench
+        self.phase = "Repositioning above the workbench"
+        self.outcome = None
+        self.frames = self._run()
+
+    def _run(self):
+        start = self.bench.data.qpos[:7].copy()
+        ticks = max(40, int(np.max(np.abs(HOME - start)) / 0.025))
+        for t in range(1, ticks + 1):
+            a = t / ticks
+            a = a * a * (3 - 2 * a)
+            self.bench.tick(start + (HOME - start) * a, 255)
+            yield
+        for _ in range(12):
+            self.bench.tick(HOME, 255)
+            yield
+        self.outcome = Outcome("expressed", "")
+
+    def pause(self):
+        self.bench.data.ctrl[:7] = self.bench.data.qpos[:7]
+        self.outcome = Outcome("interrupted", "Stopped. I'll hold still.")
+
+    def resume(self):
+        self.outcome = None
+        self.frames = self._run()
+
+    def advance(self):
+        if self.outcome:
+            return False
+        try:
+            next(self.frames)
+            return True
+        except StopIteration:
+            return False
+
+
+class ToolChange:
+    """Return an interrupted tool, verify its rack placement, then start the new skill."""
+
+    def __init__(self, bench, paused, tool, returning=False):
+        self.bench = bench
+        self.current = paused.return_to_rack()
+        self.previous_tool = self.current.object
+        self.requested_tool, self.returning = tool, returning
+        self.stage = "return_previous"
+        self.outcome = None
+        self.notifications = []
+        self.verified_steps = []
+
+    @property
+    def object(self):
+        return self.current.object
+
+    @property
+    def destination(self):
+        return self.current.destination
+
+    @property
+    def initial_height(self):
+        return self.current.initial_height
+
+    @property
+    def max_height(self):
+        return self.current.max_height
+
+    @property
+    def phase(self):
+        if self.stage == "return_previous":
+            return (
+                f"Returning {self.previous_tool} before {self.requested_tool}: {self.current.phase}"
+            )
+        return self.current.phase
+
+    def pause(self):
+        self.current.pause()
+        self.outcome = Outcome("interrupted", "Stopped. Placement is not confirmed.")
+
+    def stop(self):
+        self.pause()
+
+    def resume(self):
+        self.outcome = None
+        self.current.resume()
+
+    def return_to_rack(self):
+        return self.current.return_to_rack()
+
+    def redirect_to_handoff(self):
+        return self.current.redirect_to_handoff()
+
+    def advance(self):
+        if self.outcome:
+            return False
+        if self.current.advance():
+            return True
+        outcome = self.current.outcome
+        self.verified_steps.append(
+            {
+                "object": self.object,
+                "destination": self.destination,
+                "status": outcome.status,
+                "distance_m": outcome.distance_m,
+            }
+        )
+        if self.stage == "return_previous":
+            if outcome.status != "success":
+                self.outcome = Outcome(
+                    "failed",
+                    f"I couldn't return the {self.previous_tool} "
+                    "reliably. I haven't started the new pickup.",
+                    outcome.distance_m,
+                )
+                return False
+            self.notifications.append(outcome.message)
+            self.current = ToolPerformance(self.bench, self.requested_tool, self.returning)
+            self.stage = "requested"
+            return True
+        self.outcome = outcome
         return False

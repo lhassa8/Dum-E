@@ -5,13 +5,13 @@ import io
 import json
 import os
 import queue
-import re
 import socket
 import threading
 import time
 import uuid
 from dataclasses import asdict
 from pathlib import Path
+from typing import Literal
 
 import uvicorn
 from fastapi import FastAPI, HTTPException, Request
@@ -30,6 +30,19 @@ class ChatRequest(BaseModel):
     message: str = Field(min_length=1, max_length=1500)
 
 
+class ResolvedChatRequest(ChatRequest):
+    intent: dict | None = None
+
+
+class DialogueRow(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str = Field(max_length=1500)
+
+
+class UnderstandingRequest(ChatRequest):
+    history: list[DialogueRow] = Field(default_factory=list, max_length=8)
+
+
 class Application:
     def __init__(self, model_path=None, log_path=None, tools=False):
         self.lock = threading.RLock()
@@ -38,6 +51,7 @@ class Application:
         self.stop_event = threading.Event()
         self.closed = threading.Event()
         self.language = None
+        self.language_lock = threading.Lock()
         self.model_status = "loading"
         self.model_error = None
         self.busy = False
@@ -55,6 +69,7 @@ class Application:
         self.events = []
         self.tools = tools
         self.joint_positions = []
+        self.gripper_command = 255
         self.scene_targets = TARGETS
         self.interrupted = None
         self.paused_controller = None
@@ -62,6 +77,7 @@ class Application:
         self.current_request = None
         self.responsiveness = {}
         self.request_clock = None
+        self.verified_steps = []
         if tools:
             from physical_ai_lab.assistant.tool_scene import HANDOFF
 
@@ -102,6 +118,7 @@ class Application:
                 "objects": self.observations,
                 "targets": self.scene_targets,
                 "robot_joints": self.joint_positions,
+                "gripper_command": self.gripper_command,
                 "inventory": self.inventory(),
                 "job_id": self.job_id,
                 "task": self.task,
@@ -109,6 +126,7 @@ class Application:
                 "last_outcome": self.last_outcome,
                 "epoch": self.epoch,
                 "responsiveness": dict(self.responsiveness),
+                "verified_steps": list(self.verified_steps),
                 "recovery": {
                     "can_resume": self.interrupted is not None,
                     "tool": self.last_tool,
@@ -116,7 +134,7 @@ class Application:
                 },
             }
 
-    def chat(self, text):
+    def chat(self, text, resolved=None):
         text = text.strip()
         if not text:
             raise ValueError("Please enter a request")
@@ -136,6 +154,7 @@ class Application:
             self.busy = True
             self.last_intent = None
             self.last_outcome = None
+            self.verified_steps = []
             self.phase = "Understanding your request"
             self.job_id = uuid.uuid4().hex[:8]
             self.current_request = text
@@ -143,55 +162,17 @@ class Application:
             self.responsiveness = {"job_id": self.job_id, "route": "model"}
             self.event("request_received", job_id=self.job_id, request=text)
             if self.tools:
-                from physical_ai_lab.assistant.tool_language import ToolIntent
-                from physical_ai_lab.assistant.tool_routing import explicit_decline, familiar_intent
+                from physical_ai_lab.assistant.tool_routing import known_intent
 
-                words = re.sub(r"[^a-z\s]", " ", text.lower())
-                words = " ".join(words.split())
-                if words in {
-                    "resume",
-                    "resume please",
-                    "please resume",
-                    "continue",
-                    "continue please",
-                    "carry on",
-                    "resume the task",
-                    "continue the task",
-                    "keep going",
-                }:
+                intent, route = (
+                    (resolved, "resolved") if resolved else known_intent(text, self.last_tool)
+                )
+                if intent and intent.action == "resume":
                     if self.interrupted and self.interrupted["intent"] is None:
                         text = self.interrupted["request"]
                         self.current_request = text
-                    else:
-                        self.commands.put(
-                            (
-                                "intent",
-                                (self.epoch, self.job_id, ToolIntent("resume", None, None, "")),
-                            )
-                        )
-                        self.responsiveness["route"] = "context"
-                        return
-                elif words in {
-                    "put it back",
-                    "put it back please",
-                    "please put it back",
-                    "put that back",
-                    "put that tool back in its rack please",
-                    "return it",
-                    "return the tool",
-                }:
-                    intent = (
-                        ToolIntent("return", self.last_tool, "rack", "")
-                        if self.last_tool
-                        else ToolIntent("clarify", None, None, "Which tool should I put back?")
-                    )
-                    self.commands.put(("intent", (self.epoch, self.job_id, intent)))
-                    self.responsiveness["route"] = "context"
-                    return
-                decline = explicit_decline(text)
-                intent = decline or familiar_intent(text)
+                        intent, route = known_intent(text, self.last_tool)
                 if intent is not None:
-                    route = "decline" if decline else "familiar"
                     self.responsiveness["route"] = route
                     self.event(
                         "interpretation",
@@ -205,6 +186,44 @@ class Application:
                     self.commands.put(("intent", (self.epoch, self.job_id, intent)))
                     return
             self.requests.put((self.epoch, self.job_id, text, history))
+
+    def understand(self, text, history=()):
+        """Read-only interpretation; never changes the active job, grip or path."""
+        from physical_ai_lab.assistant.tool_routing import known_intent, status_intent
+
+        started = time.monotonic()
+        snapshot = self.snapshot()
+        intent = status_intent(text, snapshot)
+        route = "state"
+        if intent is None:
+            intent, route = known_intent(text, snapshot["recovery"]["tool"])
+        if intent is None:
+            if self.model_status != "ready":
+                raise ValueError("The language model is not ready.")
+            with self.language_lock:
+                intent, _ = self.language.interpret(
+                    text,
+                    history,
+                    observations={
+                        "positions_m": snapshot["objects"],
+                        "locations": snapshot["inventory"],
+                        "recent_tool": snapshot["recovery"]["tool"],
+                        "interrupted_task": snapshot["recovery"]["interrupted"],
+                        "active_task": snapshot["task"],
+                        "phase": snapshot["phase"],
+                    },
+                )
+            route = "model"
+        elapsed = (time.monotonic() - started) * 1000
+        self.event(
+            "understanding",
+            request=text,
+            intent=asdict(intent),
+            route=route,
+            elapsed_ms=elapsed,
+            active_job=snapshot["job_id"],
+        )
+        return {"intent": asdict(intent), "route": route, "elapsed_ms": elapsed}
 
     def timing_point(self, name, job):
         with self.lock:
@@ -258,18 +277,20 @@ class Application:
                 if self.tools:
                     with self.lock:
                         positions = dict(self.observations)
-                    intent, raw = self.language.interpret(
-                        text,
-                        history,
-                        observations={
-                            "positions_m": positions,
-                            "locations": self.inventory(positions),
-                            "recent_tool": self.last_tool,
-                            "interrupted_task": self.interrupted,
-                        },
-                    )
+                    with self.language_lock:
+                        intent, raw = self.language.interpret(
+                            text,
+                            history,
+                            observations={
+                                "positions_m": positions,
+                                "locations": self.inventory(positions),
+                                "recent_tool": self.last_tool,
+                                "interrupted_task": self.interrupted,
+                            },
+                        )
                 else:
-                    intent, raw = self.language.interpret(text, history)
+                    with self.language_lock:
+                        intent, raw = self.language.interpret(text, history)
                 self.event(
                     "interpretation",
                     job_id=job,
@@ -311,7 +332,10 @@ class Application:
 
     def tool_action(self, bench, intent, job):
         """Bounded recovery and expression run on the same native control thread."""
-        from physical_ai_lab.assistant.tool_control import Gesture, ToolPerformance
+        import numpy as np
+
+        from physical_ai_lab.assistant.tool_control import Gesture, ToolChange, ToolPerformance
+        from physical_ai_lab.assistant.tool_scene import HANDOFF, TOOLS
 
         controller = None
         reply = intent.message
@@ -333,22 +357,51 @@ class Application:
                 self.interrupted = self.paused_controller = None
         elif intent.action in {"fetch", "return"}:
             paused = self.paused_controller
-            if intent.action == "return" and isinstance(paused, ToolPerformance):
+            if isinstance(paused, (ToolPerformance, ToolChange)):
                 if paused.object == intent.object:
-                    controller = paused.return_to_rack()
+                    controller = (
+                        paused.return_to_rack()
+                        if intent.action == "return"
+                        else paused.redirect_to_handoff()
+                    )
+                elif (
+                    bench.data.ctrl[7] < 128
+                    or np.linalg.norm(bench.observe()[paused.object][:2] - TOOLS[paused.object])
+                    > 0.035
+                ):
+                    controller = ToolChange(
+                        bench, paused, intent.object, returning=intent.action == "return"
+                    )
             if controller is None and bench.data.ctrl[7] < 128 and paused:
                 reply = "I'm holding a stopped tool. Say resume or put it back first."
             else:
+                if controller is None and intent.action == "fetch":
+                    occupied = [
+                        name
+                        for name, xyz in bench.observe().items()
+                        if name != intent.object
+                        and xyz[2] < 0.04
+                        and np.linalg.norm(xyz[:2] - HANDOFF["handoff"]) < 0.035
+                    ]
+                    if occupied:
+                        previous = ToolPerformance(bench, occupied[0], returning=True)
+                        controller = ToolChange(bench, previous, intent.object)
                 controller = controller or ToolPerformance(
                     bench, intent.object, returning=intent.action == "return"
                 )
-                self.last_tool = intent.object
+                self.last_tool = controller.object
                 self.interrupted = self.paused_controller = None
                 reply = (
                     f"I'll bring you the {intent.object}."
                     if intent.action == "fetch"
                     else f"I'll put the {intent.object} back in its rack."
                 )
+                if isinstance(controller, ToolChange):
+                    reply = f"I'll put the {controller.previous_tool} back first, then " + (
+                        f"bring you the {intent.object}."
+                        if intent.action == "fetch"
+                        else f"return the {intent.object}."
+                    )
         elif intent.action == "stop":
             self.stop()
             return None
@@ -494,9 +547,17 @@ class Application:
                     controller.notifications.clear()
                 if more:
                     with self.lock:
+                        self.verified_steps = list(getattr(controller, "verified_steps", []))
                         self.phase = controller.phase
+                        if self.tools and controller.object:
+                            self.last_tool = controller.object
+                            self.task = {
+                                "object": controller.object,
+                                "destination": controller.destination,
+                            }
                 else:
                     outcome = controller.outcome
+                    self.verified_steps = list(getattr(controller, "verified_steps", []))
                     self.timing_point("task_finished_ms", self.job_id)
                     self.last_outcome = asdict(outcome)
                     if self.messages[-1]["content"] != outcome.message:
@@ -509,6 +570,7 @@ class Application:
                         outcome=asdict(outcome),
                         observed={k: v.tolist() for k, v in bench.observe().items()},
                         lift_m=controller.max_height - controller.initial_height,
+                        verified_steps=getattr(controller, "verified_steps", []),
                     )
                     controller = None
                     with self.lock:
@@ -523,6 +585,7 @@ class Application:
             with self.lock:
                 self.observations = {k: v.tolist() for k, v in bench.observe().items()}
                 self.joint_positions = bench.data.qpos[:7].tolist()
+                self.gripper_command = float(bench.data.ctrl[7])
             if time.monotonic() - last_render >= 0.09:
                 buffer = io.BytesIO()
                 Image.fromarray(bench.render()).save(buffer, format="JPEG", quality=87)
@@ -560,12 +623,28 @@ def make_api(state):
             )
 
     @api.post("/chat")
-    def chat(request: ChatRequest):
+    def chat(request: ResolvedChatRequest):
         try:
-            state.chat(request.message)
+            resolved = None
+            if request.intent is not None:
+                if not state.tools:
+                    raise ValueError("Resolved tool intents require the tool scene.")
+                from physical_ai_lab.assistant.tool_language import ToolIntent
+
+                resolved = ToolIntent.parse(json.dumps(request.intent))
+            state.chat(request.message, resolved)
         except ValueError as error:
             raise HTTPException(409, str(error)) from error
         return {"accepted": True, "job_id": state.job_id}
+
+    @api.post("/understand")
+    def understand(request: UnderstandingRequest):
+        if not state.tools:
+            raise HTTPException(409, "Dialogue during work requires the tool scene.")
+        try:
+            return state.understand(request.message, [r.model_dump() for r in request.history])
+        except ValueError as error:
+            raise HTTPException(409, str(error)) from error
 
     @api.post("/stop")
     def stop():

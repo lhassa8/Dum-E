@@ -82,6 +82,23 @@ class SimulationAgent(IRobotAgent):
         self.last_result = None
         self.tools = tools
         self.lock = asyncio.Lock()
+        from physical_ai_lab.dume.interaction import InteractionCoordinator
+
+        self.interaction = InteractionCoordinator(self)
+
+    def log_interaction(self, request, result, elapsed_ms):
+        with (self.log_path.parent / "interactions.jsonl").open("a") as stream:
+            stream.write(
+                json.dumps(
+                    {
+                        "time": time.time(),
+                        "request": request,
+                        "result": result,
+                        "elapsed_ms": elapsed_ms,
+                    }
+                )
+                + "\n"
+            )
 
     @property
     def id(self):
@@ -103,10 +120,11 @@ class SimulationAgent(IRobotAgent):
                 + "\n"
             )
 
-    async def submit(self, instruction):
-        task_id = await self.tasks.create_task(
-            instruction, {"robot_id": self.id, "source": "dume_sim_browser", "simulation": True}
-        )
+    async def submit(self, instruction, resolved_intent=None):
+        metadata = {"robot_id": self.id, "source": "dume_sim_browser", "simulation": True}
+        if resolved_intent:
+            metadata["resolved_intent"] = resolved_intent
+        task_id = await self.tasks.create_task(instruction, metadata)
         await self.publish(
             MessageType.TASK_CREATED, task_id, instruction=instruction, robot_id=self.id
         )
@@ -136,9 +154,10 @@ class SimulationAgent(IRobotAgent):
                 before = await self.controller.state()
                 if before["busy"]:
                     raise RuntimeError("The simulation is already handling another request.")
-                response = await self.controller.request(
-                    "POST", "/chat", json={"message": instruction}
-                )
+                payload = {"message": instruction}
+                if record.metadata.get("resolved_intent"):
+                    payload["intent"] = record.metadata["resolved_intent"]
+                response = await self.controller.request("POST", "/chat", json=payload)
                 job_id = response.json()["job_id"]
                 seen_messages = len(before.get("messages", []))
                 start, phase = time.monotonic(), None
@@ -199,6 +218,7 @@ class SimulationAgent(IRobotAgent):
                             "outcome": outcome,
                             "observed": state["objects"],
                             "targets": state["targets"],
+                            "verified_steps": state.get("verified_steps", []),
                         }
                         break
                     if time.monotonic() - start > 120:
@@ -267,8 +287,10 @@ class SimulationAgent(IRobotAgent):
     async def get_status(self):
         return {"robot_id": self.id, "simulation": True, "active_task": self.active_id}
 
-    async def cancel(self):
+    async def cancel(self, invalidate_interaction=True):
         # Physical stop first, then cancel both the active request and queued tasks.
+        if invalidate_interaction:
+            self.interaction.invalidate()
         await self.controller.stop()
         for task in await self.tasks.list_tasks():
             if task.status in {TaskStatus.PENDING, TaskStatus.RUNNING}:

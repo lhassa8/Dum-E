@@ -13,6 +13,7 @@ from physical_ai_lab.assistant.tool_routing import familiar_intent
         ("Hand me the hammer, please.", "fetch", "hammer"),
         ("Please pass me a spanner.", "fetch", "wrench"),
         ("Would you please fetch my screwdriver?", "fetch", "screwdriver"),
+        ("Actually can you hand me the hammer instead?", "fetch", "hammer"),
         ("Put the screwdriver back in its rack.", "return", "screwdriver"),
         ("Return the wrench to its rack, please.", "return", "wrench"),
         ("Please put my hammer back in the tool rack.", "return", "hammer"),

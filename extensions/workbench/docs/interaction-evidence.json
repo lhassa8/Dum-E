@@ -1,0 +1,1574 @@
+{
+  "schema_version": 1,
+  "scope": "Simulation and saved synthetic speech only; live microphone remains a separate gate.",
+  "interaction": {
+    "capture": "saved synthetic speech and actual ASR, not live microphone",
+    "interactions": [
+      {
+        "name": "fetch",
+        "recognized": {
+          "text": "Bring me the screwdriver.",
+          "audio_seconds": 1.421125,
+          "decoder_padding_seconds": 0,
+          "recognition_seconds": 1.269,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "request",
+          "likely_echo": false
+        },
+        "response": {
+          "accepted": true,
+          "mode": "task",
+          "task_id": "3a1e51c3-59f6-4350-b5d5-f137b2b76f35"
+        },
+        "asr_plus_dispatch_ms": 1277.9645419795997
+      },
+      {
+        "name": "question",
+        "recognized": {
+          "text": "What are you doing?",
+          "audio_seconds": 1.105375,
+          "decoder_padding_seconds": 0,
+          "recognition_seconds": 0.144,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        },
+        "response": {
+          "accepted": true,
+          "mode": "conversation",
+          "task_id": null,
+          "message": "I'm working on the screwdriver: lifting tool. Placement isn't confirmed yet.",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "I'm working on the screwdriver: lifting tool. Placement isn't confirmed yet."
+          },
+          "route": "state",
+          "elapsed_ms": 0.019000028260052204
+        },
+        "asr_plus_dispatch_ms": 152.481707977131
+      },
+      {
+        "name": "change",
+        "recognized": {
+          "text": "actually bring me the wrench instead.",
+          "audio_seconds": 2.1096875,
+          "decoder_padding_seconds": 0,
+          "recognition_seconds": 0.131,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        },
+        "response": {
+          "accepted": true,
+          "mode": "change",
+          "task_id": "9597ea2c-fef7-44ff-b649-0140be90d21a",
+          "intent": {
+            "action": "fetch",
+            "object": "wrench",
+            "destination": "handoff",
+            "message": ""
+          },
+          "route": "familiar",
+          "elapsed_ms": 0.10187498992308974
+        },
+        "asr_plus_dispatch_ms": 284.66916701290756
+      },
+      {
+        "name": "stop",
+        "recognized": {
+          "text": "Stop.",
+          "audio_seconds": 0.6995,
+          "decoder_padding_seconds": 0.35,
+          "recognition_seconds": 0.115,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        },
+        "response": {
+          "stopping": true
+        },
+        "asr_plus_dispatch_ms": 119.65212499490008
+      },
+      {
+        "name": "resume",
+        "recognized": {
+          "text": "Resume, please.",
+          "audio_seconds": 1.3888125,
+          "decoder_padding_seconds": 0,
+          "recognition_seconds": 0.131,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "request",
+          "likely_echo": false
+        },
+        "response": {
+          "accepted": true,
+          "mode": "task",
+          "task_id": "c3a2db05-60be-482e-8c91-fc88e5ae5dc2"
+        },
+        "asr_plus_dispatch_ms": 138.75966699561104
+      },
+      {
+        "name": "return",
+        "recognized": {
+          "text": "Put it back.",
+          "audio_seconds": 0.8804375,
+          "decoder_padding_seconds": 0.35,
+          "recognition_seconds": 0.135,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "request",
+          "likely_echo": false
+        },
+        "response": {
+          "accepted": true,
+          "mode": "task",
+          "task_id": "64988bf5-a017-4f1b-8e8c-d9bf15090088"
+        },
+        "asr_plus_dispatch_ms": 146.24329196522012
+      }
+    ],
+    "original_task": "3a1e51c3-59f6-4350-b5d5-f137b2b76f35",
+    "changed_task": "9597ea2c-fef7-44ff-b649-0140be90d21a",
+    "resumed_task": "c3a2db05-60be-482e-8c91-fc88e5ae5dc2",
+    "completed_change": {
+      "status": "completed",
+      "message": "Your wrench is ready in the handoff tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "fetch",
+        "object": "wrench",
+        "destination": "handoff",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "Your wrench is ready in the handoff tray.",
+        "distance_m": 0.007157507477125466
+      },
+      "observed": {
+        "screwdriver": [
+          0.4253013834637453,
+          -0.22588035903575693,
+          0.021844874683753766
+        ],
+        "wrench": [
+          0.6341460823442912,
+          -0.15588155837219161,
+          0.02185041514120487
+        ],
+        "hammer": [
+          0.42350684177311937,
+          0.23758781994995534,
+          0.021880385438156232
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [
+        {
+          "object": "screwdriver",
+          "destination": "rack",
+          "status": "success",
+          "distance_m": 0.006248872745177681
+        },
+        {
+          "object": "wrench",
+          "destination": "handoff",
+          "status": "success",
+          "distance_m": 0.007157507477125466
+        }
+      ],
+      "task_id": "c3a2db05-60be-482e-8c91-fc88e5ae5dc2"
+    },
+    "return_result": {
+      "status": "completed",
+      "message": "The wrench is back in its tool tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "return",
+        "object": "wrench",
+        "destination": "rack",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "The wrench is back in its tool tray.",
+        "distance_m": 0.004596756049961891
+      },
+      "observed": {
+        "screwdriver": [
+          0.4253013807868985,
+          -0.22588035903445158,
+          0.021844874683753766
+        ],
+        "wrench": [
+          0.4454614666814303,
+          -0.0007293019452549811,
+          0.021850415141204924
+        ],
+        "hammer": [
+          0.42350684419655055,
+          0.23758781995005016,
+          0.0218803854381562
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [],
+      "task_id": "64988bf5-a017-4f1b-8e8c-d9bf15090088"
+    },
+    "general_dialogue": {
+      "response": {
+        "accepted": true,
+        "mode": "conversation",
+        "task_id": null,
+        "message": "Why did the robot go to therapy? Because it had too many unresolved issues in its memory bank!",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "Why did the robot go to therapy? Because it had too many unresolved issues in its memory bank!"
+        },
+        "route": "model",
+        "elapsed_ms": 5994.317792006768
+      },
+      "elapsed_ms": 6006.67379098013,
+      "task_status_on_response": "running"
+    },
+    "withdrawal": {
+      "status": "completed",
+      "message": "The hammer is back in its tool tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "return",
+        "object": "hammer",
+        "destination": "rack",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "The hammer is back in its tool tray.",
+        "distance_m": 0.013266262895493802
+      },
+      "observed": {
+        "screwdriver": [
+          0.4253013799735282,
+          -0.22588035903405623,
+          0.021844874683753762
+        ],
+        "wrench": [
+          0.44546146703188444,
+          -0.0007293019455683865,
+          0.021850415141204876
+        ],
+        "hammer": [
+          0.42655715650623843,
+          0.2171882647588307,
+          0.021880385438156232
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [],
+      "task_id": "72e18d64-6c0a-4864-baf6-02d9040ca860"
+    },
+    "clarification_across_completion": {
+      "question": {
+        "accepted": true,
+        "mode": "conversation",
+        "task_id": null,
+        "message": "Which tool would you like?",
+        "intent": {
+          "action": "clarify",
+          "object": null,
+          "destination": null,
+          "message": "Which tool would you like?"
+        },
+        "route": "model",
+        "elapsed_ms": 1762.7731660031714
+      },
+      "choice": {
+        "accepted": true,
+        "mode": "change",
+        "task_id": "28843ffc-a624-45dc-9fb7-3a07a00356c0",
+        "intent": {
+          "action": "fetch",
+          "object": "wrench",
+          "destination": "handoff",
+          "message": "A wrench, coming up."
+        },
+        "route": "model",
+        "elapsed_ms": 1676.5591250150464
+      },
+      "result": {
+        "status": "completed",
+        "message": "Your wrench is ready in the handoff tray.",
+        "physical_success": true,
+        "intent": {
+          "action": "fetch",
+          "object": "wrench",
+          "destination": "handoff",
+          "message": "A wrench, coming up."
+        },
+        "outcome": {
+          "status": "success",
+          "message": "Your wrench is ready in the handoff tray.",
+          "distance_m": 0.007131615948628648
+        },
+        "observed": {
+          "screwdriver": [
+            0.4254106271735322,
+            -0.21957509357737853,
+            0.021844874683753766
+          ],
+          "wrench": [
+            0.6341498450884793,
+            -0.15592131960405867,
+            0.021850415141204917
+          ],
+          "hammer": [
+            0.42655715398327737,
+            0.21718826477944017,
+            0.021880385438156232
+          ]
+        },
+        "targets": {
+          "handoff": [
+            0.64,
+            -0.16
+          ]
+        },
+        "verified_steps": [
+          {
+            "object": "screwdriver",
+            "destination": "rack",
+            "status": "success",
+            "distance_m": 0.011390390186265094
+          },
+          {
+            "object": "wrench",
+            "destination": "handoff",
+            "status": "success",
+            "distance_m": 0.007131615948628648
+          }
+        ],
+        "task_id": "28843ffc-a624-45dc-9fb7-3a07a00356c0"
+      }
+    }
+  },
+  "automatic_voice": {
+    "capture": "saved native speech plus actual waveform pause detection, not live microphone",
+    "conversation_mode": true,
+    "recognized": [
+      {
+        "text": "Bring me the screwdriver, please.",
+        "audio_seconds": 3.0945,
+        "decoder_padding_seconds": 0,
+        "recognition_seconds": 0.294,
+        "model": "mlx-community/whisper-small.en-mlx",
+        "local": true,
+        "voice_mode": "request",
+        "likely_echo": false
+      },
+      {
+        "text": "Don't stop.",
+        "audio_seconds": 1.8883125,
+        "decoder_padding_seconds": 0,
+        "recognition_seconds": 0.155,
+        "model": "mlx-community/whisper-small.en-mlx",
+        "local": true,
+        "voice_mode": "interrupt",
+        "likely_echo": false
+      },
+      {
+        "text": "Stop.",
+        "audio_seconds": 1.6995,
+        "decoder_padding_seconds": 0,
+        "recognition_seconds": 0.142,
+        "model": "mlx-community/whisper-small.en-mlx",
+        "local": true,
+        "voice_mode": "interrupt",
+        "likely_echo": false
+      }
+    ],
+    "task_id": "8b89a0c2-5997-4470-87a8-1f84cb8d5e7d",
+    "negative_stop_ignored": 1,
+    "stop_commands": 1,
+    "capture_releases": 3,
+    "stop_speech_to_post_ms": 928,
+    "settled_joint_drift_rad": 0.0017312470339581054,
+    "stop_end_to_post_ms": 519,
+    "final_result": {
+      "status": "cancelled",
+      "message": "Stopped. This task was cancelled; placement is not confirmed. Say resume to continue, or put it back to return the tool.",
+      "physical_success": false,
+      "task_id": "8b89a0c2-5997-4470-87a8-1f84cb8d5e7d"
+    },
+    "phases": [
+      "Ready",
+      "Approaching tool",
+      "Lowering gripper",
+      "Grasping",
+      "Lifting tool",
+      "Moving to handoff tray",
+      "Stopped"
+    ]
+  },
+  "gripper_control_comparison": [
+    {
+      "gain_multiplier": 1,
+      "change": {
+        "status": "success",
+        "message": "Your wrench is ready in the handoff tray.",
+        "distance_m": 0.011578169160484111
+      },
+      "return_wrench": {
+        "status": "success",
+        "message": "The wrench is back in its tool tray.",
+        "distance_m": 0.005429976676265955
+      },
+      "return_hammer": {
+        "status": "failed",
+        "message": "I couldn't deliver the tool reliably. It isn't confirmed ready for you.",
+        "distance_m": 0.06263943785719098
+      },
+      "max_grasp_actuator_force_N": 2.285939599640465,
+      "wrench_disturbance_m": 0.002494698845990742
+    },
+    {
+      "gain_multiplier": 2,
+      "change": {
+        "status": "success",
+        "message": "Your wrench is ready in the handoff tray.",
+        "distance_m": 0.007157317529553427
+      },
+      "return_wrench": {
+        "status": "success",
+        "message": "The wrench is back in its tool tray.",
+        "distance_m": 0.004596756289273965
+      },
+      "return_hammer": {
+        "status": "success",
+        "message": "The hammer is back in its tool tray.",
+        "distance_m": 0.01623613270432031
+      },
+      "max_grasp_actuator_force_N": 4.59700153468799,
+      "wrench_disturbance_m": 5.192083312222688e-10
+    },
+    {
+      "gain_multiplier": 4,
+      "change": {
+        "status": "success",
+        "message": "Your wrench is ready in the handoff tray.",
+        "distance_m": 0.007308880983341322
+      },
+      "return_wrench": {
+        "status": "success",
+        "message": "The wrench is back in its tool tray.",
+        "distance_m": 0.004898141979345262
+      },
+      "return_hammer": {
+        "status": "success",
+        "message": "The hammer is back in its tool tray.",
+        "distance_m": 0.013934377914480366
+      },
+      "max_grasp_actuator_force_N": 9.16948387779152,
+      "wrench_disturbance_m": 2.652975798130516e-09
+    }
+  ],
+  "latency_replay": {
+    "capture": "saved native speech + shipped automatic pause controller + actual local ASR and task bus",
+    "model_state": "already loaded; first sample reported separately, no model-load cold-start claim",
+    "first_sample": {
+      "repeat": 0,
+      "name": "screwdriver",
+      "text": "Bring me the screwdriver, please.",
+      "category": "common",
+      "recognized": "Bring me the screwdriver, please.",
+      "intent": {
+        "action": "fetch",
+        "object": "screwdriver",
+        "destination": "handoff",
+        "message": ""
+      },
+      "correct": true,
+      "error": null,
+      "task_id": "1c4a0251-0474-4e22-b1d6-f3fe8dae5f14",
+      "pause_ms": 940.8949170000001,
+      "asr_ms": 186.44383300000027,
+      "submit_to_decision_ms": 59.13791600000013,
+      "end_of_speech_to_decision_ms": 1187.785875,
+      "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+    },
+    "overall": {
+      "count": 30,
+      "failures": 0,
+      "median_ms": 1204.2665204999976,
+      "p95_ms": 2906.583541
+    },
+    "common": {
+      "count": 18,
+      "failures": 0,
+      "median_ms": 1189.9958749999998,
+      "p95_ms": 1214.7845000000088
+    },
+    "general": {
+      "count": 6,
+      "failures": 0,
+      "median_ms": 2066.368958500003,
+      "p95_ms": 4197.504417
+    },
+    "guards": {
+      "count": 6,
+      "failures": 0,
+      "median_ms": 2047.4795625000024,
+      "p95_ms": 2855.3963339999973
+    },
+    "rows": [
+      {
+        "repeat": 0,
+        "name": "screwdriver",
+        "text": "Bring me the screwdriver, please.",
+        "category": "common",
+        "recognized": "Bring me the screwdriver, please.",
+        "intent": {
+          "action": "fetch",
+          "object": "screwdriver",
+          "destination": "handoff",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "1c4a0251-0474-4e22-b1d6-f3fe8dae5f14",
+        "pause_ms": 940.8949170000001,
+        "asr_ms": 186.44383300000027,
+        "submit_to_decision_ms": 59.13791600000013,
+        "end_of_speech_to_decision_ms": 1187.785875,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 0,
+        "name": "wrench",
+        "text": "Could you hand me the wrench?",
+        "category": "common",
+        "recognized": "Could you hand me the wrench?",
+        "intent": {
+          "action": "fetch",
+          "object": "wrench",
+          "destination": "handoff",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "b29b1289-8b13-4f25-a6be-5ff85890a28c",
+        "pause_ms": 900.0497919999998,
+        "asr_ms": 225.08779200000026,
+        "submit_to_decision_ms": 56.946750000000065,
+        "end_of_speech_to_decision_ms": 1182.72275,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 0,
+        "name": "hammer",
+        "text": "Hand me the hammer, please.",
+        "category": "common",
+        "recognized": "Hand me the hammer, please.",
+        "intent": {
+          "action": "fetch",
+          "object": "hammer",
+          "destination": "handoff",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "919b7ed9-624f-4e27-bd01-846766c0e46c",
+        "pause_ms": 936.3478329999998,
+        "asr_ms": 168.16262499999903,
+        "submit_to_decision_ms": 81.78199999999924,
+        "end_of_speech_to_decision_ms": 1186.614125,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 0,
+        "name": "return",
+        "text": "Put the screwdriver back in its rack.",
+        "category": "common",
+        "recognized": "Put the screwdriver back in its rack.",
+        "intent": {
+          "action": "return",
+          "object": "screwdriver",
+          "destination": "rack",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "6d7189aa-ef3d-495b-b86a-8e0909a2206c",
+        "pause_ms": 900.591375,
+        "asr_ms": 179.4867090000007,
+        "submit_to_decision_ms": 68.47975000000042,
+        "end_of_speech_to_decision_ms": 1148.906583,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 0,
+        "name": "return-wrench",
+        "text": "Return the wrench to its rack, please.",
+        "category": "common",
+        "recognized": "Return the wrench to its rack, please.",
+        "intent": {
+          "action": "return",
+          "object": "wrench",
+          "destination": "rack",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "8006493f-83fd-4db6-81b1-9f18840eaafd",
+        "pause_ms": 900.5540000000001,
+        "asr_ms": 177.04837500000212,
+        "submit_to_decision_ms": 86.6862919999985,
+        "end_of_speech_to_decision_ms": 1164.5361249999987,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 0,
+        "name": "wave",
+        "text": "Wave hello, please.",
+        "category": "common",
+        "recognized": "Wave hello, please.",
+        "intent": {
+          "action": "gesture",
+          "object": null,
+          "destination": "wave",
+          "message": "Hello! Ready to lend a hand."
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "80e4d890-63ec-4304-b60f-bfb07854d5bc",
+        "pause_ms": 938.0228330000027,
+        "asr_ms": 163.14137499999924,
+        "submit_to_decision_ms": 104.23170800000298,
+        "end_of_speech_to_decision_ms": 1205.6545410000035,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 0,
+        "name": "help",
+        "text": "What can you help me with?",
+        "category": "general",
+        "recognized": "What can you help me with?",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "I can bring a screwdriver, wrench or hammer to the handoff tray, put it back, and wave hello. Say stop to pause, then resume to continue. We're in simulation."
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "d73dd61d-62d9-45a8-bef4-5641c9b2c98d",
+        "pause_ms": 940.1837090000008,
+        "asr_ms": 177.01062499999898,
+        "submit_to_decision_ms": 113.39270899999974,
+        "end_of_speech_to_decision_ms": 1230.900209000003,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 0,
+        "name": "semantic",
+        "text": "I need something for turning screws.",
+        "category": "general",
+        "recognized": "I need something for turning screws.",
+        "intent": {
+          "action": "fetch",
+          "object": "screwdriver",
+          "destination": "handoff",
+          "message": "A screwdriver, coming up."
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "307cc003-957c-47ff-b6a2-cc5bfbcbcdce",
+        "pause_ms": 901.5735419999983,
+        "asr_ms": 167.55804200000057,
+        "submit_to_decision_ms": 3128.0723749999997,
+        "end_of_speech_to_decision_ms": 4197.504417,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 0,
+        "name": "negative",
+        "text": "Don't bring me the wrench.",
+        "category": "guard",
+        "recognized": "Don't bring me the wrench.",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "Okay. I won't fetch a tool."
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "ffc24abd-84e6-469a-a8ed-acc88b164f97",
+        "pause_ms": 940.8672499999993,
+        "asr_ms": 247.58741700000246,
+        "submit_to_decision_ms": 85.770417000007,
+        "end_of_speech_to_decision_ms": 1274.507542000003,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 0,
+        "name": "multiple",
+        "text": "Bring me the wrench and the hammer.",
+        "category": "guard",
+        "recognized": "Bring me the wrench and the hammer.",
+        "intent": {
+          "action": "clarify",
+          "object": null,
+          "destination": null,
+          "message": "Which tool would you like first?"
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "7be4eac3-4ae6-452b-b9be-d1abeb4bb9d0",
+        "pause_ms": 938.3589999999967,
+        "asr_ms": 181.72775000000547,
+        "submit_to_decision_ms": 1735.072874999998,
+        "end_of_speech_to_decision_ms": 2855.3963339999973,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 1,
+        "name": "screwdriver",
+        "text": "Bring me the screwdriver, please.",
+        "category": "common",
+        "recognized": "Bring me the screwdriver, please.",
+        "intent": {
+          "action": "fetch",
+          "object": "screwdriver",
+          "destination": "handoff",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "33261b3d-fab5-429e-bd35-edf9fe9b6b71",
+        "pause_ms": 938.2667500000025,
+        "asr_ms": 174.68999999999505,
+        "submit_to_decision_ms": 70.01179200000479,
+        "end_of_speech_to_decision_ms": 1183.252333000004,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 1,
+        "name": "wrench",
+        "text": "Could you hand me the wrench?",
+        "category": "common",
+        "recognized": "Could you hand me the wrench?",
+        "intent": {
+          "action": "fetch",
+          "object": "wrench",
+          "destination": "handoff",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "416f1a90-d0fa-4483-9bec-476660829727",
+        "pause_ms": 936.5720839999994,
+        "asr_ms": 176.08204100000148,
+        "submit_to_decision_ms": 91.48266600000352,
+        "end_of_speech_to_decision_ms": 1204.6126250000016,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 1,
+        "name": "hammer",
+        "text": "Hand me the hammer, please.",
+        "category": "common",
+        "recognized": "Hand me the hammer, please.",
+        "intent": {
+          "action": "fetch",
+          "object": "hammer",
+          "destination": "handoff",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "f83539cc-261d-42fb-98bc-91887e767c2a",
+        "pause_ms": 935.1411250000019,
+        "asr_ms": 172.87804100000358,
+        "submit_to_decision_ms": 28.407874999997148,
+        "end_of_speech_to_decision_ms": 1136.6935410000006,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 1,
+        "name": "return",
+        "text": "Put the screwdriver back in its rack.",
+        "category": "common",
+        "recognized": "Put the screwdriver back in its rack.",
+        "intent": {
+          "action": "return",
+          "object": "screwdriver",
+          "destination": "rack",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "62b5b34f-7589-47f8-a8a8-15724eb31099",
+        "pause_ms": 939.9889999999941,
+        "asr_ms": 177.40808399999514,
+        "submit_to_decision_ms": 84.82770799999707,
+        "end_of_speech_to_decision_ms": 1202.492707999998,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 1,
+        "name": "return-wrench",
+        "text": "Return the wrench to its rack, please.",
+        "category": "common",
+        "recognized": "Return the wrench to its rack, please.",
+        "intent": {
+          "action": "return",
+          "object": "wrench",
+          "destination": "rack",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "7f11ef09-8f82-4104-9677-ee93f88b42fc",
+        "pause_ms": 939.0294579999972,
+        "asr_ms": 181.01941600000282,
+        "submit_to_decision_ms": 90.35116700000071,
+        "end_of_speech_to_decision_ms": 1210.716124999999,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 1,
+        "name": "wave",
+        "text": "Wave hello, please.",
+        "category": "common",
+        "recognized": "Wave hello, please.",
+        "intent": {
+          "action": "gesture",
+          "object": null,
+          "destination": "wave",
+          "message": "Hello! Ready to lend a hand."
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "8b13d04d-f3ef-4994-8b31-9ac4c418c941",
+        "pause_ms": 936.146541999995,
+        "asr_ms": 213.90970799999923,
+        "submit_to_decision_ms": 60.07437499999651,
+        "end_of_speech_to_decision_ms": 1210.3700839999947,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 1,
+        "name": "help",
+        "text": "What can you help me with?",
+        "category": "general",
+        "recognized": "What can you help me with?",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "I can bring a screwdriver, wrench or hammer to the handoff tray, put it back, and wave hello. Say stop to pause, then resume to continue. We're in simulation."
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "98d87d2d-2faf-4f9e-86b0-4701ea084600",
+        "pause_ms": 936.4382499999992,
+        "asr_ms": 167.88962499999616,
+        "submit_to_decision_ms": 81.03025000000343,
+        "end_of_speech_to_decision_ms": 1185.5352080000011,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 1,
+        "name": "semantic",
+        "text": "I need something for turning screws.",
+        "category": "general",
+        "recognized": "I need something for turning screws.",
+        "intent": {
+          "action": "fetch",
+          "object": "screwdriver",
+          "destination": "handoff",
+          "message": "Here's a screwdriver for turning screws."
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "03ba617c-0c9c-4d38-8392-c81c03adfa34",
+        "pause_ms": 936.7277920000051,
+        "asr_ms": 177.54795799999556,
+        "submit_to_decision_ms": 1787.1358749999927,
+        "end_of_speech_to_decision_ms": 2901.647291999994,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 1,
+        "name": "negative",
+        "text": "Don't bring me the wrench.",
+        "category": "guard",
+        "recognized": "Don't bring me the wrench.",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "Okay. I won't fetch a tool."
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "069e405a-9088-45be-bdf5-a7c79ad19aa3",
+        "pause_ms": 939.0953339999978,
+        "asr_ms": 172.78204199999163,
+        "submit_to_decision_ms": 70.48729200000525,
+        "end_of_speech_to_decision_ms": 1182.711209000001,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 1,
+        "name": "multiple",
+        "text": "Bring me the wrench and the hammer.",
+        "category": "guard",
+        "recognized": "Bring me the wrench and the hammer.",
+        "intent": {
+          "action": "clarify",
+          "object": null,
+          "destination": null,
+          "message": "Which tool would you like first?"
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "4a64a078-8c1a-4ecd-ba46-b16e4b80d496",
+        "pause_ms": 937.1553330000024,
+        "asr_ms": 177.13745799999742,
+        "submit_to_decision_ms": 1705.8754169999884,
+        "end_of_speech_to_decision_ms": 2820.451583000002,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 2,
+        "name": "screwdriver",
+        "text": "Bring me the screwdriver, please.",
+        "category": "common",
+        "recognized": "Bring me the screwdriver, please.",
+        "intent": {
+          "action": "fetch",
+          "object": "screwdriver",
+          "destination": "handoff",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "9e2e7988-b5f7-41b5-9e88-b0cc4cb9917d",
+        "pause_ms": 940.077833000003,
+        "asr_ms": 173.79770900000585,
+        "submit_to_decision_ms": 89.86333300000115,
+        "end_of_speech_to_decision_ms": 1203.9204159999936,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 2,
+        "name": "wrench",
+        "text": "Could you hand me the wrench?",
+        "category": "common",
+        "recognized": "Could you hand me the wrench?",
+        "intent": {
+          "action": "fetch",
+          "object": "wrench",
+          "destination": "handoff",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "7fc29187-7efa-4204-bab9-26b62e88c614",
+        "pause_ms": 938.0917499999923,
+        "asr_ms": 166.23512500000652,
+        "submit_to_decision_ms": 87.57800000000861,
+        "end_of_speech_to_decision_ms": 1192.2058749999997,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 2,
+        "name": "hammer",
+        "text": "Hand me the hammer, please.",
+        "category": "common",
+        "recognized": "Hand me the hammer, please.",
+        "intent": {
+          "action": "fetch",
+          "object": "hammer",
+          "destination": "handoff",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "5b60fc83-2bca-41c4-b155-6ab7cc2d90d8",
+        "pause_ms": 937.2435420000111,
+        "asr_ms": 165.67375000000175,
+        "submit_to_decision_ms": 71.53945799999929,
+        "end_of_speech_to_decision_ms": 1174.6380000000063,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 2,
+        "name": "return",
+        "text": "Put the screwdriver back in its rack.",
+        "category": "common",
+        "recognized": "Put the screwdriver back in its rack.",
+        "intent": {
+          "action": "return",
+          "object": "screwdriver",
+          "destination": "rack",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "de01235c-8bf6-4151-95c5-2a8650934f1f",
+        "pause_ms": 938.0191249999916,
+        "asr_ms": 181.64066699999967,
+        "submit_to_decision_ms": 83.11958300000697,
+        "end_of_speech_to_decision_ms": 1202.9615829999966,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 2,
+        "name": "return-wrench",
+        "text": "Return the wrench to its rack, please.",
+        "category": "common",
+        "recognized": "Return the wrench to its rack, please.",
+        "intent": {
+          "action": "return",
+          "object": "wrench",
+          "destination": "rack",
+          "message": ""
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "5989f8d4-2271-4b71-82c0-c0469961d930",
+        "pause_ms": 939.6644170000072,
+        "asr_ms": 181.39858300000196,
+        "submit_to_decision_ms": 93.52733300000546,
+        "end_of_speech_to_decision_ms": 1214.7845000000088,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 2,
+        "name": "wave",
+        "text": "Wave hello, please.",
+        "category": "common",
+        "recognized": "Wave hello, please.",
+        "intent": {
+          "action": "gesture",
+          "object": null,
+          "destination": "wave",
+          "message": "Hello! Ready to lend a hand."
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "e3ade678-552f-490d-b5c9-9bb992de83dd",
+        "pause_ms": 939.5692500000005,
+        "asr_ms": 162.24508400000923,
+        "submit_to_decision_ms": 58.84695799999463,
+        "end_of_speech_to_decision_ms": 1160.8409580000007,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 2,
+        "name": "help",
+        "text": "What can you help me with?",
+        "category": "general",
+        "recognized": "What can you help me with?",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "I can bring a screwdriver, wrench or hammer to the handoff tray, put it back, and wave hello. Say stop to pause, then resume to continue. We're in simulation."
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "8c90f23a-be3b-4347-998a-59eccb404ba8",
+        "pause_ms": 938.8536250000034,
+        "asr_ms": 163.9608750000043,
+        "submit_to_decision_ms": 128.0917080000072,
+        "end_of_speech_to_decision_ms": 1231.0906250000116,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 2,
+        "name": "semantic",
+        "text": "I need something for turning screws.",
+        "category": "general",
+        "recognized": "I need something for turning screws.",
+        "intent": {
+          "action": "fetch",
+          "object": "screwdriver",
+          "destination": "handoff",
+          "message": "A screwdriver, coming up."
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "4588a53a-04b6-4295-afd6-c9e27fab52de",
+        "pause_ms": 939.8305000000109,
+        "asr_ms": 175.0757500000036,
+        "submit_to_decision_ms": 1791.4990829999879,
+        "end_of_speech_to_decision_ms": 2906.583541,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 2,
+        "name": "negative",
+        "text": "Don't bring me the wrench.",
+        "category": "guard",
+        "recognized": "Don't bring me the wrench.",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "Okay. I won't fetch a tool."
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "421a5697-3985-42c2-8922-722c94e9731f",
+        "pause_ms": 937.4160839999968,
+        "asr_ms": 168.96154199999,
+        "submit_to_decision_ms": 106.39333299999998,
+        "end_of_speech_to_decision_ms": 1212.996417000002,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      },
+      {
+        "repeat": 2,
+        "name": "multiple",
+        "text": "Bring me the wrench and the hammer.",
+        "category": "guard",
+        "recognized": "Bring me the wrench and the hammer.",
+        "intent": {
+          "action": "clarify",
+          "object": null,
+          "destination": null,
+          "message": "Which tool would you like first?"
+        },
+        "correct": true,
+        "error": null,
+        "task_id": "2749996b-081c-4520-b664-c5a7344724b7",
+        "pause_ms": 938.0416660000046,
+        "asr_ms": 177.07700000000477,
+        "submit_to_decision_ms": 1713.1541670000006,
+        "end_of_speech_to_decision_ms": 2828.4656250000116,
+        "timing": "last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded"
+      }
+    ]
+  },
+  "browser_journey": {
+    "phase": "Ready",
+    "busy": false,
+    "inventory": {
+      "screwdriver": "tool rack",
+      "wrench": "handoff tray",
+      "hammer": "tool rack"
+    },
+    "last_result": {
+      "status": "completed",
+      "message": "Your wrench is ready in the handoff tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "fetch",
+        "object": "wrench",
+        "destination": "handoff",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "Your wrench is ready in the handoff tray.",
+        "distance_m": 0.007009129518520398
+      },
+      "observed": {
+        "screwdriver": [
+          0.4254376055237899,
+          -0.21955585760707172,
+          0.021844874683753738
+        ],
+        "wrench": [
+          0.6341757541576621,
+          -0.1561005055583017,
+          0.021850415141204928
+        ],
+        "hammer": [
+          0.423506835842985,
+          0.23758781995152925,
+          0.02188038543815619
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [
+        {
+          "object": "screwdriver",
+          "destination": "rack",
+          "status": "success",
+          "distance_m": 0.01139717183213797
+        },
+        {
+          "object": "wrench",
+          "destination": "handoff",
+          "status": "success",
+          "distance_m": 0.007009129518520398
+        }
+      ],
+      "task_id": "588de1a1-10af-4c24-8301-5b4b2547ed20"
+    }
+  },
+  "recovery_expression": {
+    "voice_capture": "saved synthetic speech, not live microphone",
+    "journeys": [
+      {
+        "name": "stop holding -> spoken resume -> handoff",
+        "original_task": "e6714f47-3f10-46f9-a530-e6b3c926009f",
+        "resumed_task": "7d808aea-72f2-4bdb-8600-d0bd3b942b42",
+        "result": {
+          "status": "completed",
+          "message": "Your screwdriver is ready in the handoff tray.",
+          "physical_success": true,
+          "intent": {
+            "action": "fetch",
+            "object": "screwdriver",
+            "destination": "handoff",
+            "message": ""
+          },
+          "outcome": {
+            "status": "success",
+            "message": "Your screwdriver is ready in the handoff tray.",
+            "distance_m": 0.00920513908665356
+          },
+          "observed": {
+            "screwdriver": [
+              0.6343783864184762,
+              -0.15271082678375547,
+              0.02184487468375376
+            ],
+            "wrench": [
+              0.4557375643612097,
+              0.003236156165430809,
+              0.021850415141204872
+            ],
+            "hammer": [
+              0.42350683894852775,
+              0.23758781993232234,
+              0.02188038543815622
+            ]
+          },
+          "targets": {
+            "handoff": [
+              0.64,
+              -0.16
+            ]
+          },
+          "verified_steps": [],
+          "task_id": "7d808aea-72f2-4bdb-8600-d0bd3b942b42"
+        }
+      },
+      {
+        "name": "spoken contextual return after handoff",
+        "result": {
+          "status": "completed",
+          "message": "The screwdriver is back in its tool tray.",
+          "physical_success": true,
+          "intent": {
+            "action": "return",
+            "object": "screwdriver",
+            "destination": "rack",
+            "message": ""
+          },
+          "outcome": {
+            "status": "success",
+            "message": "The screwdriver is back in its tool tray.",
+            "distance_m": 0.01139518071363709
+          },
+          "observed": {
+            "screwdriver": [
+              0.42540839029237926,
+              -0.21957084548370082,
+              0.02184487468375373
+            ],
+            "wrench": [
+              0.4557375628518754,
+              0.0032361561654311133,
+              0.02185041514120491
+            ],
+            "hammer": [
+              0.4235068396451491,
+              0.23758781993237965,
+              0.021880385438156173
+            ]
+          },
+          "targets": {
+            "handoff": [
+              0.64,
+              -0.16
+            ]
+          },
+          "verified_steps": [],
+          "task_id": "4b5208da-70e5-42bc-8c41-228f3af15479"
+        }
+      },
+      {
+        "name": "stop holding -> spoken return -> rack",
+        "result": {
+          "status": "completed",
+          "message": "The wrench is back in its tool tray.",
+          "physical_success": true,
+          "intent": {
+            "action": "return",
+            "object": "wrench",
+            "destination": "rack",
+            "message": ""
+          },
+          "outcome": {
+            "status": "success",
+            "message": "The wrench is back in its tool tray.",
+            "distance_m": 0.005846943003893528
+          },
+          "observed": {
+            "screwdriver": [
+              0.4254083936512339,
+              -0.21957084548768968,
+              0.0218448746837537
+            ],
+            "wrench": [
+              0.4457002996559981,
+              -0.0039622366785281036,
+              0.021850415141204917
+            ],
+            "hammer": [
+              0.4235068428405977,
+              0.237587819932377,
+              0.02188038543815621
+            ]
+          },
+          "targets": {
+            "handoff": [
+              0.64,
+              -0.16
+            ]
+          },
+          "verified_steps": [],
+          "task_id": "46e6e9f1-33b4-4a93-ad4f-800037988d4b"
+        }
+      },
+      {
+        "name": "conversation + native speech + nod, tools undisturbed",
+        "joint_excursion_rad": 0.8642269935196965,
+        "reply": "I can bring a screwdriver, wrench or hammer to the handoff tray, put it back, and wave hello. Say stop to pause, then resume to continue. We're in simulation."
+      },
+      {
+        "name": "stop expression -> spoken resume",
+        "result": {
+          "status": "completed",
+          "message": "Hello! Ready to lend a hand.",
+          "physical_success": false,
+          "intent": {
+            "action": "gesture",
+            "object": null,
+            "destination": "wave",
+            "message": "Hello! Ready to lend a hand."
+          },
+          "outcome": {
+            "status": "expressed",
+            "message": "Hello! Ready to lend a hand.",
+            "distance_m": null
+          },
+          "observed": {
+            "screwdriver": [
+              0.4254083945086115,
+              -0.21957084548870898,
+              0.021844874683753755
+            ],
+            "wrench": [
+              0.44570029912047265,
+              -0.003962236677702076,
+              0.021850415141204334
+            ],
+            "hammer": [
+              0.4235068435373491,
+              0.23758781993477468,
+              0.021880385438160645
+            ]
+          },
+          "targets": {
+            "handoff": [
+              0.64,
+              -0.16
+            ]
+          },
+          "verified_steps": [],
+          "task_id": "96a518ba-b0d0-414b-916a-e9c8ef77f8ea"
+        }
+      },
+      {
+        "name": "reset clears recovery; absent resume is honest",
+        "result": {
+          "status": "completed",
+          "message": "There isn't a stopped task to resume. Tell me what you'd like next.",
+          "physical_success": false,
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "There isn't a stopped task to resume. Tell me what you'd like next."
+          },
+          "outcome": null,
+          "observed": {
+            "screwdriver": [
+              0.4343832967768954,
+              -0.23097066820090037,
+              0.02184487467594803
+            ],
+            "wrench": [
+              0.4557375667185821,
+              0.0032361561391689056,
+              0.021850415105152753
+            ],
+            "hammer": [
+              0.4235068375662024,
+              0.2375878199373603,
+              0.02188038541434838
+            ]
+          },
+          "targets": {
+            "handoff": [
+              0.64,
+              -0.16
+            ]
+          },
+          "verified_steps": [],
+          "task_id": "65ad824a-b4bc-45eb-873d-4a5a116db6df"
+        }
+      }
+    ],
+    "transcripts": [
+      {
+        "text": "Resume, please.",
+        "audio_seconds": 1.3888125,
+        "decoder_padding_seconds": 0,
+        "recognition_seconds": 0.143,
+        "model": "mlx-community/whisper-small.en-mlx",
+        "local": true,
+        "voice_mode": "request",
+        "likely_echo": false
+      },
+      {
+        "text": "Put it back.",
+        "audio_seconds": 0.8804375,
+        "decoder_padding_seconds": 0.35,
+        "recognition_seconds": 0.142,
+        "model": "mlx-community/whisper-small.en-mlx",
+        "local": true,
+        "voice_mode": "request",
+        "likely_echo": false
+      },
+      {
+        "text": "Put it back, please.",
+        "audio_seconds": 1.5538125,
+        "decoder_padding_seconds": 0,
+        "recognition_seconds": 0.154,
+        "model": "mlx-community/whisper-small.en-mlx",
+        "local": true,
+        "voice_mode": "request",
+        "likely_echo": false
+      },
+      {
+        "text": "resume.",
+        "audio_seconds": 0.7155625,
+        "decoder_padding_seconds": 0.35,
+        "recognition_seconds": 0.129,
+        "model": "mlx-community/whisper-small.en-mlx",
+        "local": true,
+        "voice_mode": "request",
+        "likely_echo": false
+      }
+    ]
+  },
+  "gripper_reproduction": [
+    {
+      "gain_multiplier": 1,
+      "change": {
+        "status": "success",
+        "message": "Your wrench is ready in the handoff tray.",
+        "distance_m": 0.01157816916048338
+      },
+      "return_wrench": {
+        "status": "success",
+        "message": "The wrench is back in its tool tray.",
+        "distance_m": 0.005429976676193961
+      },
+      "return_hammer": {
+        "status": "failed",
+        "message": "I couldn't deliver the tool reliably. It isn't confirmed ready for you.",
+        "distance_m": 0.06263943784709006
+      },
+      "max_grasp_actuator_force_N": 2.285939599640457,
+      "wrench_disturbance_m": 0.002274874539532732
+    },
+    {
+      "gain_multiplier": 2,
+      "change": {
+        "status": "success",
+        "message": "Your wrench is ready in the handoff tray.",
+        "distance_m": 0.007157317529553427
+      },
+      "return_wrench": {
+        "status": "success",
+        "message": "The wrench is back in its tool tray.",
+        "distance_m": 0.004596756289273965
+      },
+      "return_hammer": {
+        "status": "success",
+        "message": "The hammer is back in its tool tray.",
+        "distance_m": 0.01623613270432031
+      },
+      "max_grasp_actuator_force_N": 4.59700153468799,
+      "wrench_disturbance_m": 5.192083312222688e-10
+    },
+    {
+      "gain_multiplier": 4,
+      "change": {
+        "status": "success",
+        "message": "Your wrench is ready in the handoff tray.",
+        "distance_m": 0.0073088809836022554
+      },
+      "return_wrench": {
+        "status": "success",
+        "message": "The wrench is back in its tool tray.",
+        "distance_m": 0.004898141979342007
+      },
+      "return_hammer": {
+        "status": "success",
+        "message": "The hammer is back in its tool tray.",
+        "distance_m": 0.013934377914488347
+      },
+      "max_grasp_actuator_force_N": 9.169483877791528,
+      "wrench_disturbance_m": 2.6571787740715127e-09
+    }
+  ]
+}

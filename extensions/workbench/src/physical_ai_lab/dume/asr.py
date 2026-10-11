@@ -111,6 +111,13 @@ class SpeechInput:
 
         started = time.monotonic()
         audio = decode_audio(data)
+        captured_samples = len(audio)
+        # Very short clips can yield no confident segment even with a complete
+        # word. Bounded trailing context fixes this without extending capture or
+        # weakening speech/confidence gates. Validate the original audio first.
+        decoder_padding = 0.35 if captured_samples < 16000 else 0
+        if decoder_padding:
+            audio = np.pad(audio, (0, int(decoder_padding * 16000)))
         result = mlx_whisper.transcribe(
             audio,
             path_or_hf_repo=self.path,
@@ -129,7 +136,8 @@ class SpeechInput:
             raise ValueError("I couldn't make out the words. Please try again.")
         return {
             "text": text[:1500],
-            "audio_seconds": len(audio) / 16000,
+            "audio_seconds": captured_samples / 16000,
+            "decoder_padding_seconds": decoder_padding,
             "recognition_seconds": round(time.monotonic() - started, 3),
             "model": MODEL_REPO,
             "local": True,

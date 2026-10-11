@@ -56,6 +56,46 @@ class RecognitionProbe:
         return {"text": "Bring me the screwdriver."}
 
 
+def test_reset_clears_pending_dialogue_only_when_idle(tmp_path):
+    from physical_ai_lab.dume.app import make_api
+    from physical_ai_lab.dume.interaction import InteractionCoordinator
+
+    class Agent:
+        log_path = tmp_path / "events.jsonl"
+        messages, last_result, active_id = [], None, None
+        busy = True
+        resets = 0
+
+        async def task_records(self):
+            return []
+
+        async def state(self):
+            return {"model_status": "ready", "busy": self.busy}
+
+        async def request(self, *args, **kwargs):
+            self.resets += 1
+
+    agent = Agent()
+    agent.controller = agent
+    agent.interaction = InteractionCoordinator(agent)
+    agent.interaction.clarification = {"request": "Bring a tool", "question": "Which tool?"}
+    api = make_api(agent, SimpleNamespace(poll=lambda: None), tools=True)
+
+    async def run():
+        async with httpx.AsyncClient(
+            transport=httpx.ASGITransport(app=api), base_url="http://testserver"
+        ) as client:
+            assert (await client.post("/reset")).status_code == 409
+            assert agent.interaction.clarification and agent.interaction.epoch == 0
+            assert agent.resets == 0
+            agent.busy = False
+            assert (await client.post("/reset")).status_code == 200
+            assert agent.interaction.clarification is None
+            assert agent.interaction.epoch == 1 and agent.resets == 1
+
+    asyncio.run(run())
+
+
 def test_transcription_never_submits_task(tmp_path):
     from physical_ai_lab.dume.app import make_api
 

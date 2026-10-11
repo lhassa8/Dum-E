@@ -14,6 +14,7 @@ import uuid
 from contextlib import asynccontextmanager
 from multiprocessing.managers import SharedMemoryManager
 from pathlib import Path
+from typing import Literal
 
 import httpx
 import uvicorn
@@ -33,6 +34,10 @@ from shared.message_broker import SharedMemoryMessageBroker  # noqa: E402
 from shared.task_manager import SharedMemoryTaskManager  # noqa: E402
 
 WEB = Path(__file__).parent / "web"
+
+
+class InteractionRequest(ChatRequest):
+    source: Literal["typed", "voice"] = "typed"
 
 
 def make_api(agent, mcp_process, tools=False, speech_input=None):
@@ -107,6 +112,9 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
                 "speaking": bool(speech.process and speech.process.poll() is None),
             },
             speech_input=speech_input.snapshot(),
+            interaction=agent.interaction.snapshot()
+            if hasattr(agent, "interaction")
+            else {"busy": False},
         )
         return snapshot
 
@@ -139,6 +147,25 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
             raise HTTPException(503, "Could not contact the simulator to stop it.") from error
         return {"stopping": True}
 
+    @api.post("/interact")
+    async def interact(request: InteractionRequest):
+        if not tools:
+            raise HTTPException(409, "Interaction during work requires the tool scene.")
+        from physical_ai_lab.assistant.tool_routing import is_stop_request
+
+        if is_stop_request(request.message):
+            speech.stop()
+            return await agent.interaction.interact(request.message)
+        if mcp_process.poll() is not None:
+            raise HTTPException(503, "Dum-E MCP server is offline; restart dume-sim.")
+        snapshot = await state()
+        if snapshot["model_status"] != "ready":
+            raise HTTPException(409, "The local language model is still loading.")
+        try:
+            return await agent.interaction.interact(request.message)
+        except (httpx.HTTPError, RuntimeError, ValueError) as error:
+            raise HTTPException(409, str(error)) from error
+
     @api.post("/transcribe")
     async def transcribe(request: Request):
         snapshot = await state()
@@ -167,6 +194,7 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
             raise HTTPException(503, "Local transcription failed. Please try again.") from error
         # Only recognized text/metrics are logged. Audio bytes are never saved.
         result["voice_mode"] = voice_mode
+        result["likely_echo"] = speech.is_echo(result["text"])
         with (agent.log_path.parent / "transcripts.jsonl").open("a") as file:
             file.write(json.dumps(result) + "\n")
         # Transcription alone cannot move the arm. The browser submits through /chat.
@@ -192,6 +220,9 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
         snapshot = await state()
         if snapshot["busy"]:
             raise HTTPException(409, "Stop before resetting.")
+        if hasattr(agent, "interaction"):
+            agent.interaction.invalidate()
+            agent.interaction.clarification = None
         await agent.controller.request("POST", "/reset")
         return {"resetting": True}
 

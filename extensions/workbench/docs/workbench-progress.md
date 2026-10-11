@@ -69,3 +69,45 @@ Next active slice B contract:
   plus browser evidence. Preserve visible controls and motion-only microphone use.
 - Rollback for slice B is the committed responsiveness pass. Camera/learning and
   hardware plan remain required subsequent work; goal status stays active.
+
+October 11, slice B verified:
+- Read-only task-aware dialogue while manipulating; explicit changes return the
+  old tool before retrieving the next; clarification survives task completion.
+  Matching negative fetch requests withdraw the request and return the tool.
+  Positive Stop invalidates delayed understanding; negative/model-ambiguous Stop
+  cannot silently cancel movement. Reset invalidates pending dialogue/context.
+- Enabled text/tool inputs during movement and opt-in motion-time speech for
+  conversation as well as Stop. Mic scope remains active-work only, visible and
+  controllable. Pending recognition survives task completion. Echo comparison is
+  a text heuristic, not acoustic cancellation; live room performance remains open.
+- Saved short Stop originally failed recognition. Decoder-only 350ms silence for
+  sub-second clips fixes that fixture without extra capture delay or confidence
+  relaxation. Final shipped voice replay: 519ms end-of-Stop to POST, 0.00173 rad
+  settled drift; “don't stop” preserves the running job.
+- Empty ready-pose transit fixes poor IK branches after earlier skills; no held
+  gripper reopening. Extended runtime found late hammer-return slip (64.6mm).
+  Several path/descent/regrasp probes were rejected and rolled back; all retained
+  in local runs. Controlled comparison identified weak servo grasp. Doubled
+  stiffness produced ~4.6N actuator force and 16.2mm return in the isolated probe,
+  versus ~2.3N/62.6mm originally. Gap mapping/force cap/physics checks unchanged;
+  real gripper calibration remains required. Three late-return regressions pass.
+- Full saved-speech + actual bus/physics journey passes, including model conversation,
+  withdrawal, Stop/resume, contextual return and clarification across completion.
+  Runtime change placements: screwdriver rack 6.25mm, wrench handoff 7.16mm;
+  withdrawn hammer return 13.27mm. A real browser question and change also exercised.
+- Identical 30-case warmed replay: 0 errors; common median/p95 1.190/1.215 sec;
+  overall 1.204/2.907 sec. Startup-session first recognition took 1.269 sec;
+  warmed replay does not prove first-request improvement. First general joke
+  during motion took 6.01 sec; clarification/choice ~1.7 sec. Still a bottleneck.
+- 135 lab / 118 fork tests, source hashes, Ruff, shipped capture probes and the
+  earlier speech/recovery/expression runtime regression pass. See interaction-audit.md
+  and interaction-evidence.json. Human live conversation/noise gates remain open.
+
+Next loop A2: isolate general interpretation startup/prompt/decode cost; inspect
+local generation tools/cache and compare a bounded optimization. Consider a
+smaller local model only after a correctness/latency comparison supports it.
+Also make “ready” accurately reflect recognition warmup, measuring startup
+separately from first request. Preserve guard, context and Stop behavior, fixed
+timing boundaries and physical checks. Rollback is the published slice B commit.
+Camera perception, varied-layout recovery, learning gains and hardware plan remain
+required; no purchases, real actuation, cloud spend or expanded idle microphone.

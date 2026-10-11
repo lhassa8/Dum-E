@@ -108,6 +108,159 @@ def test_task_results_depend_on_observation(
     asyncio.run(run())
 
 
+def test_conversation_during_work_preserves_original_task(upstream_backends, tmp_path):
+    class WorkingProbe(ControllerProbe):
+        async def state(self):
+            value = await super().state()
+            value.update(busy=True, phase="Lifting tool")
+            return value
+
+        async def request(self, *args, **kwargs):
+            intent = {
+                "action": "answer",
+                "object": None,
+                "destination": None,
+                "message": "I'm lifting the screwdriver. Placement isn't confirmed yet.",
+            }
+            return type(
+                "Response", (), {"json": lambda self: {"intent": intent, "route": "state"}}
+            )()
+
+    async def run():
+        tasks, broker = upstream_backends
+        controller = WorkingProbe()
+        agent = SimulationAgent(controller, tasks, broker, tmp_path / "events.jsonl", tools=True)
+        tid = await tasks.create_task("Bring me the screwdriver")
+        await tasks.update_task(tid, TaskStatus.RUNNING)
+        result = await agent.interaction.interact("What are you doing?")
+        assert result["mode"] == "conversation" and result["task_id"] is None
+        assert (await tasks.get_task(tid)).status == TaskStatus.RUNNING
+        assert not controller.stopped and not controller.sent
+        assert len(await tasks.list_tasks()) == 1
+
+    asyncio.run(run())
+
+
+def test_change_cancels_original_request_before_worker_claim(upstream_backends, tmp_path):
+    class PendingProbe(ControllerProbe):
+        async def state(self):
+            value = await super().state()
+            value["phase"] = "Stopped" if self.stopped else "Ready"
+            return value
+
+        async def request(self, *args, **kwargs):
+            intent = {
+                "action": "fetch",
+                "object": "wrench",
+                "destination": "handoff",
+                "message": "",
+            }
+            return type(
+                "Response", (), {"json": lambda self: {"intent": intent, "route": "familiar"}}
+            )()
+
+    async def run():
+        tasks, broker = upstream_backends
+        controller = PendingProbe()
+        agent = SimulationAgent(controller, tasks, broker, tmp_path / "events.jsonl", tools=True)
+        old = await agent.submit("Bring me the screwdriver")
+        result = await agent.interaction.interact("Actually bring me the wrench instead")
+        assert controller.stopped and result["mode"] == "change"
+        assert (await tasks.get_task(old)).status == TaskStatus.CANCELLED
+        assert not await tasks.claim_task(old, agent.id)
+        new = await tasks.get_task(result["task_id"])
+        assert new.status == TaskStatus.PENDING
+        assert new.metadata["resolved_intent"]["object"] == "wrench"
+
+    asyncio.run(run())
+
+
+def test_stop_supersedes_slow_dialogue_before_any_new_task(upstream_backends, tmp_path):
+    async def run():
+        entered, release = asyncio.Event(), asyncio.Event()
+
+        class SlowUnderstandingProbe(ControllerProbe):
+            async def state(self):
+                value = await super().state()
+                value.update(
+                    busy=not self.stopped, phase="Stopped" if self.stopped else "Lifting tool"
+                )
+                return value
+
+            async def request(self, *args, **kwargs):
+                entered.set()
+                await release.wait()
+                intent = {
+                    "action": "fetch",
+                    "object": "wrench",
+                    "destination": "handoff",
+                    "message": "",
+                }
+                return type(
+                    "Response", (), {"json": lambda self: {"intent": intent, "route": "model"}}
+                )()
+
+        tasks, broker = upstream_backends
+        controller = SlowUnderstandingProbe()
+        agent = SimulationAgent(controller, tasks, broker, tmp_path / "events.jsonl", tools=True)
+        tid = await tasks.create_task("Bring the screwdriver")
+        await tasks.update_task(tid, TaskStatus.RUNNING)
+        pending = asyncio.create_task(agent.interaction.interact("I need something for nuts"))
+        await entered.wait()
+        await agent.cancel()
+        assert controller.stopped and (await tasks.get_task(tid)).status == TaskStatus.CANCELLED
+        release.set()
+        result = await pending
+        assert result["mode"] == "superseded" and not result["accepted"]
+        assert len(await tasks.list_tasks()) == 1 and not controller.sent
+
+    asyncio.run(run())
+
+
+@pytest.mark.parametrize(
+    "action,route,expected_motion", [("answer", "decline", True), ("stop", "model", False)]
+)
+def test_withdrawal_and_ambiguous_model_stop_are_explicit(
+    upstream_backends, tmp_path, action, route, expected_motion
+):
+    class WorkingProbe(ControllerProbe):
+        async def state(self):
+            value = await super().state()
+            value.update(
+                busy=not self.stopped,
+                phase="Stopped" if self.stopped else "Lifting tool",
+                task={"object": "wrench", "destination": "handoff"},
+                recovery={"tool": "wrench"},
+                last_intent={"action": "fetch", "object": "wrench", "destination": "handoff"},
+            )
+            return value
+
+        async def request(self, *args, **kwargs):
+            intent = {"action": action, "object": None, "destination": None, "message": "Okay"}
+            return type("Response", (), {"json": lambda self: {"intent": intent, "route": route}})()
+
+    async def run():
+        tasks, broker = upstream_backends
+        controller = WorkingProbe()
+        agent = SimulationAgent(controller, tasks, broker, tmp_path / "events.jsonl", tools=True)
+        tid = await tasks.create_task("Bring the wrench")
+        await tasks.update_task(tid, TaskStatus.RUNNING)
+        result = await agent.interaction.interact(
+            "Don't bring me the wrench." if expected_motion else "Don't stop thinking about it"
+        )
+        assert controller.stopped is expected_motion
+        if expected_motion:
+            assert result["mode"] == "change"
+            new_task = await tasks.get_task(result["task_id"])
+            assert new_task.metadata["resolved_intent"]["action"] == "return"
+            assert (await tasks.get_task(tid)).status == TaskStatus.CANCELLED
+        else:
+            assert result["mode"] == "conversation" and result["intent"]["action"] == "clarify"
+            assert (await tasks.get_task(tid)).status == TaskStatus.RUNNING
+
+    asyncio.run(run())
+
+
 def test_backend_loss_fails_task(upstream_backends, tmp_path):
     async def run():
         tasks, broker = upstream_backends
