@@ -32,6 +32,7 @@ const fixtures={request:audio('request','Bring me the screwdriver, please.'),neg
 const element=()=>({textContent:'',hidden:false,disabled:false,setAttribute(){}});
 let mic,taskId=null,allowInterrupt=false,interruptClip=0,stops=0,negations=0,captureReleases=0;
 let currentFixture,stopStarted=null,voiceStopPosted=null;
+let stopLastSpeech=null;
 const recognized=[],trace=[],errors=[];
 class Recorder {
  static isTypeSupported(){return true;}
@@ -54,6 +55,7 @@ mic=new MicrophoneInput({button:element(),cancel:element(),note:element(),heard:
    if(mic.kind==='interrupt'&&interruptClip>0&&stopStarted===null)stopStarted=performance.now();
    const values=fixture.pcm.subarray(offset,offset+640);offset+=640;
    const rms=values.length?Math.sqrt(values.reduce((n,v)=>n+v*v,0)/values.length):0;
+   if(mic.kind==='interrupt'&&interruptClip>0&&rms>=detector.threshold)stopLastSpeech=performance.now();
    if(detector.sample(rms,performance.now()))onPause();
   },40);
   return ()=>clearInterval(timer);
@@ -71,7 +73,7 @@ while(performance.now()<deadline){
  if(s.phase==='Lifting tool')allowInterrupt=true;
  mic.setWorking(s.busy);mic.setReady(s.speech_input.status==='ready'&&!s.speech_input.busy);
  const task=s.tasks.find(t=>t.task_id===taskId);
- if(task?.status==='cancelled'&&!s.busy){final=s;break;}
+ if(task?.status==='cancelled'&&!s.busy&&s.phase==='Stopped'){final=s;break;}
  await sleep(100);
 }
 mic.close();assert.ok(final,'Voice Stop failed to cancel the real task');
@@ -84,6 +86,8 @@ const drift=Math.max(...settled.map((v,i)=>Math.abs(v-later.robot_joints[i])));a
 const evidence={capture:'saved native speech plus actual waveform pause detection, not live microphone',
  recognized,task_id:taskId,negative_stop_ignored:negations,stop_commands:stops,capture_releases:captureReleases,
  stop_speech_to_post_ms:Math.round(voiceStopPosted-stopStarted),settled_joint_drift_rad:drift,
+ stop_end_to_post_ms:Math.round(voiceStopPosted-stopLastSpeech),
  final_result:final.last_result,phases:[...new Set(trace.map(t=>t.phase))],trace};
 fs.writeFileSync(path.join(output,'verification.json'),JSON.stringify(evidence,null,2));
+assert.ok(stopLastSpeech!==null&&evidence.stop_end_to_post_ms<=1000,'Spoken Stop exceeded 1 second after its last voiced sample');
 console.log(`PASS: automatic request -> actual motion; "don't stop" ignored; spoken Stop cancels via shipped controller. ${evidence.stop_speech_to_post_ms} ms speech-to-stop request; ${drift.toFixed(5)} rad settled drift.`);

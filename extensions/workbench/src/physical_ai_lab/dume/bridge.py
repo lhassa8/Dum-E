@@ -153,6 +153,16 @@ class SimulationAgent(IRobotAgent):
                         }
                         break
                     state = await self.controller.state()
+                    if state["epoch"] != before["epoch"] and state["phase"] in {
+                        "Stopping",
+                        "Stopped",
+                    }:
+                        result = {
+                            "status": "cancelled",
+                            "message": self.stopped_message(),
+                            "physical_success": False,
+                        }
+                        break
                     if state["job_id"] != job_id or state["epoch"] != before["epoch"]:
                         raise RuntimeError("The simulation request was interrupted or replaced.")
                     for message in state["messages"][seen_messages:]:

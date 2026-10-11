@@ -135,3 +135,24 @@ def test_cancel_pending_never_starts_motion(upstream_backends, tmp_path):
         assert controller.stopped
 
     asyncio.run(run())
+
+
+@pytest.mark.parametrize(
+    "phase,expected", [("Stopping", "cancelled"), ("Stopped", "cancelled"), ("Ready", "failed")]
+)
+def test_stop_epoch_before_task_record_cancellation(upstream_backends, tmp_path, phase, expected):
+    class StopBeforeRecordProbe(ControllerProbe):
+        async def state(self):
+            value = await super().state()
+            if self.sent:
+                value.update(epoch=1, phase=phase)
+            return value
+
+    async def run():
+        tasks, broker = upstream_backends
+        agent = SimulationAgent(StopBeforeRecordProbe(), tasks, broker, tmp_path / "events.jsonl")
+        result = await agent.arun("Bring me the wrench")
+        assert result["status"] == expected and not result["physical_success"]
+        assert (await tasks.get_task(result["task_id"])).status == TaskStatus(expected)
+
+    asyncio.run(run())

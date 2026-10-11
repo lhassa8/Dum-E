@@ -60,6 +60,8 @@ class Application:
         self.paused_controller = None
         self.last_tool = None
         self.current_request = None
+        self.responsiveness = {}
+        self.request_clock = None
         if tools:
             from physical_ai_lab.assistant.tool_scene import HANDOFF
 
@@ -106,6 +108,7 @@ class Application:
                 "last_intent": self.last_intent,
                 "last_outcome": self.last_outcome,
                 "epoch": self.epoch,
+                "responsiveness": dict(self.responsiveness),
                 "recovery": {
                     "can_resume": self.interrupted is not None,
                     "tool": self.last_tool,
@@ -136,8 +139,12 @@ class Application:
             self.phase = "Understanding your request"
             self.job_id = uuid.uuid4().hex[:8]
             self.current_request = text
+            self.request_clock = time.monotonic()
+            self.responsiveness = {"job_id": self.job_id, "route": "model"}
+            self.event("request_received", job_id=self.job_id, request=text)
             if self.tools:
                 from physical_ai_lab.assistant.tool_language import ToolIntent
+                from physical_ai_lab.assistant.tool_routing import explicit_decline, familiar_intent
 
                 words = re.sub(r"[^a-z\s]", " ", text.lower())
                 words = " ".join(words.split())
@@ -162,6 +169,7 @@ class Application:
                                 (self.epoch, self.job_id, ToolIntent("resume", None, None, "")),
                             )
                         )
+                        self.responsiveness["route"] = "context"
                         return
                 elif words in {
                     "put it back",
@@ -178,11 +186,39 @@ class Application:
                         else ToolIntent("clarify", None, None, "Which tool should I put back?")
                     )
                     self.commands.put(("intent", (self.epoch, self.job_id, intent)))
+                    self.responsiveness["route"] = "context"
+                    return
+                decline = explicit_decline(text)
+                intent = decline or familiar_intent(text)
+                if intent is not None:
+                    route = "decline" if decline else "familiar"
+                    self.responsiveness["route"] = route
+                    self.event(
+                        "interpretation",
+                        job_id=self.job_id,
+                        request=text,
+                        raw=None,
+                        intent=asdict(intent),
+                        route=route,
+                    )
+                    self.timing_point("interpretation_ms", self.job_id)
+                    self.commands.put(("intent", (self.epoch, self.job_id, intent)))
                     return
             self.requests.put((self.epoch, self.job_id, text, history))
 
+    def timing_point(self, name, job):
+        with self.lock:
+            if job == self.job_id and self.request_clock is not None:
+                elapsed = round((time.monotonic() - self.request_clock) * 1000, 3)
+                self.responsiveness[name] = elapsed
+                self.event("timing", job_id=job, stage=name, elapsed_ms=elapsed)
+
     def stop(self):
         with self.lock:
+            # Browser and task bridge can acknowledge the same cancellation.
+            # Repeated Stop must not restart stopping or invalidate a later reset.
+            if self.stop_event.is_set() or (self.phase == "Stopped" and not self.busy):
+                return
             if self.tools and self.busy and self.paused_controller is None:
                 self.interrupted = {
                     "request": self.current_request,
@@ -218,6 +254,7 @@ class Application:
             except queue.Empty:
                 continue
             try:
+                self.timing_point("interpretation_started_ms", job)
                 if self.tools:
                     with self.lock:
                         positions = dict(self.observations)
@@ -234,8 +271,14 @@ class Application:
                 else:
                     intent, raw = self.language.interpret(text, history)
                 self.event(
-                    "interpretation", job_id=job, request=text, raw=raw, intent=asdict(intent)
+                    "interpretation",
+                    job_id=job,
+                    request=text,
+                    raw=raw,
+                    intent=asdict(intent),
+                    route="model",
                 )
+                self.timing_point("interpretation_ms", job)
                 with self.lock:
                     if epoch != self.epoch:
                         continue
@@ -399,6 +442,7 @@ class Application:
                         if epoch != self.epoch:
                             continue
                         self.last_intent = asdict(intent)
+                        self.timing_point("decision_ms", job)
                         if self.tools:
                             controller = self.tool_action(bench, intent, job)
                         elif intent.action == "move":
@@ -439,6 +483,11 @@ class Application:
                             self.phase = "Ready"
             if controller:
                 more = controller.advance()
+                if (
+                    controller.phase == "Approaching tool"
+                    and "pickup_started_ms" not in self.responsiveness
+                ):
+                    self.timing_point("pickup_started_ms", self.job_id)
                 for message in getattr(controller, "notifications", []):
                     self.add_message("assistant", message)
                 if hasattr(controller, "notifications"):
@@ -448,6 +497,7 @@ class Application:
                         self.phase = controller.phase
                 else:
                     outcome = controller.outcome
+                    self.timing_point("task_finished_ms", self.job_id)
                     self.last_outcome = asdict(outcome)
                     if self.messages[-1]["content"] != outcome.message:
                         self.add_message("assistant", outcome.message)

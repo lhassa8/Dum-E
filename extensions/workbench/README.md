@@ -80,6 +80,15 @@ Tool geometry/masses/friction are approximate. Hardware purchases remain deferre
 
 ## Verification
 
+The first measured responsiveness pass uses a strict fast path for complete,
+familiar tool commands and retains the local model for other language. Common
+saved-speech requests improved from a 2.85-second median to 1.17 seconds (18 trials,
+p95 1.94 seconds); all 30 decisions were correct after the fix. This measures real
+local recognition and simulator decisions, not live microphone or audible onset.
+Tool manipulation starts directly rather than waiting through pre/post nods;
+greeting and conversation gestures remain. See `docs/responsiveness-audit.md` for
+the benchmark, failure cases, cold behavior and remaining scope.
+
 ```sh
 uv run --locked pytest -q
 uv run --locked ruff check src tests scripts
@@ -90,6 +99,8 @@ node scripts/check_voice_capture.mjs
 uv run --locked python scripts/verify_voice_delivery.py --output runs/voice-check-001
 # Shipped JS controller + native ASR/physics: pause completion, negation and Stop
 node scripts/verify_automatic_voice.mjs runs/automatic-voice-check-001
+# Repeat identical saved speech to measure responsiveness before/after a change
+node scripts/benchmark_responsiveness.mjs runs/latency-check-001 runs/latency-fixtures-001
 # Saved speech -> Stop/recovery tasks -> physical placement, speech and expression
 uv run --locked python scripts/verify_recovery_expression.py runs/recovery-check-001
 ```

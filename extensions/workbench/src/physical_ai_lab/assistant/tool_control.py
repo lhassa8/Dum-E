@@ -151,16 +151,15 @@ class Gesture:
 
 
 class ToolPerformance:
-    """One task: brief acknowledgement, verified delivery, brief completion nod."""
+    """Verified delivery starts immediately; social gestures remain separate skills."""
 
     def __init__(self, bench, tool, returning=False, delivery=None):
         self.delivery = delivery or ToolDelivery(bench, tool, returning)
         self.bench = bench
-        # No pre-gesture when already grasping a paused tool.
-        self.current = (
-            self.delivery if bench.data.ctrl[7] < 128 else Gesture(bench, "nod", "", brief=True)
-        )
-        self.stage = "delivery" if self.current is self.delivery else "acknowledge"
+        # A serial nod used to delay pickup by ~2 seconds and release the task
+        # ~2 seconds late. Speech acknowledges handling; manipulation takes priority.
+        self.current = self.delivery
+        self.stage = "delivery"
         self.outcome = None
         self.notifications = []
 
@@ -182,7 +181,7 @@ class ToolPerformance:
 
     @property
     def phase(self):
-        return "Acknowledging your request" if self.stage == "acknowledge" else self.current.phase
+        return self.current.phase
 
     def pause(self):
         self.current.pause()
@@ -204,14 +203,6 @@ class ToolPerformance:
         if self.outcome:
             return False
         if self.current.advance():
-            return True
-        if self.stage == "acknowledge":
-            self.current, self.stage = self.delivery, "delivery"
-            return True
-        if self.stage == "delivery" and self.delivery.outcome.status == "success":
-            self.notifications.append(self.delivery.outcome.message)
-            self.current = Gesture(self.bench, "nod", "", brief=True)
-            self.stage = "completion"
             return True
         self.outcome = self.delivery.outcome
         return False
