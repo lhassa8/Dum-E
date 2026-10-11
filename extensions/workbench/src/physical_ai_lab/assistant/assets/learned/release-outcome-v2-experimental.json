@@ -1,0 +1,44 @@
+{
+  "fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+  "dataset_sha256": "56bd2ebd8ba151727786cdc42d3ff8a2aaf274a6d1180aa62843664d44de71e7",
+  "model_sha256": "0f8ed20dce5f72cdcd0ba5a2a9a7f163ccb110ca3e264499672db708b722dacb",
+  "config": {
+    "seeds": [
+      819731,
+      819732,
+      819733
+    ],
+    "hidden_width": 64,
+    "epochs": 300,
+    "batch_size": 128,
+    "learning_rate": 0.003,
+    "target": "final XY residual from desired destination minus proposed XY offset; final height and unrelated-tool disturbance, millimeters",
+    "split_unit": "scene ID; all action branches and both legs stay in same split"
+  },
+  "feature_version": 1,
+  "features": 76,
+  "train_rows": 2016,
+  "original_train_rows": 1008,
+  "sensor_dropout_sha256": "d3145ee342f9ea6a36fb6eadd57017f66d3fd40eb3bcd291055b81c30fd68b01",
+  "validation_rows": 234,
+  "train_episodes": 67,
+  "validation_episodes": 16,
+  "training_s": 3.0721842090133578,
+  "torch_version": "2.14.1",
+  "device": "cpu",
+  "parameter_count_per_member": 9413,
+  "linear_ridge_penalty": 0.01,
+  "scope": "Future release outcome, not current state estimation",
+  "status": "offline validation passes; physical full-loop acceptance fails; not a public runtime default",
+  "autoload": false,
+  "outputs": [
+    "final_xy_residual_x_m",
+    "final_xy_residual_y_m",
+    "final_height_m",
+    "final_speed_m_s",
+    "added_neighbor_disturbance_m"
+  ],
+  "labels": "Future settled state from physical contact/release branches; simulation truth only in collector/verifier",
+  "observations": "Camera history and robot proprioception; unknown heading explicitly represented",
+  "hardware_scope": "Panda-specific robot telemetry/kinematics and primitive known-tool catalog; no hardware readiness claim"
+}

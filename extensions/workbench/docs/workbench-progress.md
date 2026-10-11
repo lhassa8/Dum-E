@@ -586,3 +586,82 @@ Next active D2c — predict contact/release outcomes and recover observation:
 - Useful learning, camera-informed public operation, live/noise/audible/cold
   latency, concrete hardware adaptation and convincing human demo remain open.
   This failed learning slice is progress, not completion or a blocked audit.
+
+
+D2c contract — future contact/release prediction:
+- Previous goal turn is progress: D2b published fork9040de0/root11fd506,
+  exactremote verified, bothclean at freshinspection;161lab/142fork tests pass.
+- [O] Free-space estimate correction does not improve fulljourneys. [I] Predicting
+  release consequences is the missing model capability, highconfidence; raw
+  state-estimate RMSE is insufficient as physical utility evidence.
+- [D] Frozen new72train/18validation/24test scenes before collection/fitting,
+  balanced tool×journey, plus nine proposedXY offsets in[-20,0,20]mm².
+  New10mm future-position validationp95 and10ms inference gates are provisional
+  for a different future-outcome task; do not relabel D2b as passing them.
+  All original physical thresholds and95%journey gate remain unchanged.
+- Hypothesis: action-conditioned predicted final placement, height and neighbor
+  disturbance can choose a better descent/release action than rigid placement.
+  Compare against zero-offset, per-tool constant and linear learned baselines;
+  train on separate episodes, retain rejected/zero-data trajectories, open test
+  once after selecting on validation. Preserve D2/D2b regressions separately.
+- Actor inputs: camera history and robot telemetry plus proposed action; label
+  truth and exact snapshot branching only in the offline collector/verifier.
+  No true-state runtime fallback, default-controller or microphone changes.
+- Bounded2hypotheses max; first verify a repeated baseline branch reproduces
+  the actual deterministic future, then collect/fit/judge. Replan on failures.
+  Rollback publishedD2b. Full goal and publicA4workflow remain active.
+
+
+D2c execution — future outcomes, October 11:
+- Frozen114scene fixture7fda988b... before collection;72train/18validation/
+  24test. Testlayouts nevercollected/opened. Nine±20mm/zero actions.
+- Physical counterfactual collector keeps snapshots/truth outside actor.
+  138release states/1242action outcomes; exact zero-action replay againstnormal
+  continuation and repeatedbranch acrossallstates. Training1008rows/67of72
+  scenes, validation234rows/16of18;7pre-release failures retained.
+- Model76camera-history/robot/actionfeatures,3fixed-seed members9413parameters
+  each; TorchCPU2.14.1,300epochs. Also toolmean andridge baselines. NumPyonly
+  inference; no dependencies or microphone/camera scope expanded.
+- Firstfit1.821s:RMSE4.523/p958.417mm oncoverage, oneunknownheadingstate
+  withheld because trainingflagconstant1→normalized100. Changeddatahypothesis
+  once to training-only signedheading dropout; validation/tests/labels/guard8/
+  hyperparameters unchanged. Protocol d3145ee3..., fit2uses2016augmentedrows
+  fromsame67scenes,3.072s. No thirdfit.
+- Fit2futureXYall234valactions:rigid12.631mmRMSE,constant7.614,linear10.232,
+  NN3.842/p957.905mm;zero withheld. Offlineactiongain3.676mm/fullcoverage
+  passesnew10mmfuture-p95/10msinference judge. D2bfailedjudge unchanged.
+  IndependentTorch/NumPy paritymax5.51e-9(1e-6numericbound).
+- Native9actionprediction0.071/0.088msmedian/p95,first.132ms. ActualIK-filtered
+  chooserincludingfeatures+kinematics5.17/11.55ms;camera/speech/motionexcluded.
+- Full18valjourneys rigid16/18vsNN14/18. Initial16placementsallpass35mm;
+  mean12.491→8.825mm, but2freshreturnsfail. Same2initialgeometricrefusals.
+  BoundedIKcandidatefilter avoidschoosingunreachableposes but still14/18;
+  modelnotpromoted.95%fulljourney/lift/grip/speed/4mmjudges unchanged.
+- [O] Returnvalidation000 wristload−12Nm(normalized10.535) vsmean−.107,
+  std1.129;actuatorsaturation and modelrefusal. Exactcontact/servo causeunknown.
+- [O] Returnvalidation014 currentIKseedends109.645mmerrorafter120iters;
+  home-seed scratchFKfinds.429mm/.000259radorientationerror. Poseisreachable;
+  single-startsolver fails. No newIKmotionpolicyadopted/physicalprovenyet.
+- Replan aftertwofits/twophysicalpolicies: missing verifiedmotion/tracking/
+  recoverycapability and changedfuturegraspstates, notanotherblindfit.
+  Preserve24unopenedtests fornextvalidatedpolicy. Fullgoal remainsactive.
+- Fresh165labtests(4release-focused) pass;Ruff/format85files. Newanalytic
+  exactzeroensemble-std assertion failed3.47e-18roundoff, correctedonlynumeric
+  atol1e-15, physicalbounds unchanged. Exportedfork146tests/Ruff61filespass;
+  all46pinnedupstreamhashes intact;publicappReady withoutmic/motion changes.
+  Scientificfigure inspected; experimentalcheckpoint andhonestevidence retained.
+
+Next active D2d — verified motion and recovery before camera integration:
+- Implement bounded robot-only IKseed recovery from independently verifiedFK
+  poses; preserve position/orientation tolerances, actualphysics and forcecaps.
+  A mathematicalIKsolution doesnotprove a safecollision-free jointpath.
+- Diagnose saturatedwrist/actualTCPtracking after transit, distinguishcontacts,
+  jointlimits,servoerrors andsolverbranches. Observe robotmeasurements andhold
+  onunverifiedmotion; neverextrapolateNNor wideninputbounds tohidefailure.
+- Resolve cameraweakfits by measuredviewpoint/reobservation, notlowerfitgate.
+  Complete all-phase cameraStop/resume/replan and independently observedrelease
+  beforepubliccontrollerintegration. Preserve currentA4voiceworkflow.
+- ReuseoldD2/D2b/validationcases asregressions; onlyopen24newtests aftera
+  coherent full-loop policy passesvalidation. Learningmustimprovewholejourneys.
+- Camera-informedpublicoperation, meaningfullearninggains,live/noise/audible/
+  coldresponsiveness, hardwareadapter/plan andhumanlive demonstration stayopen.

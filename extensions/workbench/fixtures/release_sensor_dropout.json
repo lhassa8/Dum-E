@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "base_fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+  "scope": "Training-only sensor dropout. Duplicate each training action row with signed-heading cos/sin/known flag withheld. Other observed camera/robot/action features and physical labels unchanged. No validation/test augmentation.",
+  "feature_indices": [
+    3,
+    4,
+    5
+  ],
+  "masked_values": [
+    0,
+    0,
+    0
+  ],
+  "copies_per_training_row": 1,
+  "motivation": "Observed validation-000 initial release has unknown direction; original training heading-known flag was constant1, producing normalized100 and conservative refusal. Need model experience of explicit missing cue, not wider guards."
+}

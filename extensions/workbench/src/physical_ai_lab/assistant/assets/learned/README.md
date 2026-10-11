@@ -11,6 +11,12 @@ release, and it does not improve full physical journeys. Features depend on
 this robot, tool catalog and simulator actuator proxies. It is not transferable
 to an SO-101 without new sensing, calibration, data and validation.
 
+`release-outcome-v2-experimental.npz` is the separate action-conditioned future
+release ensemble and its simpler baselines. It passes offline prediction
+validation, but worsens complete validation journeys (16/18 rigid vs 14/18
+learned). It also stays out of the public runtime. See `docs/release-learning-audit.md`.
+New test layouts remain unopened pending a validated motion/recovery policy.
+
 Inference requires only NumPy. Fitting and plotting require the lab's locked
 PyTorch/Matplotlib environment. See `docs/carry-learning-audit.md` for the fixed
 judges, abstentions, negative findings and reproduction commands.

@@ -110,6 +110,7 @@ class CameraDelivery:
         rack_xy=None,
         carry_model=None,
         carry_policy="xy_descent",
+        release_model=None,
     ):
         self.robot, self.camera, self.object = robot, camera, tool
         self.target = np.asarray(destination_xy, dtype=float).copy()
@@ -129,13 +130,18 @@ class CameraDelivery:
         self.carry_policy = carry_policy
         self.grasp_reading = None
         self.direction_yaw = None
+        self.initial_scene_estimates = None
+        self.release_model = release_model
         self.frames = self._run()
 
     def _observe(self):
         start = perf_counter()
         sample = self.camera.capture_timed()
         captured_s = sample.captured_s
-        prediction = locate_tools(sample.frame)[self.object]
+        predictions = locate_tools(sample.frame)
+        prediction = predictions[self.object]
+        if self.initial_scene_estimates is None:
+            self.initial_scene_estimates = predictions
         self.evidence.append(
             {
                 "kind": "camera",
@@ -251,7 +257,19 @@ class CameraDelivery:
     def _carry(self):
         point = self._place_point(apply_correction=self.carry_policy == "full_xyz")
         yield from self._motion(point + [0, 0, 0.20], "Moving to target", 0)
-        yield from self._motion(self._place_point(), "Placing tool", 0)
+        # Explicit observation/action boundary for offline counterfactual data.
+        # No robot tick, object-state query or extra settling here.
+        self.phase = "Choosing release action"
+        yield
+        point = self._place_point()
+        if self.release_model is not None:
+            point, decision = self.release_model.choose(self, point)
+            self.evidence.append(decision)
+        yield from self.finish_release(point)
+
+    def finish_release(self, point):
+        """Execute a specified robot descent, opening and withdrawal with physics."""
+        yield from self._motion(point, "Placing tool", 0)
         # Release is intentional. A rigid-grasp estimate cannot prove placement.
         self.carrying = False
         yield from self._wait(28, 255, "Releasing")

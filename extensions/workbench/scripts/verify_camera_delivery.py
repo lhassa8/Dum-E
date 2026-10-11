@@ -13,6 +13,7 @@ from physical_ai_lab.assistant.camera_control import CameraDelivery
 from physical_ai_lab.assistant.camera_robot import SimRobot
 from physical_ai_lab.assistant.carry_model import CarryModel
 from physical_ai_lab.assistant.perception_scene import CameraSensor, camera_scene_xml
+from physical_ai_lab.assistant.release_model import ReleaseModel
 from physical_ai_lab.assistant.tool_scene import HANDOFF, ToolWorkbench
 
 parser = argparse.ArgumentParser()
@@ -22,11 +23,18 @@ parser.add_argument("--split", choices=["pilot", "heldout", "validation", "test"
 parser.add_argument("--return-after-delivery", action="store_true")
 parser.add_argument("--carry-model", type=Path)
 parser.add_argument("--carry-policy", choices=["full_xyz", "xy_descent"], default="xy_descent")
+parser.add_argument("--release-model", type=Path)
+parser.add_argument(
+    "--release-kind", choices=["ensemble", "linear", "constant"], default="ensemble"
+)
 args = parser.parse_args()
 fixture = json.loads(args.fixture.read_text())
 args.output.mkdir(parents=True, exist_ok=False)
 rows = []
 carry_model = CarryModel(args.carry_model) if args.carry_model else None
+release_model = (
+    ReleaseModel(args.release_model, kind=args.release_kind) if args.release_model else None
+)
 for case in fixture["cases"]:
     if case["split"] != args.split:
         continue
@@ -43,6 +51,7 @@ for case in fixture["cases"]:
         HANDOFF["handoff"],
         carry_model=carry_model,
         carry_policy=args.carry_policy,
+        release_model=release_model,
     )
     images = args.output / case["id"]
     images.mkdir()
@@ -101,6 +110,7 @@ for case in fixture["cases"]:
                 controller.rack_xy,
                 carry_model=carry_model,
                 carry_policy=args.carry_policy,
+                release_model=release_model,
             )
             return_initial = b.observe()[case["tool"]].copy()
             return_max = float(return_initial[2])
@@ -191,6 +201,10 @@ summary = {
     if args.carry_model is None
     else hashlib.sha256(args.carry_model.read_bytes()).hexdigest(),
     "carry_policy": args.carry_policy if args.carry_model else "rigid",
+    "release_model_sha256": None
+    if args.release_model is None
+    else hashlib.sha256(args.release_model.read_bytes()).hexdigest(),
+    "release_kind": args.release_kind if args.release_model else None,
 }
 (args.output / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 print(json.dumps(summary), flush=True)
