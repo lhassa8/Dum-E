@@ -405,3 +405,67 @@ Next active slice D1 — grounded simulated camera observations:
 - Rollback: accepted A4 runtime. Camera baseline does not itself complete D.
   Learned-model usefulness, failure recovery, acoustic/noise testing, hardware
   adapter/plan and the convincing human live demonstration remain required.
+
+D1 execution — actual simulated camera baseline:
+- Previous goal turn classification: progress. A4 prompt, full regression and
+  browser/physics evidence published at fork cd0ed4b; root4379b90.
+- [O] Installed MuJoCo3.15.0 classic Renderer provides RGB and metric axial
+  depth; existing overview is distant. [D] Probe a fixed overhead camera at
+ 640x480 with zero stereo offset, using known calibration. This changes only
+  offline scenes, not the accepted public simulator or upstream assets.
+- First inspect an actual frame before selecting a detector. No new dependency
+  or marker assumption yet. Freeze varied-layout held-out examples before tuning.
+
+- Overhead probe is substantially arm-occluded; retained RGB/depth. A bounded
+  three-view sweep identifies a front oblique camera with all tools visible.
+  Selected1.05,0,.9m,40deg,640x480,zero stereo offset. Classic OpenGL warns
+  about clip-control precision; independent rendered mat-plane check passes
+  below0.5mm, so depth is measured rather than assumed unusable or perfect.
+- Frozen48scenes before tuning:12pilot,24held-out clear,12held-out occlusion;
+  yaw rotations, shuffled rack slots, x/y offsets and lighting variation. SHA
+  3c88327d24eefceaaec2769a80e4fc3860110c35e98c63c31c2bc2bfc02e46b4.
+  Provisional gate:95%clear coverage,p95position5mm,no confident occluded or
+  identity-confused estimates. RGB/depth/calibration files hashed separately
+  from privileged annotation labels; detector has no simulator imports.
+- Classical baseline uses colors, depth and known44x56mm flat handle tops; no
+  markers, pretrained vision model, privileged rack coordinates or miss fallback.
+  Pilot36/36 observed,median0.49mm/p950.67mm; one wrench outlier5.29mm retained.
+  Held-out72/72 clear,p950.67mm,max0.73mm; all12occluded targets withheld. One
+  additional unoccluded wrench in an occlusion scene is conservatively withheld
+  as ambiguous. Median localizer23ms,p9526ms excludes rendering/IO/planning.
+- Independent tests:actual rendered unseen rotated/permuted layout,known mat
+  depth scale,occlusion,no-depth refusal and duplicate-handle ambiguity pass.
+  First analytic projection probe used zero absolute tolerance at expected0;
+  its2.22e-16roundoff is not a camera failure. Corrected arithmetic-only bound
+  to1e-12m; fixed5mm benchmark and0.5mm actual plane checks unchanged.
+
+- D1 offline baseline accepted:held-out72/72 clear tools,p950.67mm, all12
+  occluded targets withheld; independent duplicate-handle/no-depth probes pass.
+  Actual capture+localizer32ms median/36ms p95 across30 stationary captures,
+  scene prep288ms, firstsample52ms. This excludes active manipulation/IPC/IO.
+  Fresh147lab/128fork, Ruff/format pass, pinned46upstream hashes intact.
+  No dependency/model/voice/controller changes. Camera-perception audit, public
+  synthetic evidence and actual rendered comparisons saved; native warning
+  logs remain local. The public app continues on the accepted A4 runtime.
+
+Next active slice D2 — camera estimates guide actual pickup:
+- [O] Current PickPlace/ToolDelivery use bench.observe for approach, grasp-lift
+  checks, carried-tool offsets, recovery and final outcome; support_height also
+  uses privileged tool geometry/pose. Initial camera target substitution alone
+  would therefore be a hybrid, not proof of a camera-based controller.
+- [S] Adopted milestone D requires camera-informed operation on varied supported
+  layouts. [D] Build a separate experimental observation/planning adapter before
+  changing the default public controller. Preserve the accepted A4 rollback.
+- Hypothesis: fresh camera estimates plus robot joint/gripper proprioception can
+  support contact-based pickup/delivery while independent simulator truth judges
+  outcomes. Reject ambiguous, stale, low-fit or missing camera targets before
+  moving; never silently substitute rack coordinates or true tool positions.
+- Start by separating motion inputs from verification. Inspect actual pose/offset
+  assumptions, camera occlusion near the gripper and supported orientation.
+  Bounded first physical probes, then varied layouts and regression journeys;
+  retain failures and do not relax original placement/grip/Stop checks.
+- Camera observation must have visible provenance when exposed in the app;
+  update the assistant truthful capabilities only after integration works.
+  No webcam/idle microphone/real actuator or new model required for this slice.
+  D1 does not complete camera operation, recovery, learning, acoustic/noise,
+  hardware adapter/plan or the required human live demonstration. Goal active.

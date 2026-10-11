@@ -1,0 +1,95 @@
+"""Offline sensor/annotation adapter; simulator truth stays outside the detector."""
+
+import xml.etree.ElementTree as ET
+
+import mujoco
+import numpy as np
+
+from physical_ai_lab.assistant.perception import CameraCalibration, RGBDFrame
+from physical_ai_lab.assistant.scene import Workbench
+from physical_ai_lab.assistant.tool_scene import HANDOFF, TOOLS, tool_scene_xml
+
+
+def camera_scene_xml(case):
+    root = ET.fromstring(tool_scene_xml())
+    world = root.find("worldbody")
+    position = np.array([1.05, 0, 0.9])
+    z = position - np.array([0.46, 0, 0.03])
+    z /= np.linalg.norm(z)
+    x = np.cross([0, 0, 1], z)
+    x /= np.linalg.norm(x)
+    y = np.cross(z, x)
+    ET.SubElement(
+        world,
+        "camera",
+        name="workbench_camera",
+        pos=" ".join(map(str, position)),
+        xyaxes=" ".join(map(str, np.r_[x, y])),
+        fovy="40",
+        ipd="0",
+    )
+    for name, pose in case["layout"].items():
+        body = world.find(f"body[@name='{name}']")
+        body.set("pos", f"{pose[0]} {pose[1]} 0.026")
+        body.set("quat", f"{np.cos(pose[2] / 2)} 0 0 {np.sin(pose[2] / 2)}")
+    if case.get("occluded"):
+        name = case["occluded"]
+        px, py, _ = case["layout"][name]
+        ET.SubElement(
+            world,
+            "geom",
+            name="visual_occluder",
+            type="box",
+            pos=f"{px} {py} 0.16",
+            size="0.095 0.095 0.02",
+            rgba="0.16 0.11 0.19 1",
+            contype="0",
+            conaffinity="0",
+        )
+    return ET.tostring(root, encoding="unicode")
+
+
+class CameraDatasetScene:
+    def __init__(self, case, width=640, height=480):
+        self.bench = Workbench(
+            seed=case["seed"], xml=camera_scene_xml(case), objects=TOOLS, targets=HANDOFF
+        )
+        self.bench.model.vis.headlight.diffuse[:] *= case.get("light", 1)
+        self.renderer = mujoco.Renderer(self.bench.model, height=height, width=width)
+        self.camera_id = self.bench.model.camera("workbench_camera").id
+        self.calibration = CameraCalibration(
+            width,
+            height,
+            float(self.bench.model.cam_fovy[self.camera_id]),
+            self.bench.data.cam_xpos[self.camera_id].copy(),
+            self.bench.data.cam_xmat[self.camera_id].reshape(3, 3).copy(),
+        )
+
+    def capture(self):
+        self.renderer.disable_segmentation_rendering()
+        self.renderer.disable_depth_rendering()
+        self.renderer.update_scene(self.bench.data, camera="workbench_camera")
+        rgb = self.renderer.render().copy()
+        self.renderer.enable_depth_rendering()
+        depth = self.renderer.render().copy()
+        self.renderer.disable_depth_rendering()
+        return RGBDFrame(rgb, depth, self.calibration)
+
+    def annotations(self):
+        """Privileged evaluation labels, never part of RGBDFrame."""
+        self.renderer.enable_segmentation_rendering()
+        ids = self.renderer.render()[:, :, 0]
+        self.renderer.disable_segmentation_rendering()
+        labels = {}
+        for name, xyz in self.bench.observe().items():
+            body = self.bench.model.body(name).id
+            handle = self.bench.model.body_geomadr[body]
+            labels[name] = {
+                "position_m": xyz.tolist(),
+                "visible_handle_pixels": int((ids == handle).sum()),
+            }
+        return labels
+
+    def close(self):
+        self.renderer.close()
+        self.bench.close()

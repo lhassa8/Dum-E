@@ -147,6 +147,20 @@ confirmed cancellation and settled joints; room-dependent timing can differ.
 
 ## Structure and provenance
 
+The optional offline camera experiment uses actual simulated RGB/depth frames to
+locate the current primitive tool handles. It finds all 72 tools in 24 held-out
+clear layouts (p95 error 0.67mm), withholds obscured/ambiguous handles, and takes
+32ms median for capture plus localization. It assumes known handle colors/shapes
+and calibration; it is not yet connected to the public arm controller. See
+`docs/camera-perception-audit.md` for assumptions, the retained pilot outlier and
+reproduction. No webcam, vision model download or extra dependency is required:
+
+```sh
+uv run --locked python scripts/generate_camera_dataset.py runs/camera-data-new
+uv run --locked python scripts/benchmark_perception.py runs/camera-data-new runs/camera-check-new --split heldout
+uv run --locked python scripts/benchmark_camera_pipeline.py runs/camera-timing-new
+```
+
 `src/physical_ai_lab/assistant`: MuJoCo scene, bounded local-model interpretation,
 controller and physics observation server. `src/physical_ai_lab/dume`: original
 task/MCP bridge, browser UI, native speech and local ASR. No copy of upstream core
