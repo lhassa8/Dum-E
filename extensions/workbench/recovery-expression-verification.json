@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-11",
+  "capture": "saved synthetic speech, not live microphone",
+  "standalone_tests_passed": 63,
+  "upstream_unchanged": true,
+  "journeys": [
+    {
+      "name": "stop holding -> spoken resume -> handoff",
+      "status": "passed",
+      "physical_success": true,
+      "distance_m": 0.02497017923292175,
+      "joint_excursion_rad": null
+    },
+    {
+      "name": "spoken contextual return after handoff",
+      "status": "passed",
+      "physical_success": true,
+      "distance_m": 0.006028628983597311,
+      "joint_excursion_rad": null
+    },
+    {
+      "name": "stop holding -> spoken return -> rack",
+      "status": "passed",
+      "physical_success": true,
+      "distance_m": 0.012570700725649267,
+      "joint_excursion_rad": null
+    },
+    {
+      "name": "conversation + native speech + nod, tools undisturbed",
+      "status": "passed",
+      "physical_success": false,
+      "distance_m": null,
+      "joint_excursion_rad": 0.20804739090270274
+    },
+    {
+      "name": "stop expression -> spoken resume",
+      "status": "passed",
+      "physical_success": false,
+      "distance_m": null,
+      "joint_excursion_rad": null
+    },
+    {
+      "name": "reset clears recovery; absent resume is honest",
+      "status": "passed",
+      "physical_success": false,
+      "distance_m": null,
+      "joint_excursion_rad": null
+    }
+  ],
+  "transcripts": [
+    "Resume, please.",
+    "Put it back.",
+    "Put it back, please.",
+    "Resume."
+  ],
+  "browser_trial": "passed: recovery context and Resume shown; Resume completes handoff; Put it back completes return; final Ready observed",
+  "live_recovery_voice_trial": "unmeasured",
+  "browser_resume_distance_m": 0.012138471839670305,
+  "browser_return_distance_m": 0.005463715484484637,
+  "spoken_stop_regression": {
+    "stop_speech_to_post_ms": 926,
+    "negative_stop_ignored": 1,
+    "settled_joint_drift_rad": 3.34232698868675e-05
+  }
+}

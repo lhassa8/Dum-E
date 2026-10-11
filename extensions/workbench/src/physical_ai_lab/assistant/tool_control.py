@@ -4,6 +4,7 @@ import numpy as np
 
 from physical_ai_lab.assistant.control import Outcome, PickPlace
 from physical_ai_lab.assistant.scene import HOME
+from physical_ai_lab.assistant.tasks import Step
 from physical_ai_lab.assistant.tool_scene import HANDOFF, TOOLS
 
 
@@ -12,6 +13,51 @@ class ToolDelivery(PickPlace):
         self.returning = returning
         targets = {**HANDOFF, "rack": TOOLS[tool]}
         super().__init__(bench, tool, "rack" if returning else "handoff", targets)
+        self.carrying = False
+
+    def pause(self):
+        # Retain the generator, grip and waypoint progress; Stop never opens fingers.
+        self.bench.data.ctrl[:7] = self.bench.data.qpos[:7]
+        self.outcome = Outcome("interrupted", "Stopped. Placement is not confirmed.")
+
+    def resume(self):
+        # The arm settles during speech/ASR. Old interpolation frames can jerk from
+        # a stale joint target, so rebuild the remaining path from measured state.
+        self._replan()
+
+    def _replan(self):
+        xyz = self.bench.observe()[self.object]
+        tcp = self.bench.data.site_xpos[self.bench.tcp]
+        self.carrying = self.bench.data.ctrl[7] < 128 and np.linalg.norm(xyz - tcp) < 0.065
+        self.initial_height = self.max_height = xyz[2]
+        self.cancelled = False
+        self.outcome = None
+        self.frames = self._run()
+
+    def redirect_to_rack(self):
+        self.returning, self.destination = True, "rack"
+        self._replan()
+        return self
+
+    def plan(self):
+        if not self.carrying:
+            return super().plan()
+        return self._carry_plan()
+
+    def _carry_plan(self):
+        # After a hold, the tool can settle lower within the fingers. Observe its
+        # offset at each waypoint rather than pushing it into the table on descent.
+        target = np.array([*self.targets[self.destination], 0.026])
+        tcp = self.bench.data.site_xpos[self.bench.tcp].copy()
+        yield Step("Lifting tool", 0, tcp + [0, 0, 0.12])
+        yield Step("Checking grasp", 0, check_lift=True)
+        offset = self.bench.data.site_xpos[self.bench.tcp] - self.bench.observe()[self.object]
+        yield Step("Moving to target", 0, target + offset + [0, 0, 0.20])
+        offset = self.bench.data.site_xpos[self.bench.tcp] - self.bench.observe()[self.object]
+        yield Step("Placing tool", 0, target + offset + [0, 0, 0.008])
+        yield Step("Releasing", 255, ticks=28)
+        yield Step("Withdrawing gripper", 255, target + [0, 0, 0.20])
+        yield Step("Checking placement", 255, ticks=30)
 
     def advance(self):
         more = super().advance()
@@ -36,7 +82,7 @@ class ToolDelivery(PickPlace):
 class Gesture:
     """Expressive motion is joint control, never object movement or fake task success."""
 
-    def __init__(self, bench, gesture, message):
+    def __init__(self, bench, gesture, message, brief=False):
         if gesture not in {"wave", "nod", "curious", "celebrate"}:
             raise ValueError("Unknown gesture")
         self.bench, self.message = bench, message
@@ -49,13 +95,21 @@ class Gesture:
             "celebrate": "A little victory wiggle",
         }[gesture]
         self.outcome = None
+        self.brief = brief
         self.frames = self._run(gesture)
+
+    def pause(self):
+        self.bench.data.ctrl[:7] = self.bench.data.qpos[:7]
+        self.outcome = Outcome("interrupted", "Stopped. I'll hold still.")
+
+    def resume(self):
+        self.outcome = None
 
     def _run(self, gesture):
         start = self.bench.data.qpos[:7].copy()
         # First withdraw to the elevated vendor home pose with the gripper open.
         poses = [HOME.copy()]
-        for sign in [1, -1, 1, -1]:
+        for sign in [1, -1] if self.brief else [1, -1, 1, -1]:
             pose = HOME.copy()
             if gesture in {"wave", "celebrate"}:
                 pose[0] += sign * 0.16
@@ -72,8 +126,9 @@ class Gesture:
                 self.bench.model.jnt_range[:7, 0] + 0.01,
                 self.bench.model.jnt_range[:7, 1] - 0.01,
             )
-            for i in range(1, 21):
-                amount = i / 20
+            ticks = 14 if self.brief else 20
+            for i in range(1, ticks + 1):
+                amount = i / ticks
                 amount = amount * amount * (3 - 2 * amount)
                 self.bench.tick(start + (pose - start) * amount, 255)
                 yield
@@ -93,3 +148,70 @@ class Gesture:
             return True
         except StopIteration:
             return False
+
+
+class ToolPerformance:
+    """One task: brief acknowledgement, verified delivery, brief completion nod."""
+
+    def __init__(self, bench, tool, returning=False, delivery=None):
+        self.delivery = delivery or ToolDelivery(bench, tool, returning)
+        self.bench = bench
+        # No pre-gesture when already grasping a paused tool.
+        self.current = (
+            self.delivery if bench.data.ctrl[7] < 128 else Gesture(bench, "nod", "", brief=True)
+        )
+        self.stage = "delivery" if self.current is self.delivery else "acknowledge"
+        self.outcome = None
+        self.notifications = []
+
+    @property
+    def object(self):
+        return self.delivery.object
+
+    @property
+    def destination(self):
+        return self.delivery.destination
+
+    @property
+    def initial_height(self):
+        return self.delivery.initial_height
+
+    @property
+    def max_height(self):
+        return self.delivery.max_height
+
+    @property
+    def phase(self):
+        return "Acknowledging your request" if self.stage == "acknowledge" else self.current.phase
+
+    def pause(self):
+        self.current.pause()
+        self.outcome = Outcome("interrupted", "Stopped. Placement is not confirmed.")
+
+    def stop(self):
+        self.pause()
+
+    def resume(self):
+        self.outcome = None
+        self.current.resume()
+
+    def return_to_rack(self):
+        return ToolPerformance(
+            self.bench, self.object, returning=True, delivery=self.delivery.redirect_to_rack()
+        )
+
+    def advance(self):
+        if self.outcome:
+            return False
+        if self.current.advance():
+            return True
+        if self.stage == "acknowledge":
+            self.current, self.stage = self.delivery, "delivery"
+            return True
+        if self.stage == "delivery" and self.delivery.outcome.status == "success":
+            self.notifications.append(self.delivery.outcome.message)
+            self.current = Gesture(self.bench, "nod", "", brief=True)
+            self.stage = "completion"
+            return True
+        self.outcome = self.delivery.outcome
+        return False

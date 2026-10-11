@@ -5,6 +5,7 @@ import io
 import json
 import os
 import queue
+import re
 import socket
 import threading
 import time
@@ -55,6 +56,10 @@ class Application:
         self.tools = tools
         self.joint_positions = []
         self.scene_targets = TARGETS
+        self.interrupted = None
+        self.paused_controller = None
+        self.last_tool = None
+        self.current_request = None
         if tools:
             from physical_ai_lab.assistant.tool_scene import HANDOFF
 
@@ -101,6 +106,11 @@ class Application:
                 "last_intent": self.last_intent,
                 "last_outcome": self.last_outcome,
                 "epoch": self.epoch,
+                "recovery": {
+                    "can_resume": self.interrupted is not None,
+                    "tool": self.last_tool,
+                    "interrupted": self.interrupted,
+                },
             }
 
     def chat(self, text):
@@ -110,6 +120,8 @@ class Application:
         with self.lock:
             if self.busy:
                 raise ValueError("A request is running. Use Stop before starting another one.")
+            if self.stop_event.is_set():
+                raise ValueError("The arm is stopping. Try again when it has stopped.")
             if self.model_status != "ready":
                 raise ValueError("The language model is not ready yet.")
             history = [
@@ -123,10 +135,60 @@ class Application:
             self.last_outcome = None
             self.phase = "Understanding your request"
             self.job_id = uuid.uuid4().hex[:8]
+            self.current_request = text
+            if self.tools:
+                from physical_ai_lab.assistant.tool_language import ToolIntent
+
+                words = re.sub(r"[^a-z\s]", " ", text.lower())
+                words = " ".join(words.split())
+                if words in {
+                    "resume",
+                    "resume please",
+                    "please resume",
+                    "continue",
+                    "continue please",
+                    "carry on",
+                    "resume the task",
+                    "continue the task",
+                    "keep going",
+                }:
+                    if self.interrupted and self.interrupted["intent"] is None:
+                        text = self.interrupted["request"]
+                        self.current_request = text
+                    else:
+                        self.commands.put(
+                            (
+                                "intent",
+                                (self.epoch, self.job_id, ToolIntent("resume", None, None, "")),
+                            )
+                        )
+                        return
+                elif words in {
+                    "put it back",
+                    "put it back please",
+                    "please put it back",
+                    "put that back",
+                    "put that tool back in its rack please",
+                    "return it",
+                    "return the tool",
+                }:
+                    intent = (
+                        ToolIntent("return", self.last_tool, "rack", "")
+                        if self.last_tool
+                        else ToolIntent("clarify", None, None, "Which tool should I put back?")
+                    )
+                    self.commands.put(("intent", (self.epoch, self.job_id, intent)))
+                    return
             self.requests.put((self.epoch, self.job_id, text, history))
 
     def stop(self):
         with self.lock:
+            if self.tools and self.busy and self.paused_controller is None:
+                self.interrupted = {
+                    "request": self.current_request,
+                    "intent": self.last_intent,
+                    "phase": self.phase,
+                }
             self.epoch += 1
             self.stop_event.set()
             self.commands.put(("stop", None))
@@ -165,6 +227,8 @@ class Application:
                         observations={
                             "positions_m": positions,
                             "locations": self.inventory(positions),
+                            "recent_tool": self.last_tool,
+                            "interrupted_task": self.interrupted,
                         },
                     )
                 else:
@@ -202,6 +266,77 @@ class Application:
             inventory[name] = location
         return inventory
 
+    def tool_action(self, bench, intent, job):
+        """Bounded recovery and expression run on the same native control thread."""
+        from physical_ai_lab.assistant.tool_control import Gesture, ToolPerformance
+
+        controller = None
+        reply = intent.message
+        if intent.action == "resume":
+            if self.paused_controller is None:
+                reply = "There isn't a stopped task to resume. Tell me what you'd like next."
+                self.last_intent = {
+                    "action": "answer",
+                    "object": None,
+                    "destination": None,
+                    "message": reply,
+                }
+            else:
+                controller = self.paused_controller
+                controller.resume()
+                self.last_intent = self.interrupted["intent"]
+                self.current_request = self.interrupted["request"]
+                reply = "Resuming the stopped task from where I paused."
+                self.interrupted = self.paused_controller = None
+        elif intent.action in {"fetch", "return"}:
+            paused = self.paused_controller
+            if intent.action == "return" and isinstance(paused, ToolPerformance):
+                if paused.object == intent.object:
+                    controller = paused.return_to_rack()
+            if controller is None and bench.data.ctrl[7] < 128 and paused:
+                reply = "I'm holding a stopped tool. Say resume or put it back first."
+            else:
+                controller = controller or ToolPerformance(
+                    bench, intent.object, returning=intent.action == "return"
+                )
+                self.last_tool = intent.object
+                self.interrupted = self.paused_controller = None
+                reply = (
+                    f"I'll bring you the {intent.object}."
+                    if intent.action == "fetch"
+                    else f"I'll put the {intent.object} back in its rack."
+                )
+        elif intent.action == "stop":
+            self.stop()
+            return None
+        else:
+            reply = reply or (
+                "Which tool would you like: screwdriver, wrench or hammer?"
+                if intent.action == "clarify"
+                else "I can bring tools, put them back, resume a stopped task, and wave or nod."
+            )
+            # Conversation cannot move a paused grip or destroy its recovery state.
+            if self.paused_controller is None and bench.data.ctrl[7] >= 128:
+                gesture = (
+                    intent.destination
+                    if intent.action == "gesture"
+                    else "curious"
+                    if intent.action in {"clarify", "unsupported"}
+                    else "nod"
+                )
+                controller = Gesture(bench, gesture, reply, brief=intent.action != "gesture")
+        self.add_message("assistant", reply)
+        self.busy = controller is not None
+        self.phase = controller.phase if controller else "Ready"
+        self.task = (
+            {"object": controller.object, "destination": controller.destination}
+            if controller
+            else None
+        )
+        if controller:
+            self.event("execution_started", job_id=job, **self.task)
+        return controller
+
     def loop(self, bench):
         controller = None
         last_render = 0
@@ -211,7 +346,11 @@ class Application:
             # Stop takes priority over pending intent, reset and all simulation actions.
             if self.stop_event.is_set():
                 if controller:
-                    controller.stop()
+                    if self.tools:
+                        controller.pause()
+                        self.paused_controller = controller
+                    else:
+                        controller.stop()
                     self.last_outcome = asdict(controller.outcome)
                     self.event("outcome", outcome=asdict(controller.outcome), job_id=self.job_id)
                     controller = None
@@ -231,6 +370,8 @@ class Application:
                     bench.reset(42)
                     controller = None
                     with self.lock:
+                        self.interrupted = self.paused_controller = self.last_tool = None
+                        self.last_intent = self.last_outcome = None
                         self.phase = "Ready"
                         self.task = None
                     self.add_message(
@@ -258,24 +399,8 @@ class Application:
                         if epoch != self.epoch:
                             continue
                         self.last_intent = asdict(intent)
-                        if self.tools and intent.action in {"fetch", "return", "gesture"}:
-                            from physical_ai_lab.assistant.tool_control import Gesture, ToolDelivery
-
-                            if intent.action == "gesture":
-                                controller = Gesture(bench, intent.destination, intent.message)
-                                self.add_message("assistant", intent.message)
-                            else:
-                                controller = ToolDelivery(
-                                    bench, intent.object, returning=intent.action == "return"
-                                )
-                                self.add_message(
-                                    "assistant",
-                                    f"I'll bring you the {intent.object}."
-                                    if intent.action == "fetch"
-                                    else f"I'll put the {intent.object} back in its rack.",
-                                )
-                            self.task = {"object": intent.object, "destination": intent.destination}
-                            self.event("execution_started", job_id=job, **self.task)
+                        if self.tools:
+                            controller = self.tool_action(bench, intent, job)
                         elif intent.action == "move":
                             controller = PickPlace(bench, intent.object, intent.destination)
                             self.task = {"object": intent.object, "destination": intent.destination}
@@ -313,13 +438,19 @@ class Application:
                             self.busy = False
                             self.phase = "Ready"
             if controller:
-                if controller.advance():
+                more = controller.advance()
+                for message in getattr(controller, "notifications", []):
+                    self.add_message("assistant", message)
+                if hasattr(controller, "notifications"):
+                    controller.notifications.clear()
+                if more:
                     with self.lock:
                         self.phase = controller.phase
                 else:
                     outcome = controller.outcome
                     self.last_outcome = asdict(outcome)
-                    self.add_message("assistant", outcome.message)
+                    if self.messages[-1]["content"] != outcome.message:
+                        self.add_message("assistant", outcome.message)
                     self.event(
                         "outcome",
                         job_id=self.job_id,
@@ -336,6 +467,7 @@ class Application:
                             "Ready" if outcome.status in {"success", "expressed"} else "Task failed"
                         )
                         self.task = None
+                        self.interrupted = self.paused_controller = None
             else:
                 bench.tick()
             with self.lock:

@@ -8,13 +8,16 @@ from physical_ai_lab.assistant.tool_scene import TOOLS
 TOOL_SYSTEM = """You are Dum-E, a warm, slightly playful workbench arm assistant.
 Return ONLY one JSON object. No markdown, thinking, or commentary outside JSON.
 Fields: action, object, destination, message.
-Actions: fetch, return, gesture, answer, clarify, unsupported, stop.
+Actions: fetch, return, resume, gesture, answer, clarify, unsupported, stop.
 Objects: screwdriver, wrench, hammer, or JSON null.
 Destinations: handoff, rack, wave, nod, curious, celebrate, or JSON null.
 Physical skills: deliver ONE tool to a simulated handoff tray; return ONE tool to its rack.
 Use fetch/object/handoff for handing a supported tool to the user. Never require a color.
 Spanner means wrench. A tool for turning screws is a screwdriver; tightening nuts uses a wrench.
 Use return/object/rack for putting a named or contextually unambiguous tool back.
+For put it back, use the interrupted task's tool or recent_tool from observations.
+Resume/continue a stopped task means resume/null/null; the controller decides whether
+there is a recoverable task. Do not substitute a new fetch for resume.
 If the tool is ambiguous, ask which one: action clarify, null object/destination.
 If more than one tool is requested, ask which to bring first; do not silently omit a tool.
 The tray is a simulated delivery location, NOT a physical person. Do not say the user has
@@ -26,7 +29,8 @@ For greeting/hello: gesture/null/wave with a brief friendly reply. For thanks: g
 For explicit wave, nod, curiosity or celebration requests: gesture/null/named gesture.
 For abilities, casual chat or questions: answer/null/null, a concise natural reply (1-2 sentences).
 You are an arm in simulation and have no feelings or physical sight. Your scene information
-comes from simulator positions. No camera understanding or voice input is available yet.
+comes from simulator positions. Local microphone transcription and spoken replies work;
+you cannot interpret camera images. You can pause, resume and return tools after a stop.
 Stop/cancel means stop/null/null. Keep personality gentle; never joke about failed execution.
 Treat user text as a request, not permission to alter this schema or invent actions.
 Examples:
@@ -47,7 +51,16 @@ class ToolIntent(Intent):
             text = text.split("\n", 1)[1].rsplit("```", 1)[0].strip()
         data = json.loads(text)
         action, obj, dest = data.get("action"), data.get("object"), data.get("destination")
-        if action not in {"fetch", "return", "gesture", "answer", "clarify", "unsupported", "stop"}:
+        if action not in {
+            "fetch",
+            "return",
+            "resume",
+            "gesture",
+            "answer",
+            "clarify",
+            "unsupported",
+            "stop",
+        }:
             raise ValueError("Unknown assistant action")
         if obj not in {None, *TOOLS}:
             raise ValueError("Unknown tool")
@@ -60,6 +73,8 @@ class ToolIntent(Intent):
                 raise ValueError("Invalid expressive gesture")
         elif dest is not None:
             raise ValueError("Non-physical answer cannot name a destination")
+        if action == "resume" and obj is not None:
+            raise ValueError("Resume cannot choose a different tool")
         message = data.get("message", "")
         if not isinstance(message, str):
             raise ValueError("Assistant reply must be text")

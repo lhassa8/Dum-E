@@ -27,7 +27,17 @@ Open http://127.0.0.1:8766. Click **Speak**, allow microphone access, say
 **“Bring me the screwdriver, please,”** then pause. Recording finishes automatically
 after 900 ms of quiet following speech; **Finish** remains a manual fallback. Dum-E displays
 what it heard, submits the request, speaks and moves the actual simulated arm.
-You can also type. Say **“Put it back”** to return the tool.
+You can also type. Say **“Put it back”** to return the most recent tool. After
+a stop, **“resume”** continues the interrupted destination; **“put it back”**
+returns that tool to its rack, even when still grasped. A Resume button appears
+for remembered tasks. Reset clears recovery. Original cancelled tasks stay cancelled;
+recovery creates a new task. The remaining path uses current physical measurements,
+including the settled offset of a tool between the fingers.
+
+Conversation replies include brief nods or curious tilts; delivery starts with a
+short acknowledgement and ends with a completion nod only after placement passes.
+Gestures are interruptible, do not claim tool success, and stay off while holding
+a paused tool. Resume or return it before asking for unrelated movement.
 
 With **Voice stop on**, the microphone listens only while Dum-E is working. Say
 **“stop”** to cancel directly through the physical Stop endpoint, bypassing the
@@ -80,6 +90,8 @@ node scripts/check_voice_capture.mjs
 uv run --locked python scripts/verify_voice_delivery.py --output runs/voice-check-001
 # Shipped JS controller + native ASR/physics: pause completion, negation and Stop
 node scripts/verify_automatic_voice.mjs runs/automatic-voice-check-001
+# Saved speech -> Stop/recovery tasks -> physical placement, speech and expression
+uv run --locked python scripts/verify_recovery_expression.py runs/recovery-check-001
 ```
 
 Tests check original upstream hashes, real simulated grasps/returns/gestures,

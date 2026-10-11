@@ -80,6 +80,7 @@ class SimulationAgent(IRobotAgent):
             }
         ]
         self.last_result = None
+        self.tools = tools
         self.lock = asyncio.Lock()
 
     @property
@@ -147,8 +148,7 @@ class SimulationAgent(IRobotAgent):
                         await self.controller.stop()
                         result = {
                             "status": "cancelled",
-                            "message": "Stopped. This task was cancelled; "
-                            "placement is not confirmed.",
+                            "message": self.stopped_message(),
                             "physical_success": False,
                         }
                         break
@@ -209,7 +209,7 @@ class SimulationAgent(IRobotAgent):
                 result.update(
                     status="cancelled",
                     physical_success=False,
-                    message="Stopped. This task was cancelled; placement is not confirmed.",
+                    message=self.stopped_message(),
                 )
             status = TaskStatus(result["status"])
             await self.tasks.update_task(
@@ -240,7 +240,9 @@ class SimulationAgent(IRobotAgent):
         return [
             ToolDefinition(
                 "execute_robot_instruction",
-                "Move a block in simulation",
+                "Bring or return tools, resume a stopped task, or converse in simulation"
+                if self.tools
+                else "Move a block in simulation",
                 self.submit,
                 {
                     "type": "object",
@@ -261,6 +263,12 @@ class SimulationAgent(IRobotAgent):
         for task in await self.tasks.list_tasks():
             if task.status in {TaskStatus.PENDING, TaskStatus.RUNNING}:
                 await self.tasks.cancel_task(task.task_id)
+
+    def stopped_message(self):
+        return (
+            "Stopped. This task was cancelled; placement is not confirmed. "
+            + ("Say resume to continue, or put it back to return the tool." if self.tools else "")
+        ).strip()
 
     async def task_records(self):
         return [
