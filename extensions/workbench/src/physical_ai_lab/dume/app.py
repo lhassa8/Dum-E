@@ -142,7 +142,12 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
     @api.post("/transcribe")
     async def transcribe(request: Request):
         snapshot = await state()
-        if snapshot["busy"] or snapshot["model_status"] != "ready":
+        voice_mode = request.headers.get("x-dume-voice-mode", "request")
+        if voice_mode not in {"request", "interrupt"}:
+            raise HTTPException(400, "Unknown voice mode.")
+        if (snapshot["busy"] and voice_mode != "interrupt") or (
+            snapshot["model_status"] != "ready" and voice_mode != "interrupt"
+        ):
             raise HTTPException(409, "Wait until Dum-E is ready before recording.")
         if not request.headers.get("content-type", "").startswith("audio/"):
             raise HTTPException(415, "Send an audio recording.")
@@ -161,6 +166,7 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
         except Exception as error:
             raise HTTPException(503, "Local transcription failed. Please try again.") from error
         # Only recognized text/metrics are logged. Audio bytes are never saved.
+        result["voice_mode"] = voice_mode
         with (agent.log_path.parent / "transcripts.jsonl").open("a") as file:
             file.write(json.dumps(result) + "\n")
         # Transcription alone cannot move the arm. The browser submits through /chat.

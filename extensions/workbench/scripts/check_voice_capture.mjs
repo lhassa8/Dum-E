@@ -1,11 +1,11 @@
 // Unit probes for the shipped recorder state machine; not a microphone/browser test.
 import assert from 'node:assert/strict';
-import {MicrophoneInput} from '../src/physical_ai_lab/dume/web/voice-input.mjs';
+import {MicrophoneInput,PauseDetector,isStopRequest} from '../src/physical_ai_lab/dume/web/voice-input.mjs';
 
 const element=()=>({textContent:'',hidden:false,disabled:false,setAttribute(){}});
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
-function setup({permission,fetchAudio,useDefaultFetch=false}={}) {
-  let releases=0,submitted=[];
+function setup({permission,fetchAudio,useDefaultFetch=false,text='Bring me the screwdriver.',monitor}={}) {
+  let releases=0,submitted=[],stops=0,paused=null;
   const stream={getTracks:()=>[{stop:()=>releases++}]};
   class Recorder {
     static isTypeSupported(){return true;}
@@ -15,10 +15,10 @@ function setup({permission,fetchAudio,useDefaultFetch=false}={}) {
   }
   const ui={button:element(),cancel:element(),note:element(),heard:element()};
   const mic=new MicrophoneInput({...ui,mediaDevices:{getUserMedia:permission||(()=>Promise.resolve(stream))},
-    Recorder,fetchAudio:useDefaultFetch?undefined:fetchAudio||(()=>Promise.resolve({ok:true,json:async()=>({text:'Bring me the screwdriver.'})})),
-    stopSpeech:async()=>{},onText:async text=>submitted.push(text),onError:message=>ui.error=message});
+    Recorder,fetchAudio:useDefaultFetch?undefined:fetchAudio||(()=>Promise.resolve({ok:true,json:async()=>({text})})),
+    monitor:monitor||((stream,detector,onPause)=>{paused=onPause;return ()=>{};}),onStop:async()=>stops++,stopSpeech:async()=>{},onText:async text=>submitted.push(text),onError:message=>ui.error=message});
   mic.setReady(true);
-  return {mic,ui,stream,submitted,releases:()=>releases};
+  return {mic,ui,stream,submitted,releases:()=>releases,stops:()=>stops,pause:()=>paused()};
 }
 
 const happy=setup();await happy.mic.start();assert.equal(happy.mic.mode,'recording');
@@ -52,3 +52,32 @@ const failed=setup({fetchAudio:async()=>({ok:false,json:async()=>({detail:'No sp
 await failed.mic.start();failed.mic.finish();await tick();
 assert.equal(failed.submitted.length,0);assert.equal(failed.ui.error,'No speech heard');
 console.log('PASS: recognized text, default browser fetch receiver, track release, pending permission cancellation, late ASR cancellation, denied mic, no-speech errors.');
+
+// Energy traces: quiet alone, short pauses and genuinely completed utterances.
+const gate=new PauseDetector();
+for(let t=0;t<=1500;t+=40)assert.equal(gate.sample(0,t),false);
+for(let t=1540;t<=1940;t+=40)assert.equal(gate.sample(.03,t),false);
+assert.equal(gate.sample(0,2500),false);assert.equal(gate.sample(0,2840),true);
+const fast=new PauseDetector({pauseMs:350});
+for(let t=0;t<=200;t+=40)assert.equal(fast.sample(.03,t),false);
+assert.equal(fast.sample(0,520),false);assert.equal(fast.sample(0,560),true);
+for(const text of ['Stop!','Please stop.','Dum-E stop','stop now','cancel'])assert.ok(isStopRequest(text));
+for(const text of ["don't stop",'do not stop','when will you stop','bring me a tool','stopwatch'])assert.equal(isStopRequest(text),false);
+const automatic=setup();await automatic.mic.start();automatic.pause();await tick();
+assert.equal(automatic.submitted.length,1);assert.equal(automatic.releases(),1);
+const interrupt=setup({text:'Stop!'});interrupt.mic.setWorking(true);await tick();
+assert.equal(interrupt.mic.kind,'interrupt');assert.equal(interrupt.mic.mode,'recording');
+interrupt.pause();await tick();assert.equal(interrupt.stops(),1);assert.equal(interrupt.submitted.length,0);
+interrupt.mic.setReady(true);await tick();assert.equal(interrupt.mic.mode,'idle');
+const unrelated=setup({text:'Bring me the wrench.'});unrelated.mic.setWorking(true);await tick();
+unrelated.pause();await tick();assert.equal(unrelated.submitted.length,0);assert.equal(unrelated.stops(),0);
+unrelated.mic.setReady(true);await tick();assert.equal(unrelated.mic.mode,'recording');
+unrelated.mic.abort();unrelated.mic.setReady(true);await tick();assert.equal(unrelated.mic.mode,'idle');
+const lateStop=setup({fetchAudio:()=>new Promise(resolve=>resolveAudio=resolve)});
+lateStop.mic.setWorking(true);await tick();lateStop.pause();lateStop.mic.abort();
+resolveAudio({ok:true,json:async()=>({text:'Stop!'})});await tick();assert.equal(lateStop.stops(),0);
+const switched=setup();switched.mic.setWorking(true);await tick();switched.mic.setInterruptEnabled(false);
+assert.equal(switched.mic.mode,'idle');assert.equal(switched.releases(),1);
+const ended=setup();ended.mic.setWorking(true);await tick();ended.mic.setWorking(false);
+assert.equal(ended.mic.mode,'idle');assert.equal(ended.releases(),1);
+console.log('PASS: pause thresholds, automatic Finish, strict Stop, motion-only rearming, non-stop suppression, cancel, disable and task-end cleanup.');

@@ -1,0 +1,49 @@
+{
+  "capture": "saved native speech plus actual waveform pause detection, not live microphone",
+  "recognized": [
+    {
+      "text": "Bring me the screwdriver, please.",
+      "audio_seconds": 3.0945,
+      "recognition_seconds": 1.081,
+      "model": "mlx-community/whisper-small.en-mlx",
+      "local": true,
+      "voice_mode": "request"
+    },
+    {
+      "text": "Don't stop.",
+      "audio_seconds": 1.8883125,
+      "recognition_seconds": 0.248,
+      "model": "mlx-community/whisper-small.en-mlx",
+      "local": true,
+      "voice_mode": "interrupt"
+    },
+    {
+      "text": "Stop.",
+      "audio_seconds": 1.6995,
+      "recognition_seconds": 0.133,
+      "model": "mlx-community/whisper-small.en-mlx",
+      "local": true,
+      "voice_mode": "interrupt"
+    }
+  ],
+  "negative_stop_ignored": 1,
+  "stop_commands": 1,
+  "capture_releases": 4,
+  "stop_speech_to_post_ms": 924,
+  "settled_joint_drift_rad": 1.7891119046070658e-05,
+  "phases": [
+    "Ready",
+    "Understanding your request",
+    "Approaching tool",
+    "Lowering gripper",
+    "Grasping",
+    "Lifting tool",
+    "Moving to handoff tray",
+    "Stopped"
+  ],
+  "extension_tests_passed": 45,
+  "upstream_unchanged": true,
+  "actual_browser_trial": "partial: capture and automatic work listener observed; speaker test detected no speech; live automatic completion and spoken Stop pending human trial",
+  "browser_work_listener_observed": true,
+  "browser_ui_stop_released_capture": true
+}

@@ -109,5 +109,20 @@ def test_transcription_never_submits_task(tmp_path):
                 "/transcribe", content=b"voice", headers={"content-type": "audio/webm"}
             )
             assert busy.status_code == 409
+            interruption = await client.post(
+                "/transcribe",
+                content=b"voice",
+                headers={"content-type": "audio/webm", "x-dume-voice-mode": "interrupt"},
+            )
+            assert interruption.status_code == 200
+            assert interruption.json()["voice_mode"] == "interrupt"
+            assert await agent.task_records() == []
+            assert (
+                await client.post(
+                    "/transcribe",
+                    content=b"voice",
+                    headers={"content-type": "audio/webm", "x-dume-voice-mode": "unknown"},
+                )
+            ).status_code == 400
 
     asyncio.run(run())

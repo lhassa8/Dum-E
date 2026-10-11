@@ -24,14 +24,22 @@ uv run --locked dume-sim
 ```
 
 Open http://127.0.0.1:8766. Click **Speak**, allow microphone access, say
-**“Bring me the screwdriver, please,”** then click **Finish**. Dum-E displays
+**“Bring me the screwdriver, please,”** then pause. Recording finishes automatically
+after 900 ms of quiet following speech; **Finish** remains a manual fallback. Dum-E displays
 what it heard, submits the request, speaks and moves the actual simulated arm.
 You can also type. Say **“Put it back”** to return the tool.
 
+With **Voice stop on**, the microphone listens only while Dum-E is working. Say
+**“stop”** to cancel directly through the physical Stop endpoint, bypassing the
+language model. Those clips finish after a 350 ms pause. Other speech is ignored,
+including negations such as “don't stop.” Turn Voice stop off to disable motion
+listening. There is no always-on idle microphone or wake word.
+
 **Stop** cancels motion, speech, recording and pending browser transcription.
-**Cancel recording** discards the recording without sending a request. Recordings
-are bounded to 12 seconds in the browser (15 seconds at the server). Microphone
-tracks close when you finish/cancel or leave the page. Raw audio remains in memory;
+**Cancel recording** discards the recording and suspends automatic listening for
+the current movement. Recordings are bounded to 12 seconds in the browser (15
+seconds at the server). Microphone tracks close after each clip, when cancelled,
+when work ends or when the page is left. Raw audio remains in memory;
 recognized text and task results are logged under `runs/`. Recognition and language
 inference are local. Model preparation downloads weights from Hugging Face once;
 runtime speech recognition uses only cached files.
@@ -70,6 +78,8 @@ uv run --locked ruff format --check src tests scripts
 node scripts/check_voice_capture.mjs
 # With dume-sim running: real spoken audio -> recognized request -> measured delivery
 uv run --locked python scripts/verify_voice_delivery.py --output runs/voice-check-001
+# Shipped JS controller + native ASR/physics: pause completion, negation and Stop
+node scripts/verify_automatic_voice.mjs runs/automatic-voice-check-001
 ```
 
 Tests check original upstream hashes, real simulated grasps/returns/gestures,
@@ -80,6 +90,13 @@ to display a recognized utterance and elicit a normal assistant response. The li
 voice check separately recognizes an actual saved spoken request, submits it to
 the unchanged task bus, and measures physical delivery. Synthetic speech tests
 cannot establish accuracy for a user's own microphone or room acoustics.
+
+Automatic completion uses a lightweight waveform energy gate, not a learned speech
+activity model. Very quiet speech or continuous room noise may require manual
+Finish. Spoken Stop depends on microphone capture, pause detection and local ASR;
+the onscreen Stop button remains available independently. The native saved-speech
+test reached the Stop endpoint in approximately 0.9 seconds from speech onset and
+confirmed cancellation and settled joints; room-dependent timing can differ.
 
 ## Structure and provenance
 
