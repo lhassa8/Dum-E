@@ -43,7 +43,15 @@
   ],
   "extension_tests_passed": 45,
   "upstream_unchanged": true,
-  "actual_browser_trial": "partial: capture and automatic work listener observed; speaker test detected no speech; live automatic completion and spoken Stop pending human trial",
+  "actual_browser_trial": "passed: user reported both automatic completion and spoken Stop worked in the requested live trial",
   "browser_work_listener_observed": true,
-  "browser_ui_stop_released_capture": true
+  "browser_ui_stop_released_capture": true,
+  "user_live_trial": {
+    "date": "2026-10-11",
+    "source": "explicit user response to live acceptance question",
+    "response": "Both worked",
+    "automatic_completion": true,
+    "spoken_stop_during_motion": true,
+    "live_latency_measured": false
+  }
 }
