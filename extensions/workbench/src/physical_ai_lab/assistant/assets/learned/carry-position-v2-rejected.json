@@ -1,0 +1,37 @@
+{
+  "status": "experimental; rejected for default motion",
+  "feature_version": 2,
+  "parameter_count": 7875,
+  "checkpoint_sha256": "e0c74098d267ae644a6f252027976a71d08d6ca1c0e31f01b610c54c3eaf91f9",
+  "fixture_sha256": "265ae7aedb6c05fc7fe99b96eafbdb4f32b38629a0d92b7b774531aed7887e86",
+  "additional_training_fixture_sha256": "00a916eec03b7f39d22c6d5e2b9a8daf6ee9196ed215621d91aacf81f81f4354",
+  "dataset_sha256": "01ceff4b9b877eb35e27cd7b6368f65551f64a4ef4f754677c1331ae78c1d49d",
+  "config": {
+    "seed": 721084,
+    "hidden_width": 64,
+    "epochs": 300,
+    "batch_size": 256,
+    "learning_rate": 0.003,
+    "translation_target": "actual-minus-rigid-center in robot hand coordinates, simulator labels used only during training/evaluation"
+  },
+  "counts": {
+    "train": {
+      "rows": 6096,
+      "episodes": 118
+    },
+    "validation": {
+      "rows": 604,
+      "episodes": 12
+    }
+  },
+  "device": "cpu",
+  "torch_version": "2.14.1",
+  "training_s": null,
+  "training_time_note": "Original fit wrote the checkpoint but evaluation raised on one guarded input before metadata was persisted. No retraining or invented duration. Re-evaluation used this same checkpoint.",
+  "inference_dependencies": [
+    "numpy"
+  ],
+  "labels": "simulation truth in training/evaluation only",
+  "scope": "current carried-position residual; no future/contact/release prediction",
+  "autoload": false
+}

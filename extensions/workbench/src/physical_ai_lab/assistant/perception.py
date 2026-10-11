@@ -174,6 +174,31 @@ def locate_tools(frame):
             long_axis = axes[:, np.argmax(high - low)]
             yaw = float(np.arctan2(long_axis[1], long_axis[0]) - np.pi / 2)
             yaw = float((yaw + np.pi / 2) % np.pi - np.pi / 2)
+            # The rectangle alone has a 180-degree ambiguity. A declared tool
+            # catalog supplies a separate pixel/depth cue: distal metal shaft
+            # or wider hammer head. Missing/contradictory cues stay unknown.
+            across = np.array([np.cos(yaw), np.sin(yaw)])
+            along = np.array([-np.sin(yaw), np.cos(yaw)])
+            relative = cloud[..., :2] - center
+            lateral, longitudinal = relative @ across, relative @ along
+            distal = 0.05 if name == "hammer" else 0.08
+            limit = 0.052 if name == "hammer" else 0.045
+            metal = valid & (chroma < 0.16) & (rgb.mean(axis=-1) > 0.28)
+            cue = (
+                metal
+                & (np.abs(lateral) < limit)
+                & (np.abs(longitudinal) > distal)
+                & (np.abs(longitudinal) < 0.135)
+                & (np.abs(cloud[..., 2] - (top - 0.022)) < 0.025)
+            )
+            positive = int((cue & (longitudinal > 0)).sum())
+            negative = int((cue & (longitudinal < 0)).sum())
+            signed_yaw = None
+            if max(positive, negative) >= 20 and max(positive, negative) > 3 * min(
+                positive, negative
+            ):
+                signed_yaw = float(yaw if positive > negative else yaw + np.pi)
+                signed_yaw = float((signed_yaw + np.pi) % (2 * np.pi) - np.pi)
             area = np.prod(sides)
             score = float(np.exp(-np.linalg.norm(sides - [0.044, 0.056]) / 0.01))
             candidates.append(
@@ -185,6 +210,8 @@ def locate_tools(frame):
                     "area_m2": float(area),
                     "top_fraction": density,
                     "yaw_mod_pi_rad": yaw,
+                    "signed_yaw_rad": signed_yaw,
+                    "direction_cue_pixels": {"positive": positive, "negative": negative},
                 }
             )
         if len(candidates) == 1:

@@ -17,6 +17,8 @@ class SimRobot:
             float(b.data.qpos[7:9].sum()),
             bool(b.data.ctrl[7] < 128),
             float(b.data.time),
+            b.data.qvel[:7].copy(),
+            b.data.actuator_force[:8].copy(),
         )
 
     def solve(self, point, rotation):

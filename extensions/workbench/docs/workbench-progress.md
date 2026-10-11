@@ -527,3 +527,62 @@ Next active D2b — carried-tool drift and full-loop acceptance:
 - D2 prototype does not complete camera operation. Useful learned-model gains,
   acoustic/noise testing, hardware adapter/plan and required convincing human
   live demonstration remain open; full goal active.
+
+
+D2b execution — learned carried-position estimation, October 11:
+- Previous goal turn: progress. D2 published fork c753d00/root be1cd06; exact
+  remote verified. Full goal remains active; public A4 controller stays Ready.
+- Frozen 54train/12validation/24test layouts, SHA
+  265ae7aedb6c05fc7fe99b96eafbdb4f32b38629a0d92b7b774531aed7887e86.
+  Physical judges unchanged, including4mm disturbance/35mm placement/95%journeys.
+- [O] First39-feature MLP validationp95 7.06mmfails5mm gate. Training journeys
+  were correlated with identity. [D] Added a frozen72-training-only balanced
+  extension and robot joint-velocity/actuator telemetry before second fit;
+  validation/test/criteria/hyperparameters unchanged. No third blind fit.
+- Camera full-direction cue uses observed distal metal/depth; unknowns remain
+  unknown. 35/36pilotdirections, max1.82deg againstinitialyaw; independent
+  rendered true-body heading tests pass. D1clear72/72,p95.257mm and all12
+  occlusions withheld. Signed direction is not a general vision model.
+- Candidate2 is54features/7875parameters;6096rows/118train episodes,604rows/
+  12heldvalidation. Eight training trajectories zero-row, outcomes retained.
+  Camera history+robot telemetry only; truth labels exclusively outside actor.
+  Target is current free-space carried-position residual, not next-state model.
+- Matched603validation samples: rigidRMSE12.976mm vslearned2.159mm,
+  learnedp954.372mm/max7.309mm. Oneout-of-range row withheld; offlinegatefails.
+  Bounds are provisional, not calibrated uncertainty. Original evaluation
+  raised after checkpointwrite; re-evaluated unchanged checkpoint, no refit.
+  Candidate2 trainingduration unknown; never fabricated. Runtime NumPy only.
+- First policy(fullXYZ) fixedoriginalhammer4.14→1.51mm but fulllegacyjourneys
+  worsen11/12→10/12 due2fresh-return refusals. Second policy retains transport,
+  onlyXYdescent correction: again10/12. Both rejected for default.
+- Untouched24tests opened only after policies fixed: rigid21/24 vslearnedXY20/24;
+  bothfail95%gate. Shared2weak-fit refusals and1unreachablepose; learnedadds
+  direction-refusedreturn. No tuning after tests. Existingcases nowregressions.
+- [O] Truth-only screwdriver diagnostic shows actual-minus-rigidX changing
+  +13.45mm beforedescent to−3.36mm beforerelease. NNdescent correction+9.63mm
+  corresponds tofree-space estimate, yet contact changes needed correction;
+  placement8.71→18.60mm. [I] Missingfuturecontact/releaseprediction capability,
+  highconfidence; precise slip/servo/force decomposition remains unknown.
+- Serialized opticalpipeline73.4/76.1ms median/p95,prep293ms/first97ms;
+  priorD259.7/64.8ms is a separate stationary run. Addedheading costs time.
+  NNstandalone3.507/3.797ms initially; samecheckpointfinal3.526/3.936ms.
+  Small relative to optical and existing voice/LM delays; no live latency claim.
+- Root20focused/full161tests and Ruff/format80files pass. Experimental rejected
+  checkpoint, collector/trainer/verifier, fixedfixtures, evidence and scientific
+  figure exported to fork. Independent142forktests and Ruff/format56files pass;
+  all46pinnedupstreamhashes match. Scientific figure inspected.
+  No dependency changes, new microphone/webcam access, hardware or purchases.
+
+Next active D2c — predict contact/release outcomes and recover observation:
+- Replan after two failed policies; do not tune more offsets or weaken judges.
+  Learn future placement consequences from camera/proprioception plus proposed
+  action, include table contact/release, compare physical utility against rigid
+  and simple baselines. Freeze new independent train/validation/test scenes;
+  keep all opened D2/D2b cases as regressions, not fresh generalization evidence.
+- Resolve low-fit viewpoint, unreachablepose and directioncoverage with measured
+  observation/planning improvements. Do not add trueposefallback or lowerfitgate.
+- Camera actor still needs all-phase recovery before public integration. Then
+  exercise full voice/chat/Stop/change/return journeys with visible provenance.
+- Useful learning, camera-informed public operation, live/noise/audible/cold
+  latency, concrete hardware adaptation and convincing human demo remain open.
+  This failed learning slice is progress, not completion or a blocked audit.

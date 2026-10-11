@@ -27,6 +27,8 @@ class RobotReading:
     gap_m: float
     closing_command: bool
     time_s: float
+    joint_velocity: np.ndarray | None = None
+    actuator_load: np.ndarray | None = None
 
 
 @dataclass(frozen=True)
@@ -36,6 +38,7 @@ class ToolObservation:
     yaw_mod_pi_rad: float
     fit_score: float
     captured_s: float
+    signed_yaw_rad: float | None = None
 
 
 def validate_observation(name, prediction, captured_s, now_s):
@@ -57,7 +60,12 @@ def validate_observation(name, prediction, captured_s, now_s):
         raise ValueError("Camera pose is invalid; no motion planned")
     if not (0.30 < xyz[0] < 0.78 and abs(xyz[1]) < 0.36 and 0.015 < xyz[2] < 0.05):
         raise ValueError("Camera target is outside the supported tabletop volume")
-    return ToolObservation(name, xyz.copy(), yaw, float(prediction["fit_score"]), captured_s)
+    signed = prediction.get("signed_yaw_rad")
+    if signed is not None and not np.isfinite(signed):
+        raise ValueError("Camera direction is invalid")
+    return ToolObservation(
+        name, xyz.copy(), yaw, float(prediction["fit_score"]), captured_s, signed
+    )
 
 
 def support_clearance(name, rotation):
@@ -93,7 +101,16 @@ def support_clearance(name, rotation):
 class CameraDelivery:
     """Experimental pickup/release; verified placement belongs to an external judge."""
 
-    def __init__(self, robot, camera, tool, destination_xy, rack_xy=None):
+    def __init__(
+        self,
+        robot,
+        camera,
+        tool,
+        destination_xy,
+        rack_xy=None,
+        carry_model=None,
+        carry_policy="xy_descent",
+    ):
         self.robot, self.camera, self.object = robot, camera, tool
         self.target = np.asarray(destination_xy, dtype=float).copy()
         if self.target.shape != (2,) or not np.isfinite(self.target).all():
@@ -106,6 +123,12 @@ class CameraDelivery:
         self.orientation = None
         self.revision = 0
         self.evidence = []
+        self.carry_model = carry_model
+        if carry_policy not in {"full_xyz", "xy_descent"}:
+            raise ValueError("Unknown experimental carry policy")
+        self.carry_policy = carry_policy
+        self.grasp_reading = None
+        self.direction_yaw = None
         self.frames = self._run()
 
     def _observe(self):
@@ -165,27 +188,49 @@ class CameraDelivery:
         rotation = reading.rotation @ self.body_rotation_local
         return center, rotation
 
-    def _place_point(self):
+    def _place_point(self, apply_correction=True):
         reading = self.robot.read()
         _, rotation = self._estimate()
         clearance = max(0.026, support_clearance(self.object, rotation))
         point = np.array([*self.target, clearance + 0.012])
-        return point + reading.rotation @ self.offset_local
+        correction = np.zeros(3)
+        if self.carry_model is not None and apply_correction:
+            from physical_ai_lab.assistant.carry_model import carry_features
+
+            start = perf_counter()
+            correction = reading.rotation @ self.carry_model.predict(carry_features(self, reading))
+            if self.carry_policy == "xy_descent":
+                correction[2] = 0  # Free-space labels do not establish contact/tilt clearance.
+            self.evidence.append(
+                {
+                    "kind": "learned_carry_inference",
+                    "policy": self.carry_policy,
+                    "correction_world_m": correction.tolist(),
+                    "latency_ms": (perf_counter() - start) * 1000,
+                }
+            )
+        return point + reading.rotation @ self.offset_local - correction
 
     def _run(self):
         try:
             obs = self._observe()
+            self.direction_yaw = obs.signed_yaw_rad
+            if self.carry_model is not None and self.direction_yaw is None:
+                raise ValueError("Tool direction is uncertain; learned carry correction withheld")
             self.orientation = rotation_z(obs.yaw_mod_pi_rad) @ self.robot.ready_rotation
             if self.rack_xy is None:
                 self.rack_xy = obs.position_m[:2].copy()
             yield from self._motion(obs.position_m + [0, 0, 0.20], "Approaching tool", 255)
             self.phase = "Reobserving before grasp"
             obs = self._observe()
+            if obs.signed_yaw_rad is not None:
+                self.direction_yaw = obs.signed_yaw_rad
             yield from self._motion(obs.position_m + [0, 0, 0.002], "Lowering gripper", 255)
             yield from self._wait(35, 0, "Grasping")
             if not self._grip_present():
                 raise ValueError("Gripper closed without a supported handle; pickup unconfirmed")
             reading = self.robot.read()
+            self.grasp_reading = reading
             self.offset_local = reading.rotation.T @ (reading.tcp_m - obs.position_m)
             self.body_rotation_local = reading.rotation.T @ rotation_z(obs.yaw_mod_pi_rad)
             self.carrying = True
@@ -204,7 +249,7 @@ class CameraDelivery:
             self.phase = "Vision task failed"
 
     def _carry(self):
-        point = self._place_point()
+        point = self._place_point(apply_correction=self.carry_policy == "full_xyz")
         yield from self._motion(point + [0, 0, 0.20], "Moving to target", 0)
         yield from self._motion(self._place_point(), "Placing tool", 0)
         # Release is intentional. A rigid-grasp estimate cannot prove placement.

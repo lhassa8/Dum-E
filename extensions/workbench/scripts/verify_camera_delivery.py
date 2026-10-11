@@ -11,18 +11,22 @@ from PIL import Image
 
 from physical_ai_lab.assistant.camera_control import CameraDelivery
 from physical_ai_lab.assistant.camera_robot import SimRobot
+from physical_ai_lab.assistant.carry_model import CarryModel
 from physical_ai_lab.assistant.perception_scene import CameraSensor, camera_scene_xml
 from physical_ai_lab.assistant.tool_scene import HANDOFF, ToolWorkbench
 
 parser = argparse.ArgumentParser()
 parser.add_argument("output", type=Path)
 parser.add_argument("--fixture", type=Path, required=True)
-parser.add_argument("--split", choices=["pilot", "heldout"], default="pilot")
+parser.add_argument("--split", choices=["pilot", "heldout", "validation", "test"], default="pilot")
 parser.add_argument("--return-after-delivery", action="store_true")
+parser.add_argument("--carry-model", type=Path)
+parser.add_argument("--carry-policy", choices=["full_xyz", "xy_descent"], default="xy_descent")
 args = parser.parse_args()
 fixture = json.loads(args.fixture.read_text())
 args.output.mkdir(parents=True, exist_ok=False)
 rows = []
+carry_model = CarryModel(args.carry_model) if args.carry_model else None
 for case in fixture["cases"]:
     if case["split"] != args.split:
         continue
@@ -32,7 +36,14 @@ for case in fixture["cases"]:
     start_truth = b.observe()
     initial = start_truth[case["tool"]]
     target = HANDOFF["handoff"] if case["journey"] != "redirect" else initial[:2]
-    controller = CameraDelivery(SimRobot(b), sensor, case["tool"], HANDOFF["handoff"])
+    controller = CameraDelivery(
+        SimRobot(b),
+        sensor,
+        case["tool"],
+        HANDOFF["handoff"],
+        carry_model=carry_model,
+        carry_policy=args.carry_policy,
+    )
     images = args.output / case["id"]
     images.mkdir()
     max_height = float(initial[2])
@@ -83,7 +94,14 @@ for case in fixture["cases"]:
         )
         return_result = None
         if args.return_after_delivery and case["journey"] != "redirect" and lifted and placed:
-            returned = CameraDelivery(SimRobot(b), sensor, case["tool"], controller.rack_xy)
+            returned = CameraDelivery(
+                SimRobot(b),
+                sensor,
+                case["tool"],
+                controller.rack_xy,
+                carry_model=carry_model,
+                carry_policy=args.carry_policy,
+            )
             return_initial = b.observe()[case["tool"]].copy()
             return_max = float(return_initial[2])
             for _ in range(3000):
@@ -169,6 +187,10 @@ summary = {
     "all_criteria_successes": sum(r["passed"] for r in rows),
     "fresh_camera_return_count": sum(r["return"] is not None for r in rows),
     "passed": sum(r["passed"] for r in rows) / max(len(rows), 1) >= 0.95,
+    "carry_model_sha256": None
+    if args.carry_model is None
+    else hashlib.sha256(args.carry_model.read_bytes()).hexdigest(),
+    "carry_policy": args.carry_policy if args.carry_model else "rigid",
 }
 (args.output / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 print(json.dumps(summary), flush=True)
