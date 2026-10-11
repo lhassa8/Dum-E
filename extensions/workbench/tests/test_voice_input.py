@@ -46,6 +46,56 @@ def test_voice_not_ready_cannot_transcribe():
     voice.close()
 
 
+def test_voice_ready_waits_for_spoken_decode_and_failed_warmup_stays_unavailable(monkeypatch):
+    from physical_ai_lab.dume import asr
+
+    monkeypatch.setattr(asr, "model_path", lambda: "local-test-model")
+    monkeypatch.setattr(asr.shutil, "which", lambda executable: "/test/ffmpeg")
+    voice = SpeechInput()
+    seen = []
+
+    def decode(data):
+        assert voice.status == "loading"
+        # Bundled PCM speech must be usable by the original audio gates.
+        audio = decode_audio(data)
+        assert len(audio) > 16000 and np.sqrt(np.mean(audio**2)) > 0.003
+        seen.append(True)
+        return {"text": "Synthetic warmup"}
+
+    monkeypatch.setattr(voice, "_recognize", decode)
+    voice._prepare()
+    assert seen and voice.status == "ready"
+    assert voice.snapshot()["warmup_seconds"] is not None
+    voice.close()
+    failed = SpeechInput()
+
+    def reject(data):
+        raise ValueError("No confident speech")
+
+    monkeypatch.setattr(failed, "_recognize", reject)
+    failed._prepare()
+    assert failed.status == "unavailable" and "No confident speech" in failed.error
+    failed.close()
+
+
+def test_speech_preparation_follows_language_allocation():
+    from physical_ai_lab.dume.app import prepare_voice_after_language
+
+    calls = []
+
+    class Controller:
+        async def state(self):
+            calls.append("state")
+            return {"model_status": "loading" if len(calls) == 1 else "ready"}
+
+    class Speech:
+        async def prepare(self):
+            calls.append("prepare")
+
+    asyncio.run(prepare_voice_after_language(Speech(), Controller()))
+    assert calls == ["state", "state", "prepare"]
+
+
 class RecognitionProbe:
     def snapshot(self):
         return {"status": "ready"}

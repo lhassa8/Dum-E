@@ -1,0 +1,8 @@
+[
+  {"name":"need_screws_after_chat","message":"I need something for turning screws.","history":[{"role":"user","content":"What can you help me with?"},{"role":"assistant","content":"I can bring you tools and answer questions about the workbench."}],"actions":["fetch"],"object":"screwdriver"},
+  {"name":"need_nuts_after_information","message":"I need a tool for tightening nuts.","history":[{"role":"user","content":"Which tool helps tighten nuts?"},{"role":"assistant","content":"A wrench helps tighten nuts."}],"actions":["fetch"],"object":"wrench"},
+  {"name":"need_nails_after_chat","message":"I need something for driving nails.","history":[{"role":"user","content":"Tell me a joke."},{"role":"assistant","content":"Why did the robot take a break? It needed to recharge."}],"actions":["fetch"],"object":"hammer"},
+  {"name":"question_screws_after_fetch","message":"Which tool is useful for turning screws?","history":[{"role":"user","content":"Bring me the wrench."},{"role":"assistant","content":"The wrench is in the handoff tray."}],"actions":["answer"],"object":null},
+  {"name":"question_nuts_after_fetch","message":"What tool tightens nuts?","history":[{"role":"user","content":"Bring me the screwdriver."},{"role":"assistant","content":"The screwdriver is in the handoff tray."}],"actions":["answer"],"object":null},
+  {"name":"hypothetical_after_fetch","message":"If I needed a hammer, what would you do?","history":[{"role":"user","content":"Bring me the wrench."},{"role":"assistant","content":"The wrench is in the handoff tray."}],"actions":["answer"],"object":null}
+]

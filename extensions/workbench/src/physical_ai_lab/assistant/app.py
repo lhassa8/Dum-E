@@ -193,6 +193,7 @@ class Application:
 
         started = time.monotonic()
         snapshot = self.snapshot()
+        profile = None
         intent = status_intent(text, snapshot)
         route = "state"
         if intent is None:
@@ -213,6 +214,7 @@ class Application:
                         "phase": snapshot["phase"],
                     },
                 )
+                profile = dict(getattr(self.language, "last_profile", {}))
             route = "model"
         elapsed = (time.monotonic() - started) * 1000
         self.event(
@@ -222,8 +224,9 @@ class Application:
             route=route,
             elapsed_ms=elapsed,
             active_job=snapshot["job_id"],
+            profile=profile,
         )
-        return {"intent": asdict(intent), "route": route, "elapsed_ms": elapsed}
+        return {"intent": asdict(intent), "route": route, "elapsed_ms": elapsed, "profile": profile}
 
     def timing_point(self, name, job):
         with self.lock:
@@ -253,6 +256,7 @@ class Application:
 
     def language_worker(self):
         try:
+            started = time.perf_counter()
             if self.tools:
                 from physical_ai_lab.assistant.tool_language import ToolLanguage
 
@@ -261,7 +265,14 @@ class Application:
                 self.language = LocalLanguage(self.model_path)
             with self.lock:
                 self.model_status = "ready"
-                self.event("model_ready", model=str(self.language.path))
+                self.event(
+                    "model_ready",
+                    model=str(self.language.path),
+                    preparation_ms=(time.perf_counter() - started) * 1000,
+                    prefix_prepare_ms=getattr(self.language, "prefix_prepare_ms", 0),
+                    startup_warmup_ms=getattr(self.language, "startup_warmup_ms", 0),
+                    cached_prefix_tokens=len(getattr(self.language, "prefix_tokens", [])),
+                )
         except Exception as error:
             with self.lock:
                 self.model_status = "unavailable"
@@ -288,9 +299,11 @@ class Application:
                                 "interrupted_task": self.interrupted,
                             },
                         )
+                        profile = dict(getattr(self.language, "last_profile", {}))
                 else:
                     with self.language_lock:
                         intent, raw = self.language.interpret(text, history)
+                        profile = dict(getattr(self.language, "last_profile", {}))
                 self.event(
                     "interpretation",
                     job_id=job,
@@ -298,6 +311,7 @@ class Application:
                     raw=raw,
                     intent=asdict(intent),
                     route="model",
+                    profile=profile,
                 )
                 self.timing_point("interpretation_ms", job)
                 with self.lock:

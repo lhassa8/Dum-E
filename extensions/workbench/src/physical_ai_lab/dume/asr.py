@@ -7,6 +7,7 @@ import subprocess
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 
 import numpy as np
 
@@ -70,6 +71,8 @@ class SpeechInput:
         self.error = None
         self.busy = False
         self.path = None
+        self.preparation_seconds = None
+        self.warmup_seconds = None
         self.lock = threading.Lock()
         self.executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="dume-asr")
 
@@ -81,23 +84,24 @@ class SpeechInput:
             "model": MODEL_REPO,
             "revision": MODEL_REVISION,
             "local": True,
+            "preparation_seconds": self.preparation_seconds,
+            "warmup_seconds": self.warmup_seconds,
         }
 
     def _prepare(self):
+        started = time.monotonic()
         try:
-            import mlx_whisper
-
             if not shutil.which("ffmpeg"):
                 raise RuntimeError("Install ffmpeg with: brew install ffmpeg")
             self.path = model_path()
-            # Warm the actual public transcription API on the same thread used below.
-            mlx_whisper.transcribe(
-                np.zeros(16000, dtype=np.float32),
-                path_or_hf_repo=self.path,
-                language="en",
-                temperature=0.0,
-                condition_on_previous_text=False,
-            )
+            # Silence skips spoken-word decoding. Exercise the actual path with
+            # a bundled synthetic phrase, on the same executor as user requests.
+            # No microphone, sound output, conversation or task is involved.
+            warmup_started = time.monotonic()
+            fixture = Path(__file__).with_name("fixtures") / "recognition-warmup.wav"
+            self._recognize(fixture.read_bytes())
+            self.warmup_seconds = round(time.monotonic() - warmup_started, 3)
+            self.preparation_seconds = round(time.monotonic() - started, 3)
             self.status = "ready"
         except Exception as error:
             self.status = "unavailable"
@@ -111,6 +115,7 @@ class SpeechInput:
 
         started = time.monotonic()
         audio = decode_audio(data)
+        decoded = time.monotonic()
         captured_samples = len(audio)
         # Very short clips can yield no confident segment even with a complete
         # word. Bounded trailing context fixes this without extending capture or
@@ -139,6 +144,8 @@ class SpeechInput:
             "audio_seconds": captured_samples / 16000,
             "decoder_padding_seconds": decoder_padding,
             "recognition_seconds": round(time.monotonic() - started, 3),
+            "audio_decode_seconds": round(decoded - started, 3),
+            "model_recognition_seconds": round(time.monotonic() - decoded, 3),
             "model": MODEL_REPO,
             "local": True,
         }

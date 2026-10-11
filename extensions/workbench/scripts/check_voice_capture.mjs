@@ -4,7 +4,8 @@ import {MicrophoneInput,PauseDetector,isStopRequest} from '../src/physical_ai_la
 
 const element=()=>({textContent:'',hidden:false,disabled:false,setAttribute(){}});
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
-function setup({permission,fetchAudio,useDefaultFetch=false,text='Bring me the screwdriver.',monitor,converse=false,echo=false}={}) {
+const probes=[];
+function setup({permission,fetchAudio,useDefaultFetch=false,text='Bring me the screwdriver.',monitor,converse=false,echo=false,onDuringWork}={}) {
   let releases=0,submitted=[],stops=0,paused=null;
   const stream={getTracks:()=>[{stop:()=>releases++}]};
   class Recorder {
@@ -16,9 +17,10 @@ function setup({permission,fetchAudio,useDefaultFetch=false,text='Bring me the s
   const ui={button:element(),cancel:element(),note:element(),heard:element()};
   const mic=new MicrophoneInput({...ui,mediaDevices:{getUserMedia:permission||(()=>Promise.resolve(stream))},
     Recorder,fetchAudio:useDefaultFetch?undefined:fetchAudio||(()=>Promise.resolve({ok:true,json:async()=>({text,likely_echo:echo})})),
-    onDuringWork:converse?async text=>submitted.push(text):undefined,
+    onDuringWork:onDuringWork||(converse?async text=>submitted.push(text):undefined),
     monitor:monitor||((stream,detector,onPause)=>{paused=onPause;return ()=>{};}),onStop:async()=>stops++,stopSpeech:async()=>{},onText:async text=>submitted.push(text),onError:message=>ui.error=message});
   mic.setReady(true);
+  probes.push(mic);
   return {mic,ui,stream,submitted,releases:()=>releases,stops:()=>stops,pause:()=>paused()};
 }
 
@@ -100,3 +102,19 @@ lateAnswer({ok:true,json:async()=>({text:'Bring me the hammer.'})});await tick()
 assert.deepEqual(finishedSpeech.submitted,['Bring me the hammer.']);
 assert.equal(finishedSpeech.releases(),1);assert.equal(finishedSpeech.mic.mode,'idle');
 console.log('PASS: opt-in conversation during movement, echo rejection with independent Stop, and pending recognition preserved when work ends.');
+
+// Hold a conversation response indefinitely, then recognize Stop before it resolves.
+let releaseDialogue,dialogueStarted=false;
+const thinking=setup({text:'Tell me a joke.',onDuringWork:function(){
+  assert.ok(this.working,'Deferred callback lost its receiver');
+  dialogueStarted=true;return new Promise(resolve=>releaseDialogue=resolve);
+}});
+thinking.mic.setWorking(true);await tick();thinking.pause();await tick();
+assert.ok(dialogueStarted);assert.equal(thinking.mic.mode,'recording','Reply blocks Stop listening');
+thinking.mic.fetchAudio=async()=>({ok:true,json:async()=>({text:'Stop.'})});
+thinking.pause();await tick();assert.equal(thinking.stops(),1);
+assert.equal(thinking.mic.mode,'idle');
+releaseDialogue();await tick();assert.equal(thinking.mic.mode,'idle','Late reply rearmed after Stop');
+thinking.mic.close();
+console.log('PASS: spoken Stop remains reachable while a conversation response is pending.');
+for(const mic of probes)mic.close();

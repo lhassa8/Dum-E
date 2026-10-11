@@ -40,6 +40,27 @@ class InteractionRequest(ChatRequest):
     source: Literal["typed", "voice"] = "typed"
 
 
+async def prepare_voice_after_language(speech_input, controller):
+    """Warm speech after the large model's allocation/prefill, before mic ready.
+
+    Startup ordering only: later Stop recognition is independent of language calls.
+    """
+    deadline = time.monotonic() + 90
+    while time.monotonic() < deadline:
+        try:
+            state = await controller.state()
+            if state.get("model_status") in {"ready", "unavailable"}:
+                break
+        except httpx.HTTPError:
+            pass
+        await asyncio.sleep(0.1)
+    else:
+        speech_input.status = "unavailable"
+        speech_input.error = "Voice input unavailable: simulator startup timed out."
+        return
+    await speech_input.prepare()
+
+
 def make_api(agent, mcp_process, tools=False, speech_input=None):
     speech = Speech()
     speech_input = speech_input or SpeechInput()
@@ -47,7 +68,11 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
     @asynccontextmanager
     async def lifespan(api):
         worker = asyncio.create_task(agent.worker())
-        voice_loader = asyncio.create_task(speech_input.prepare()) if tools else None
+        voice_loader = (
+            asyncio.create_task(prepare_voice_after_language(speech_input, agent.controller))
+            if tools
+            else None
+        )
         # Start the original broker subscription before accepting any requests.
         await asyncio.sleep(0.1)
         try:

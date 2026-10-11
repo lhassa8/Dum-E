@@ -112,6 +112,15 @@ wait(
 )
 post("/reset")
 wait(lambda s: s["phase"] == "Ready" and s["last_intent"] is None)
+# Informational tool language must not submit a physical job while idle.
+idle = state()
+knowledge = post("/interact", {"message": "Which tool is useful for tightening nuts?"})
+after_knowledge = state()
+assert knowledge["mode"] == "conversation" and knowledge["intent"]["action"] == "answer"
+assert knowledge["intent"]["object"] is None
+assert idle["job_id"] == after_knowledge["job_id"] and not after_knowledge["busy"]
+assert idle["tasks"] == after_knowledge["tasks"]
+evidence["informational_tool_question"] = knowledge
 original = voice("fetch")["task_id"]
 before = wait(lambda s: s["phase"] == "Lifting tool" and s["objects"]["screwdriver"][2] > 0.13)
 answer = voice("question", True)

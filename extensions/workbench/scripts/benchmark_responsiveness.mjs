@@ -7,6 +7,7 @@ import {spawnSync} from 'node:child_process';
 import {MicrophoneInput} from '../src/physical_ai_lab/dume/web/voice-input.mjs';
 
 const output=process.argv[2], fixtureDir=process.argv[3];
+const frontend=process.argv.includes('--frontend');
 assert.ok(output&&fixtureDir,'Usage: node scripts/benchmark_responsiveness.mjs OUTPUT FIXTURES');
 fs.mkdirSync(output,{recursive:false});fs.mkdirSync(fixtureDir,{recursive:true});
 const cases=[
@@ -45,7 +46,7 @@ const rows=[];
 for(let repeat=0;repeat<3;repeat++)for(const [name,text,action,object,category] of cases){
  await post('/reset');await wait(s=>!s.busy&&s.phase==='Ready'&&s.last_intent===null);
  const previous=(await request(native,'/state')).job_id, fixture=fixtures.get(name);
- let lastSpeech,paused,asrStart,asrEnd,submitted,recognized,taskId,error;
+ let lastSpeech,paused,asrStart,asrEnd,submitted,recognized,taskId,error,replyDecision;
  const element=()=>({textContent:'',hidden:false,disabled:false,setAttribute(){}});
  class Recorder{static isTypeSupported(){return true;}constructor(){this.mimeType='audio/wav';this.state='inactive';}start(){this.state='recording';}stop(){this.state='inactive';this.ondataavailable({data:new Blob([fixture.bytes])});this.onstop();}}
  const mic=new MicrophoneInput({button:element(),cancel:element(),note:element(),heard:element(),Recorder,
@@ -53,17 +54,25 @@ for(let repeat=0;repeat<3;repeat++)for(const [name,text,action,object,category] 
   monitor:(stream,detector,onPause)=>{let offset=0;const timer=setInterval(()=>{const values=fixture.pcm.subarray(offset,offset+640);offset+=640;const rms=values.length?Math.sqrt(values.reduce((n,v)=>n+v*v,0)/values.length):0;const now=performance.now();if(rms>=detector.threshold)lastSpeech=now;if(detector.sample(rms,now)){paused=now;onPause();}},40);return()=>clearInterval(timer);},
   fetchAudio:async(route,options)=>{asrStart=performance.now();const r=await fetch(base+route,options);asrEnd=performance.now();recognized=await r.clone().json();return r;},
   stopSpeech:()=>post('/speech-stop'),onStop:()=>{error='Unexpected Stop interpretation';},
-  onText:async transcript=>{submitted=performance.now();taskId=(await post('/chat',{message:transcript})).task_id;},onError:e=>{if(e)error=e;},
+  onText:async transcript=>{
+    submitted=performance.now();
+    const response=await post(frontend?'/interact':'/chat',{message:transcript});taskId=response.task_id;
+    if(frontend&&response.mode==='conversation'&&response.intent)replyDecision={intent:response.intent,at:performance.now()};
+  },onError:e=>{if(e)error=e;},
  });
  mic.setInterruptEnabled(false);mic.setReady(true);await mic.start();
  let decided,observed;const end=performance.now()+90000;
- while(performance.now()<end&&!error){const s=await request(native,'/state');if(s.job_id!==previous&&s.last_intent){observed=s;decided=performance.now();break;}await sleep(40);}
+ while(performance.now()<end&&!error){
+   if(replyDecision){observed={last_intent:replyDecision.intent};decided=replyDecision.at;break;}
+   const s=await request(native,'/state');if(s.job_id!==previous&&s.last_intent){observed=s;decided=performance.now();break;}await sleep(40);
+ }
  mic.close();
  const intent=observed?.last_intent;
  const correct=!!intent&&action.split('|').includes(intent.action)&&intent.object===object;
  const row={repeat,name,text,category,recognized:recognized?.text,intent,correct,error:error||(!decided?'Decision timeout':null),task_id:taskId,
   pause_ms:paused-lastSpeech,asr_ms:asrEnd-asrStart,submit_to_decision_ms:decided-submitted,end_of_speech_to_decision_ms:decided-lastSpeech,
-  timing:'last voiced 40ms RMS sample -> native intent observed by 40ms HTTP polling; real-time saved audio, not live microphone; audible speech and placement excluded'};
+  decision_observation:replyDecision?'read-only conversation API reply':'native intent observed by 40ms HTTP polling',
+  timing:'last voiced 40ms RMS sample -> decision observation; real-time saved audio, not live microphone; audible speech and placement excluded'};
  rows.push(row);fs.appendFileSync(path.join(output,'rows.jsonl'),JSON.stringify(row)+'\n');
  console.log(`${rows.length}/30 ${name}: ${Math.round(row.end_of_speech_to_decision_ms)} ms (${Math.round(row.submit_to_decision_ms)} decision) ${correct?'correct':'FAIL'}`);
  await post('/stop');await wait(s=>!s.busy&&!s.tasks.some(t=>t.status==='pending'||t.status==='running'));
@@ -72,6 +81,6 @@ for(let repeat=0;repeat<3;repeat++)for(const [name,text,action,object,category] 
  await sleep(500);
 }
 const stats=group=>{const r=rows.filter(group),a=r.map(x=>x.end_of_speech_to_decision_ms).filter(Number.isFinite).sort((a,b)=>a-b);return{count:r.length,failures:r.filter(x=>!x.correct||x.error).length,median_ms:(a[Math.floor((a.length-1)/2)]+a[Math.floor(a.length/2)])/2,p95_ms:a[Math.ceil(a.length*.95)-1]};};
-const summary={capture:'saved native speech + shipped automatic pause controller + actual local ASR and task bus',model_state:'already loaded; first sample reported separately, no model-load cold-start claim',first_sample:rows[0],overall:stats(()=>true),common:stats(r=>r.category==='common'),general:stats(r=>r.category==='general'),guards:stats(r=>r.category==='guard'),rows};
+const summary={capture:'saved native speech + shipped automatic pause controller + actual local ASR and task bus',route:frontend?'current UI /interact':'original bus /chat',model_state:'already loaded; first sample reported separately, no model-load cold-start claim',first_sample:rows[0],overall:stats(()=>true),common:stats(r=>r.category==='common'),general:stats(r=>r.category==='general'),guards:stats(r=>r.category==='guard'),rows};
 fs.writeFileSync(path.join(output,'summary.json'),JSON.stringify(summary,null,2));console.log(JSON.stringify({...summary,rows:undefined},null,2));
 await post('/reset');await wait(s=>!s.busy&&s.phase==='Ready');

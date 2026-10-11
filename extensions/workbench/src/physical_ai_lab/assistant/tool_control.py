@@ -79,7 +79,8 @@ class ToolDelivery(PickPlace):
 
     def advance(self):
         more = super().advance()
-        self.phase = self.phase.replace("block", "tool").replace("target", "handoff tray")
+        location = "tool rack" if self.returning else "handoff tray"
+        self.phase = self.phase.replace("block", "tool").replace("target", location)
         if not more and self.outcome:
             if self.outcome.status == "success":
                 message = (

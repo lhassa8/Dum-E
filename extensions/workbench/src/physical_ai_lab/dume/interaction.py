@@ -6,7 +6,7 @@ import time
 from dataclasses import asdict
 
 from physical_ai_lab.assistant.tool_language import ToolIntent
-from physical_ai_lab.assistant.tool_routing import declined_tool, is_stop_request
+from physical_ai_lab.assistant.tool_routing import declined_tool, is_stop_request, known_intent
 
 
 class InteractionCoordinator:
@@ -33,8 +33,10 @@ class InteractionCoordinator:
         if is_stop_request(text):
             await self.agent.cancel()
             return {"accepted": True, "mode": "stop", "task_id": None}
+        epoch = self.epoch
         async with self.lock:
-            epoch = self.epoch
+            if epoch != self.epoch:
+                return {"accepted": False, "mode": "superseded", "task_id": None}
             self.busy, self.request = True, text
             started = time.monotonic()
             try:
@@ -52,11 +54,16 @@ class InteractionCoordinator:
                     and state.get("inventory", {}).get(decline) == "handoff tray"
                 )
                 if not working and self.clarification is None and not withdraw_delivered:
-                    return {
-                        "accepted": True,
-                        "mode": "task",
-                        "task_id": await self.agent.submit(text),
-                    }
+                    familiar, _ = known_intent(text, state.get("recovery", {}).get("tool"))
+                    if familiar and familiar.action in {"fetch", "return", "resume", "gesture"}:
+                        return {
+                            "accepted": True,
+                            "mode": "task",
+                            "task_id": await self.agent.submit(text, asdict(familiar)),
+                        }
+                    # Other text needs classification before it can become a
+                    # physical job. Answers/clarifications do not actuate even
+                    # when the arm is idle, and model decisions are reused below.
                 response = await self.agent.controller.request(
                     "POST",
                     "/understand",

@@ -1,0 +1,17 @@
+[
+  {"name":"screws","message":"I need something for turning screws.","actions":["fetch"],"object":"screwdriver"},
+  {"name":"nuts","message":"Please pass me something for tightening nuts.","actions":["fetch"],"object":"wrench"},
+  {"name":"nails","message":"Could you bring me the tool for driving nails?","actions":["fetch"],"object":"hammer"},
+  {"name":"ambiguous","message":"Bring me a tool.","actions":["clarify"],"object":null},
+  {"name":"multiple","message":"Bring me the screwdriver and hammer.","actions":["clarify"],"object":null},
+  {"name":"negative","message":"I don't want you to fetch the hammer.","actions":["answer","clarify","unsupported"],"object":null},
+  {"name":"hypothetical","message":"If I asked you for a screwdriver, what would you do?","actions":["answer"],"object":null},
+  {"name":"tool_question","message":"Which tool is useful for tightening nuts?","actions":["answer"],"object":null},
+  {"name":"impossible","message":"Please use the screwdriver to assemble this shelf.","actions":["unsupported"],"object":null},
+  {"name":"joke","message":"Tell me a short joke about robots.","actions":["answer"],"object":null},
+  {"name":"chat","message":"I had a long day. How are you doing?","actions":["answer"],"object":null},
+  {"name":"capability","message":"Do you actually see me through a camera?","actions":["answer"],"object":null},
+  {"name":"clarified_wrench","message":"Wrench.","history":[{"role":"user","content":"Bring me a tool."},{"role":"assistant","content":"Which tool would you like?"}],"actions":["fetch"],"object":"wrench"},
+  {"name":"clarified_hammer","message":"The hammer, please.","history":[{"role":"user","content":"Bring me a tool."},{"role":"assistant","content":"Which tool would you like?"}],"actions":["fetch"],"object":"hammer"},
+  {"name":"negated_stop","message":"Don't stop thinking about the question.","actions":["answer","clarify"],"object":null}
+]

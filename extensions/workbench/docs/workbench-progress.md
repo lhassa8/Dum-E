@@ -111,3 +111,126 @@ separately from first request. Preserve guard, context and Stop behavior, fixed
 timing boundaries and physical checks. Rollback is the published slice B commit.
 Camera perception, varied-layout recovery, learning gains and hardware plan remain
 required; no purchases, real actuation, cloud spend or expanded idle microphone.
+
+A2 loop card (October 11):
+- Baseline: fixed 15-case synthetic dialogue fixture, 3 repeats, SHA256
+  2f4dd3530e5cc35a59e6716e0dfd96c16d773b989d956d01d87438086875695d.
+  Original 45 trials: median 1.500s, p95 1.827s; 6 schema/intent mismatches.
+  Three informational tool questions wrongly requested a fetch; three unsupported
+  requests retained an object despite the expected nonphysical schema. Neither
+  read-only benchmark actuated the arm. Profiling confirms ~0.85s warm prefill.
+- Hypothesis: explicit informational-question semantics correct the intent error;
+  caching the token-exact fixed instruction prefix removes repeated prefill work.
+  Empty physical-action messages remove text that the controller already replaces.
+- Boundary: local language prompt, complete per-request cache clone, inference/ASR
+  stage telemetry, and reproducible text benchmark. No changed fixture expectations,
+  partial-JSON execution, confidence gates, motion checks or microphone scope.
+- Judges: identical 45 cases with cache off/on, separate startup cost; context/cache
+  isolation checks; existing saved-voice and full physics journey; real browser tool
+  question without a fetch. Text timings exclude capture, ASR, audible onset/motion.
+- Rollback: lab d4602ae / fork 64ef27f. Attempt budget: two comparable cache probes
+  before revising the hypothesis. Broader goal and live room/noise gates remain open.
+- Cache probe 001 stopped before readiness: this tokenizer requires a user query
+  even when deriving the system template. Add a harmless template-only user marker
+  to both prefix probes; it lies after their first mismatch and is never prefetched.
+  Retain failed run and fixture unchanged; retry is based on that explicit error.
+- Corrected prompt alone: 45/45 correct, median/p95 1.555/1.852s. Cache probe 002:
+  45/45 correct, 0.917/1.213s; cached 771 fixed tokens (85.4MB), prefix preparation
+  5.292s, total model preparation 11.910s. First request still 3.055s versus 5.364s
+  in revised-prompt control. New hypothesis: exercise one read-only decode during
+  startup, then mark ready. Measure that cost separately; do not imply it vanished.
+- ASR probe after cache runtime restart: first clip 1.924s (decode 0.053s,
+  model 1.870s), identical later clips 0.166/0.150s (model 0.139/0.121s).
+  Silence warmup skips word decoding. Replace it with a bundled synthetic saved
+  phrase through the actual decoder, before ready; expose preparation time. No
+  microphone access, task submission or audio output during either warmup.
+- Synthetic speech warmup before large language-model startup was insufficient:
+  isolated first request still 1.135s versus 0.149/0.143s afterward. Concurrent
+  probe was slower and retained separately, not treated as an isolated comparison.
+  Changed hypothesis: large-model allocation/prefill after speech warmup leaves
+  speech cold again. Order speech preparation after language startup, then measure
+  the actual first clip. This is a startup dependency only; active Stop remains
+  independent of language inference. No repeated identical warmup attempt.
+- Ordered startup first saved clip: 0.214s recognition (0.183s model), then
+  0.148/0.149s. First language query after speech still 2.528s: startup preparation
+  improves availability but does not guarantee every first model query is fast.
+  Isolated final 45-case judge: 45/45 correct, median/p95 0.914/1.224s.
+- Same 30 saved-speech replay: 0 errors, common median/p95 1.170/1.217s;
+  overall 1.174/2.429s, general 1.735/2.498s. Semantic wording remains >2s.
+- New full-journey idle-question check failed: `/interact` submitted all idle text
+  as a task before classifying it. Even an answer acquired a native job. Keep the
+  failed check; route unrecognized idle text through read-only interpretation
+  first, leaving familiar physical commands on their bounded direct route. Reuse
+  the classified intent rather than generating it again. Verify no idle question
+  job/motion, preserve moving task/grip and previous full speech/physics journey.
+- Code review found a larger interruption bottleneck: the capture controller
+  awaited a general conversation response before rearming the microphone. Release
+  ASR/capture state immediately after dispatch during motion, while surfacing async
+  errors. Stop can then be heard while the reply is pending. Also snapshot the
+  dialogue epoch at arrival so Stop supersedes requests queued behind a slow reply.
+  Judges: shipped-controller pending-promise/Stop probe, queued-request cancellation
+  against original shared task store, and real saved speech during pending inference.
+- Pending-speech verifier 001 reached Stop and superseded the real pending model
+  reply, but its final settling check used a missing frontend joint field. This
+  is a verifier API-contract error, not a passing outcome. Read physical joints
+  from the native state endpoint (as the earlier settling verifier does); retain
+  all criteria and retry with that explicit contract correction.
+- Verifier 002 repeated the missing-field problem because the field name was
+  assumed. Classify this as a weak tool/API contract: source and earlier verifier
+  name the field `robot_joints`. Correct that name and validate its seven-element
+  array before moving. Runs 001/002 have no final verification and are not passes.
+- Current UI's separate 30-case replay exposed 3/30 failures: present tool need
+  after capabilities chat was answered informationally. Original text fixture
+  without that history had passed, so it was too narrow to establish contextual
+  correctness. Preserve both existing fixtures and failed replay. Add six mixed-
+  history cases; clarify current present tool requests versus questions/hypotheticals
+  in the prompt. Rerun original 45, new 18 and current UI 30 without weaker judges.
+- Final prompt: original 45 and new 18 all pass; UI speech replay 30/30, common
+  median/p95 1.167/1.287s, general 1.691/3.111s. Final pending-answer Stop passes
+  at 539ms end-of-voice to POST, late answer superseded, drift 2.43e-8 rad.
+  Full final physical journey passes: old rack return 6.21mm, requested handoff
+  7.16mm, withdrawn hammer return 16.36mm. General joke still 3.29s in that context.
+- Browser proved an idle tool question creates no job/motion and a natural-purpose
+  request physically delivers a screwdriver. Returned a stopped tool through UI
+  at 4.71mm error. A later moving-question observation missed the brief phase;
+  it is not counted as a moving-question pass. Use a bounded in-browser visible
+  Working wait for the final check, rather than assuming the phase persisted.
+  Browser inspection also caught return phases incorrectly naming the handoff
+  tray; select the actual rack/delivery label without changing any control target.
+- Clean browser proof now passes: one physical job survives the status question
+  during visible Working and completes at 9.67mm; browser return at 11.40mm.
+  Voice/listening controls restored, public app Ready. Separate headless return
+  observes “Moving to tool rack” and measured success. No live room recordings
+  published. See dialogue-audit.md/evidence.json and real browser screenshots.
+- A2 accepted with remaining limits: individual first/long-idle model delays,
+  3.11s UI semantic-request tail, 3.29s full-journey joke, real audible onset and
+  room/noise/overlap performance. Neither responsiveness targets nor physics
+  thresholds were relaxed. Broad camera/learning/hardware/live-demo criteria remain.
+
+- Final verification exposed a transient mesh read during concurrent export/tests.
+  All pinned asset hashes matched afterwards (link3_1: 777 vertices); serial fork
+  verification passed 122/122. Direct copy over a live asset is the leading race
+  hypothesis. Export now skips identical files and atomically replaces changed
+  files; two tests cover whole-file visibility and preservation after failed copy.
+  Whole-project export remains a separate operation from verification. Sandboxed
+  rerun's 18 IPC errors were environmental (socket binding); IPC-enabled run passed.
+- Baseline published microphone controller fails the new pending-reply judge:
+  mode stays transcribing instead of listening. Its previous probes pass. This
+  synthetic callback control grounds the interruption fix independently of latency.
+
+Next active loop A3:
+- Observed bottleneck: current local language model peaks around 20.4GB and takes
+  1–3+ seconds for varied/contextual responses despite fixed-prefix reuse. Common
+  bounded commands and independent Stop already meet their provisional targets.
+- Hypothesis: a smaller maintained local model can improve first/contextual
+  latency and memory use while preserving required intent and conversation quality.
+- Boundary: research primary model sources, use the existing MLX backend where
+  compatible, compare one bounded candidate before changing the default. No paid
+  service, new microphone scope, hardware purchase or real actuator. Download only
+  ordinary public model data if justified; do not enable arbitrary remote code.
+- Judges: original 45 and mixed-history 18 cases, matched startup and UI speech
+  observations, factual/capability answers, Stop/context and physical regressions.
+  Keep failed cases and original expectations; do not accept speed alone.
+- Rollback: accepted A2 source/model; restore current model if the candidate does
+  not pass. Then broaden speech/noise evidence and advance camera/learning/hardware
+  slices. This is a replaceable implementation choice, not new required scope.

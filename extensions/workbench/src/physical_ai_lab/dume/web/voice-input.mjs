@@ -142,6 +142,13 @@ export class MicrophoneInput {
     this.mode='transcribing';this.note.textContent='Recognizing your words locally…';
     this.paint();this.recorder.stop();this.release();
   }
+  dispatchDuringWork(callback,text) {
+    // Waiting for a model reply must not hold the recorder in transcribing mode.
+    // The server invalidates pending dialogue on Stop; resume listening now.
+    Promise.resolve().then(()=>callback.call(this,text)).catch(error=>{
+      if(!this.closed)this.onError(error.message||String(error));
+    });
+  }
   async recognize(blob,generation,kind) {
     if(generation!==this.generation)return;
     try {
@@ -162,11 +169,13 @@ export class MicrophoneInput {
         this.held=true;this.note.textContent='Stopping the arm…';
         await this.onStop();
       } else if(kind==='request') {
-        this.note.textContent='Request recognized. Sending to Dum-E…';await this.onText(text);
+        this.note.textContent='Request recognized. Sending to Dum-E…';
+        if(this.working)this.dispatchDuringWork(this.onText,text);else await this.onText(text);
       } else if(this.onDuringWork) {
-        this.note.textContent='Request recognized. Responding while working…';await this.onDuringWork(text);
+        this.note.textContent='Request recognized. Responding while working…';
+        this.dispatchDuringWork(this.onDuringWork,text);
       } else {this.note.textContent='Only “stop” is accepted while the arm is working.';}
-      if(generation===this.generation){this.mode='idle';this.paint();}
+      if(generation===this.generation){this.mode='idle';this.paint();this.maybeListen();}
     } catch(error) {
       if(generation!==this.generation||error.name==='AbortError')return;
       this.mode='idle';this.paint();this.note.textContent=error.message;

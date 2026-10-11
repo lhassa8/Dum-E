@@ -141,6 +141,42 @@ def test_conversation_during_work_preserves_original_task(upstream_backends, tmp
     asyncio.run(run())
 
 
+def test_idle_tool_question_does_not_enter_physical_task_queue(upstream_backends, tmp_path):
+    class IdleProbe(ControllerProbe):
+        async def request(self, *args, **kwargs):
+            assert args[:2] == ("POST", "/understand")
+            return type(
+                "Response",
+                (),
+                {
+                    "json": lambda self: {
+                        "intent": {
+                            "action": "answer",
+                            "object": None,
+                            "destination": None,
+                            "message": "A wrench helps tighten nuts.",
+                        },
+                        "route": "model",
+                    }
+                },
+            )()
+
+    async def run():
+        tasks, broker = upstream_backends
+        controller = IdleProbe()
+        agent = SimulationAgent(controller, tasks, broker, tmp_path / "events.jsonl", tools=True)
+        result = await agent.interaction.interact("Which tool helps tighten nuts?")
+        assert result["mode"] == "conversation" and result["task_id"] is None
+        assert not await tasks.list_tasks() and not controller.sent and not controller.stopped
+        assert agent.messages[-1]["content"] == "A wrench helps tighten nuts."
+        # A familiar physical request still submits immediately, without LLM work.
+        physical = await agent.interaction.interact("Bring me the screwdriver.")
+        assert physical["mode"] == "task" and physical["task_id"]
+        assert len(await tasks.list_tasks()) == 1
+
+    asyncio.run(run())
+
+
 def test_change_cancels_original_request_before_worker_claim(upstream_backends, tmp_path):
     class PendingProbe(ControllerProbe):
         async def state(self):
@@ -207,11 +243,15 @@ def test_stop_supersedes_slow_dialogue_before_any_new_task(upstream_backends, tm
         await tasks.update_task(tid, TaskStatus.RUNNING)
         pending = asyncio.create_task(agent.interaction.interact("I need something for nuts"))
         await entered.wait()
+        queued = asyncio.create_task(agent.interaction.interact("Bring me the hammer."))
+        await asyncio.sleep(0)  # Request arrives while the first holds the dialogue lock.
         await agent.cancel()
         assert controller.stopped and (await tasks.get_task(tid)).status == TaskStatus.CANCELLED
         release.set()
         result = await pending
         assert result["mode"] == "superseded" and not result["accepted"]
+        queued_result = await queued
+        assert queued_result["mode"] == "superseded" and not queued_result["accepted"]
         assert len(await tasks.list_tasks()) == 1 and not controller.sent
 
     asyncio.run(run())
