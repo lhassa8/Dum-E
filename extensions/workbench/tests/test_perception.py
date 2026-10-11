@@ -64,6 +64,10 @@ def test_actual_rgbd_rotated_permuted_tools_and_depth_scale():
                 np.linalg.norm(np.array(prediction["position_m"]) - truth[name]["position_m"])
                 < 0.005
             )
+            rotation = scene.bench.data.xmat[scene.bench.model.body(name).id].reshape(3, 3)
+            actual_yaw = np.arctan2(rotation[1, 0], rotation[0, 0])
+            yaw_error = (prediction["yaw_mod_pi_rad"] - actual_yaw + np.pi / 2) % np.pi - np.pi / 2
+            assert abs(yaw_error) < 0.05
         # Known static mat plane: verify actual rendered axial-depth conversion
         # despite the classic Mac OpenGL clip-control warning.
         u, v = np.rint(frame.camera.project([0.66, -0.18, 0.002])).astype(int)

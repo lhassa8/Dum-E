@@ -1,0 +1,3762 @@
+{
+  "scope": "Separate native simulated camera-informed manipulation; public voice/controller unchanged",
+  "fixture_sha256": "acb1b93171a78e0b1589f98a88187a077562749896a6985f7cd50ee359335e72",
+  "actor_files_sha256": {
+    "src/physical_ai_lab/assistant/camera_control.py": "76bfb3f03ca2a1c5ac6476b72e337eed2e8b48febe64d83fcdfc69334dcf40ac",
+    "src/physical_ai_lab/assistant/camera_robot.py": "e59014c6d0abda1236698543993ad0b98a4de205db19996e49e9bef56948c8cb",
+    "src/physical_ai_lab/assistant/perception.py": "809a3bcfc6a08837016c778ed7bd0fc3a7747825393f55c97795fa08db4f6618",
+    "src/physical_ai_lab/assistant/perception_scene.py": "f910bdbf49d57c2d9086e5f1692517523c72623474f37f5077f97066c67ad125"
+  },
+  "pilot_attempts": {
+    "camera-delivery-pilot-001": [
+      {
+        "case": {
+          "id": "pilot-screwdriver",
+          "split": "pilot",
+          "seed": 8250,
+          "tool": "screwdriver",
+          "journey": "deliver",
+          "layout": {
+            "screwdriver": [
+              0.41,
+              -0.23,
+              0.0
+            ],
+            "wrench": [
+              0.46,
+              0.0,
+              0.0
+            ],
+            "hammer": [
+              0.44,
+              0.23,
+              0.0
+            ]
+          },
+          "light": 1.0
+        },
+        "actor_outcome": {
+          "status": "failed",
+          "message": "Handle is missing, ambiguous or a weak geometric fit; no motion planned",
+          "distance_m": null
+        },
+        "physics": {
+          "lifted": false,
+          "placed": false,
+          "distance_m": 0.2451047194096966,
+          "max_lift_m": 0.0,
+          "final_height_m": 0.021844871310317277,
+          "speed_m_s": 1.246046044502828e-07,
+          "other_tool_disturbance_m": 0.0
+        },
+        "hold": null,
+        "wall_s": 0.09666833403753117,
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 0.4000000000000003,
+            "latency_ms": 96.58733400283381,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.40545097236084904,
+                -0.2273052255718062,
+                0.021852422995111788
+              ],
+              "fit_score": 0.7334481278223742,
+              "surface_pixels": 726,
+              "observed_sides_m": [
+                0.041049601186748275,
+                0.05504865999498107
+              ],
+              "area_m2": 0.0022597255386588772,
+              "top_fraction": 0.38170347003154576,
+              "yaw_mod_pi_rad": 0.01604094571339343
+            }
+          }
+        ]
+      },
+      {
+        "case": {
+          "id": "pilot-wrench",
+          "split": "pilot",
+          "seed": 8251,
+          "tool": "wrench",
+          "journey": "deliver",
+          "layout": {
+            "screwdriver": [
+              0.41,
+              -0.23,
+              0.0
+            ],
+            "wrench": [
+              0.46,
+              0.0,
+              0.0
+            ],
+            "hammer": [
+              0.44,
+              0.23,
+              0.0
+            ]
+          },
+          "light": 1.0
+        },
+        "actor_outcome": {
+          "status": "failed",
+          "message": "Handle is missing, ambiguous or a weak geometric fit; no motion planned",
+          "distance_m": null
+        },
+        "physics": {
+          "lifted": false,
+          "placed": false,
+          "distance_m": 0.24415160972470532,
+          "max_lift_m": 8.073805859987182e-09,
+          "final_height_m": 0.02185041514120489,
+          "speed_m_s": 2.0799959489193452e-10,
+          "other_tool_disturbance_m": 7.481328709819664e-09
+        },
+        "hold": null,
+        "wall_s": 0.13991383300162852,
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 0.4000000000000003,
+            "latency_ms": 44.84962503192946,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.4529233613697776,
+                -0.003089434581685757,
+                0.02192263222435909
+              ],
+              "fit_score": 0.9651855118880641,
+              "surface_pixels": 815,
+              "observed_sides_m": [
+                0.04368015444276602,
+                0.05584747974260014
+              ],
+              "area_m2": 0.0024394265403960206,
+              "top_fraction": 0.3310316815597076,
+              "yaw_mod_pi_rad": 0.0482432126878789
+            }
+          },
+          {
+            "kind": "camera",
+            "phase": "Reobserving before grasp",
+            "captured_s": 2.0639999999999943,
+            "latency_ms": 33.47162500722334,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.45388652614815267,
+                -0.0031713893089049977,
+                0.021923254578965545
+              ],
+              "fit_score": 0.7006761100638469,
+              "surface_pixels": 772,
+              "observed_sides_m": [
+                0.040589903927992,
+                0.05498798598683786
+              ],
+              "area_m2": 0.002231957068399519,
+              "top_fraction": 0.3466546924113157,
+              "yaw_mod_pi_rad": 0.0064972800090641325
+            }
+          }
+        ]
+      },
+      {
+        "case": {
+          "id": "pilot-hammer",
+          "split": "pilot",
+          "seed": 8252,
+          "tool": "hammer",
+          "journey": "deliver",
+          "layout": {
+            "screwdriver": [
+              0.41,
+              -0.23,
+              0.0
+            ],
+            "wrench": [
+              0.46,
+              0.0,
+              0.0
+            ],
+            "hammer": [
+              0.44,
+              0.23,
+              0.0
+            ]
+          },
+          "light": 1.0
+        },
+        "actor_outcome": {
+          "status": "failed",
+          "message": "Handle is missing, ambiguous or a weak geometric fit; no motion planned",
+          "distance_m": null
+        },
+        "physics": {
+          "lifted": false,
+          "placed": false,
+          "distance_m": 0.44798551582963675,
+          "max_lift_m": 0.0,
+          "final_height_m": 0.021880378611126843,
+          "speed_m_s": 2.5253319480403617e-07,
+          "other_tool_disturbance_m": 0.0
+        },
+        "hold": null,
+        "wall_s": 0.044410500035155565,
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 0.4000000000000003,
+            "latency_ms": 44.36354199424386,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.43442665641396594,
+                0.2376507039132663,
+                0.021900015977164913
+              ],
+              "fit_score": 0.7713348402634653,
+              "surface_pixels": 771,
+              "observed_sides_m": [
+                0.041663948128022044,
+                0.05486696166621424
+              ],
+              "area_m2": 0.002285974244803324,
+              "top_fraction": 0.32205513784461154,
+              "yaw_mod_pi_rad": -0.01265616846205897
+            }
+          }
+        ]
+      }
+    ],
+    "camera-delivery-pilot-002": [
+      {
+        "case": {
+          "id": "pilot-screwdriver",
+          "split": "pilot",
+          "seed": 8250,
+          "tool": "screwdriver",
+          "journey": "deliver",
+          "layout": {
+            "screwdriver": [
+              0.41,
+              -0.23,
+              0.0
+            ],
+            "wrench": [
+              0.46,
+              0.0,
+              0.0
+            ],
+            "hammer": [
+              0.44,
+              0.23,
+              0.0
+            ]
+          },
+          "light": 1.0
+        },
+        "actor_outcome": {
+          "status": "failed",
+          "message": "Handle is missing, ambiguous or a weak geometric fit; no motion planned",
+          "distance_m": null
+        },
+        "physics": {
+          "lifted": false,
+          "placed": false,
+          "distance_m": 0.2451047194096966,
+          "max_lift_m": 0.0,
+          "final_height_m": 0.021844871310317277,
+          "speed_m_s": 1.246046044502828e-07,
+          "other_tool_disturbance_m": 0.0
+        },
+        "hold": null,
+        "wall_s": 0.05795979197137058,
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 0.4000000000000003,
+            "latency_ms": 57.89433402242139,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.4054156162301603,
+                -0.2273604760812877,
+                0.021852422995111788
+              ],
+              "fit_score": 0.7143509607678554,
+              "surface_pixels": 726,
+              "observed_sides_m": [
+                0.0406362379303577,
+                0.05598223939091812
+              ],
+              "area_m2": 0.0022749075997635917,
+              "top_fraction": 0.38170347003154576,
+              "yaw_mod_pi_rad": 0.0
+            }
+          }
+        ]
+      },
+      {
+        "case": {
+          "id": "pilot-wrench",
+          "split": "pilot",
+          "seed": 8251,
+          "tool": "wrench",
+          "journey": "deliver",
+          "layout": {
+            "screwdriver": [
+              0.41,
+              -0.23,
+              0.0
+            ],
+            "wrench": [
+              0.46,
+              0.0,
+              0.0
+            ],
+            "hammer": [
+              0.44,
+              0.23,
+              0.0
+            ]
+          },
+          "light": 1.0
+        },
+        "actor_outcome": {
+          "status": "failed",
+          "message": "Handle is missing, ambiguous or a weak geometric fit; no motion planned",
+          "distance_m": null
+        },
+        "physics": {
+          "lifted": false,
+          "placed": false,
+          "distance_m": 0.24415160972470532,
+          "max_lift_m": 8.073805859987182e-09,
+          "final_height_m": 0.02185041514120489,
+          "speed_m_s": 2.0799959489193452e-10,
+          "other_tool_disturbance_m": 7.481328709819664e-09
+        },
+        "hold": null,
+        "wall_s": 0.12813237501541153,
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 0.4000000000000003,
+            "latency_ms": 47.84891603048891,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.4528939020822487,
+                -0.002986036098527564,
+                0.02192263222435909
+              ],
+              "fit_score": 0.8620094889731771,
+              "surface_pixels": 815,
+              "observed_sides_m": [
+                0.04258070245463741,
+                0.055563545193146824
+              ],
+              "area_m2": 0.0023659347851941836,
+              "top_fraction": 0.3310316815597076,
+              "yaw_mod_pi_rad": 0.0
+            }
+          },
+          {
+            "kind": "camera",
+            "phase": "Reobserving before grasp",
+            "captured_s": 2.0639999999999943,
+            "latency_ms": 39.91462499834597,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.4538821586192985,
+                -0.0031021063698214116,
+                0.021923254578965545
+              ],
+              "fit_score": 0.7075002538336527,
+              "surface_pixels": 772,
+              "observed_sides_m": [
+                0.04060449836624108,
+                0.055334143258096144
+              ],
+              "area_m2": 0.002246815129520715,
+              "top_fraction": 0.3466546924113157,
+              "yaw_mod_pi_rad": 0.0
+            }
+          }
+        ]
+      },
+      {
+        "case": {
+          "id": "pilot-hammer",
+          "split": "pilot",
+          "seed": 8252,
+          "tool": "hammer",
+          "journey": "deliver",
+          "layout": {
+            "screwdriver": [
+              0.41,
+              -0.23,
+              0.0
+            ],
+            "wrench": [
+              0.46,
+              0.0,
+              0.0
+            ],
+            "hammer": [
+              0.44,
+              0.23,
+              0.0
+            ]
+          },
+          "light": 1.0
+        },
+        "actor_outcome": {
+          "status": "failed",
+          "message": "Handle is missing, ambiguous or a weak geometric fit; no motion planned",
+          "distance_m": null
+        },
+        "physics": {
+          "lifted": false,
+          "placed": false,
+          "distance_m": 0.44798551582963675,
+          "max_lift_m": 0.0,
+          "final_height_m": 0.021880378611126843,
+          "speed_m_s": 2.5253319480403617e-07,
+          "other_tool_disturbance_m": 0.0
+        },
+        "hold": null,
+        "wall_s": 0.04994016600539908,
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 0.4000000000000003,
+            "latency_ms": 49.88525004591793,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.43442403613521824,
+                0.23773775477030254,
+                0.021900015977164913
+              ],
+              "fit_score": 0.7676945562153247,
+              "surface_pixels": 771,
+              "observed_sides_m": [
+                0.04136359224710695,
+                0.05580467560532193
+              ],
+              "area_m2": 0.0023082818472206124,
+              "top_fraction": 0.32205513784461154,
+              "yaw_mod_pi_rad": 0.0
+            }
+          }
+        ]
+      }
+    ],
+    "camera-delivery-pilot-003": [
+      {
+        "case": {
+          "id": "pilot-screwdriver",
+          "split": "pilot",
+          "seed": 8250,
+          "tool": "screwdriver",
+          "journey": "deliver",
+          "layout": {
+            "screwdriver": [
+              0.41,
+              -0.23,
+              0.0
+            ],
+            "wrench": [
+              0.46,
+              0.0,
+              0.0
+            ],
+            "hammer": [
+              0.44,
+              0.23,
+              0.0
+            ]
+          },
+          "light": 1.0
+        },
+        "actor_outcome": {
+          "status": "released_unverified",
+          "message": "Released the tool; placement needs checking.",
+          "distance_m": null
+        },
+        "physics": {
+          "lifted": true,
+          "placed": true,
+          "distance_m": 0.016627462155818687,
+          "max_lift_m": 0.2142841435679151,
+          "final_height_m": 0.0218448746837537,
+          "speed_m_s": 2.2362417036729646e-10,
+          "other_tool_disturbance_m": 1.028205589610065e-08
+        },
+        "hold": null,
+        "wall_s": 0.5263767919968814,
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 0.4000000000000003,
+            "latency_ms": 73.36649997159839,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.4043993301130268,
+                -0.22736387618134812,
+                0.021852422995111788
+              ],
+              "fit_score": 0.8753551283206769,
+              "surface_pixels": 763,
+              "observed_sides_m": [
+                0.042668789363223825,
+                0.0559889931153047
+              ],
+              "area_m2": 0.0023889825538959252,
+              "top_fraction": 0.4011566771819138,
+              "yaw_mod_pi_rad": 0.0
+            }
+          },
+          {
+            "kind": "camera",
+            "phase": "Reobserving before grasp",
+            "captured_s": 2.0639999999999943,
+            "latency_ms": 57.38541600294411,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.4043993301130268,
+                -0.22736387618134812,
+                0.0218524310203704
+              ],
+              "fit_score": 0.8753551283206769,
+              "surface_pixels": 763,
+              "observed_sides_m": [
+                0.042668789363223825,
+                0.0559889931153047
+              ],
+              "area_m2": 0.0023889825538959252,
+              "top_fraction": 0.40999462654486835,
+              "yaw_mod_pi_rad": 0.0
+            }
+          },
+          {
+            "kind": "rigid_grasp_inference",
+            "gap_m": 0.04372187751016471,
+            "offset_local_m": [
+              0.0017119423430608037,
+              -0.004023430817603639,
+              0.00219634988407182
+            ]
+          }
+        ]
+      },
+      {
+        "case": {
+          "id": "pilot-wrench",
+          "split": "pilot",
+          "seed": 8251,
+          "tool": "wrench",
+          "journey": "deliver",
+          "layout": {
+            "screwdriver": [
+              0.41,
+              -0.23,
+              0.0
+            ],
+            "wrench": [
+              0.46,
+              0.0,
+              0.0
+            ],
+            "hammer": [
+              0.44,
+              0.23,
+              0.0
+            ]
+          },
+          "light": 1.0
+        },
+        "actor_outcome": {
+          "status": "released_unverified",
+          "message": "Released the tool; placement needs checking.",
+          "distance_m": null
+        },
+        "physics": {
+          "lifted": true,
+          "placed": true,
+          "distance_m": 0.013697745964163734,
+          "max_lift_m": 0.20046439481756767,
+          "final_height_m": 0.02185041514120489,
+          "speed_m_s": 2.0661754178875278e-10,
+          "other_tool_disturbance_m": 7.896638184963393e-09
+        },
+        "hold": null,
+        "wall_s": 0.5183476249803789,
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 0.4000000000000003,
+            "latency_ms": 65.8278749906458,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.4528939020822487,
+                -0.002986036098527564,
+                0.02192263222435909
+              ],
+              "fit_score": 0.8620094889731771,
+              "surface_pixels": 815,
+              "observed_sides_m": [
+                0.04258070245463741,
+                0.055563545193146824
+              ],
+              "area_m2": 0.0023659347851941836,
+              "top_fraction": 0.3310316815597076,
+              "yaw_mod_pi_rad": 0.0
+            }
+          },
+          {
+            "kind": "camera",
+            "phase": "Reobserving before grasp",
+            "captured_s": 2.0639999999999943,
+            "latency_ms": 55.71245797909796,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.4528939020822487,
+                -0.002986036098527564,
+                0.021923254578965545
+              ],
+              "fit_score": 0.8620094889731771,
+              "surface_pixels": 815,
+              "observed_sides_m": [
+                0.04258070245463741,
+                0.055563545193146824
+              ],
+              "area_m2": 0.0023659347851941836,
+              "top_fraction": 0.3659631791647957,
+              "yaw_mod_pi_rad": 0.0
+            }
+          },
+          {
+            "kind": "rigid_grasp_inference",
+            "gap_m": 0.043753801329861786,
+            "offset_local_m": [
+              -3.214214185682003e-05,
+              -0.0046560248692207205,
+              0.0016764721677178325
+            ]
+          }
+        ]
+      },
+      {
+        "case": {
+          "id": "pilot-hammer",
+          "split": "pilot",
+          "seed": 8252,
+          "tool": "hammer",
+          "journey": "deliver",
+          "layout": {
+            "screwdriver": [
+              0.41,
+              -0.23,
+              0.0
+            ],
+            "wrench": [
+              0.46,
+              0.0,
+              0.0
+            ],
+            "hammer": [
+              0.44,
+              0.23,
+              0.0
+            ]
+          },
+          "light": 1.0
+        },
+        "actor_outcome": {
+          "status": "failed",
+          "message": "Handle is missing, ambiguous or a weak geometric fit; no motion planned",
+          "distance_m": null
+        },
+        "physics": {
+          "lifted": false,
+          "placed": false,
+          "distance_m": 0.44798551582963675,
+          "max_lift_m": 0.0,
+          "final_height_m": 0.021880378611126843,
+          "speed_m_s": 2.5253319480403617e-07,
+          "other_tool_disturbance_m": 0.0
+        },
+        "hold": null,
+        "wall_s": 0.06387283402727917,
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 0.4000000000000003,
+            "latency_ms": 63.81883396534249,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.4344240358071584,
+                0.2377734005221242,
+                0.021900015977164913
+              ],
+              "fit_score": 0.7680248180875425,
+              "surface_pixels": 774,
+              "observed_sides_m": [
+                0.04136358433136672,
+                0.05587595375014753
+              ],
+              "area_m2": 0.002311229725039774,
+              "top_fraction": 0.3233082706766917,
+              "yaw_mod_pi_rad": 0.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "journeys": [
+    {
+      "case": {
+        "id": "heldout-00",
+        "split": "heldout",
+        "seed": 88500,
+        "tool": "screwdriver",
+        "journey": "deliver",
+        "layout": {
+          "screwdriver": [
+            0.4619968502607179,
+            0.008208936249741366,
+            -1.2748821966235009
+          ],
+          "wrench": [
+            0.4072553307219273,
+            -0.2325962263932095,
+            -0.632833614341834
+          ],
+          "hammer": [
+            0.46589387190788595,
+            0.2202332988339955,
+            1.381396087926917
+          ]
+        },
+        "light": 1.1497631351759314
+      },
+      "actor_outcome": {
+        "status": "released_unverified",
+        "message": "Released the tool; placement needs checking.",
+        "distance_m": null
+      },
+      "physics": {
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.008705509021327138,
+        "max_lift_m": 0.21922073221960928,
+        "final_height_m": 0.021844874683753738,
+        "speed_m_s": 2.6818460334390825e-10,
+        "other_tool_disturbance_m": 1.0400032851816375e-08
+      },
+      "hold": null,
+      "return": {
+        "actor_outcome": {
+          "status": "released_unverified",
+          "message": "Released the tool; placement needs checking.",
+          "distance_m": null
+        },
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 13.616000000001216,
+            "latency_ms": 44.5068750414066,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.6315475526437879,
+                -0.15819494038435353,
+                0.021851840186110603
+              ],
+              "fit_score": 0.9881691620542563,
+              "surface_pixels": 1104,
+              "observed_sides_m": [
+                0.043890832816750214,
+                0.056047400515539025
+              ],
+              "area_m2": 0.002459967085840963,
+              "top_fraction": 0.5446339017051154,
+              "yaw_mod_pi_rad": -1.2828170002158321
+            }
+          },
+          {
+            "kind": "camera",
+            "phase": "Reobserving before grasp",
+            "captured_s": 15.280000000001772,
+            "latency_ms": 45.83229101262987,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.6315475526437879,
+                -0.15819494038435353,
+                0.021851840186110603
+              ],
+              "fit_score": 0.9881691620542563,
+              "surface_pixels": 1104,
+              "observed_sides_m": [
+                0.043890832816750214,
+                0.056047400515539025
+              ],
+              "area_m2": 0.002459967085840963,
+              "top_fraction": 0.5446339017051154,
+              "yaw_mod_pi_rad": -1.2828170002158321
+            }
+          },
+          {
+            "kind": "rigid_grasp_inference",
+            "gap_m": 0.043721038092267246,
+            "offset_local_m": [
+              -0.004673317697399571,
+              -0.0027094751715434186,
+              0.00600780769913214
+            ]
+          }
+        ],
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.01665984180976626,
+        "final_height_m": 0.021844874683753773,
+        "speed_m_s": 2.1713747837110591e-10,
+        "max_lift_m": 0.26256990803207836
+      },
+      "passed": true,
+      "wall_s": 0.9373429999686778,
+      "observations": [
+        {
+          "kind": "camera",
+          "phase": "Observing tool",
+          "captured_s": 0.4000000000000003,
+          "latency_ms": 78.73979199212044,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.46826222841793635,
+              0.009992174645841637,
+              0.021853491465849556
+            ],
+            "fit_score": 0.9656101256924859,
+            "surface_pixels": 838,
+            "observed_sides_m": [
+              0.04390978757937508,
+              0.05566187638156794
+            ],
+            "area_m2": 0.002444101168184083,
+            "top_fraction": 0.4916864608076009,
+            "yaw_mod_pi_rad": -1.2740903539558603
+          }
+        },
+        {
+          "kind": "camera",
+          "phase": "Reobserving before grasp",
+          "captured_s": 2.319999999999966,
+          "latency_ms": 59.79670805390924,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.46826222841793635,
+              0.009992174645841637,
+              0.021853492787197303
+            ],
+            "fit_score": 0.9656101256924859,
+            "surface_pixels": 838,
+            "observed_sides_m": [
+              0.04390978757937508,
+              0.05566187638156794
+            ],
+            "area_m2": 0.002444101168184083,
+            "top_fraction": 0.49580838323353293,
+            "yaw_mod_pi_rad": -1.2740903539558603
+          }
+        },
+        {
+          "kind": "rigid_grasp_inference",
+          "gap_m": 0.0437195428034335,
+          "offset_local_m": [
+            -0.0037789629937424055,
+            -0.001491957201607712,
+            0.0018594158589595364
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "heldout-01",
+        "split": "heldout",
+        "seed": 88501,
+        "tool": "wrench",
+        "journey": "deliver",
+        "layout": {
+          "screwdriver": [
+            0.4638814290569744,
+            -0.22594186091009089,
+            -1.0468288193983555
+          ],
+          "wrench": [
+            0.418466051233937,
+            0.23251419605374793,
+            2.3071617395467356
+          ],
+          "hammer": [
+            0.43692961540156455,
+            0.011618206198079083,
+            0.5955859477068874
+          ]
+        },
+        "light": 0.905736942832882
+      },
+      "actor_outcome": {
+        "status": "released_unverified",
+        "message": "Released the tool; placement needs checking.",
+        "distance_m": null
+      },
+      "physics": {
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.0075112420715260815,
+        "max_lift_m": 0.2282916500063579,
+        "final_height_m": 0.02185041514120488,
+        "speed_m_s": 1.9520209399632503e-10,
+        "other_tool_disturbance_m": 0.001653811287655105
+      },
+      "hold": null,
+      "return": {
+        "actor_outcome": {
+          "status": "released_unverified",
+          "message": "Released the tool; placement needs checking.",
+          "distance_m": null
+        },
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 13.712000000001249,
+            "latency_ms": 48.75216702930629,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.6397937406352976,
+                -0.15255504616433233,
+                0.02192592715424735
+              ],
+              "fit_score": 0.9900274473272629,
+              "surface_pixels": 1121,
+              "observed_sides_m": [
+                0.043917412448567617,
+                0.055943214695503174
+              ],
+              "area_m2": 0.002456881233481182,
+              "top_fraction": 0.41063911213164944,
+              "yaw_mod_pi_rad": -0.8377580409572781
+            }
+          },
+          {
+            "kind": "camera",
+            "phase": "Reobserving before grasp",
+            "captured_s": 15.376000000001804,
+            "latency_ms": 47.68095904728398,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.6397937406352976,
+                -0.15255504616433233,
+                0.021927314434424125
+              ],
+              "fit_score": 0.9900274473272629,
+              "surface_pixels": 1121,
+              "observed_sides_m": [
+                0.043917412448567617,
+                0.055943214695503174
+              ],
+              "area_m2": 0.002456881233481182,
+              "top_fraction": 0.43653376729048005,
+              "yaw_mod_pi_rad": -0.8377580409572781
+            }
+          },
+          {
+            "kind": "rigid_grasp_inference",
+            "gap_m": 0.04375468249217758,
+            "offset_local_m": [
+              -0.0031660754515352753,
+              -0.004513873666899048,
+              0.006273530756596361
+            ]
+          }
+        ],
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.02129010497986867,
+        "final_height_m": 0.02185041514120492,
+        "speed_m_s": 1.8259493627455217e-10,
+        "max_lift_m": 0.27545426379828186
+      },
+      "passed": true,
+      "wall_s": 0.9233912500203587,
+      "observations": [
+        {
+          "kind": "camera",
+          "phase": "Observing tool",
+          "captured_s": 0.4000000000000003,
+          "latency_ms": 69.0376249840483,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.4236508422467141,
+              0.23829186066366487,
+              0.021926960035331344
+            ],
+            "fit_score": 0.9861531957697827,
+            "surface_pixels": 786,
+            "observed_sides_m": [
+              0.044076814869313446,
+              0.05588363085591125
+            ],
+            "area_m2": 0.0024631724514610526,
+            "top_fraction": 0.43837144450641385,
+            "yaw_mod_pi_rad": -0.8377580409572781
+          }
+        },
+        {
+          "kind": "camera",
+          "phase": "Reobserving before grasp",
+          "captured_s": 2.4159999999999555,
+          "latency_ms": 58.97691601421684,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.4236508473173843,
+              0.23829186522931678,
+              0.02192682335055459
+            ],
+            "fit_score": 0.9861543188810995,
+            "surface_pixels": 786,
+            "observed_sides_m": [
+              0.044076814869313446,
+              0.05588364450243072
+            ],
+            "area_m2": 0.002463173052956165,
+            "top_fraction": 0.4479804161566707,
+            "yaw_mod_pi_rad": -0.8377580409572781
+          }
+        },
+        {
+          "kind": "rigid_grasp_inference",
+          "gap_m": 0.04375135680680879,
+          "offset_local_m": [
+            -0.004160308512037267,
+            -0.0011832393037958752,
+            0.0017517215572006634
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "heldout-02",
+        "split": "heldout",
+        "seed": 88502,
+        "tool": "hammer",
+        "journey": "deliver",
+        "layout": {
+          "screwdriver": [
+            0.40504530511663234,
+            -0.22527408448426392,
+            -2.040968280854379
+          ],
+          "wrench": [
+            0.4243066988576561,
+            0.0020858306534919484,
+            3.063112040794186
+          ],
+          "hammer": [
+            0.4058711276144784,
+            0.23178118364860498,
+            -3.0724224850637367
+          ]
+        },
+        "light": 1.1877873053231207
+      },
+      "actor_outcome": {
+        "status": "released_unverified",
+        "message": "Released the tool; placement needs checking.",
+        "distance_m": null
+      },
+      "physics": {
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.01967627265443956,
+        "max_lift_m": 0.21627262409412054,
+        "final_height_m": 0.021880385438156232,
+        "speed_m_s": 2.1588359066314284e-10,
+        "other_tool_disturbance_m": 1.0693299612350911e-08
+      },
+      "hold": null,
+      "return": {
+        "actor_outcome": {
+          "status": "released_unverified",
+          "message": "Released the tool; placement needs checking.",
+          "distance_m": null
+        },
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 13.360000000001131,
+            "latency_ms": 48.867916979361326,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.6289964455619883,
+                -0.1442430599409292,
+                0.02190122245302295
+              ],
+              "fit_score": 0.8873506187196264,
+              "surface_pixels": 1092,
+              "observed_sides_m": [
+                0.04392701343492922,
+                0.05480707979946073
+              ],
+              "area_m2": 0.0024075113306801493,
+              "top_fraction": 0.39418476260581525,
+              "yaw_mod_pi_rad": 0.06981317007977328
+            }
+          },
+          {
+            "kind": "camera",
+            "phase": "Reobserving before grasp",
+            "captured_s": 15.024000000001687,
+            "latency_ms": 54.442291031591594,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.6289903357168058,
+                -0.14414260235570145,
+                0.02189965710836274
+              ],
+              "fit_score": 0.869694973933728,
+              "surface_pixels": 1048,
+              "observed_sides_m": [
+                0.04392518873855156,
+                0.05460587848082171
+              ],
+              "area_m2": 0.0023985735185045047,
+              "top_fraction": 0.3858208955223881,
+              "yaw_mod_pi_rad": 0.06981317007977328
+            }
+          },
+          {
+            "kind": "rigid_grasp_inference",
+            "gap_m": 0.04367538676517334,
+            "offset_local_m": [
+              0.0016317707986688267,
+              -0.0054692806022768005,
+              0.006236233615617115
+            ]
+          }
+        ],
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.011859187408343927,
+        "final_height_m": 0.021880385438156194,
+        "speed_m_s": 2.2137505194577984e-10,
+        "max_lift_m": 0.22885454571990743
+      },
+      "passed": true,
+      "wall_s": 0.8568077909876592,
+      "observations": [
+        {
+          "kind": "camera",
+          "phase": "Observing tool",
+          "captured_s": 0.4000000000000003,
+          "latency_ms": 63.55712498771027,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.41068669808485786,
+              0.23068402162181148,
+              0.021900663466427314
+            ],
+            "fit_score": 0.9929005087518067,
+            "surface_pixels": 770,
+            "observed_sides_m": [
+              0.04394134048068005,
+              0.055959560462606334
+            ],
+            "area_m2": 0.0024589380994365865,
+            "top_fraction": 0.3371937639198218,
+            "yaw_mod_pi_rad": 0.06981317007977328
+          }
+        },
+        {
+          "kind": "camera",
+          "phase": "Reobserving before grasp",
+          "captured_s": 2.0639999999999943,
+          "latency_ms": 54.91916701430455,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.4106866967192264,
+              0.23068404115125088,
+              0.021900829066262083
+            ],
+            "fit_score": 0.9929027145986355,
+            "surface_pixels": 770,
+            "observed_sides_m": [
+              0.04394134048068005,
+              0.05595959961686292
+            ],
+            "area_m2": 0.002458939819927106,
+            "top_fraction": 0.3494921514312096,
+            "yaw_mod_pi_rad": 0.06981317007977328
+          }
+        },
+        {
+          "kind": "rigid_grasp_inference",
+          "gap_m": 0.04367190684993347,
+          "offset_local_m": [
+            -0.001775494747514794,
+            -0.0044932299108536595,
+            0.0019365752063558411
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "heldout-03",
+        "split": "heldout",
+        "seed": 88503,
+        "tool": "screwdriver",
+        "journey": "deliver",
+        "layout": {
+          "screwdriver": [
+            0.45095471561838407,
+            -0.22632500266914618,
+            1.1226698621858295
+          ],
+          "wrench": [
+            0.4220823290119981,
+            0.22207065972428444,
+            0.28651155361967806
+          ],
+          "hammer": [
+            0.41170145633574645,
+            -0.00960949363696636,
+            -0.9431102519352481
+          ]
+        },
+        "light": 1.1784345014443682
+      },
+      "actor_outcome": {
+        "status": "released_unverified",
+        "message": "Released the tool; placement needs checking.",
+        "distance_m": null
+      },
+      "physics": {
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.010229583489859485,
+        "max_lift_m": 0.21100457451800378,
+        "final_height_m": 0.021844874683753738,
+        "speed_m_s": 2.1666047935891566e-10,
+        "other_tool_disturbance_m": 1.0318600374259553e-08
+      },
+      "hold": null,
+      "return": {
+        "actor_outcome": {
+          "status": "released_unverified",
+          "message": "Released the tool; placement needs checking.",
+          "distance_m": null
+        },
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 14.160000000001398,
+            "latency_ms": 52.75600001914427,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.6302294015770997,
+                -0.15721932368702768,
+                0.021851454545010182
+              ],
+              "fit_score": 0.9917904431677608,
+              "surface_pixels": 1105,
+              "observed_sides_m": [
+                0.04393762302219473,
+                0.05594610617572782
+              ],
+              "area_m2": 0.002458138922708809,
+              "top_fraction": 0.4533721898417985,
+              "yaw_mod_pi_rad": 1.1257373675363427
+            }
+          },
+          {
+            "kind": "camera",
+            "phase": "Reobserving before grasp",
+            "captured_s": 15.824000000001954,
+            "latency_ms": 58.45645803492516,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.6302294015770997,
+                -0.15721932368702768,
+                0.021851454545010182
+              ],
+              "fit_score": 0.9917904431677608,
+              "surface_pixels": 1105,
+              "observed_sides_m": [
+                0.04393762302219473,
+                0.05594610617572782
+              ],
+              "area_m2": 0.002458138922708809,
+              "top_fraction": 0.4533721898417985,
+              "yaw_mod_pi_rad": 1.1257373675363427
+            }
+          },
+          {
+            "kind": "rigid_grasp_inference",
+            "gap_m": 0.04371962265659364,
+            "offset_local_m": [
+              0.005369095109323568,
+              -0.00133859475471109,
+              0.0061199849602129605
+            ]
+          }
+        ],
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.017417969068206238,
+        "final_height_m": 0.021844874683753762,
+        "speed_m_s": 2.6572492297408316e-10,
+        "max_lift_m": 0.23187747686051058
+      },
+      "passed": true,
+      "wall_s": 0.9206706249970011,
+      "observations": [
+        {
+          "kind": "camera",
+          "phase": "Observing tool",
+          "captured_s": 0.4000000000000003,
+          "latency_ms": 67.68070801626891,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.4588310407480111,
+              -0.22894035204410834,
+              0.021851564088986496
+            ],
+            "fit_score": 0.9795665492660268,
+            "surface_pixels": 830,
+            "observed_sides_m": [
+              0.04382587462451796,
+              0.055889083921105254
+            ],
+            "area_m2": 0.0024493879848055213,
+            "top_fraction": 0.41143724696356276,
+            "yaw_mod_pi_rad": 1.1257373675363427
+          }
+        },
+        {
+          "kind": "camera",
+          "phase": "Reobserving before grasp",
+          "captured_s": 2.863999999999906,
+          "latency_ms": 57.382334023714066,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.4588312869390991,
+              -0.22894046947123367,
+              0.021851766899037582
+            ],
+            "fit_score": 0.9795942700062852,
+            "surface_pixels": 830,
+            "observed_sides_m": [
+              0.04382587462451796,
+              0.055889611544075735
+            ],
+            "area_m2": 0.0024494111083436746,
+            "top_fraction": 0.41331977630910016,
+            "yaw_mod_pi_rad": 1.1257373675363427
+          }
+        },
+        {
+          "kind": "rigid_grasp_inference",
+          "gap_m": 0.043718995179753896,
+          "offset_local_m": [
+            0.004729465706960616,
+            -0.0003999862730741916,
+            0.0029057305409650094
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "heldout-04",
+        "split": "heldout",
+        "seed": 88504,
+        "tool": "wrench",
+        "journey": "resume",
+        "layout": {
+          "screwdriver": [
+            0.4323676281294728,
+            0.23926176893808457,
+            -2.1220096313171264
+          ],
+          "wrench": [
+            0.4325721970664921,
+            3.860885985764416e-05,
+            -1.7595222948644658
+          ],
+          "hammer": [
+            0.45934905115736746,
+            -0.23970636275225704,
+            3.001997011898294
+          ]
+        },
+        "light": 1.0693350840742708
+      },
+      "actor_outcome": {
+        "status": "released_unverified",
+        "message": "Released the tool; placement needs checking.",
+        "distance_m": null
+      },
+      "physics": {
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.025641339049079358,
+        "max_lift_m": 0.20599186526170216,
+        "final_height_m": 0.021850415141204897,
+        "speed_m_s": 2.4393422986800434e-10,
+        "other_tool_disturbance_m": 7.920481420463408e-09
+      },
+      "hold": {
+        "duration_s": 0.608,
+        "joint_drift_rad": 0.005572546851492444,
+        "grip_retained": true,
+        "actual_tool_height_m": 0.2085010945908919
+      },
+      "return": {
+        "actor_outcome": {
+          "status": "released_unverified",
+          "message": "Released the tool; placement needs checking.",
+          "distance_m": null
+        },
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 14.192000000001409,
+            "latency_ms": 46.864916977938265,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.614736315910446,
+                -0.156517905357206,
+                0.021937461928731798
+              ],
+              "fit_score": 0.9878593235993657,
+              "surface_pixels": 1075,
+              "observed_sides_m": [
+                0.04393904973079514,
+                0.05589414335395604
+              ],
+              "area_m2": 0.002455935544489667,
+              "top_fraction": 0.6957671957671958,
+              "yaw_mod_pi_rad": 1.3875367553354923
+            }
+          },
+          {
+            "kind": "camera",
+            "phase": "Reobserving before grasp",
+            "captured_s": 15.856000000001965,
+            "latency_ms": 47.519167012069374,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.614736315910446,
+                -0.156517905357206,
+                0.021938221060865286
+              ],
+              "fit_score": 0.9878593235993657,
+              "surface_pixels": 1075,
+              "observed_sides_m": [
+                0.04393904973079514,
+                0.05589414335395604
+              ],
+              "area_m2": 0.002455935544489667,
+              "top_fraction": 0.7363253856942497,
+              "yaw_mod_pi_rad": 1.3875367553354923
+            }
+          },
+          {
+            "kind": "rigid_grasp_inference",
+            "gap_m": 0.04375084885619003,
+            "offset_local_m": [
+              0.005315035892915046,
+              0.00012130707043292044,
+              0.005565602145976145
+            ]
+          }
+        ],
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.005695683523389849,
+        "final_height_m": 0.021850415141204917,
+        "speed_m_s": 1.7608669662019147e-10,
+        "max_lift_m": 0.22801180525428705
+      },
+      "passed": true,
+      "wall_s": 0.9332052080426365,
+      "observations": [
+        {
+          "kind": "camera",
+          "phase": "Observing tool",
+          "captured_s": 0.4000000000000003,
+          "latency_ms": 69.29287500679493,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.43991841620405997,
+              0.00693250372367081,
+              0.0219360299927435
+            ],
+            "fit_score": 0.9887156544660126,
+            "surface_pixels": 800,
+            "observed_sides_m": [
+              0.04398965385914032,
+              0.05588698763174199
+            ],
+            "area_m2": 0.0024584492411503863,
+            "top_fraction": 0.7820136852394917,
+            "yaw_mod_pi_rad": 1.3875367553354923
+          }
+        },
+        {
+          "kind": "camera",
+          "phase": "Reobserving before grasp",
+          "captured_s": 2.255999999999973,
+          "latency_ms": 60.50066702300683,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.43991896137576736,
+              0.006932402682067226,
+              0.021936945314759107
+            ],
+            "fit_score": 0.9886064727824798,
+            "surface_pixels": 800,
+            "observed_sides_m": [
+              0.04398965385914032,
+              0.05588587871948891
+            ],
+            "area_m2": 0.002458400460484213,
+            "top_fraction": 0.8037190082644629,
+            "yaw_mod_pi_rad": 1.3875367553354923
+          }
+        },
+        {
+          "kind": "rigid_grasp_inference",
+          "gap_m": 0.043751433804393926,
+          "offset_local_m": [
+            0.003635079282769181,
+            -0.0013387179395564683,
+            0.000919049752967999
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "heldout-05",
+        "split": "heldout",
+        "seed": 88505,
+        "tool": "hammer",
+        "journey": "resume",
+        "layout": {
+          "screwdriver": [
+            0.4265461366699947,
+            1.3484061214140766e-05,
+            0.046770024072057215
+          ],
+          "wrench": [
+            0.4621731059371129,
+            -0.2413871449674329,
+            0.0774998281569994
+          ],
+          "hammer": [
+            0.41044864025827993,
+            0.23078645435563838,
+            -2.7064245567234497
+          ]
+        },
+        "light": 0.8938093991276677
+      },
+      "actor_outcome": {
+        "status": "released_unverified",
+        "message": "Released the tool; placement needs checking.",
+        "distance_m": null
+      },
+      "physics": {
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.021342247831816995,
+        "max_lift_m": 0.2102023609484404,
+        "final_height_m": 0.021880385438156232,
+        "speed_m_s": 2.1098399899274166e-10,
+        "other_tool_disturbance_m": 0.00414163232462746
+      },
+      "hold": {
+        "duration_s": 0.608,
+        "joint_drift_rad": 0.005661704333903117,
+        "grip_retained": true,
+        "actual_tool_height_m": 0.21312323355706048
+      },
+      "return": {
+        "actor_outcome": {
+          "status": "released_unverified",
+          "message": "Released the tool; placement needs checking.",
+          "distance_m": null
+        },
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 14.000000000001345,
+            "latency_ms": 56.185833003837615,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.6239507139525144,
+                -0.14609759815337767,
+                0.021900785145020384
+              ],
+              "fit_score": 0.9787180843505404,
+              "surface_pixels": 1059,
+              "observed_sides_m": [
+                0.04381063483310221,
+                0.055897941671009976
+              ],
+              "area_m2": 0.0024489243104706656,
+              "top_fraction": 0.38294744579198825,
+              "yaw_mod_pi_rad": 0.4276056667386108
+            }
+          },
+          {
+            "kind": "camera",
+            "phase": "Reobserving before grasp",
+            "captured_s": 15.6640000000019,
+            "latency_ms": 55.24054099805653,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.6238344927410651,
+                -0.1461542153711648,
+                0.02190129062354383
+              ],
+              "fit_score": 0.9750142288653917,
+              "surface_pixels": 1045,
+              "observed_sides_m": [
+                0.0437835938287528,
+                0.0558688754986445
+              ],
+              "area_m2": 0.0024461401525018097,
+              "top_fraction": 0.3788383277839438,
+              "yaw_mod_pi_rad": 0.41887902047863923
+            }
+          },
+          {
+            "kind": "rigid_grasp_inference",
+            "gap_m": 0.043672461657994356,
+            "offset_local_m": [
+              0.003461137284203479,
+              -0.004527435628700311,
+              0.006134394870030304
+            ]
+          }
+        ],
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.010404053419743136,
+        "final_height_m": 0.02360754357191811,
+        "speed_m_s": 0.0002988553720764985,
+        "max_lift_m": 0.22348185739713186
+      },
+      "passed": false,
+      "wall_s": 0.8811223339871503,
+      "observations": [
+        {
+          "kind": "camera",
+          "phase": "Observing tool",
+          "captured_s": 0.4000000000000003,
+          "latency_ms": 65.55304198991507,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.4145787074414845,
+              0.23205223016110094,
+              0.021899832341676605
+            ],
+            "fit_score": 0.9974585262319821,
+            "surface_pixels": 774,
+            "observed_sides_m": [
+              0.04397678872787253,
+              0.0559895697012864
+            ],
+            "area_m2": 0.002462241477717965,
+            "top_fraction": 0.37213833414515346,
+            "yaw_mod_pi_rad": 0.41887902047863923
+          }
+        },
+        {
+          "kind": "camera",
+          "phase": "Reobserving before grasp",
+          "captured_s": 2.0639999999999943,
+          "latency_ms": 56.65583297377452,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.4145771752270301,
+              0.23205555420394122,
+              0.021900937816986828
+            ],
+            "fit_score": 0.9972466339630287,
+            "surface_pixels": 774,
+            "observed_sides_m": [
+              0.04397922829915196,
+              0.05598186904546742
+            ],
+            "area_m2": 0.00246203939936384,
+            "top_fraction": 0.37213833414515346,
+            "yaw_mod_pi_rad": 0.41887902047863923
+          }
+        },
+        {
+          "kind": "rigid_grasp_inference",
+          "gap_m": 0.04367248430504586,
+          "offset_local_m": [
+            -0.00011532022102579249,
+            -0.004738946162997847,
+            0.002120218244371412
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "heldout-06",
+        "split": "heldout",
+        "seed": 88506,
+        "tool": "screwdriver",
+        "journey": "resume",
+        "layout": {
+          "screwdriver": [
+            0.42033803762992816,
+            0.23579399098545492,
+            1.9468600847551292
+          ],
+          "wrench": [
+            0.45188109994223746,
+            0.0004269118096508085,
+            2.871347355331758
+          ],
+          "hammer": [
+            0.4321305135778737,
+            -0.23880476169067125,
+            -0.5123054543762104
+          ]
+        },
+        "light": 1.1934009004795845
+      },
+      "actor_outcome": {
+        "status": "released_unverified",
+        "message": "Released the tool; placement needs checking.",
+        "distance_m": null
+      },
+      "physics": {
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.002653404912239871,
+        "max_lift_m": 0.24538207546821367,
+        "final_height_m": 0.021844874683753745,
+        "speed_m_s": 2.535294041439671e-10,
+        "other_tool_disturbance_m": 1.0547234897631102e-08
+      },
+      "hold": {
+        "duration_s": 0.608,
+        "joint_drift_rad": 0.005702122359663164,
+        "grip_retained": true,
+        "actual_tool_height_m": 0.21600142516480272
+      },
+      "return": {
+        "actor_outcome": {
+          "status": "released_unverified",
+          "message": "Released the tool; placement needs checking.",
+          "distance_m": null
+        },
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 14.864000000001633,
+            "latency_ms": 39.75216700928286,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.639132797672553,
+                -0.15751790033719076,
+                0.02185209183574382
+              ],
+              "fit_score": 0.9643059422208147,
+              "surface_pixels": 1116,
+              "observed_sides_m": [
+                0.043801416331723186,
+                0.0556955783370402
+              ],
+              "area_m2": 0.0024395452145768008,
+              "top_fraction": 0.5126999059266227,
+              "yaw_mod_pi_rad": -1.2042771838760873
+            }
+          },
+          {
+            "kind": "camera",
+            "phase": "Reobserving before grasp",
+            "captured_s": 16.528000000001718,
+            "latency_ms": 39.58699997747317,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.639132797672553,
+                -0.15751790033719076,
+                0.02185209183574382
+              ],
+              "fit_score": 0.9643059422208147,
+              "surface_pixels": 1116,
+              "observed_sides_m": [
+                0.043801416331723186,
+                0.0556955783370402
+              ],
+              "area_m2": 0.0024395452145768008,
+              "top_fraction": 0.5126999059266227,
+              "yaw_mod_pi_rad": -1.2042771838760873
+            }
+          },
+          {
+            "kind": "rigid_grasp_inference",
+            "gap_m": 0.043721466007736506,
+            "offset_local_m": [
+              -0.004433447567928014,
+              -0.003011648163474135,
+              0.006127780364218306
+            ]
+          }
+        ],
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.012378949164090337,
+        "final_height_m": 0.021844874683753734,
+        "speed_m_s": 2.564105026073829e-10,
+        "max_lift_m": 0.31261701462078073
+      },
+      "passed": true,
+      "wall_s": 0.9057629999588244,
+      "observations": [
+        {
+          "kind": "camera",
+          "phase": "Observing tool",
+          "captured_s": 0.4000000000000003,
+          "latency_ms": 66.86712498776615,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.42059130093975444,
+              0.2396351470461285,
+              0.021851485420258797
+            ],
+            "fit_score": 0.9744247052534093,
+            "surface_pixels": 784,
+            "observed_sides_m": [
+              0.04393948655397825,
+              0.05574808589865027
+            ],
+            "area_m2": 0.0024495422707537682,
+            "top_fraction": 0.41261357562800643,
+            "yaw_mod_pi_rad": -1.1955505376161157
+          }
+        },
+        {
+          "kind": "camera",
+          "phase": "Reobserving before grasp",
+          "captured_s": 2.7679999999999167,
+          "latency_ms": 57.52962495898828,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.4205917108353718,
+              0.23963530850830608,
+              0.0218515261389124
+            ],
+            "fit_score": 0.9743412190972391,
+            "surface_pixels": 784,
+            "observed_sides_m": [
+              0.04393948655397825,
+              0.05574720479831119
+            ],
+            "area_m2": 0.0024495035556572663,
+            "top_fraction": 0.4146079484425349,
+            "yaw_mod_pi_rad": -1.1955505376161157
+          }
+        },
+        {
+          "kind": "rigid_grasp_inference",
+          "gap_m": 0.043718899008425086,
+          "offset_local_m": [
+            -0.00398084082843369,
+            0.00034944351213866796,
+            0.001331783836320679
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "heldout-07",
+        "split": "heldout",
+        "seed": 88507,
+        "tool": "wrench",
+        "journey": "resume",
+        "layout": {
+          "screwdriver": [
+            0.4449220322503547,
+            0.22839966714867557,
+            1.6561257371074403
+          ],
+          "wrench": [
+            0.4275083101763098,
+            -0.22142117306101158,
+            2.5766703369314126
+          ],
+          "hammer": [
+            0.4461270309116159,
+            0.007967627834096328,
+            1.763554851972664
+          ]
+        },
+        "light": 0.9869440098418776
+      },
+      "actor_outcome": {
+        "status": "released_unverified",
+        "message": "Released the tool; placement needs checking.",
+        "distance_m": null
+      },
+      "physics": {
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.019362807903983464,
+        "max_lift_m": 0.2030907240073909,
+        "final_height_m": 0.021850415141204872,
+        "speed_m_s": 2.1451908628648866e-10,
+        "other_tool_disturbance_m": 8.84675882737135e-09
+      },
+      "hold": {
+        "duration_s": 0.608,
+        "joint_drift_rad": 0.0056895993757408725,
+        "grip_retained": true,
+        "actual_tool_height_m": 0.21027247410478161
+      },
+      "return": {
+        "actor_outcome": {
+          "status": "released_unverified",
+          "message": "Released the tool; placement needs checking.",
+          "distance_m": null
+        },
+        "observations": [
+          {
+            "kind": "camera",
+            "phase": "Observing tool",
+            "captured_s": 14.000000000001345,
+            "latency_ms": 58.83779202122241,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.6227503370899088,
+                -0.16873552687813984,
+                0.021929003915418986
+              ],
+              "fit_score": 0.9946891409929657,
+              "surface_pixels": 1089,
+              "observed_sides_m": [
+                0.04394698734267877,
+                0.05599497673639192
+              ],
+              "area_m2": 0.002460810533887808,
+              "top_fraction": 0.4950727358047865,
+              "yaw_mod_pi_rad": -0.5585053606381853
+            }
+          },
+          {
+            "kind": "camera",
+            "phase": "Reobserving before grasp",
+            "captured_s": 15.6640000000019,
+            "latency_ms": 56.80012499215081,
+            "prediction": {
+              "status": "observed",
+              "position_m": [
+                0.6227503370899088,
+                -0.16873552687813984,
+                0.02192851227513564
+              ],
+              "fit_score": 0.9946891409929657,
+              "surface_pixels": 1089,
+              "observed_sides_m": [
+                0.04394698734267877,
+                0.05599497673639192
+              ],
+              "area_m2": 0.002460810533887808,
+              "top_fraction": 0.484375,
+              "yaw_mod_pi_rad": -0.5585053606381853
+            }
+          },
+          {
+            "kind": "rigid_grasp_inference",
+            "gap_m": 0.04375491475420415,
+            "offset_local_m": [
+              -0.001887687373397253,
+              -0.005371266585168704,
+              0.006204390283349338
+            ]
+          }
+        ],
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.013675039566164907,
+        "final_height_m": 0.021850415141204893,
+        "speed_m_s": 2.1384336857153154e-10,
+        "max_lift_m": 0.22915602693541262
+      },
+      "passed": true,
+      "wall_s": 0.9364709579967894,
+      "observations": [
+        {
+          "kind": "camera",
+          "phase": "Observing tool",
+          "captured_s": 0.4000000000000003,
+          "latency_ms": 66.01087498711422,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.43217620995324435,
+              -0.22093675834204024,
+              0.021927982714738524
+            ],
+            "fit_score": 0.9883818919523255,
+            "surface_pixels": 794,
+            "observed_sides_m": [
+              0.04393344547774797,
+              0.05590394247179014
+            ],
+            "area_m2": 0.002456052808575551,
+            "top_fraction": 0.43722466960352424,
+            "yaw_mod_pi_rad": -0.5672320068981571
+          }
+        },
+        {
+          "kind": "camera",
+          "phase": "Reobserving before grasp",
+          "captured_s": 2.0639999999999943,
+          "latency_ms": 55.90416700579226,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.43217610558205555,
+              -0.22093669185025971,
+              0.02192683470226331
+            ],
+            "fit_score": 0.9883958065188871,
+            "surface_pixels": 794,
+            "observed_sides_m": [
+              0.043933692981298955,
+              0.05590394247179014
+            ],
+            "area_m2": 0.0024560666449998272,
+            "top_fraction": 0.44281524926686217,
+            "yaw_mod_pi_rad": -0.5672320068981571
+          }
+        },
+        {
+          "kind": "rigid_grasp_inference",
+          "gap_m": 0.04375383854031151,
+          "offset_local_m": [
+            -0.0008380364324296067,
+            -0.004665292465925864,
+            0.0025930736876048676
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "heldout-08",
+        "split": "heldout",
+        "seed": 88508,
+        "tool": "hammer",
+        "journey": "redirect",
+        "layout": {
+          "screwdriver": [
+            0.454300287078732,
+            -0.22578269560268943,
+            -1.24154217959762
+          ],
+          "wrench": [
+            0.4593455731513281,
+            -0.009479741479128957,
+            -0.759071036202152
+          ],
+          "hammer": [
+            0.40642955749141024,
+            0.22529832887687415,
+            -0.8485488035121147
+          ]
+        },
+        "light": 1.0644617208896008
+      },
+      "actor_outcome": {
+        "status": "released_unverified",
+        "message": "Released the tool; placement needs checking.",
+        "distance_m": null
+      },
+      "physics": {
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.012146264581308333,
+        "max_lift_m": 0.3062414087250395,
+        "final_height_m": 0.021880385438156198,
+        "speed_m_s": 1.2731090642217511e-15,
+        "other_tool_disturbance_m": 1.0163369556492566e-08
+      },
+      "hold": {
+        "duration_s": 0.608,
+        "joint_drift_rad": 0.005666545995459238,
+        "grip_retained": true,
+        "actual_tool_height_m": 0.21442971657256554
+      },
+      "return": null,
+      "passed": true,
+      "wall_s": 0.607992083998397,
+      "observations": [
+        {
+          "kind": "camera",
+          "phase": "Observing tool",
+          "captured_s": 0.4000000000000003,
+          "latency_ms": 73.5196250025183,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.41306832819898975,
+              0.23191496289793373,
+              0.02189989586223981
+            ],
+            "fit_score": 0.9914231370924194,
+            "surface_pixels": 773,
+            "observed_sides_m": [
+              0.04396295553496225,
+              0.05592223394760015
+            ],
+            "area_m2": 0.002458506684454102,
+            "top_fraction": 0.34643510054844606,
+            "yaw_mod_pi_rad": -0.8464846872172498
+          }
+        },
+        {
+          "kind": "camera",
+          "phase": "Reobserving before grasp",
+          "captured_s": 2.3519999999999626,
+          "latency_ms": 62.23041599150747,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.4130687834195012,
+              0.23191444164410024,
+              0.02189989586223981
+            ],
+            "fit_score": 0.9913640258808127,
+            "surface_pixels": 773,
+            "observed_sides_m": [
+              0.04396157146640674,
+              0.055922242854068216
+            ],
+            "area_m2": 0.002458429675790873,
+            "top_fraction": 0.34643510054844606,
+            "yaw_mod_pi_rad": -0.8464846872172498
+          }
+        },
+        {
+          "kind": "rigid_grasp_inference",
+          "gap_m": 0.043667751898530345,
+          "offset_local_m": [
+            -0.003661821707887415,
+            -0.001225689561540597,
+            0.0016331161295007116
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "heldout-09",
+        "split": "heldout",
+        "seed": 88509,
+        "tool": "screwdriver",
+        "journey": "redirect",
+        "layout": {
+          "screwdriver": [
+            0.43238605749558473,
+            0.011790608933770163,
+            0.9765610902906792
+          ],
+          "wrench": [
+            0.4053212127683882,
+            0.22511892172180709,
+            -0.1136687503100613
+          ],
+          "hammer": [
+            0.4469702180559271,
+            -0.23350605145735182,
+            -1.0368586770252728
+          ]
+        },
+        "light": 1.1998086037617022
+      },
+      "actor_outcome": {
+        "status": "released_unverified",
+        "message": "Released the tool; placement needs checking.",
+        "distance_m": null
+      },
+      "physics": {
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.00898589140687801,
+        "max_lift_m": 0.3048210268706938,
+        "final_height_m": 0.02184487468375374,
+        "speed_m_s": 3.268950745882478e-17,
+        "other_tool_disturbance_m": 1.0219013374093788e-08
+      },
+      "hold": {
+        "duration_s": 0.608,
+        "joint_drift_rad": 0.00555504078965674,
+        "grip_retained": true,
+        "actual_tool_height_m": 0.2114583880321005
+      },
+      "return": null,
+      "passed": true,
+      "wall_s": 0.6096164159826003,
+      "observations": [
+        {
+          "kind": "camera",
+          "phase": "Observing tool",
+          "captured_s": 0.4000000000000003,
+          "latency_ms": 65.35995798185468,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.43570322012528684,
+              0.0046006361225540415,
+              0.02185269030559761
+            ],
+            "fit_score": 0.9919228452734055,
+            "surface_pixels": 799,
+            "observed_sides_m": [
+              0.043934459576145835,
+              0.055952234066108275
+            ],
+            "area_m2": 0.002458231165772484,
+            "top_fraction": 0.43895671476137627,
+            "yaw_mod_pi_rad": 0.9773843811168246
+          }
+        },
+        {
+          "kind": "camera",
+          "phase": "Reobserving before grasp",
+          "captured_s": 2.0639999999999943,
+          "latency_ms": 56.03658297332004,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.43570296018657545,
+              0.004600811453428749,
+              0.021852700302014937
+            ],
+            "fit_score": 0.991959323879995,
+            "surface_pixels": 799,
+            "observed_sides_m": [
+              0.043934459576145835,
+              0.05595286115158671
+            ],
+            "area_m2": 0.002458258716434087,
+            "top_fraction": 0.4392837157246782,
+            "yaw_mod_pi_rad": 0.9773843811168246
+          }
+        },
+        {
+          "kind": "rigid_grasp_inference",
+          "gap_m": 0.04372040241858455,
+          "offset_local_m": [
+            0.0031067898866668363,
+            -0.002729737879259537,
+            0.001453306498685891
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "heldout-10",
+        "split": "heldout",
+        "seed": 88510,
+        "tool": "wrench",
+        "journey": "redirect",
+        "layout": {
+          "screwdriver": [
+            0.463561954090209,
+            -0.009661043538578594,
+            -2.166058202772179
+          ],
+          "wrench": [
+            0.4375313170529421,
+            0.2390591057756517,
+            0.9907627421015412
+          ],
+          "hammer": [
+            0.4098572825023083,
+            -0.23122343516653845,
+            -1.1832393327331747
+          ]
+        },
+        "light": 0.8549940532040132
+      },
+      "actor_outcome": {
+        "status": "released_unverified",
+        "message": "Released the tool; placement needs checking.",
+        "distance_m": null
+      },
+      "physics": {
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.00815196578271147,
+        "max_lift_m": 0.30207710129089677,
+        "final_height_m": 0.02185041514120489,
+        "speed_m_s": 2.0799268678877075e-10,
+        "other_tool_disturbance_m": 7.593292860005504e-09
+      },
+      "hold": {
+        "duration_s": 0.608,
+        "joint_drift_rad": 0.005715538123026054,
+        "grip_retained": true,
+        "actual_tool_height_m": 0.20987268555172595
+      },
+      "return": null,
+      "passed": true,
+      "wall_s": 0.6188982499879785,
+      "observations": [
+        {
+          "kind": "camera",
+          "phase": "Observing tool",
+          "captured_s": 0.4000000000000003,
+          "latency_ms": 67.93533300515264,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.4449116692474716,
+              0.23273997027831206,
+              0.021928182147321527
+            ],
+            "fit_score": 0.9791915258087841,
+            "surface_pixels": 805,
+            "observed_sides_m": [
+              0.043790807391507924,
+              0.05597864066469213
+            ],
+            "area_m2": 0.0024513498713859662,
+            "top_fraction": 0.4469739033870072,
+            "yaw_mod_pi_rad": 0.9948376736367681
+          }
+        },
+        {
+          "kind": "camera",
+          "phase": "Reobserving before grasp",
+          "captured_s": 2.0639999999999943,
+          "latency_ms": 58.348292019218206,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.44491169448963563,
+              0.2327400091478361,
+              0.021927542758276936
+            ],
+            "fit_score": 0.9792005553231928,
+            "surface_pixels": 805,
+            "observed_sides_m": [
+              0.04379090008469527,
+              0.05597864066469213
+            ],
+            "area_m2": 0.002451355060224593,
+            "top_fraction": 0.4753164556962025,
+            "yaw_mod_pi_rad": 0.9948376736367681
+          }
+        },
+        {
+          "kind": "rigid_grasp_inference",
+          "gap_m": 0.0437532090598286,
+          "offset_local_m": [
+            0.0024378177394714074,
+            -0.00406141884483986,
+            0.0029941510530885483
+          ]
+        }
+      ]
+    },
+    {
+      "case": {
+        "id": "heldout-11",
+        "split": "heldout",
+        "seed": 88511,
+        "tool": "hammer",
+        "journey": "redirect",
+        "layout": {
+          "screwdriver": [
+            0.40715421433216337,
+            -0.23588419922677237,
+            -0.0604392524130839
+          ],
+          "wrench": [
+            0.46258556935433526,
+            -0.004451594319445578,
+            -0.3051731201032095
+          ],
+          "hammer": [
+            0.4245022391639029,
+            0.238961457048053,
+            -2.6767108467929432
+          ]
+        },
+        "light": 1.1783344416585275
+      },
+      "actor_outcome": {
+        "status": "released_unverified",
+        "message": "Released the tool; placement needs checking.",
+        "distance_m": null
+      },
+      "physics": {
+        "lifted": true,
+        "placed": true,
+        "distance_m": 0.009501801911439995,
+        "max_lift_m": 0.3055284133620412,
+        "final_height_m": 0.021880385438156215,
+        "speed_m_s": 2.1110917965439288e-10,
+        "other_tool_disturbance_m": 1.0183821310263586e-08
+      },
+      "hold": {
+        "duration_s": 0.608,
+        "joint_drift_rad": 0.00567627030025708,
+        "grip_retained": true,
+        "actual_tool_height_m": 0.21245896074398313
+      },
+      "return": null,
+      "passed": true,
+      "wall_s": 0.6037494170013815,
+      "observations": [
+        {
+          "kind": "camera",
+          "phase": "Observing tool",
+          "captured_s": 0.4000000000000003,
+          "latency_ms": 65.37716696038842,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.4284233068036183,
+              0.23410522536055864,
+              0.021900984751650553
+            ],
+            "fit_score": 0.9951078847199473,
+            "surface_pixels": 792,
+            "observed_sides_m": [
+              0.04396230594465589,
+              0.05596862806477114
+            ],
+            "area_m2": 0.002460509950286123,
+            "top_fraction": 0.3795620437956204,
+            "yaw_mod_pi_rad": 0.4625122517784974
+          }
+        },
+        {
+          "kind": "camera",
+          "phase": "Reobserving before grasp",
+          "captured_s": 2.0639999999999943,
+          "latency_ms": 55.76424999162555,
+          "prediction": {
+            "status": "observed",
+            "position_m": [
+              0.4284233068036183,
+              0.23410522536055864,
+              0.02190096146693967
+            ],
+            "fit_score": 0.9951078847199473,
+            "surface_pixels": 792,
+            "observed_sides_m": [
+              0.04396230594465589,
+              0.05596862806477114
+            ],
+            "area_m2": 0.002460509950286123,
+            "top_fraction": 0.38016528925619836,
+            "yaw_mod_pi_rad": 0.4625122517784974
+          }
+        },
+        {
+          "kind": "rigid_grasp_inference",
+          "gap_m": 0.043672776646474294,
+          "offset_local_m": [
+            8.148150742130785e-05,
+            -0.00462388886760459,
+            0.00255478006280393
+          ]
+        }
+      ]
+    }
+  ],
+  "journey_summary": {
+    "fixture_sha256": "acb1b93171a78e0b1589f98a88187a077562749896a6985f7cd50ee359335e72",
+    "split": "heldout",
+    "cases": 12,
+    "physical_successes": 12,
+    "all_criteria_successes": 11,
+    "fresh_camera_return_count": 8,
+    "passed": false
+  },
+  "prior_partial_verifier": {
+    "summary": {
+      "fixture_sha256": "acb1b93171a78e0b1589f98a88187a077562749896a6985f7cd50ee359335e72",
+      "split": "heldout",
+      "cases": 12,
+      "physical_successes": 12,
+      "all_criteria_successes": 12,
+      "passed": true
+    },
+    "limitation": "Secondary-return disturbance not included; also regrasped 4 already-returned rack tools. Superseded by final full criteria."
+  },
+  "diagnostic_evaluator_only": [
+    {
+      "phase": "Approaching tool",
+      "actual_m": [
+        0.6237068178524399,
+        -0.14621508948550585,
+        0.021880385438156243
+      ],
+      "estimated_m": null,
+      "other_disturbance_mm": {
+        "screwdriver": 1.5057664447191221,
+        "wrench": 1.0161083252452602e-05
+      }
+    },
+    {
+      "phase": "Lowering gripper",
+      "actual_m": [
+        0.6237068181799653,
+        -0.14621508933912458,
+        0.021880385438156187
+      ],
+      "estimated_m": null,
+      "other_disturbance_mm": {
+        "screwdriver": 1.5057663728889012,
+        "wrench": 1.0183878987971145e-05
+      }
+    },
+    {
+      "phase": "Grasping",
+      "actual_m": [
+        0.6237068184971611,
+        -0.1462150891973598,
+        0.021880385438156246
+      ],
+      "estimated_m": null,
+      "other_disturbance_mm": {
+        "screwdriver": 1.5057663039943625,
+        "wrench": 1.0216578603267185e-05
+      }
+    },
+    {
+      "phase": "Lifting tool",
+      "actual_m": [
+        0.6189217086920342,
+        -0.14812642478445268,
+        0.021493667359824747
+      ],
+      "estimated_m": [
+        0.6229051522277149,
+        -0.1458865329921618,
+        0.02048354904281397
+      ],
+      "other_disturbance_mm": {
+        "screwdriver": 1.505766255666909,
+        "wrench": 1.0245232007579948e-05
+      }
+    },
+    {
+      "phase": "Moving to target",
+      "actual_m": [
+        0.6172556362913285,
+        -0.15209778670777763,
+        0.21468015313086533
+      ],
+      "estimated_m": [
+        0.6190478297004031,
+        -0.14511189665513918,
+        0.21262154316586282
+      ],
+      "other_disturbance_mm": {
+        "screwdriver": 1.5057661845196562,
+        "wrench": 1.0296124646686955e-05
+      }
+    },
+    {
+      "phase": "Placing tool",
+      "actual_m": [
+        0.41110953462529026,
+        0.2202577686511693,
+        0.2317094643927987
+      ],
+      "estimated_m": [
+        0.4113365981106943,
+        0.23064085332755052,
+        0.23345377808975853
+      ],
+      "other_disturbance_mm": {
+        "screwdriver": 1.5057661416220751,
+        "wrench": 1.0332916535406103e-05
+      }
+    },
+    {
+      "phase": "Releasing",
+      "actual_m": [
+        0.40838514490347744,
+        0.22516340796335876,
+        0.02509218962065107
+      ],
+      "estimated_m": null,
+      "other_disturbance_mm": {
+        "screwdriver": 4.60206436266216,
+        "wrench": 1.0330929463175284e-05
+      }
+    },
+    {
+      "phase": "Withdrawing gripper",
+      "actual_m": [
+        0.4061370706667775,
+        0.2252335335472389,
+        0.02362210559000553
+      ],
+      "estimated_m": null,
+      "other_disturbance_mm": {
+        "screwdriver": 4.31864557916533,
+        "wrench": 1.0298727507643395e-05
+      }
+    },
+    {
+      "phase": "Awaiting independent placement check",
+      "actual_m": [
+        0.4060531229117629,
+        0.2257113861893314,
+        0.023612716320922374
+      ],
+      "estimated_m": null,
+      "other_disturbance_mm": {
+        "screwdriver": 4.183208104892208,
+        "wrench": 1.0298050474885483e-05
+      }
+    }
+  ],
+  "perception": {
+    "pilot": {
+      "scope": "Rendered RGB, metric axial depth and known calibration/catalog; no state inputs.",
+      "dataset_fixture_sha256": "3c88327d24eefceaaec2769a80e4fc3860110c35e98c63c31c2bc2bfc02e46b4",
+      "split": "pilot",
+      "cases": 12,
+      "clear_cases": 12,
+      "clear_tool_count": 36,
+      "observed_clear_tools": 36,
+      "clear_coverage": 1.0,
+      "clear_median_error_m": 0.00010249503315735997,
+      "clear_p95_error_m": 0.0004203775562968721,
+      "maximum_error_m": 0.0005294611981474232,
+      "confident_occluded_cases": [],
+      "identity_confusions": [],
+      "localization_median_ms": 46.30660399561748,
+      "localization_p95_ms": 59.173792018555105,
+      "criteria": {
+        "clear_detection_coverage_min": 0.95,
+        "clear_position_p95_max_m": 0.005,
+        "occluded_handle_must_not_be_confident": true,
+        "confidence_is_not_probability": true
+      },
+      "passed": true
+    },
+    "heldout": {
+      "scope": "Rendered RGB, metric axial depth and known calibration/catalog; no state inputs.",
+      "dataset_fixture_sha256": "3c88327d24eefceaaec2769a80e4fc3860110c35e98c63c31c2bc2bfc02e46b4",
+      "split": "heldout",
+      "cases": 36,
+      "clear_cases": 24,
+      "clear_tool_count": 72,
+      "observed_clear_tools": 72,
+      "clear_coverage": 1.0,
+      "clear_median_error_m": 9.82155806819378e-05,
+      "clear_p95_error_m": 0.0002565886867436638,
+      "maximum_error_m": 0.0004040145053907031,
+      "confident_occluded_cases": [],
+      "identity_confusions": [],
+      "localization_median_ms": 46.506937011145055,
+      "localization_p95_ms": 53.680957993492484,
+      "criteria": {
+        "clear_detection_coverage_min": 0.95,
+        "clear_position_p95_max_m": 0.005,
+        "occluded_handle_must_not_be_confident": true,
+        "confidence_is_not_probability": true
+      },
+      "passed": true
+    }
+  },
+  "pipeline": {
+    "scope": "30 sequential captures of one stationary physics scene; no motion, IPC or disk IO.",
+    "scene_preparation_ms": 296.86020797817037,
+    "first_sample": {
+      "capture_ms": 35.0478749605827,
+      "localization_ms": 59.78687503375113,
+      "pipeline_ms": 94.83474999433383,
+      "observed": [
+        "screwdriver",
+        "hammer",
+        "wrench"
+      ]
+    },
+    "rows": [
+      {
+        "capture_ms": 35.0478749605827,
+        "localization_ms": 59.78687503375113,
+        "pipeline_ms": 94.83474999433383,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 14.348083001095802,
+        "localization_ms": 50.42358301579952,
+        "pipeline_ms": 64.77166601689532,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 10.264041018672287,
+        "localization_ms": 50.84754200652242,
+        "pipeline_ms": 61.111583025194705,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.108959009405226,
+        "localization_ms": 50.56683300063014,
+        "pipeline_ms": 58.675792010035366,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 7.908834028057754,
+        "localization_ms": 51.45729100331664,
+        "pipeline_ms": 59.366125031374395,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 7.367875019554049,
+        "localization_ms": 49.736417015083134,
+        "pipeline_ms": 57.10429203463718,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 7.787834038026631,
+        "localization_ms": 51.80524999741465,
+        "pipeline_ms": 59.59308403544128,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 9.45866695838049,
+        "localization_ms": 53.86491701938212,
+        "pipeline_ms": 63.32358397776261,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 7.697042019572109,
+        "localization_ms": 53.525582945439965,
+        "pipeline_ms": 61.22262496501207,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 7.49020796502009,
+        "localization_ms": 52.55970900179818,
+        "pipeline_ms": 60.04991696681827,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 7.551250047981739,
+        "localization_ms": 52.968916948884726,
+        "pipeline_ms": 60.520166996866465,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.015165978576988,
+        "localization_ms": 52.59199999272823,
+        "pipeline_ms": 60.60716597130522,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.57404200360179,
+        "localization_ms": 52.37749998923391,
+        "pipeline_ms": 60.9515419928357,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 7.478541985619813,
+        "localization_ms": 50.14183302409947,
+        "pipeline_ms": 57.62037500971928,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.740457997191697,
+        "localization_ms": 51.56162497587502,
+        "pipeline_ms": 60.30208297306672,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 11.071667016949505,
+        "localization_ms": 50.41454097954556,
+        "pipeline_ms": 61.48620799649507,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.466250030323863,
+        "localization_ms": 50.7451249868609,
+        "pipeline_ms": 59.211375017184764,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 7.496000034734607,
+        "localization_ms": 50.00829097116366,
+        "pipeline_ms": 57.50429100589827,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.520333038177341,
+        "localization_ms": 50.30395899666473,
+        "pipeline_ms": 58.824292034842074,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.035041973926127,
+        "localization_ms": 50.72941700927913,
+        "pipeline_ms": 58.76445898320526,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.426375046838075,
+        "localization_ms": 50.12312496546656,
+        "pipeline_ms": 58.549500012304634,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.081500011030585,
+        "localization_ms": 49.84016600064933,
+        "pipeline_ms": 57.92166601167992,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.30166699597612,
+        "localization_ms": 53.42004098929465,
+        "pipeline_ms": 61.72170798527077,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 7.576624979265034,
+        "localization_ms": 51.938624994363636,
+        "pipeline_ms": 59.51524997362867,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 9.99645801493898,
+        "localization_ms": 50.91770796570927,
+        "pipeline_ms": 60.91416598064825,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.132292015943676,
+        "localization_ms": 50.12529098894447,
+        "pipeline_ms": 58.25758300488815,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.3360830321908,
+        "localization_ms": 50.08924996946007,
+        "pipeline_ms": 58.42533300165087,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 8.615958970040083,
+        "localization_ms": 51.1632080306299,
+        "pipeline_ms": 59.779167000669986,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 9.961083007510751,
+        "localization_ms": 50.56645895820111,
+        "pipeline_ms": 60.52754196571186,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      {
+        "capture_ms": 6.933333992492408,
+        "localization_ms": 51.84412497328594,
+        "pipeline_ms": 58.77745896577835,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      }
+    ],
+    "capture_ms": {
+      "median": 8.216979505959898,
+      "p95": 14.348083001095802
+    },
+    "localization_ms": {
+      "median": 50.88262498611584,
+      "p95": 53.86491701938212
+    },
+    "pipeline_ms": {
+      "median": 59.68612551805563,
+      "p95": 64.77166601689532
+    }
+  },
+  "timing_context": "Serialized after all experiment/test handles terminal; public app idle. Excludes moving-arm operation, IPC, disk IO, speech and audible onset. Single stationary scene, 30 sequential actual captures.",
+  "earlier_timing": {
+    "concurrent_physics": {
+      "scope": "30 sequential captures of one stationary physics scene; no motion, IPC or disk IO.",
+      "scene_preparation_ms": 327.0378750166856,
+      "first_sample": {
+        "capture_ms": 251.32133398437873,
+        "localization_ms": 64.02954104123637,
+        "pipeline_ms": 315.3508750256151,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      "rows": [
+        {
+          "capture_ms": 251.32133398437873,
+          "localization_ms": 64.02954104123637,
+          "pipeline_ms": 315.3508750256151,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 11.000833008438349,
+          "localization_ms": 53.61887498293072,
+          "pipeline_ms": 64.61970799136907,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 10.48020803136751,
+          "localization_ms": 52.756041986867785,
+          "pipeline_ms": 63.236250018235296,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.463791989721358,
+          "localization_ms": 51.38995801098645,
+          "pipeline_ms": 58.853750000707805,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.168708998709917,
+          "localization_ms": 52.372500009369105,
+          "pipeline_ms": 60.54120900807902,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.494084013160318,
+          "localization_ms": 52.94979101745412,
+          "pipeline_ms": 60.443875030614436,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.454667007550597,
+          "localization_ms": 53.895915974862874,
+          "pipeline_ms": 61.35058298241347,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.624124991707504,
+          "localization_ms": 54.44366700248793,
+          "pipeline_ms": 62.06779199419543,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.497875009197742,
+          "localization_ms": 53.37170802522451,
+          "pipeline_ms": 61.86958303442225,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 9.976457979064435,
+          "localization_ms": 50.700000021606684,
+          "pipeline_ms": 60.67645800067112,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.500249950680882,
+          "localization_ms": 52.81070800265297,
+          "pipeline_ms": 60.310957953333855,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.475292019080371,
+          "localization_ms": 50.057082960847765,
+          "pipeline_ms": 57.532374979928136,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.698875037021935,
+          "localization_ms": 52.73520800983533,
+          "pipeline_ms": 60.43408304685727,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 11.516584025230259,
+          "localization_ms": 53.13741596182808,
+          "pipeline_ms": 64.65399998705834,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.439375029411167,
+          "localization_ms": 52.698624960612506,
+          "pipeline_ms": 61.13799999002367,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 6.815958011429757,
+          "localization_ms": 52.17204202199355,
+          "pipeline_ms": 58.988000033423305,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.979083970189095,
+          "localization_ms": 51.66008300147951,
+          "pipeline_ms": 60.6391669716686,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 11.613417009357363,
+          "localization_ms": 54.23762497957796,
+          "pipeline_ms": 65.85104198893532,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.135791984386742,
+          "localization_ms": 52.78399999951944,
+          "pipeline_ms": 60.91979198390618,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.568833010736853,
+          "localization_ms": 51.20295804226771,
+          "pipeline_ms": 58.77179105300456,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.601250021252781,
+          "localization_ms": 51.75816698465496,
+          "pipeline_ms": 59.359417005907744,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.974207983352244,
+          "localization_ms": 51.987042010296136,
+          "pipeline_ms": 59.96124999364838,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.6767500140704215,
+          "localization_ms": 54.39883400686085,
+          "pipeline_ms": 62.075584020931274,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 10.382667009253055,
+          "localization_ms": 52.85329098114744,
+          "pipeline_ms": 63.23595799040049,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.4747499893419445,
+          "localization_ms": 52.46749997604638,
+          "pipeline_ms": 59.94224996538833,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.421375019475818,
+          "localization_ms": 52.468416979536414,
+          "pipeline_ms": 59.88979199901223,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.558333978522569,
+          "localization_ms": 50.607083016075194,
+          "pipeline_ms": 58.16541699459776,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.801875006407499,
+          "localization_ms": 51.343082974199206,
+          "pipeline_ms": 59.144957980606705,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.536582998000085,
+          "localization_ms": 50.99912500008941,
+          "pipeline_ms": 58.53570799808949,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.612167042680085,
+          "localization_ms": 52.891791972797364,
+          "pipeline_ms": 60.50395901547745,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        }
+      ],
+      "capture_ms": {
+        "median": 7.687812525546178,
+        "p95": 11.613417009357363
+      },
+      "localization_ms": {
+        "median": 52.71691648522392,
+        "p95": 54.44366700248793
+      },
+      "pipeline_ms": {
+        "median": 60.522584011778235,
+        "p95": 65.85104198893532
+      }
+    },
+    "concurrent_regressions": {
+      "scope": "30 sequential captures of one stationary physics scene; no motion, IPC or disk IO.",
+      "scene_preparation_ms": 294.7122500045225,
+      "first_sample": {
+        "capture_ms": 45.63116701319814,
+        "localization_ms": 57.775458029937,
+        "pipeline_ms": 103.40662504313514,
+        "observed": [
+          "screwdriver",
+          "hammer",
+          "wrench"
+        ]
+      },
+      "rows": [
+        {
+          "capture_ms": 45.63116701319814,
+          "localization_ms": 57.775458029937,
+          "pipeline_ms": 103.40662504313514,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 15.680292039178312,
+          "localization_ms": 50.6728749605827,
+          "pipeline_ms": 66.35316699976102,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 10.047084011603147,
+          "localization_ms": 48.8294159877114,
+          "pipeline_ms": 58.87649999931455,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.568790984805673,
+          "localization_ms": 49.820458982139826,
+          "pipeline_ms": 57.3892499669455,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 9.552458010148257,
+          "localization_ms": 49.35720900539309,
+          "pipeline_ms": 58.909667015541345,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 10.676249978132546,
+          "localization_ms": 50.47033302253112,
+          "pipeline_ms": 61.14658300066367,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 9.109666978474706,
+          "localization_ms": 49.51866704504937,
+          "pipeline_ms": 58.628334023524076,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.751292014494538,
+          "localization_ms": 49.52599998796359,
+          "pipeline_ms": 58.277292002458125,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.498583978507668,
+          "localization_ms": 49.51920796884224,
+          "pipeline_ms": 58.017791947349906,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.767666993662715,
+          "localization_ms": 50.57212500832975,
+          "pipeline_ms": 59.339792001992464,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.919207972008735,
+          "localization_ms": 48.872292041778564,
+          "pipeline_ms": 56.7915000137873,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.906624978408217,
+          "localization_ms": 51.22950003715232,
+          "pipeline_ms": 60.13612501556054,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 10.317750042304397,
+          "localization_ms": 51.5133339795284,
+          "pipeline_ms": 61.831084021832794,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.8678749850951135,
+          "localization_ms": 54.01824996806681,
+          "pipeline_ms": 61.886124953161925,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.696874963585287,
+          "localization_ms": 53.59374999534339,
+          "pipeline_ms": 61.290624958928674,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 10.094124998431653,
+          "localization_ms": 53.416292008478194,
+          "pipeline_ms": 63.51041700690985,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.137041993904859,
+          "localization_ms": 50.7370830164291,
+          "pipeline_ms": 58.874125010333955,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 9.098124981392175,
+          "localization_ms": 49.28400000790134,
+          "pipeline_ms": 58.382124989293516,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.87716603372246,
+          "localization_ms": 50.67500000586733,
+          "pipeline_ms": 58.55216603958979,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.976958004292101,
+          "localization_ms": 49.55441696802154,
+          "pipeline_ms": 57.53137497231364,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.27529199887067,
+          "localization_ms": 50.40429101791233,
+          "pipeline_ms": 58.679583016783,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 11.321916012093425,
+          "localization_ms": 50.14304199721664,
+          "pipeline_ms": 61.46495800931007,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 9.768166986759752,
+          "localization_ms": 52.81366599956527,
+          "pipeline_ms": 62.581832986325026,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.291208010632545,
+          "localization_ms": 50.01570796594024,
+          "pipeline_ms": 58.30691597657278,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 10.167833010200411,
+          "localization_ms": 50.52841699216515,
+          "pipeline_ms": 60.69625000236556,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 13.023292005527765,
+          "localization_ms": 49.424625001847744,
+          "pipeline_ms": 62.44791700737551,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 8.450541994534433,
+          "localization_ms": 50.79683300573379,
+          "pipeline_ms": 59.24737500026822,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 11.250375013332814,
+          "localization_ms": 49.41829101881012,
+          "pipeline_ms": 60.66866603214294,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 7.760624983347952,
+          "localization_ms": 50.36995798582211,
+          "pipeline_ms": 58.130582969170064,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        },
+        {
+          "capture_ms": 11.009250010829419,
+          "localization_ms": 49.91699999663979,
+          "pipeline_ms": 60.92625000746921,
+          "observed": [
+            "screwdriver",
+            "hammer",
+            "wrench"
+          ]
+        }
+      ],
+      "capture_ms": {
+        "median": 9.002374979900196,
+        "p95": 15.680292039178312
+      },
+      "localization_ms": {
+        "median": 50.38712450186722,
+        "p95": 54.01824996806681
+      },
+      "pipeline_ms": {
+        "median": 59.29358350113034,
+        "p95": 66.35316699976102
+      }
+    }
+  },
+  "validation": {
+    "focused_tests_passed": 17,
+    "runtime_controller_changed": false,
+    "dependencies_changed": false,
+    "hardware_readiness_proven": false,
+    "full_journey_gate_passed": false,
+    "lab_full_tests_passed": 158,
+    "lab_existing_warnings": 3,
+    "lab_ruff_passed": true,
+    "lab_format_passed": true,
+    "upstream_files_unchanged": 46,
+    "fork_full_tests_passed": 139,
+    "fork_existing_warnings": 1,
+    "fork_ruff_passed": true,
+    "fork_format_passed": true
+  }
+}

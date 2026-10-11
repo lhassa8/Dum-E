@@ -93,8 +93,10 @@ def tool_scene_xml():
 
 
 class ToolWorkbench(Workbench):
-    def __init__(self, seed=42):
-        super().__init__(seed, xml=tool_scene_xml(), objects=TOOLS, targets=HANDOFF)
+    def __init__(self, seed=42, xml=None):
+        super().__init__(
+            seed, xml=tool_scene_xml() if xml is None else xml, objects=TOOLS, targets=HANDOFF
+        )
         # The vendor's positional gripper servo produces only ~2.3 N in these
         # handles. Double its stiffness (and scale damping by sqrt(2)) to keep
         # an asymmetric tool from slipping during a redirected carry. Preserve

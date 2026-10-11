@@ -147,19 +147,34 @@ confirmed cancellation and settled joints; room-dependent timing can differ.
 
 ## Structure and provenance
 
-The optional offline camera experiment uses actual simulated RGB/depth frames to
-locate the current primitive tool handles. It finds all 72 tools in 24 held-out
-clear layouts (p95 error 0.67mm), withholds obscured/ambiguous handles, and takes
-32ms median for capture plus localization. It assumes known handle colors/shapes
-and calibration; it is not yet connected to the public arm controller. See
-`docs/camera-perception-audit.md` for assumptions, the retained pilot outlier and
-reproduction. No webcam, vision model download or extra dependency is required:
+The optional camera experiment uses actual simulated RGB/depth to locate primitive
+tool handles. D1's historical baseline was 0.67mm p95 position error / 32ms median
+capture-to-estimate. D2's geometric fitter improves held-out p95 to 0.257mm while
+taking about 60ms. It assumes known colors, handle dimensions and calibration;
+it is not arbitrary real-tool recognition. See `docs/camera-perception-audit.md`
+and `docs/camera-delivery-audit.md` for versioned evidence and limitations.
+No webcam, model download or extra dependency is required:
 
 ```sh
 uv run --locked python scripts/generate_camera_dataset.py runs/camera-data-new
 uv run --locked python scripts/benchmark_perception.py runs/camera-data-new runs/camera-check-new --split heldout
 uv run --locked python scripts/benchmark_camera_pipeline.py runs/camera-timing-new
 ```
+
+D2 also adds a separate camera-informed contact controller. Images and robot
+telemetry guide movement; simulator truth is restricted to an external judge.
+All 12 varied initial moves and 8 fresh-camera returns physically place the tool,
+but the full journey passes only 11/12 cases: a hammer return nudges its neighbor
+4.14mm, beyond the unchanged 4mm limit. A straight hammer pilot is refused as a
+weak fit. **This controller remains experimental and is not used by the public
+voice app.** It reports release as unverified and has limited held-only resume.
+
+```sh
+uv run --locked python scripts/verify_camera_delivery.py runs/camera-journeys-new --fixture fixtures/camera_delivery_cases.json --split heldout --return-after-delivery
+```
+
+Expect the documented failing full-journey gate in this version. The next fix
+addresses carried-tool drift; green unit tests do not establish full acceptance.
 
 `src/physical_ai_lab/assistant`: MuJoCo scene, bounded local-model interpretation,
 controller and physics observation server. `src/physical_ai_lab/dume`: original

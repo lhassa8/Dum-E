@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import mujoco
 import numpy as np
 
-from physical_ai_lab.assistant.perception import CameraCalibration, RGBDFrame
+from physical_ai_lab.assistant.perception import CameraCalibration, CameraSample, RGBDFrame
 from physical_ai_lab.assistant.scene import Workbench
 from physical_ai_lab.assistant.tool_scene import HANDOFF, TOOLS, tool_scene_xml
 
@@ -49,12 +49,11 @@ def camera_scene_xml(case):
     return ET.tostring(root, encoding="unicode")
 
 
-class CameraDatasetScene:
-    def __init__(self, case, width=640, height=480):
-        self.bench = Workbench(
-            seed=case["seed"], xml=camera_scene_xml(case), objects=TOOLS, targets=HANDOFF
-        )
-        self.bench.model.vis.headlight.diffuse[:] *= case.get("light", 1)
+class CameraSensor:
+    """Rendered sensor port; only pixels, calibration and capture time leave it."""
+
+    def __init__(self, bench, width=640, height=480):
+        self.bench = bench
         self.renderer = mujoco.Renderer(self.bench.model, height=height, width=width)
         self.camera_id = self.bench.model.camera("workbench_camera").id
         self.calibration = CameraCalibration(
@@ -75,6 +74,22 @@ class CameraDatasetScene:
         self.renderer.disable_depth_rendering()
         return RGBDFrame(rgb, depth, self.calibration)
 
+    def capture_timed(self):
+        captured_s = float(self.bench.data.time)
+        return CameraSample(self.capture(), captured_s)
+
+    def close(self):
+        self.renderer.close()
+
+
+class CameraDatasetScene(CameraSensor):
+    def __init__(self, case, width=640, height=480):
+        bench = Workbench(
+            seed=case["seed"], xml=camera_scene_xml(case), objects=TOOLS, targets=HANDOFF
+        )
+        bench.model.vis.headlight.diffuse[:] *= case.get("light", 1)
+        super().__init__(bench, width, height)
+
     def annotations(self):
         """Privileged evaluation labels, never part of RGBDFrame."""
         self.renderer.enable_segmentation_rendering()
@@ -91,5 +106,5 @@ class CameraDatasetScene:
         return labels
 
     def close(self):
-        self.renderer.close()
+        super().close()
         self.bench.close()

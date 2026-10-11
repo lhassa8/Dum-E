@@ -77,6 +77,12 @@ class RGBDFrame:
             raise ValueError("Depth must contain floating point meters")
 
 
+@dataclass(frozen=True)
+class CameraSample:
+    frame: RGBDFrame
+    captured_s: float  # Same clock as the robot port; simulation time in MuJoCo.
+
+
 def components(mask):
     """Four-connected pixel islands without adding a vision dependency."""
     seen = np.zeros(mask.shape, dtype=bool)
@@ -133,16 +139,42 @@ def locate_tools(frame):
             top_points = points[np.abs(points[:, 2] - top) < 0.001]
             if len(top_points) < 40:
                 continue
+            density = len(top_points) / max(len(points), 1)
+            # Color supplies identity seeds; coplanar depth supplies geometry.
+            # Specular edge pixels can lose the handle's material hue. Expand
+            # only through a connected measured plane, never an inferred edge.
+            plane = valid & (np.abs(cloud[..., 2] - top) < 0.001)
+            seed = np.zeros(valid.shape, dtype=bool)
+            seed[pixels[:, 0], pixels[:, 1]] = True
+            patches = list(components(plane))
+            if patches:
+                patch = max(patches, key=lambda p: seed[p[:, 0], p[:, 1]].sum())
+                if seed[patch[:, 0], patch[:, 1]].sum() >= 40:
+                    top_points = cloud[patch[:, 0], patch[:, 1]]
             xy = top_points[:, :2]
-            _, axes = np.linalg.eigh(np.cov(xy.T))
-            projected = xy @ axes
-            low, high = np.quantile(projected, [0.01, 0.99], axis=0)
+            # PCA depends on pixel density and perspective; it can rotate a
+            # rectangular face even when its edges are clear. Fit the enclosing
+            # rectangle instead, using only the measured top-face points.
+            angles = np.deg2rad(np.arange(0, 90, 0.5))
+            c, s = np.cos(angles), np.sin(angles)
+            projections = np.stack(
+                [xy[:, 0, None] * c + xy[:, 1, None] * s, -xy[:, 0, None] * s + xy[:, 1, None] * c],
+                axis=-1,
+            )
+            bounds = np.quantile(projections, [0.001, 0.999], axis=0)
+            index = np.argmin(np.prod(bounds[1] - bounds[0], axis=-1))
+            axes = np.array([[c[index], -s[index]], [s[index], c[index]]])
+            low, high = bounds[:, index]
             sides = np.sort(high - low)
             if not (0.035 < sides[0] < 0.050 and 0.048 < sides[1] < 0.065):
                 continue
             center = ((low + high) / 2) @ axes.T
+            # Handle local Y is the longer (56mm) side. The sign remains
+            # ambiguous by 180 degrees, which a parallel gripper does not need.
+            long_axis = axes[:, np.argmax(high - low)]
+            yaw = float(np.arctan2(long_axis[1], long_axis[0]) - np.pi / 2)
+            yaw = float((yaw + np.pi / 2) % np.pi - np.pi / 2)
             area = np.prod(sides)
-            density = len(top_points) / max(len(points), 1)
             score = float(np.exp(-np.linalg.norm(sides - [0.044, 0.056]) / 0.01))
             candidates.append(
                 {
@@ -152,6 +184,7 @@ def locate_tools(frame):
                     "observed_sides_m": sides.tolist(),
                     "area_m2": float(area),
                     "top_fraction": density,
+                    "yaw_mod_pi_rad": yaw,
                 }
             )
         if len(candidates) == 1:

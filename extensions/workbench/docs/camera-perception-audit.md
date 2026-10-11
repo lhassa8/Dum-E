@@ -1,5 +1,10 @@
 # Simulated camera perception baseline — October 11, 2026
 
+Historical D1 baseline at commit d6c5b1f. The newer geometric fitter and separate
+physical manipulation experiment are documented in [D2](camera-delivery-audit.md).
+Current reproduction commands use that newer fitter; this report and its evidence
+retain the original measured results.
+
 The first camera-only localizer works on the current simplified tool models.
 On 24 held-out clear layouts it finds all 72 tools with 0.48mm median / 0.67mm
 p95 position error. It withholds all 12 deliberately obscured handles. Actual

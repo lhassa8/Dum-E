@@ -469,3 +469,61 @@ Next active slice D2 — camera estimates guide actual pickup:
   No webcam/idle microphone/real actuator or new model required for this slice.
   D1 does not complete camera operation, recovery, learning, acoustic/noise,
   hardware adapter/plan or the required human live demonstration. Goal active.
+
+D2 execution — camera-informed physical actor, October11:
+- Previous goal turn: progress. D1 tested optical baseline published at fork
+  d6c5b1f5c67addd9c045f1ec99497af841617733/root4f14055; exact remote verified.
+- [O] Actor receives timestamped RGBD + narrow robot joints/TCP/gap/clock port.
+  It has no bench/model/true tool positions; actual tests deny observe and
+  support-height access while all3tools physically lift/place. Outcome judge
+  remains separate and actor reports released_unverified, never success.
+- [D] Provisional motion gates: fit>=.8, age<=.25 simulation seconds, finite
+  tabletop pose/yaw; no missing/ambiguous/cached/NaN fallback. Known handle
+  dimensions/colors, tabletop faces and catalog clearance remain assumptions.
+  No hardware/webcam/model/dependency or public voice/controller change.
+- Frozen15cases (3pilot,12varied) before first actor; SHA
+  acb1b93171a78e0b1589f98a88187a077562749896a6985f7cd50ee359335e72.
+  Original lift80mm,placement35mm,height40mm,speed30mm/s,disturbance4mm
+  preserved; hold608ms/gripretained/jointdrift<.03rad and95%journey gate.
+- First pilot0/3refused; rectangle-only revision0/3refused. Actual RGB/depth
+  diagnostic shows highlights lose material hue; PCA/partial edge geometry
+  biases shape. Changed hypothesis to color identity seeds plus connected
+  measured depth plane and minimum-area rectangle. Pilot2/3physical passes;
+  straight hammer fit.768stillrefused. No motion-gate lowering.
+- New fitter passes untouched D1judge72/72clear,p95.257mm,max.404mm,12/12
+  obscured withheld/noidentityconfusion; old5.29mmoutlier now.10mm, pilot
+  maximum.529mm. Historical evidence retained/versioned.
+- Final frozen12initial moves physicallypass; 8fresh-camera handoff-to-rack
+  returns physicallypass; 4resume+4heldredirect pass their placement checks.
+  Full journey11/12fails95%gate: hammer returnheldout05nudges screwdriver
+  4.14mm beyond4mm. All8holds retaingrip,maxjointdrift.00572rad.
+- Stronger verifier exposed omitted secondary-return disturbance and redundant
+  already-rack regrasp counting. Corrected combined verdict, retained prior
+  incomplete summary and all failures. No thresholds weakened.
+- Evaluator-only diagnostic: actual held hammer differs from rigid-grasp
+  estimate by~10.4mm before descent; neighbor moves during descent/release.
+  [I] Carried-pose uncertainty is the next limitation (high confidence); exact
+  slip/servo/contact decomposition unknown. Constant rigid grip is invalidated
+  as a sufficient assumption for full camera journeys.
+- Serialized capture+pose59.7msmedian/64.8msp95,prep297ms/first95ms. Earlier
+  probes overlapped physics/regressions and are separately labeled; they are
+  not clean speed comparisons. Extra fitting increases cost from D1~32ms.
+- 17focused optical/denied-truth/grip/staleness tests pass. Full lab regression
+  verified158pass; independent exported fork139pass; Ruff/format pass and
+  all46upstream hashes match. Scientific actual-frame
+  figure inspected. Controller remains experimental; public A4rollback stays.
+
+Next active D2b — carried-tool drift and full-loop acceptance:
+- Address the measured failure through actual held-tool perception or a learned,
+  validated dynamics estimate from camera pose + robot telemetry. Declared
+  catalog assumptions and inferred poses need explicit uncertainty/provenance.
+  Do not fix the failed case by weakening4mm or adding true-pose offsets.
+- Use independent training/pilot trajectories for any slip model and freeze new
+  untouched layouts before tuning. Preserve all15existing camera cases and the
+  failed full-journey judge; compare physical outcomes, not just model RMSE.
+- Resolve straight-hammer viewpoint/refusal and all-phase recovery before
+  replacing the public controller. Then integrate observation provenance and
+  exercise complete saved-speech/chat/Stop/change/return journeys with images.
+- D2 prototype does not complete camera operation. Useful learned-model gains,
+  acoustic/noise testing, hardware adapter/plan and required convincing human
+  live demonstration remain open; full goal active.
