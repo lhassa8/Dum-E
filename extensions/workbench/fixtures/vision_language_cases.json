@@ -1,0 +1,311 @@
+{
+  "version": 1,
+  "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+  "criteria": {
+    "visible_tool_set_accuracy_min": 0.95,
+    "absent_tool_false_positives_max": 0,
+    "visible_center_error_max_pixels": 40,
+    "complete_response_target_ms": 2000,
+    "motion_localization_qualified": false
+  },
+  "cases": [
+    {
+      "id": "layout-00",
+      "split": "pilot",
+      "seed": 61200,
+      "present": [
+        "screwdriver",
+        "wrench",
+        "hammer"
+      ],
+      "layout": {
+        "screwdriver": [
+          0.44,
+          -0.23,
+          0
+        ],
+        "wrench": [
+          0.44,
+          0,
+          0
+        ],
+        "hammer": [
+          0.44,
+          0.23,
+          0
+        ]
+      },
+      "light": 1.0
+    },
+    {
+      "id": "layout-01",
+      "split": "validation",
+      "seed": 61201,
+      "present": [
+        "screwdriver",
+        "wrench",
+        "hammer"
+      ],
+      "layout": {
+        "screwdriver": [
+          0.44,
+          -0.23,
+          0
+        ],
+        "wrench": [
+          0.44,
+          0.23,
+          0
+        ],
+        "hammer": [
+          0.44,
+          0,
+          0
+        ]
+      },
+      "light": 1.0
+    },
+    {
+      "id": "layout-02",
+      "split": "validation",
+      "seed": 61202,
+      "present": [
+        "screwdriver",
+        "wrench",
+        "hammer"
+      ],
+      "layout": {
+        "screwdriver": [
+          0.44,
+          0,
+          0
+        ],
+        "wrench": [
+          0.44,
+          -0.23,
+          0
+        ],
+        "hammer": [
+          0.44,
+          0.23,
+          0
+        ]
+      },
+      "light": 1.0
+    },
+    {
+      "id": "layout-03",
+      "split": "validation",
+      "seed": 61203,
+      "present": [
+        "screwdriver",
+        "wrench",
+        "hammer"
+      ],
+      "layout": {
+        "screwdriver": [
+          0.44,
+          0.23,
+          0
+        ],
+        "wrench": [
+          0.44,
+          -0.23,
+          0
+        ],
+        "hammer": [
+          0.44,
+          0,
+          0
+        ]
+      },
+      "light": 1.0
+    },
+    {
+      "id": "layout-04",
+      "split": "validation",
+      "seed": 61204,
+      "present": [
+        "screwdriver",
+        "wrench",
+        "hammer"
+      ],
+      "layout": {
+        "screwdriver": [
+          0.44,
+          0,
+          0
+        ],
+        "wrench": [
+          0.44,
+          0.23,
+          0
+        ],
+        "hammer": [
+          0.44,
+          -0.23,
+          0
+        ]
+      },
+      "light": 1.0
+    },
+    {
+      "id": "layout-05",
+      "split": "validation",
+      "seed": 61205,
+      "present": [
+        "screwdriver",
+        "wrench",
+        "hammer"
+      ],
+      "layout": {
+        "screwdriver": [
+          0.44,
+          0.23,
+          0
+        ],
+        "wrench": [
+          0.44,
+          0,
+          0
+        ],
+        "hammer": [
+          0.44,
+          -0.23,
+          0
+        ]
+      },
+      "light": 1.0
+    },
+    {
+      "id": "missing-screwdriver",
+      "split": "validation",
+      "seed": 61300,
+      "present": [
+        "wrench",
+        "hammer"
+      ],
+      "layout": {
+        "wrench": [
+          0.44,
+          0,
+          0
+        ],
+        "hammer": [
+          0.44,
+          0.23,
+          0
+        ]
+      },
+      "light": 1.0
+    },
+    {
+      "id": "missing-wrench",
+      "split": "validation",
+      "seed": 61301,
+      "present": [
+        "screwdriver",
+        "hammer"
+      ],
+      "layout": {
+        "screwdriver": [
+          0.44,
+          -0.23,
+          0
+        ],
+        "hammer": [
+          0.44,
+          0.23,
+          0
+        ]
+      },
+      "light": 1.0
+    },
+    {
+      "id": "missing-hammer",
+      "split": "validation",
+      "seed": 61302,
+      "present": [
+        "screwdriver",
+        "wrench"
+      ],
+      "layout": {
+        "screwdriver": [
+          0.44,
+          -0.23,
+          0
+        ],
+        "wrench": [
+          0.44,
+          0,
+          0
+        ]
+      },
+      "light": 1.0
+    },
+    {
+      "id": "empty",
+      "split": "pilot",
+      "seed": 61400,
+      "present": [],
+      "layout": {},
+      "light": 1.0
+    },
+    {
+      "id": "rotated-00",
+      "split": "validation",
+      "seed": 61500,
+      "present": [
+        "screwdriver",
+        "wrench",
+        "hammer"
+      ],
+      "layout": {
+        "screwdriver": [
+          0.45,
+          -0.23,
+          0.45
+        ],
+        "wrench": [
+          0.45,
+          0,
+          0.45
+        ],
+        "hammer": [
+          0.45,
+          0.23,
+          0.45
+        ]
+      },
+      "light": 0.8
+    },
+    {
+      "id": "rotated-01",
+      "split": "validation",
+      "seed": 61501,
+      "present": [
+        "screwdriver",
+        "wrench",
+        "hammer"
+      ],
+      "layout": {
+        "screwdriver": [
+          0.45,
+          -0.23,
+          -0.45
+        ],
+        "wrench": [
+          0.45,
+          0,
+          -0.45
+        ],
+        "hammer": [
+          0.45,
+          0.23,
+          -0.45
+        ]
+      },
+      "light": 1.2
+    }
+  ]
+}

@@ -1,5 +1,42 @@
 # Workbench goal progress
 
+October12,B13 — pretrained vision and read-only camera questions:
+- Previous goal turn was progress: stable placements published at lab13d6d2e /
+  fork8fb6ec4. Revalidated unchanged running main Ready/Bonsai/contactsv2.
+- Reused cached pretrained models via existing LMStudio/LMLink,no downloads or
+  real camera/mic/paid access. CLI now verifies Bonsai on linked workstation.
+  Mac-native UI locked; supported CLI/API remained usable. Duplicate CLI model
+  keys can pick local copies; rejected before prediction and cleaned up. Explicit
+  selector binds the chosen workstation copy; no new credentials/link scope.
+- Bonsai misses tool identities; kept for conversation. Gemma12B Mac pilots
+  correct but6–9s. Qwen27B default5.69–8.38s; explicit GPU configuration1.05–1.63s
+  on same pilot images. Expanded/compact Qwen validation9/10,8/10 with absent
+  false positives; rejected. Gemma31B compact first rejects coordinate contract;
+  retained output reveals1000-grid[y,x]. Explicit convention/strict normalization
+  passes same unchanged40px judge; no clipping or auto-unit guessing.
+- Ten frozen validation scenes now10/10,no absent false positives,max10.53px
+  center error;median1.083s,p951.273,max1.398. RGB/catalog only,no pose/inventory
+  data sent. This is conversational image grounding,not5mm motion qualification.
+- Camera questions are pure answers,never robot commands. Capture on main thread,
+  fresh JPEG cache,independent vision lock,Stop invalidation,snapshot hash checks.
+  Camera/model/unit/endpoint choices explicit;different-camera native reuse fails.
+- First real saved-speech/task-bus/physics journey passes all stages except final
+  post-return camera identity: shadowed screwdriver missed. Retained snapshot and
+  failure. Added bounded second optical view without light/geometry/pose changes,
+  never filling from state or mixing coordinate frames. Same unchanged journey
+  now passes;32.04-wall-second hold min224.22mm,joint drift0.00395rad;Stop63.96ms.
+- Alternate-view validation preserves10/10/zeroabsentFP but one2.126s recovery
+  misses2s target. Real post-return recovery2.225s;tail gap explicitly retained.
+  No new live-speech/settling claim. Camera-based robot motion remains separate.
+- Final lab263/fork244 regressions pass;all46protected upstream hashes unchanged.
+  Main8766/native8765/MCP8001 restarted at exec74724 with Bonsai+Gemma camera.
+  Actual browser camera button verified RGB-only answer,no physical job. Main
+  saved-speech/Stop32s/resume/return journey independently passes;all tools rack.
+  Final screenshot/voice restoration retained after checks;candidate cleaned up.
+- Full goal active:camera-derived motion,pretrained arm runtime,real acoustics
+  and convincing human live demonstration remain. No reserved C3 test opened.
+- See vision-language-audit.md,synthetic evidence,comparison and recovery traces.
+
 October 12, B12 — stable returned tools without weakening Stop holds:
 - Previous goal turn was progress: Bonsai/configurable backends published at
   lab4892e9e / fork52c4b4f. Kept the user's selected model and Mac speech setup.

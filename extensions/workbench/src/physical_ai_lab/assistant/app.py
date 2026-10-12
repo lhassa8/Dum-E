@@ -1,6 +1,7 @@
 """Local browser application; simulation/rendering run on the macOS main thread."""
 
 import argparse
+import hashlib
 import io
 import json
 import os
@@ -70,6 +71,12 @@ class Application:
         self.events = []
         self.tools = tools
         self.physics_profile = None
+        self.vision = None
+        self.vision_lock = threading.Lock()
+        self.camera_image = self.camera_answer_image = b""
+        self.camera_alternate_image = b""
+        self.camera_captured_s = None
+        self.last_camera_read = None
         self.language_backend = (
             os.environ.get("WORKBENCH_LANGUAGE_BACKEND", "mlx") if tools else "mlx"
         )
@@ -116,6 +123,12 @@ class Application:
                 "schema_version": 2,
                 "profile": "tools" if self.tools else "blocks",
                 "physics_profile": self.physics_profile,
+                "camera": {
+                    "model": getattr(self.vision, "model", None),
+                    "coordinates": getattr(self.vision, "coordinates", None),
+                    "endpoint": getattr(self.vision, "url", None),
+                    "last_read": self.last_camera_read,
+                },
                 "messages": list(self.messages),
                 "phase": self.phase,
                 "busy": self.busy,
@@ -205,6 +218,83 @@ class Application:
         started = time.monotonic()
         snapshot = self.snapshot()
         profile = None
+        if self.tools:
+            from physical_ai_lab.assistant.tool_language import ToolIntent
+            from physical_ai_lab.assistant.vision_language import camera_question, describe_snapshot
+
+            matched, requested_tool = camera_question(text)
+            if matched:
+                if self.vision is None:
+                    intent = ToolIntent(
+                        "answer", None, None, "The simulated camera isn't enabled in this session."
+                    )
+                else:
+                    with self.vision_lock:
+                        with self.lock:
+                            jpeg, captured, epoch = (
+                                self.camera_image,
+                                self.camera_captured_s,
+                                self.epoch,
+                            )
+                            alternate = self.camera_alternate_image
+                        if captured is None or time.monotonic() - captured > 0.75:
+                            raise ValueError("The simulated camera frame isn't fresh; try again.")
+                        try:
+                            observation = self.vision.observe(jpeg)
+                            view, calls = "front", [observation["elapsed_ms"]]
+                            names = (
+                                [requested_tool] if requested_tool else list(observation["tools"])
+                            )
+                            if alternate and any(
+                                not observation["tools"][n]["visible"] for n in names
+                            ):
+                                with self.lock:
+                                    if epoch != self.epoch:
+                                        raise ValueError("Camera request was superseded.")
+                                other = self.vision.observe(alternate)
+                                calls.append(other["elapsed_ms"])
+                                # Choose one complete optical observation. Never fill a
+                                # missing class or coordinate from simulator object state.
+                                if sum(other["tools"][n]["visible"] for n in names) > sum(
+                                    observation["tools"][n]["visible"] for n in names
+                                ):
+                                    observation, jpeg, view = other, alternate, "side"
+                        except Exception as error:
+                            self.event("camera_failed", error=repr(error))
+                            raise ValueError(
+                                "I couldn't reliably inspect that simulator snapshot."
+                            ) from error
+                        profile = {
+                            **observation,
+                            "captured_monotonic_s": captured,
+                            "frame_sha256": hashlib.sha256(jpeg).hexdigest(),
+                            "view": view,
+                            "view_call_ms": calls,
+                        }
+                        with self.lock:
+                            if epoch != self.epoch:
+                                raise ValueError("Camera request was superseded.")
+                            self.camera_answer_image = jpeg
+                            self.last_camera_read = profile
+                        intent = ToolIntent(
+                            "answer", None, None, describe_snapshot(observation, requested_tool)
+                        )
+                elapsed = (time.monotonic() - started) * 1000
+                self.event(
+                    "understanding",
+                    request=text,
+                    intent=asdict(intent),
+                    route="camera",
+                    elapsed_ms=elapsed,
+                    profile=profile,
+                    active_job=snapshot["job_id"],
+                )
+                return {
+                    "intent": asdict(intent),
+                    "route": "camera",
+                    "elapsed_ms": elapsed,
+                    "profile": profile,
+                }
         intent = status_intent(text, snapshot)
         route = "state"
         if intent is None:
@@ -499,6 +589,7 @@ class Application:
     def loop(self, bench):
         controller = None
         last_render = 0
+        last_camera = 0
         self.phase = "Ready"
         while not self.closed.is_set():
             started = time.monotonic()
@@ -655,6 +746,18 @@ class Application:
                 with self.lock:
                     self.image = buffer.getvalue()
                 last_render = time.monotonic()
+            if self.vision and time.monotonic() - last_camera >= 0.5:
+                views = []
+                for view in ["tool_view", "tool_view_side"]:
+                    buffer = io.BytesIO()
+                    Image.fromarray(bench.render(view)).resize((640, 480)).save(
+                        buffer, format="JPEG", quality=95
+                    )
+                    views.append(buffer.getvalue())
+                with self.lock:
+                    self.camera_image, self.camera_alternate_image = views
+                    self.camera_captured_s = time.monotonic()
+                last_camera = time.monotonic()
             time.sleep(max(0, 0.032 - (time.monotonic() - started)))
 
 
@@ -683,6 +786,19 @@ def make_api(state):
         with state.lock:
             return Response(
                 state.image, media_type="image/jpeg", headers={"Cache-Control": "no-store"}
+            )
+
+    @api.get("/camera.jpg")
+    def camera_frame(frame: str | None = None):
+        with state.lock:
+            if not state.camera_answer_image:
+                raise HTTPException(404, "Ask a camera question to capture a snapshot.")
+            if frame and frame != state.last_camera_read["frame_sha256"]:
+                raise HTTPException(409, "That snapshot was superseded by another camera answer.")
+            return Response(
+                state.camera_answer_image,
+                media_type="image/jpeg",
+                headers={"Cache-Control": "no-store"},
             )
 
     @api.post("/chat")
@@ -733,12 +849,18 @@ def main():
     parser.add_argument("--language-backend", choices=["mlx", "lmstudio", "codex"])
     parser.add_argument("--lmstudio-url", help="LM Studio server, default http://127.0.0.1:1234")
     parser.add_argument("--tools", action="store_true")
+    parser.add_argument("--vision-model", help="Optional already loaded LM Studio vision instance")
+    parser.add_argument(
+        "--vision-coordinates", choices=["normalized_xy", "grid1000_yx"], default="normalized_xy"
+    )
     parser.add_argument("--log-dir", type=Path)
     parser.add_argument("--test-gripper-fault", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
     from physical_ai_lab.assistant.tool_language import configure_tool_language
 
     try:
+        if args.vision_model and not args.tools:
+            raise ValueError("Camera questions require --tools")
         if not args.tools and args.language_backend not in {None, "mlx"}:
             raise ValueError("External language backends currently require --tools")
         configure_tool_language(
@@ -764,6 +886,15 @@ def main():
 
         bench = ToolWorkbench()
         state.physics_profile = bench.physics_profile
+        if args.vision_model:
+            from physical_ai_lab.assistant.vision_language import LMStudioVision
+
+            state.vision = LMStudioVision(
+                args.vision_model,
+                os.environ.get("WORKBENCH_LMSTUDIO_URL", "http://127.0.0.1:1234"),
+                compact=True,
+                coordinates=args.vision_coordinates,
+            )
     else:
         bench = Workbench()
     if args.test_gripper_fault:
@@ -793,6 +924,8 @@ def main():
             except (RuntimeError, OSError) as error:
                 state.event("language_cancel_failed", error=str(error))
         language_thread.join(timeout=5)
+        if state.vision:
+            state.vision.close()
         bench.close()
 
 

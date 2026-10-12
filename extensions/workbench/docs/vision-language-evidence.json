@@ -1,0 +1,5934 @@
+{
+  "scope": "Synthetic RGB-only tool descriptions,not robot motion localization;protocol/labels frozen before pilots;validation used for selection",
+  "loop": {
+    "loop_id": "D3",
+    "previous_goal_turn": "Progress:qualified/published table contact stability at lab13d6d2e,fork8fb6ec4;current app Ready/Bonsai/tool_contacts_v2 confirmed",
+    "specified_outcome": "Camera-informed operation, evaluated against independent simulator truth before reliance for motion; reuse available models and retain flexible model choices",
+    "observed": "Bonsai image transport works; overview misidentifies tools. First fixed catalog/focused-view pilot misses wrench,second geometry-corrected catalog misses wrench and hammer; empty counterfactual correct. Shape diagnosis calls wrench shaft/bolt. No further prompt sweep.",
+    "hypothesis": "Another already downloaded multimodal model may resolve catalog identities under the same frozen RGB-only contract. Separate vision model preserves user-selected fast conversation backend.",
+    "action_boundary": "Read-only synthetic images and a bounded cached Gemma12B load via existing LMStudio. No real camera,microphone,downloads,paid services,motion-controller change or physical success claim.",
+    "fast_judge": "Same full/empty pilot,strict output/model/bounds checks",
+    "strong_judge": "Frozen remaining10 unseen scenes,permutations,missing tools,rotations and light;independent segmentation labels;95%scene presence,zeroabsentfalsepositives,40px conversational centers and2s complete-response target. Not motion-qualified 5mm camera localization.",
+    "rollback": "No public vision default unless qualification passes; conversation model unchanged; unload only the owned extra model instance if rejected",
+    "attempt_budget": 2,
+    "new_observations": [
+      "LMCLI proves Bonsai on connected workstation and Gemma12B local; no GPU telemetry inferred. Native app access failed because Mac locked; CLI/API remain usable.",
+      "Full GPU/single-lane Qwen load requested after18.75GiB estimate; original two expanded pilot calls1.05/1.63s versus5.69/8.38s before reload. Identical model outputs; causal GPU-only attribution unproven.",
+      "Compact output saves tokens,but validation8/10 with2absent false positives; missing cases shift tool identities by row order. No public promotion.",
+      "Before loading another large model, compare original explicit presence format on the same ten images/model/configuration; test the protocol hypothesis instead of prompt tuning.",
+      "Expanded Qwen output improves negative cases to9/10,but still1absent false positive; compact output not solecause. Neither Qwenformat promotes.",
+      "Gemma31B CLI short key resolved local; exact indexeddevice:model key unsupportedCLI. Rejected placement before inference; localowned instance removed. REST canonicalmodel after workstation preference successfullyloads on linked workstation,verifiedlmsps. No remote address/credentials/link access added."
+    ]
+  },
+  "bonsai_pilot_first": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "pilot",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2495,
+            "center_pixels": [
+              193.5,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3706,
+            "center_pixels": [
+              331.5,
+              234.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4509,
+            "center_pixels": [
+              465.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "e303abea5577a8af19704d257cf10b7152cab20dee3a6becd8a6277235d36452",
+        "passed": false,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.283,
+                0.476
+              ]
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.719,
+                0.482
+              ]
+            }
+          },
+          "raw": "{\n  \"screwdriver\": {\n    \"visible\": true,\n    \"center\": [0.283, 0.476]\n  },\n  \"wrench\": {\n    \"visible\": false,\n    \"center\": null\n  },\n  \"hammer\": {\n    \"visible\": true,\n    \"center\": [0.719, 0.482]\n  }\n}",
+          "model": "prism-ml/bonsai-27b",
+          "elapsed_ms": 1344.2882499657571,
+          "usage": {
+            "prompt_tokens": 489,
+            "completion_tokens": 99,
+            "total_tokens": 588,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": false,
+        "center_error_pixels": {
+          "screwdriver": 12.743029467124396,
+          "hammer": 5.510462775484497
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "empty",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5f9dae7e4ca6b8ea005565a662818d396b78b8c9e543218b7f131ab10b84cbe0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": false,
+              "center": null
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\n  \"screwdriver\": {\n    \"visible\": false,\n    \"center\": null\n  },\n  \"wrench\": {\n    \"visible\": false,\n    \"center\": null\n  },\n  \"hammer\": {\n    \"visible\": false,\n    \"center\": null\n  }\n}",
+          "model": "prism-ml/bonsai-27b",
+          "elapsed_ms": 994.9995839851908,
+          "usage": {
+            "prompt_tokens": 489,
+            "completion_tokens": 73,
+            "total_tokens": 562,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {},
+        "false_positives": 0
+      }
+    ]
+  },
+  "bonsai_pilot_revised": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "pilot",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2495,
+            "center_pixels": [
+              193.5,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3706,
+            "center_pixels": [
+              331.5,
+              234.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4509,
+            "center_pixels": [
+              465.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "e303abea5577a8af19704d257cf10b7152cab20dee3a6becd8a6277235d36452",
+        "passed": false,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.283,
+                0.476
+              ]
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\n  \"screwdriver\": {\n    \"visible\": true,\n    \"center\": [0.283, 0.476]\n  },\n  \"wrench\": {\n    \"visible\": false,\n    \"center\": null\n  },\n  \"hammer\": {\n    \"visible\": false,\n    \"center\": null\n  }\n}",
+          "model": "prism-ml/bonsai-27b",
+          "elapsed_ms": 1232.6322919689119,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 86,
+            "total_tokens": 589,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": false,
+        "center_error_pixels": {
+          "screwdriver": 12.743029467124396
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "empty",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5f9dae7e4ca6b8ea005565a662818d396b78b8c9e543218b7f131ab10b84cbe0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": false,
+              "center": null
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\n  \"screwdriver\": {\n    \"visible\": false,\n    \"center\": null\n  },\n  \"wrench\": {\n    \"visible\": false,\n    \"center\": null\n  },\n  \"hammer\": {\n    \"visible\": false,\n    \"center\": null\n  }\n}",
+          "model": "prism-ml/bonsai-27b",
+          "elapsed_ms": 927.3606250062585,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 73,
+            "total_tokens": 576,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {},
+        "false_positives": 0
+      }
+    ]
+  },
+  "gemma12_mac_pilot": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "pilot",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2495,
+            "center_pixels": [
+              193.5,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3706,
+            "center_pixels": [
+              331.5,
+              234.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4509,
+            "center_pixels": [
+              465.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "e303abea5577a8af19704d257cf10b7152cab20dee3a6becd8a6277235d36452",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.28,
+                0.48
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.53,
+                0.49
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.72,
+                0.48
+              ]
+            }
+          },
+          "raw": "{\n  \"screwdriver\": {\n    \"visible\": true,\n    \"center\": [0.28, 0.48]\n  },\n  \"wrench\": {\n    \"visible\": true,\n    \"center\": [0.53, 0.49]\n  },\n  \"hammer\": {\n    \"visible\": true,\n    \"center\": [0.72, 0.48]\n  }\n}",
+          "model": "google/gemma-4-12b",
+          "elapsed_ms": 9306.774792028591,
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 108,
+            "total_tokens": 443,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 14.342245291445812,
+          "wrench": 7.731752712031127,
+          "hammer": 4.716990566028345
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "empty",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5f9dae7e4ca6b8ea005565a662818d396b78b8c9e543218b7f131ab10b84cbe0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": false,
+              "center": null
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\n  \"screwdriver\": {\n    \"visible\": false,\n    \"center\": null\n  },\n  \"wrench\": {\n    \"visible\": false,\n    \"center\": null\n  },\n  \"hammer\": {\n    \"visible\": false,\n    \"center\": null\n  }\n}",
+          "model": "google/gemma-4-12b",
+          "elapsed_ms": 6024.218625039794,
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 75,
+            "total_tokens": 410,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {},
+        "false_positives": 0
+      }
+    ]
+  },
+  "qwen_default_pilot": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "pilot",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2495,
+            "center_pixels": [
+              193.5,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3706,
+            "center_pixels": [
+              331.5,
+              234.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4509,
+            "center_pixels": [
+              465.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "e303abea5577a8af19704d257cf10b7152cab20dee3a6becd8a6277235d36452",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.3,
+                0.49
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.51,
+                0.49
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.72,
+                0.48
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\":{\"visible\":true,\"center\":[0.30,0.49]},\"wrench\":{\"visible\":true,\"center\":[0.51,0.49]},\"hammer\":{\"visible\":true,\"center\":[0.72,0.48]}}",
+          "model": "qwen/qwen3.8-27b",
+          "elapsed_ms": 8381.831540958956,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 62,
+            "total_tokens": 565,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 3.992492955535415,
+          "wrench": 5.147815070493521,
+          "hammer": 4.716990566028345
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "empty",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5f9dae7e4ca6b8ea005565a662818d396b78b8c9e543218b7f131ab10b84cbe0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": false,
+              "center": null
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\"screwdriver\": {\"visible\": false, \"center\": null}, \"wrench\": {\"visible\": false, \"center\": null}, \"hammer\": {\"visible\": false, \"center\": null}}",
+          "model": "qwen/qwen3.8-27b",
+          "elapsed_ms": 5685.3312909952365,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 43,
+            "total_tokens": 546,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {},
+        "false_positives": 0
+      }
+    ]
+  },
+  "qwen_gpu_pilot": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "pilot",
+    "model": "workbench-vision-qwen",
+    "format": "expanded",
+    "system_prompt_sha256": "0734f85a9312bdba8e3b4cf04eb1acc6ee413ef62c581bbd06fbec389f3bb8ea",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2495,
+            "center_pixels": [
+              193.5,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3706,
+            "center_pixels": [
+              331.5,
+              234.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4509,
+            "center_pixels": [
+              465.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "e303abea5577a8af19704d257cf10b7152cab20dee3a6becd8a6277235d36452",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.3,
+                0.49
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.51,
+                0.49
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.72,
+                0.48
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\":{\"visible\":true,\"center\":[0.30,0.49]},\"wrench\":{\"visible\":true,\"center\":[0.51,0.49]},\"hammer\":{\"visible\":true,\"center\":[0.72,0.48]}}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1628.7628749851137,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 62,
+            "total_tokens": 565,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 3.992492955535415,
+          "wrench": 5.147815070493521,
+          "hammer": 4.716990566028345
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "empty",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5f9dae7e4ca6b8ea005565a662818d396b78b8c9e543218b7f131ab10b84cbe0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": false,
+              "center": null
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\"screwdriver\": {\"visible\": false, \"center\": null}, \"wrench\": {\"visible\": false, \"center\": null}, \"hammer\": {\"visible\": false, \"center\": null}}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1053.6850000498816,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 43,
+            "total_tokens": 546,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {},
+        "false_positives": 0
+      }
+    ]
+  },
+  "qwen_expanded": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "validation",
+    "model": "workbench-vision-qwen",
+    "format": "expanded",
+    "system_prompt_sha256": "0734f85a9312bdba8e3b4cf04eb1acc6ee413ef62c581bbd06fbec389f3bb8ea",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-01",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2505,
+            "center_pixels": [
+              197.0,
+              233.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3864,
+            "center_pixels": [
+              477.0,
+              235.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4260,
+            "center_pixels": [
+              327.5,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "6e2f47ed2f583213cfc127e86e9c7cb2fd700ca97240f311170756963fb9515d",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.31,
+                0.49
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.75,
+                0.49
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.51,
+                0.49
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\":{\"visible\":true,\"center\":[0.31,0.49]},\"wrench\":{\"visible\":true,\"center\":[0.75,0.49]},\"hammer\":{\"visible\":true,\"center\":[0.51,0.49]}}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1660.1513750501908,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 62,
+            "total_tokens": 565,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 2.202271554554519,
+          "wrench": 3.006659275674581,
+          "hammer": 6.789698078707175
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-02",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2446,
+            "center_pixels": [
+              334.0,
+              235.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3777,
+            "center_pixels": [
+              183.0,
+              231.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4526,
+            "center_pixels": [
+              472.0,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "cfc98adc652e7ce94c3fdb2b4b62302d2c662a91d6e6e6961ce67f979c8cded0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.52,
+                0.49
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.28,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.74,
+                0.48
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\":{\"visible\":true,\"center\":[0.52,0.49]},\"wrench\":{\"visible\":true,\"center\":[0.28,0.48]},\"hammer\":{\"visible\":true,\"center\":[0.74,0.48]}}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1313.695541000925,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 62,
+            "total_tokens": 565,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 1.2165525060596307,
+          "wrench": 3.847076812334256,
+          "hammer": 2.4839484696748415
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-03",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2510,
+            "center_pixels": [
+              475.0,
+              234.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3788,
+            "center_pixels": [
+              190.0,
+              232.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4260,
+            "center_pixels": [
+              326.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "10c4d9725be729b30c483a7bee1afe694de727ff0e9868b480a3d769a12ce26e",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.74,
+                0.49
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.3,
+                0.49
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.5,
+                0.49
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\":{\"visible\":true,\"center\":[0.74,0.49]},\"wrench\":{\"visible\":true,\"center\":[0.30,0.49]},\"hammer\":{\"visible\":true,\"center\":[0.50,0.49]}}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1293.4083339641802,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 62,
+            "total_tokens": 565,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 1.5652475842498272,
+          "wrench": 3.773592452822632,
+          "hammer": 8.324061508662696
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-04",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2466,
+            "center_pixels": [
+              333.0,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3820,
+            "center_pixels": [
+              474.0,
+              236.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4372,
+            "center_pixels": [
+              187.0,
+              232.0
+            ]
+          }
+        },
+        "frame_sha256": "7651708451f3b03560d1b8ecbbc5994e312252f9f322dd74dc0e0f83f11a45a7",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.52,
+                0.48
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.74,
+                0.49
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.29,
+                0.48
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\":{\"visible\":true,\"center\":[0.52,0.48]},\"wrench\":{\"visible\":true,\"center\":[0.74,0.49]},\"hammer\":{\"visible\":true,\"center\":[0.29,0.48]}}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1300.4104580031708,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 62,
+            "total_tokens": 565,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 1.118033988749915,
+          "wrench": 1.3601470508735485,
+          "hammer": 2.1260291625469505
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-05",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2470,
+            "center_pixels": [
+              473.5,
+              233.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3756,
+            "center_pixels": [
+              327.5,
+              232.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4368,
+            "center_pixels": [
+              180.0,
+              232.5
+            ]
+          }
+        },
+        "frame_sha256": "5e243aa534653682f695ebb218f895aecf25b0a3e56d55208226ad382b2accfe",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.74,
+                0.48
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.51,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.28,
+                0.48
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\":{\"visible\":true,\"center\":[0.74,0.48]},\"wrench\":{\"visible\":true,\"center\":[0.51,0.48]},\"hammer\":{\"visible\":true,\"center\":[0.28,0.48]}}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1309.4854590017349,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 62,
+            "total_tokens": 565,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 2.601922366251561,
+          "wrench": 1.9416487838947916,
+          "hammer": 2.2472205054244383
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "missing-screwdriver",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3683,
+            "center_pixels": [
+              327.5,
+              231.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4521,
+            "center_pixels": [
+              471.5,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "0c359be9d764c5e92b487df2e0d0ddafe7ddc8b9d4555acf791d6027d378d8bc",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": false,
+              "center": null
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.51,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.73,
+                0.47
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\":{\"visible\":false,\"center\":null},\"wrench\":{\"visible\":true,\"center\":[0.51,0.48]},\"hammer\":{\"visible\":true,\"center\":[0.73,0.47]}}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1195.497874985449,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 53,
+            "total_tokens": 556,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "wrench": 1.5556349186104366,
+          "hammer": 5.186520991955988
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "missing-wrench",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2457,
+            "center_pixels": [
+              194.0,
+              229.0
+            ]
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4531,
+            "center_pixels": [
+              466.5,
+              231.5
+            ]
+          }
+        },
+        "frame_sha256": "08776fe66f2e4d90933b66ceb5679c23d57df0f7bc8f5bc43ffc2e340fe5eaf8",
+        "passed": false,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.3,
+                0.48
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.74,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\"screwdriver\":{\"visible\":true,\"center\":[0.30,0.48]},\"wrench\":{\"visible\":true,\"center\":[0.74,0.48]},\"hammer\":{\"visible\":false,\"center\":null}}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1214.5995839964598,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 53,
+            "total_tokens": 556,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": false,
+        "center_error_pixels": {
+          "screwdriver": 2.4413111231467273
+        },
+        "false_positives": 1
+      },
+      {
+        "id": "missing-hammer",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2468,
+            "center_pixels": [
+              189.0,
+              232.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3689,
+            "center_pixels": [
+              332.5,
+              232.5
+            ]
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5cc1d2af2b456ec9be31ed5ddc5a47a37b89e05787aa0b367890d84f6148930e",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.29,
+                0.48
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.52,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\"screwdriver\":{\"visible\":true,\"center\":[0.29,0.48]},\"wrench\":{\"visible\":true,\"center\":[0.52,0.48]},\"hammer\":{\"visible\":false,\"center\":null}}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1202.366165991407,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 53,
+            "total_tokens": 556,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 3.757658845611202,
+          "wrench": 2.121320343559667
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "rotated-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2533,
+            "center_pixels": [
+              188.5,
+              233.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3643,
+            "center_pixels": [
+              326.5,
+              224.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4488,
+            "center_pixels": [
+              476.5,
+              229.5
+            ]
+          }
+        },
+        "frame_sha256": "d3e91d1a035360e464d7b09d6df32958948cdc9f32672673cfaf3fbd91e427ec",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.29,
+                0.5
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.5,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.74,
+                0.48
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\":{\"visible\":true,\"center\":[0.29,0.5]},\"wrench\":{\"visible\":true,\"center\":[0.5,0.48]},\"hammer\":{\"visible\":true,\"center\":[0.74,0.48]}}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1294.485040998552,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 60,
+            "total_tokens": 563,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 7.1175838597097005,
+          "wrench": 8.778382538941882,
+          "hammer": 3.036445290137767
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "rotated-01",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2348,
+            "center_pixels": [
+              187.0,
+              245.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3723,
+            "center_pixels": [
+              333.5,
+              245.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4405,
+            "center_pixels": [
+              469.0,
+              246.5
+            ]
+          }
+        },
+        "frame_sha256": "c59a19966b2d17329e39bd19c7ea372cb615d0348c3d32c34d5a9a51a8f359d5",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.29,
+                0.51
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.51,
+                0.5
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.73,
+                0.5
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\":{\"visible\":true,\"center\":[0.29,0.51]},\"wrench\":{\"visible\":true,\"center\":[0.51,0.50]},\"hammer\":{\"visible\":true,\"center\":[0.73,0.50]}}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1307.8199999872595,
+          "usage": {
+            "prompt_tokens": 503,
+            "completion_tokens": 62,
+            "total_tokens": 565,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 1.5652475842498528,
+          "wrench": 8.68389313614581,
+          "hammer": 6.744627491566901
+        },
+        "false_positives": 0
+      }
+    ]
+  },
+  "qwen_compact": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "validation",
+    "model": "workbench-vision-qwen",
+    "format": "compact",
+    "system_prompt_sha256": "f07c34ec423b14e426ec21413c86044a5d0f7ffe468dc6077c5ca5953bf9ba8e",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-01",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2505,
+            "center_pixels": [
+              197.0,
+              233.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3864,
+            "center_pixels": [
+              477.0,
+              235.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4260,
+            "center_pixels": [
+              327.5,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "6e2f47ed2f583213cfc127e86e9c7cb2fd700ca97240f311170756963fb9515d",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.31,
+                0.49
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.75,
+                0.49
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.51,
+                0.49
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [0.31, 0.49], \"wrench\": [0.75, 0.49], \"hammer\": [0.51, 0.49]}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1390.4195000068285,
+          "usage": {
+            "prompt_tokens": 497,
+            "completion_tokens": 49,
+            "total_tokens": 546,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 2.202271554554519,
+          "wrench": 3.006659275674581,
+          "hammer": 6.789698078707175
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-02",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2446,
+            "center_pixels": [
+              334.0,
+              235.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3777,
+            "center_pixels": [
+              183.0,
+              231.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4526,
+            "center_pixels": [
+              472.0,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "cfc98adc652e7ce94c3fdb2b4b62302d2c662a91d6e6e6961ce67f979c8cded0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.52,
+                0.49
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.28,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.74,
+                0.48
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [0.52, 0.49], \"wrench\": [0.28, 0.48], \"hammer\": [0.74, 0.48]}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1153.7776250042953,
+          "usage": {
+            "prompt_tokens": 497,
+            "completion_tokens": 49,
+            "total_tokens": 546,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 1.2165525060596307,
+          "wrench": 3.847076812334256,
+          "hammer": 2.4839484696748415
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-03",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2510,
+            "center_pixels": [
+              475.0,
+              234.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3788,
+            "center_pixels": [
+              190.0,
+              232.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4260,
+            "center_pixels": [
+              326.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "10c4d9725be729b30c483a7bee1afe694de727ff0e9868b480a3d769a12ce26e",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.74,
+                0.49
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.3,
+                0.49
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.5,
+                0.49
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [0.74, 0.49], \"wrench\": [0.3, 0.49], \"hammer\": [0.5, 0.49]}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1107.4768750113435,
+          "usage": {
+            "prompt_tokens": 497,
+            "completion_tokens": 47,
+            "total_tokens": 544,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 1.5652475842498272,
+          "wrench": 3.773592452822632,
+          "hammer": 8.324061508662696
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-04",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2466,
+            "center_pixels": [
+              333.0,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3820,
+            "center_pixels": [
+              474.0,
+              236.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4372,
+            "center_pixels": [
+              187.0,
+              232.0
+            ]
+          }
+        },
+        "frame_sha256": "7651708451f3b03560d1b8ecbbc5994e312252f9f322dd74dc0e0f83f11a45a7",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.52,
+                0.48
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.74,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.28,
+                0.48
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [0.52, 0.48], \"wrench\": [0.74, 0.48], \"hammer\": [0.28, 0.48]}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1120.603499992285,
+          "usage": {
+            "prompt_tokens": 497,
+            "completion_tokens": 49,
+            "total_tokens": 546,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 1.118033988749915,
+          "wrench": 6.113100686231191,
+          "hammer": 7.9624116949577415
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-05",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2470,
+            "center_pixels": [
+              473.5,
+              233.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3756,
+            "center_pixels": [
+              327.5,
+              232.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4368,
+            "center_pixels": [
+              180.0,
+              232.5
+            ]
+          }
+        },
+        "frame_sha256": "5e243aa534653682f695ebb218f895aecf25b0a3e56d55208226ad382b2accfe",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.74,
+                0.49
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.51,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.28,
+                0.48
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [0.74, 0.49], \"wrench\": [0.51, 0.48], \"hammer\": [0.28, 0.48]}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1116.7652079602703,
+          "usage": {
+            "prompt_tokens": 497,
+            "completion_tokens": 49,
+            "total_tokens": 546,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 2.2022715545545135,
+          "wrench": 1.9416487838947916,
+          "hammer": 2.2472205054244383
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "missing-screwdriver",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3683,
+            "center_pixels": [
+              327.5,
+              231.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4521,
+            "center_pixels": [
+              471.5,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "0c359be9d764c5e92b487df2e0d0ddafe7ddc8b9d4555acf791d6027d378d8bc",
+        "passed": false,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.51,
+                0.48
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.73,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\"screwdriver\": [0.51, 0.48], \"wrench\": [0.73, 0.48], \"hammer\": null}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 984.4685830175877,
+          "usage": {
+            "prompt_tokens": 497,
+            "completion_tokens": 39,
+            "total_tokens": 536,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": false,
+        "center_error_pixels": {
+          "wrench": 139.70433064153735
+        },
+        "false_positives": 1
+      },
+      {
+        "id": "missing-wrench",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2457,
+            "center_pixels": [
+              194.0,
+              229.0
+            ]
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4531,
+            "center_pixels": [
+              466.5,
+              231.5
+            ]
+          }
+        },
+        "frame_sha256": "08776fe66f2e4d90933b66ceb5679c23d57df0f7bc8f5bc43ffc2e340fe5eaf8",
+        "passed": false,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.3,
+                0.48
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.73,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\"screwdriver\": [0.3, 0.48], \"wrench\": [0.73, 0.48], \"hammer\": null}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 965.8543749828823,
+          "usage": {
+            "prompt_tokens": 497,
+            "completion_tokens": 38,
+            "total_tokens": 535,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": false,
+        "center_error_pixels": {
+          "screwdriver": 2.4413111231467273
+        },
+        "false_positives": 1
+      },
+      {
+        "id": "missing-hammer",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2468,
+            "center_pixels": [
+              189.0,
+              232.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3689,
+            "center_pixels": [
+              332.5,
+              232.5
+            ]
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5cc1d2af2b456ec9be31ed5ddc5a47a37b89e05787aa0b367890d84f6148930e",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.29,
+                0.48
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.52,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\"screwdriver\": [0.29, 0.48], \"wrench\": [0.52, 0.48], \"hammer\": null}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 974.744750012178,
+          "usage": {
+            "prompt_tokens": 497,
+            "completion_tokens": 39,
+            "total_tokens": 536,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 3.757658845611202,
+          "wrench": 2.121320343559667
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "rotated-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2533,
+            "center_pixels": [
+              188.5,
+              233.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3643,
+            "center_pixels": [
+              326.5,
+              224.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4488,
+            "center_pixels": [
+              476.5,
+              229.5
+            ]
+          }
+        },
+        "frame_sha256": "d3e91d1a035360e464d7b09d6df32958948cdc9f32672673cfaf3fbd91e427ec",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.29,
+                0.49
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.5,
+                0.48
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.74,
+                0.48
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [0.29, 0.49], \"wrench\": [0.5, 0.48], \"hammer\": [0.74, 0.48]}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1104.0689999936149,
+          "usage": {
+            "prompt_tokens": 497,
+            "completion_tokens": 48,
+            "total_tokens": 545,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 3.3615472627943213,
+          "wrench": 8.778382538941882,
+          "hammer": 3.036445290137767
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "rotated-01",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2348,
+            "center_pixels": [
+              187.0,
+              245.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3723,
+            "center_pixels": [
+              333.5,
+              245.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4405,
+            "center_pixels": [
+              469.0,
+              246.5
+            ]
+          }
+        },
+        "frame_sha256": "c59a19966b2d17329e39bd19c7ea372cb615d0348c3d32c34d5a9a51a8f359d5",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.29,
+                0.51
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.51,
+                0.51
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.73,
+                0.51
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [0.29, 0.51], \"wrench\": [0.51, 0.51], \"hammer\": [0.73, 0.51]}",
+          "model": "workbench-vision-qwen",
+          "elapsed_ms": 1129.979874996934,
+          "usage": {
+            "prompt_tokens": 497,
+            "completion_tokens": 49,
+            "total_tokens": 546,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 1.5652475842498528,
+          "wrench": 7.102816342831927,
+          "hammer": 2.47588368062799
+        },
+        "false_positives": 0
+      }
+    ]
+  },
+  "gemma31_default_pilot": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "pilot",
+    "model": "google/gemma-4-31b",
+    "format": "expanded",
+    "system_prompt_sha256": "0734f85a9312bdba8e3b4cf04eb1acc6ee413ef62c581bbd06fbec389f3bb8ea",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2495,
+            "center_pixels": [
+              193.5,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3706,
+            "center_pixels": [
+              331.5,
+              234.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4509,
+            "center_pixels": [
+              465.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "e303abea5577a8af19704d257cf10b7152cab20dee3a6becd8a6277235d36452",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.301,
+                0.485
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.522,
+                0.487
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.731,
+                0.486
+              ]
+            }
+          },
+          "raw": "{\n  \"screwdriver\": {\n    \"visible\": true,\n    \"center\": [0.301, 0.485]\n  },\n  \"wrench\": {\n    \"visible\": true,\n    \"center\": [0.522, 0.487]\n  },\n  \"hammer\": {\n    \"visible\": true,\n    \"center\": [0.731, 0.486]\n  }\n}",
+          "model": "google/gemma-4-31b",
+          "elapsed_ms": 13695.340375008527,
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 114,
+            "total_tokens": 449,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 1.5587174214718906,
+          "wrench": 2.68402682549937,
+          "hammer": 4.029143829649159
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "empty",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5f9dae7e4ca6b8ea005565a662818d396b78b8c9e543218b7f131ab10b84cbe0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": false,
+              "center": null
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\n  \"screwdriver\": {\n    \"visible\": false,\n    \"center\": null\n  },\n  \"wrench\": {\n    \"visible\": false,\n    \"center\": null\n  },\n  \"hammer\": {\n    \"visible\": false,\n    \"center\": null\n  }\n}",
+          "model": "google/gemma-4-31b",
+          "elapsed_ms": 8490.70991599001,
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 75,
+            "total_tokens": 410,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {},
+        "false_positives": 0
+      }
+    ]
+  },
+  "gemma31_gpu_pilot": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "pilot",
+    "model": "workbench-vision-gemma",
+    "format": "expanded",
+    "system_prompt_sha256": "0734f85a9312bdba8e3b4cf04eb1acc6ee413ef62c581bbd06fbec389f3bb8ea",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2495,
+            "center_pixels": [
+              193.5,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3706,
+            "center_pixels": [
+              331.5,
+              234.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4509,
+            "center_pixels": [
+              465.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "e303abea5577a8af19704d257cf10b7152cab20dee3a6becd8a6277235d36452",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.301,
+                0.485
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.522,
+                0.487
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.731,
+                0.486
+              ]
+            }
+          },
+          "raw": "{\n  \"screwdriver\": {\n    \"visible\": true,\n    \"center\": [0.301, 0.485]\n  },\n  \"wrench\": {\n    \"visible\": true,\n    \"center\": [0.522, 0.487]\n  },\n  \"hammer\": {\n    \"visible\": true,\n    \"center\": [0.731, 0.486]\n  }\n}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 2576.5905829612166,
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 114,
+            "total_tokens": 449,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 1.5587174214718906,
+          "wrench": 2.68402682549937,
+          "hammer": 4.029143829649159
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "empty",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5f9dae7e4ca6b8ea005565a662818d396b78b8c9e543218b7f131ab10b84cbe0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": false,
+              "center": null
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\n  \"screwdriver\": {\n    \"visible\": false,\n    \"center\": null\n  },\n  \"wrench\": {\n    \"visible\": false,\n    \"center\": null\n  },\n  \"hammer\": {\n    \"visible\": false,\n    \"center\": null\n  }\n}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1724.949709023349,
+          "usage": {
+            "prompt_tokens": 335,
+            "completion_tokens": 75,
+            "total_tokens": 410,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {},
+        "false_positives": 0
+      }
+    ]
+  },
+  "gemma31_bad_unit_pilot": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "pilot",
+    "model": "workbench-vision-gemma",
+    "format": "compact",
+    "system_prompt_sha256": "f07c34ec423b14e426ec21413c86044a5d0f7ffe468dc6077c5ca5953bf9ba8e",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2495,
+            "center_pixels": [
+              193.5,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3706,
+            "center_pixels": [
+              331.5,
+              234.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4509,
+            "center_pixels": [
+              465.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "e303abea5577a8af19704d257cf10b7152cab20dee3a6becd8a6277235d36452",
+        "passed": false,
+        "failure": "ValueError('Invalid normalized camera center')"
+      },
+      {
+        "id": "empty",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5f9dae7e4ca6b8ea005565a662818d396b78b8c9e543218b7f131ab10b84cbe0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": false,
+              "center": null
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\"screwdriver\": null, \"wrench\": null, \"hammer\": null}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 867.2768329852261,
+          "usage": {
+            "prompt_tokens": 327,
+            "completion_tokens": 21,
+            "total_tokens": 348,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {},
+        "false_positives": 0
+      }
+    ]
+  },
+  "gemma31_bad_units": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "validation",
+    "model": "workbench-vision-gemma",
+    "format": "compact",
+    "system_prompt_sha256": "f07c34ec423b14e426ec21413c86044a5d0f7ffe468dc6077c5ca5953bf9ba8e",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-01",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2505,
+            "center_pixels": [
+              197.0,
+              233.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3864,
+            "center_pixels": [
+              477.0,
+              235.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4260,
+            "center_pixels": [
+              327.5,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "6e2f47ed2f583213cfc127e86e9c7cb2fd700ca97240f311170756963fb9515d",
+        "passed": false,
+        "failure": "ValueError('Invalid normalized camera center')"
+      },
+      {
+        "id": "layout-02",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2446,
+            "center_pixels": [
+              334.0,
+              235.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3777,
+            "center_pixels": [
+              183.0,
+              231.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4526,
+            "center_pixels": [
+              472.0,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "cfc98adc652e7ce94c3fdb2b4b62302d2c662a91d6e6e6961ce67f979c8cded0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.528,
+                0.486
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.283,
+                0.486
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.741,
+                0.486
+              ]
+            }
+          },
+          "raw": "{\n  \"screwdriver\": [0.528, 0.486],\n  \"wrench\": [0.283, 0.486],\n  \"hammer\": [0.741, 0.486]\n}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1557.4253749800846,
+          "usage": {
+            "prompt_tokens": 327,
+            "completion_tokens": 66,
+            "total_tokens": 393,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 4.280747598258991,
+          "wrench": 2.9551311307622368,
+          "hammer": 5.278825626974247
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-03",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2510,
+            "center_pixels": [
+              475.0,
+              234.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3788,
+            "center_pixels": [
+              190.0,
+              232.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4260,
+            "center_pixels": [
+              326.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "10c4d9725be729b30c483a7bee1afe694de727ff0e9868b480a3d769a12ce26e",
+        "passed": false,
+        "failure": "ValueError('Invalid normalized camera center')"
+      },
+      {
+        "id": "layout-04",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2466,
+            "center_pixels": [
+              333.0,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3820,
+            "center_pixels": [
+              474.0,
+              236.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4372,
+            "center_pixels": [
+              187.0,
+              232.0
+            ]
+          }
+        },
+        "frame_sha256": "7651708451f3b03560d1b8ecbbc5994e312252f9f322dd74dc0e0f83f11a45a7",
+        "passed": false,
+        "failure": "ValueError('Invalid normalized camera center')"
+      },
+      {
+        "id": "layout-05",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2470,
+            "center_pixels": [
+              473.5,
+              233.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3756,
+            "center_pixels": [
+              327.5,
+              232.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4368,
+            "center_pixels": [
+              180.0,
+              232.5
+            ]
+          }
+        },
+        "frame_sha256": "5e243aa534653682f695ebb218f895aecf25b0a3e56d55208226ad382b2accfe",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.743,
+                0.486
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.521,
+                0.486
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.28,
+                0.486
+              ]
+            }
+          },
+          "raw": "{\n  \"screwdriver\": [0.743, 0.486],\n  \"wrench\": [0.521, 0.486],\n  \"hammer\": [0.28, 0.486]\n}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1546.9067909871228,
+          "usage": {
+            "prompt_tokens": 327,
+            "completion_tokens": 65,
+            "total_tokens": 392,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 2.0393136100168427,
+          "wrench": 6.076347587161219,
+          "hammer": 1.1173182178770622
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "missing-screwdriver",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3683,
+            "center_pixels": [
+              327.5,
+              231.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4521,
+            "center_pixels": [
+              471.5,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "0c359be9d764c5e92b487df2e0d0ddafe7ddc8b9d4555acf791d6027d378d8bc",
+        "passed": false,
+        "failure": "ValueError('Invalid normalized camera center')"
+      },
+      {
+        "id": "missing-wrench",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2457,
+            "center_pixels": [
+              194.0,
+              229.0
+            ]
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4531,
+            "center_pixels": [
+              466.5,
+              231.5
+            ]
+          }
+        },
+        "frame_sha256": "08776fe66f2e4d90933b66ceb5679c23d57df0f7bc8f5bc43ffc2e340fe5eaf8",
+        "passed": false,
+        "failure": "ValueError('Invalid normalized camera center')"
+      },
+      {
+        "id": "missing-hammer",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2468,
+            "center_pixels": [
+              189.0,
+              232.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3689,
+            "center_pixels": [
+              332.5,
+              232.5
+            ]
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5cc1d2af2b456ec9be31ed5ddc5a47a37b89e05787aa0b367890d84f6148930e",
+        "passed": false,
+        "failure": "ValueError('Invalid normalized camera center')"
+      },
+      {
+        "id": "rotated-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2533,
+            "center_pixels": [
+              188.5,
+              233.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3643,
+            "center_pixels": [
+              326.5,
+              224.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4488,
+            "center_pixels": [
+              476.5,
+              229.5
+            ]
+          }
+        },
+        "frame_sha256": "d3e91d1a035360e464d7b09d6df32958948cdc9f32672673cfaf3fbd91e427ec",
+        "passed": false,
+        "failure": "ValueError('Invalid normalized camera center')"
+      },
+      {
+        "id": "rotated-01",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2348,
+            "center_pixels": [
+              187.0,
+              245.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3723,
+            "center_pixels": [
+              333.5,
+              245.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4405,
+            "center_pixels": [
+              469.0,
+              246.5
+            ]
+          }
+        },
+        "frame_sha256": "c59a19966b2d17329e39bd19c7ea372cb615d0348c3d32c34d5a9a51a8f359d5",
+        "passed": false,
+        "failure": "ValueError('Invalid normalized camera center')"
+      }
+    ]
+  },
+  "unit_diagnosis": {
+    "response": {
+      "id": "chatcmpl-45dj61yjx7cu8nr6jwevg",
+      "object": "chat.completion",
+      "created": 1791833541,
+      "model": "workbench-vision-gemma",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "{\n  \"screwdriver\": [485, 302],\n  \"wrench\": [487, 521],\n  \"hammer\": [486, 729]\n}",
+            "reasoning_content": "",
+            "tool_calls": []
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 327,
+        "completion_tokens": 54,
+        "total_tokens": 381,
+        "completion_tokens_details": {
+          "reasoning_tokens": 0
+        }
+      },
+      "stats": {},
+      "system_fingerprint": "workbench-vision-gemma"
+    },
+    "elapsed_ms": 1852.763207978569
+  },
+  "gemma_grid_pilot": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "pilot",
+    "model": "workbench-vision-gemma",
+    "format": "compact",
+    "coordinates": "grid1000_yx",
+    "system_prompt_sha256": "e2dc45c05709f2bba431942b9255ef07896f88d06c0ce6bbba5778ad0e74afd9",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2495,
+            "center_pixels": [
+              193.5,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3706,
+            "center_pixels": [
+              331.5,
+              234.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4509,
+            "center_pixels": [
+              465.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "e303abea5577a8af19704d257cf10b7152cab20dee3a6becd8a6277235d36452",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.305,
+                0.486
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.521,
+                0.487
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.731,
+                0.487
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [486, 305], \"wrench\": [487, 521], \"hammer\": [487, 731]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1474.8933329829015,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 2.461381725779235,
+          "wrench": 2.0763429389192924,
+          "hammer": 4.428679261359962
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "empty",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5f9dae7e4ca6b8ea005565a662818d396b78b8c9e543218b7f131ab10b84cbe0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": false,
+              "center": null
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\"screwdriver\": null, \"wrench\": null, \"hammer\": null}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 738.7487910455093,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 21,
+            "total_tokens": 359,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {},
+        "false_positives": 0
+      }
+    ]
+  },
+  "gemma_grid": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "validation",
+    "model": "workbench-vision-gemma",
+    "format": "compact",
+    "coordinates": "grid1000_yx",
+    "system_prompt_sha256": "e2dc45c05709f2bba431942b9255ef07896f88d06c0ce6bbba5778ad0e74afd9",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-01",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2505,
+            "center_pixels": [
+              197.0,
+              233.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3864,
+            "center_pixels": [
+              477.0,
+              235.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4260,
+            "center_pixels": [
+              327.5,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "6e2f47ed2f583213cfc127e86e9c7cb2fd700ca97240f311170756963fb9515d",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.293,
+                0.492
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.75,
+                0.491
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.516,
+                0.492
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [492, 293], \"wrench\": [491, 750], \"hammer\": [492, 516]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1398.287917021662,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 9.846115985504149,
+          "wrench": 3.0761014287568624,
+          "hammer": 8.135305771758059
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-02",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2446,
+            "center_pixels": [
+              334.0,
+              235.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3777,
+            "center_pixels": [
+              183.0,
+              231.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4526,
+            "center_pixels": [
+              472.0,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "cfc98adc652e7ce94c3fdb2b4b62302d2c662a91d6e6e6961ce67f979c8cded0",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.526,
+                0.487
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.283,
+                0.487
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.739,
+                0.487
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [487, 526], \"wrench\": [487, 283], \"hammer\": [487, 739]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1120.9227919462137,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 2.9167104758614544,
+          "wrench": 3.339461034358694,
+          "hammer": 5.346886944755786
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-03",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2510,
+            "center_pixels": [
+              475.0,
+              234.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3788,
+            "center_pixels": [
+              190.0,
+              232.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4260,
+            "center_pixels": [
+              326.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "10c4d9725be729b30c483a7bee1afe694de727ff0e9868b480a3d769a12ce26e",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.745,
+                0.486
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.283,
+                0.486
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.519,
+                0.486
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [486, 745], \"wrench\": [486, 283], \"hammer\": [486, 519]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1102.7481670025736,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 2.1744884455889935,
+          "wrench": 8.971777973177916,
+          "hammer": 6.541712314065813
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-04",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2466,
+            "center_pixels": [
+              333.0,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3820,
+            "center_pixels": [
+              474.0,
+              236.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4372,
+            "center_pixels": [
+              187.0,
+              232.0
+            ]
+          }
+        },
+        "frame_sha256": "7651708451f3b03560d1b8ecbbc5994e312252f9f322dd74dc0e0f83f11a45a7",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.531,
+                0.487
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.746,
+                0.489
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.288,
+                0.489
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [487, 531], \"wrench\": [489, 746], \"hammer\": [489, 288]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1107.388499949593,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 7.203693497088865,
+          "wrench": 3.873241536491107,
+          "hammer": 3.818481373530586
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-05",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2470,
+            "center_pixels": [
+              473.5,
+              233.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3756,
+            "center_pixels": [
+              327.5,
+              232.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4368,
+            "center_pixels": [
+              180.0,
+              232.5
+            ]
+          }
+        },
+        "frame_sha256": "5e243aa534653682f695ebb218f895aecf25b0a3e56d55208226ad382b2accfe",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.743,
+                0.487
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.526,
+                0.487
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.281,
+                0.487
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [487, 743], \"wrench\": [487, 526], \"hammer\": [487, 281]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1072.890792042017,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 2.158240023723013,
+          "wrench": 9.307910614095933,
+          "hammer": 1.270118104744581
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "missing-screwdriver",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3683,
+            "center_pixels": [
+              327.5,
+              231.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4521,
+            "center_pixels": [
+              471.5,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "0c359be9d764c5e92b487df2e0d0ddafe7ddc8b9d4555acf791d6027d378d8bc",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": false,
+              "center": null
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.521,
+                0.487
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.739,
+                0.486
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": null, \"wrench\": [487, 521], \"hammer\": [486, 739]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 941.0484579857439,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 37,
+            "total_tokens": 375,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "wrench": 6.355407146674391,
+          "hammer": 4.997999599839916
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "missing-wrench",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2457,
+            "center_pixels": [
+              194.0,
+              229.0
+            ]
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4531,
+            "center_pixels": [
+              466.5,
+              231.5
+            ]
+          }
+        },
+        "frame_sha256": "08776fe66f2e4d90933b66ceb5679c23d57df0f7bc8f5bc43ffc2e340fe5eaf8",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.309,
+                0.483
+              ]
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.735,
+                0.486
+              ]
+            }
+          },
+          "raw": "{\n  \"screwdriver\": [483, 309],\n  \"wrench\": null,\n  \"hammer\": [486, 735]\n}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1093.1989999953657,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 46,
+            "total_tokens": 384,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 4.712027164607601,
+          "hammer": 4.287003615580447
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "missing-hammer",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2468,
+            "center_pixels": [
+              189.0,
+              232.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3689,
+            "center_pixels": [
+              332.5,
+              232.5
+            ]
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5cc1d2af2b456ec9be31ed5ddc5a47a37b89e05787aa0b367890d84f6148930e",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.296,
+                0.492
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.527,
+                0.493
+              ]
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\"screwdriver\": [492, 296], \"wrench\": [493, 527], \"hammer\": null}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 958.0249999999069,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 37,
+            "total_tokens": 375,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 4.183204513288821,
+          "wrench": 6.3236065658767995
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "rotated-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2533,
+            "center_pixels": [
+              188.5,
+              233.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3643,
+            "center_pixels": [
+              326.5,
+              224.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4488,
+            "center_pixels": [
+              476.5,
+              229.5
+            ]
+          }
+        },
+        "frame_sha256": "d3e91d1a035360e464d7b09d6df32958948cdc9f32672673cfaf3fbd91e427ec",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.296,
+                0.495
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.518,
+                0.487
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.748,
+                0.493
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [495, 296], \"wrench\": [487, 518], \"hammer\": [493, 748]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1068.334457988385,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 4.206376112522506,
+          "wrench": 10.533185652973161,
+          "hammer": 7.477165238243698
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "rotated-01",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2348,
+            "center_pixels": [
+              187.0,
+              245.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3723,
+            "center_pixels": [
+              333.5,
+              245.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4405,
+            "center_pixels": [
+              469.0,
+              246.5
+            ]
+          }
+        },
+        "frame_sha256": "c59a19966b2d17329e39bd19c7ea372cb615d0348c3d32c34d5a9a51a8f359d5",
+        "passed": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.296,
+                0.518
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.524,
+                0.517
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.737,
+                0.52
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [518, 296], \"wrench\": [517, 524], \"hammer\": [520, 737]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1061.2294579623267,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 3.976581446418529,
+          "wrench": 3.666769695522208,
+          "hammer": 4.097853096439668
+        },
+        "false_positives": 0
+      }
+    ]
+  },
+  "gemma_configuration": {
+    "model_key": "google/gemma-4-31b",
+    "instance_id": "workbench-vision-gemma",
+    "device": "existing linked workstation",
+    "selected_cli_option": "google/gemma-4-31b (18.52 GiB) \u00b7 DESKTOP-EK0AJCB",
+    "gpu_requested": "max",
+    "parallel": 1,
+    "context_length": 4096,
+    "load_seconds": 8.85,
+    "estimate_gpu_gib": 20.22,
+    "download_requested": false,
+    "scope": "CLI-selected load configuration and verified remote placement;no GPU utilization/driver/kernel telemetry"
+  },
+  "export_failure": {
+    "scope": "Missing figure script caused initial export to stop after copying core/tests;no new runtime launched. Completed file added before rerunning export. Upstream unchanged."
+  },
+  "alternate_validation": {
+    "scope": "Synthetic optical tool description, RGB only; no physical manipulation or motion localization claim. Frozen before catalog prompt pilot. Existing C3 reserved cases untouched.",
+    "split": "validation",
+    "model": "workbench-vision-gemma",
+    "format": "compact",
+    "coordinates": "grid1000_yx",
+    "alternate": true,
+    "system_prompt_sha256": "e2dc45c05709f2bba431942b9255ef07896f88d06c0ce6bbba5778ad0e74afd9",
+    "criteria": {
+      "visible_tool_set_accuracy_min": 0.95,
+      "absent_tool_false_positives_max": 0,
+      "visible_center_error_max_pixels": 40,
+      "complete_response_target_ms": 2000,
+      "motion_localization_qualified": false
+    },
+    "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+    "rows": [
+      {
+        "id": "layout-01",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2505,
+            "center_pixels": [
+              197.0,
+              233.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3864,
+            "center_pixels": [
+              477.0,
+              235.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4260,
+            "center_pixels": [
+              327.5,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "6e2f47ed2f583213cfc127e86e9c7cb2fd700ca97240f311170756963fb9515d",
+        "passed": true,
+        "view": "front",
+        "selected_labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2505,
+            "center_pixels": [
+              197.0,
+              233.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3864,
+            "center_pixels": [
+              477.0,
+              235.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4260,
+            "center_pixels": [
+              327.5,
+              228.5
+            ]
+          }
+        },
+        "selected_frame_sha256": "6e2f47ed2f583213cfc127e86e9c7cb2fd700ca97240f311170756963fb9515d",
+        "total_vision_ms": 1350.9892909787595,
+        "timing_target_met": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.293,
+                0.492
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.75,
+                0.491
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.516,
+                0.492
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [492, 293], \"wrench\": [491, 750], \"hammer\": [492, 516]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1350.9892909787595,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 9.846115985504149,
+          "wrench": 3.0761014287568624,
+          "hammer": 8.135305771758059
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-02",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2446,
+            "center_pixels": [
+              334.0,
+              235.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3777,
+            "center_pixels": [
+              183.0,
+              231.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4526,
+            "center_pixels": [
+              472.0,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "cfc98adc652e7ce94c3fdb2b4b62302d2c662a91d6e6e6961ce67f979c8cded0",
+        "passed": true,
+        "view": "front",
+        "selected_labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2446,
+            "center_pixels": [
+              334.0,
+              235.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3777,
+            "center_pixels": [
+              183.0,
+              231.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4526,
+            "center_pixels": [
+              472.0,
+              228.5
+            ]
+          }
+        },
+        "selected_frame_sha256": "cfc98adc652e7ce94c3fdb2b4b62302d2c662a91d6e6e6961ce67f979c8cded0",
+        "total_vision_ms": 1313.1379580008797,
+        "timing_target_met": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.526,
+                0.487
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.283,
+                0.487
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.739,
+                0.487
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [487, 526], \"wrench\": [487, 283], \"hammer\": [487, 739]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1313.1379580008797,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 2.9167104758614544,
+          "wrench": 3.339461034358694,
+          "hammer": 5.346886944755786
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-03",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2510,
+            "center_pixels": [
+              475.0,
+              234.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3788,
+            "center_pixels": [
+              190.0,
+              232.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4260,
+            "center_pixels": [
+              326.5,
+              230.0
+            ]
+          }
+        },
+        "frame_sha256": "10c4d9725be729b30c483a7bee1afe694de727ff0e9868b480a3d769a12ce26e",
+        "passed": true,
+        "view": "front",
+        "selected_labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2510,
+            "center_pixels": [
+              475.0,
+              234.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3788,
+            "center_pixels": [
+              190.0,
+              232.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4260,
+            "center_pixels": [
+              326.5,
+              230.0
+            ]
+          }
+        },
+        "selected_frame_sha256": "10c4d9725be729b30c483a7bee1afe694de727ff0e9868b480a3d769a12ce26e",
+        "total_vision_ms": 1365.8224170212634,
+        "timing_target_met": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.745,
+                0.486
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.283,
+                0.486
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.519,
+                0.486
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [486, 745], \"wrench\": [486, 283], \"hammer\": [486, 519]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1365.8224170212634,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 2.1744884455889935,
+          "wrench": 8.971777973177916,
+          "hammer": 6.541712314065813
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-04",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2466,
+            "center_pixels": [
+              333.0,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3820,
+            "center_pixels": [
+              474.0,
+              236.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4372,
+            "center_pixels": [
+              187.0,
+              232.0
+            ]
+          }
+        },
+        "frame_sha256": "7651708451f3b03560d1b8ecbbc5994e312252f9f322dd74dc0e0f83f11a45a7",
+        "passed": true,
+        "view": "front",
+        "selected_labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2466,
+            "center_pixels": [
+              333.0,
+              231.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3820,
+            "center_pixels": [
+              474.0,
+              236.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4372,
+            "center_pixels": [
+              187.0,
+              232.0
+            ]
+          }
+        },
+        "selected_frame_sha256": "7651708451f3b03560d1b8ecbbc5994e312252f9f322dd74dc0e0f83f11a45a7",
+        "total_vision_ms": 1129.0346669848077,
+        "timing_target_met": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.531,
+                0.487
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.746,
+                0.489
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.288,
+                0.489
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [487, 531], \"wrench\": [489, 746], \"hammer\": [489, 288]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1129.0346669848077,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 7.203693497088865,
+          "wrench": 3.873241536491107,
+          "hammer": 3.818481373530586
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "layout-05",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2470,
+            "center_pixels": [
+              473.5,
+              233.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3756,
+            "center_pixels": [
+              327.5,
+              232.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4368,
+            "center_pixels": [
+              180.0,
+              232.5
+            ]
+          }
+        },
+        "frame_sha256": "5e243aa534653682f695ebb218f895aecf25b0a3e56d55208226ad382b2accfe",
+        "passed": true,
+        "view": "front",
+        "selected_labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2470,
+            "center_pixels": [
+              473.5,
+              233.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3756,
+            "center_pixels": [
+              327.5,
+              232.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4368,
+            "center_pixels": [
+              180.0,
+              232.5
+            ]
+          }
+        },
+        "selected_frame_sha256": "5e243aa534653682f695ebb218f895aecf25b0a3e56d55208226ad382b2accfe",
+        "total_vision_ms": 1122.876291978173,
+        "timing_target_met": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.743,
+                0.487
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.526,
+                0.487
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.281,
+                0.487
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [487, 743], \"wrench\": [487, 526], \"hammer\": [487, 281]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1122.876291978173,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 2.158240023723013,
+          "wrench": 9.307910614095933,
+          "hammer": 1.270118104744581
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "missing-screwdriver",
+        "labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3683,
+            "center_pixels": [
+              327.5,
+              231.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4521,
+            "center_pixels": [
+              471.5,
+              228.5
+            ]
+          }
+        },
+        "frame_sha256": "0c359be9d764c5e92b487df2e0d0ddafe7ddc8b9d4555acf791d6027d378d8bc",
+        "passed": true,
+        "view": "front",
+        "selected_labels": {
+          "screwdriver": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3683,
+            "center_pixels": [
+              327.5,
+              231.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4521,
+            "center_pixels": [
+              471.5,
+              228.5
+            ]
+          }
+        },
+        "selected_frame_sha256": "0c359be9d764c5e92b487df2e0d0ddafe7ddc8b9d4555acf791d6027d378d8bc",
+        "total_vision_ms": 1998.766999982763,
+        "timing_target_met": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": false,
+              "center": null
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.521,
+                0.487
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.739,
+                0.486
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": null, \"wrench\": [487, 521], \"hammer\": [486, 739]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 974.8450419865549,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 37,
+            "total_tokens": 375,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "wrench": 6.355407146674391,
+          "hammer": 4.997999599839916
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "missing-wrench",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2457,
+            "center_pixels": [
+              194.0,
+              229.0
+            ]
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4531,
+            "center_pixels": [
+              466.5,
+              231.5
+            ]
+          }
+        },
+        "frame_sha256": "08776fe66f2e4d90933b66ceb5679c23d57df0f7bc8f5bc43ffc2e340fe5eaf8",
+        "passed": true,
+        "view": "front",
+        "selected_labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2457,
+            "center_pixels": [
+              194.0,
+              229.0
+            ]
+          },
+          "wrench": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4531,
+            "center_pixels": [
+              466.5,
+              231.5
+            ]
+          }
+        },
+        "selected_frame_sha256": "08776fe66f2e4d90933b66ceb5679c23d57df0f7bc8f5bc43ffc2e340fe5eaf8",
+        "total_vision_ms": 2125.5949569749646,
+        "timing_target_met": false,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.309,
+                0.483
+              ]
+            },
+            "wrench": {
+              "visible": false,
+              "center": null
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.735,
+                0.486
+              ]
+            }
+          },
+          "raw": "{\n  \"screwdriver\": [483, 309],\n  \"wrench\": null,\n  \"hammer\": [486, 735]\n}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1118.6931660049595,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 46,
+            "total_tokens": 384,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 4.712027164607601,
+          "hammer": 4.287003615580447
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "missing-hammer",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2468,
+            "center_pixels": [
+              189.0,
+              232.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3689,
+            "center_pixels": [
+              332.5,
+              232.5
+            ]
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "frame_sha256": "5cc1d2af2b456ec9be31ed5ddc5a47a37b89e05787aa0b367890d84f6148930e",
+        "passed": true,
+        "view": "front",
+        "selected_labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2468,
+            "center_pixels": [
+              189.0,
+              232.0
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3689,
+            "center_pixels": [
+              332.5,
+              232.5
+            ]
+          },
+          "hammer": {
+            "visible": false,
+            "pixels": 0,
+            "center_pixels": null
+          }
+        },
+        "selected_frame_sha256": "5cc1d2af2b456ec9be31ed5ddc5a47a37b89e05787aa0b367890d84f6148930e",
+        "total_vision_ms": 1995.366749993991,
+        "timing_target_met": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.296,
+                0.492
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.527,
+                0.493
+              ]
+            },
+            "hammer": {
+              "visible": false,
+              "center": null
+            }
+          },
+          "raw": "{\"screwdriver\": [492, 296], \"wrench\": [493, 527], \"hammer\": null}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 949.7388749732636,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 37,
+            "total_tokens": 375,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 4.183204513288821,
+          "wrench": 6.3236065658767995
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "rotated-00",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2533,
+            "center_pixels": [
+              188.5,
+              233.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3643,
+            "center_pixels": [
+              326.5,
+              224.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4488,
+            "center_pixels": [
+              476.5,
+              229.5
+            ]
+          }
+        },
+        "frame_sha256": "d3e91d1a035360e464d7b09d6df32958948cdc9f32672673cfaf3fbd91e427ec",
+        "passed": true,
+        "view": "front",
+        "selected_labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2533,
+            "center_pixels": [
+              188.5,
+              233.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3643,
+            "center_pixels": [
+              326.5,
+              224.5
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4488,
+            "center_pixels": [
+              476.5,
+              229.5
+            ]
+          }
+        },
+        "selected_frame_sha256": "d3e91d1a035360e464d7b09d6df32958948cdc9f32672673cfaf3fbd91e427ec",
+        "total_vision_ms": 1099.9112499994226,
+        "timing_target_met": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.296,
+                0.495
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.518,
+                0.487
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.748,
+                0.493
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [495, 296], \"wrench\": [487, 518], \"hammer\": [493, 748]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1099.9112499994226,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 4.206376112522506,
+          "wrench": 10.533185652973161,
+          "hammer": 7.477165238243698
+        },
+        "false_positives": 0
+      },
+      {
+        "id": "rotated-01",
+        "labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2348,
+            "center_pixels": [
+              187.0,
+              245.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3723,
+            "center_pixels": [
+              333.5,
+              245.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4405,
+            "center_pixels": [
+              469.0,
+              246.5
+            ]
+          }
+        },
+        "frame_sha256": "c59a19966b2d17329e39bd19c7ea372cb615d0348c3d32c34d5a9a51a8f359d5",
+        "passed": true,
+        "view": "front",
+        "selected_labels": {
+          "screwdriver": {
+            "visible": true,
+            "pixels": 2348,
+            "center_pixels": [
+              187.0,
+              245.5
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "pixels": 3723,
+            "center_pixels": [
+              333.5,
+              245.0
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "pixels": 4405,
+            "center_pixels": [
+              469.0,
+              246.5
+            ]
+          }
+        },
+        "selected_frame_sha256": "c59a19966b2d17329e39bd19c7ea372cb615d0348c3d32c34d5a9a51a8f359d5",
+        "total_vision_ms": 1106.0676659690216,
+        "timing_target_met": true,
+        "observation": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.296,
+                0.518
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.524,
+                0.517
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.737,
+                0.52
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [518, 296], \"wrench\": [517, 524], \"hammer\": [520, 737]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1106.0676659690216,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+        },
+        "presence_correct": true,
+        "center_error_pixels": {
+          "screwdriver": 3.976581446418529,
+          "wrench": 3.666769695522208,
+          "hammer": 4.097853096439668
+        },
+        "false_positives": 0
+      }
+    ]
+  },
+  "failed_candidate_journey": {
+    "scope": "Saved synthetic speech,actual models/task bus/MuJoCo; no live mic or hardware",
+    "passed": false,
+    "saved_speech": {
+      "recognized": {
+        "text": "What can you see on the workbench?",
+        "audio_seconds": 1.88325,
+        "decoder_padding_seconds": 0,
+        "recognition_seconds": 0.156,
+        "audio_decode_seconds": 0.028,
+        "model_recognition_seconds": 0.127,
+        "model": "mlx-community/whisper-small.en-mlx",
+        "local": true,
+        "voice_mode": "request",
+        "likely_echo": false
+      },
+      "answer": {
+        "accepted": true,
+        "mode": "conversation",
+        "task_id": null,
+        "message": "In this simulator snapshot, I can make out the screwdriver near the left, the wrench near the middle, the hammer near the right.",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "In this simulator snapshot, I can make out the screwdriver near the left, the wrench near the middle, the hammer near the right."
+        },
+        "route": "camera",
+        "elapsed_ms": 1380.6965840049088,
+        "profile": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.295,
+                0.483
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.526,
+                0.491
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.743,
+                0.47
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [483, 295], \"wrench\": [491, 526], \"hammer\": [470, 743]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1380.5594579898752,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets",
+          "captured_monotonic_s": 378357.794093958,
+          "frame_sha256": "8f531480aa9882e64fe3b14e50f079ddb23bcb1f69d2be7dea754fe9d670077a"
+        }
+      },
+      "dispatch_to_observed_ms": 1396.2776659755036
+    },
+    "while_working": {
+      "accepted": true,
+      "mode": "conversation",
+      "task_id": null,
+      "message": "In this simulator snapshot, I can make out the screwdriver near the left.",
+      "intent": {
+        "action": "answer",
+        "object": null,
+        "destination": null,
+        "message": "In this simulator snapshot, I can make out the screwdriver near the left."
+      },
+      "route": "camera",
+      "elapsed_ms": 1440.01479097642,
+      "profile": {
+        "tools": {
+          "screwdriver": {
+            "visible": true,
+            "center": [
+              0.285,
+              0.418
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "center": [
+              0.526,
+              0.503
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "center": [
+              0.738,
+              0.479
+            ]
+          }
+        },
+        "raw": "{\n  \"screwdriver\": [418, 285],\n  \"wrench\": [503, 526],\n  \"hammer\": [479, 738]\n}",
+        "model": "workbench-vision-gemma",
+        "elapsed_ms": 1439.8711250396445,
+        "usage": {
+          "prompt_tokens": 338,
+          "completion_tokens": 54,
+          "total_tokens": 392,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "coordinates": "grid1000_yx",
+        "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets",
+        "captured_monotonic_s": 378365.765016833,
+        "frame_sha256": "ca6de6a813b0e2afcb5e99a1564e27369f0fd414b19b48e5825967d821b5b1f0"
+      }
+    },
+    "stop_observed_ms": 68.82987503195181,
+    "superseded_camera": {
+      "accepted": false,
+      "mode": "superseded",
+      "task_id": null
+    },
+    "hold": {
+      "wall_seconds": 32.05764520802768,
+      "minimum_height_m": 0.22283002894916276,
+      "maximum_joint_drift_rad": 0.00215639123018585
+    },
+    "delivery": {
+      "status": "completed",
+      "message": "Your screwdriver is ready in the handoff tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "fetch",
+        "object": "screwdriver",
+        "destination": "handoff",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "Your screwdriver is ready in the handoff tray.",
+        "distance_m": 0.008149834574491564
+      },
+      "observed": {
+        "screwdriver": [
+          0.632493788901206,
+          -0.15682563415278725,
+          0.021656911640388153
+        ],
+        "wrench": [
+          0.4557375666948417,
+          0.003300572844978832,
+          0.0216960137567021
+        ],
+        "hammer": [
+          0.4235068375646078,
+          0.2375616437990426,
+          0.02172738357875164
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [],
+      "task_id": "4d868a06-769e-4051-a29c-afb0b2103e6c"
+    },
+    "return": {
+      "status": "completed",
+      "message": "The screwdriver is back in its tool tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "return",
+        "object": "screwdriver",
+        "destination": "rack",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "The screwdriver is back in its tool tray.",
+        "distance_m": 0.012726391073147315
+      },
+      "observed": {
+        "screwdriver": [
+          0.4239042055171783,
+          -0.2188285041570111,
+          0.021656911640377436
+        ],
+        "wrench": [
+          0.45573756669229326,
+          0.00330057284339788,
+          0.021696013756744587
+        ],
+        "hammer": [
+          0.42350683756445084,
+          0.23756164379628494,
+          0.021727383580918098
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [],
+      "task_id": "fd4559f0-dc53-49e9-90de-a42c7bc78203"
+    },
+    "failure": "AssertionError()"
+  },
+  "passed_candidate_journey": {
+    "scope": "Saved synthetic speech,actual models/task bus/MuJoCo; no live mic or hardware",
+    "passed": true,
+    "saved_speech": {
+      "recognized": {
+        "text": "What can you see on the workbench?",
+        "audio_seconds": 1.88325,
+        "decoder_padding_seconds": 0,
+        "recognition_seconds": 0.152,
+        "audio_decode_seconds": 0.028,
+        "model_recognition_seconds": 0.125,
+        "model": "mlx-community/whisper-small.en-mlx",
+        "local": true,
+        "voice_mode": "request",
+        "likely_echo": false
+      },
+      "answer": {
+        "accepted": true,
+        "mode": "conversation",
+        "task_id": null,
+        "message": "In this simulator snapshot, I can make out the screwdriver near the left, the wrench near the middle, the hammer near the right.",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "In this simulator snapshot, I can make out the screwdriver near the left, the wrench near the middle, the hammer near the right."
+        },
+        "route": "camera",
+        "elapsed_ms": 1455.8415419887751,
+        "profile": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.295,
+                0.483
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.526,
+                0.491
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.743,
+                0.47
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [483, 295], \"wrench\": [491, 526], \"hammer\": [470, 743]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1455.7169170002453,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets",
+          "captured_monotonic_s": 379458.104166291,
+          "frame_sha256": "8f531480aa9882e64fe3b14e50f079ddb23bcb1f69d2be7dea754fe9d670077a",
+          "view": "front",
+          "view_call_ms": [
+            1455.7169170002453
+          ]
+        }
+      },
+      "dispatch_to_observed_ms": 1473.0903749587014
+    },
+    "while_working": {
+      "accepted": true,
+      "mode": "conversation",
+      "task_id": null,
+      "message": "In this simulator snapshot, I can make out the screwdriver near the left.",
+      "intent": {
+        "action": "answer",
+        "object": null,
+        "destination": null,
+        "message": "In this simulator snapshot, I can make out the screwdriver near the left."
+      },
+      "route": "camera",
+      "elapsed_ms": 1521.5776250115596,
+      "profile": {
+        "tools": {
+          "screwdriver": {
+            "visible": true,
+            "center": [
+              0.287,
+              0.432
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "center": [
+              0.526,
+              0.501
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "center": [
+              0.738,
+              0.479
+            ]
+          }
+        },
+        "raw": "{\n  \"screwdriver\": [432, 287],\n  \"wrench\": [501, 526],\n  \"hammer\": [479, 738]\n}",
+        "model": "workbench-vision-gemma",
+        "elapsed_ms": 1521.4491660008207,
+        "usage": {
+          "prompt_tokens": 338,
+          "completion_tokens": 54,
+          "total_tokens": 392,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "coordinates": "grid1000_yx",
+        "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets",
+        "captured_monotonic_s": 379465.852212166,
+        "frame_sha256": "1b37dce14860694be976b434a0faeecc4cae4d3102c16338fc795b02686537e1",
+        "view": "front",
+        "view_call_ms": [
+          1521.4491660008207
+        ]
+      }
+    },
+    "stop_observed_ms": 63.958165992517024,
+    "superseded_camera": {
+      "accepted": false,
+      "mode": "superseded",
+      "task_id": null
+    },
+    "hold": {
+      "wall_seconds": 32.04016029200284,
+      "minimum_height_m": 0.22422268205557208,
+      "maximum_joint_drift_rad": 0.003945163172989874
+    },
+    "delivery": {
+      "status": "completed",
+      "message": "Your screwdriver is ready in the handoff tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "fetch",
+        "object": "screwdriver",
+        "destination": "handoff",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "Your screwdriver is ready in the handoff tray.",
+        "distance_m": 0.008394897571380065
+      },
+      "observed": {
+        "screwdriver": [
+          0.6325168493296928,
+          -0.15619516606413972,
+          0.021656911640327344
+        ],
+        "wrench": [
+          0.45573756669023174,
+          0.0033005728394195875,
+          0.021696013749090744
+        ],
+        "hammer": [
+          0.4235068375648295,
+          0.23756164379625577,
+          0.02172738358092005
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [],
+      "task_id": "8f0c1349-7df4-4611-8ca1-0620901d4873"
+    },
+    "return": {
+      "status": "completed",
+      "message": "The screwdriver is back in its tool tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "return",
+        "object": "screwdriver",
+        "destination": "rack",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "The screwdriver is back in its tool tray.",
+        "distance_m": 0.012626344329049907
+      },
+      "observed": {
+        "screwdriver": [
+          0.4239024129531088,
+          -0.2189435989887611,
+          0.02165691163342548
+        ],
+        "wrench": [
+          0.45573756669280385,
+          0.0033005728410324445,
+          0.021696013749158416
+        ],
+        "hammer": [
+          0.42350683756469093,
+          0.23756164379625735,
+          0.021727383580925293
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [],
+      "task_id": "433da220-221b-449b-845c-c91064328872"
+    },
+    "final_camera": {
+      "accepted": true,
+      "mode": "conversation",
+      "task_id": null,
+      "message": "In this simulator snapshot, I can make out the screwdriver near the left, the wrench near the middle, the hammer near the middle.",
+      "intent": {
+        "action": "answer",
+        "object": null,
+        "destination": null,
+        "message": "In this simulator snapshot, I can make out the screwdriver near the left, the wrench near the middle, the hammer near the middle."
+      },
+      "route": "camera",
+      "elapsed_ms": 2225.0418339972384,
+      "profile": {
+        "tools": {
+          "screwdriver": {
+            "visible": true,
+            "center": [
+              0.314,
+              0.603
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "center": [
+              0.527,
+              0.538
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "center": [
+              0.664,
+              0.379
+            ]
+          }
+        },
+        "raw": "{\"screwdriver\": [603, 314], \"wrench\": [538, 527], \"hammer\": [379, 664]}",
+        "model": "workbench-vision-gemma",
+        "elapsed_ms": 1084.4309590174817,
+        "usage": {
+          "prompt_tokens": 338,
+          "completion_tokens": 45,
+          "total_tokens": 383,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "coordinates": "grid1000_yx",
+        "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets",
+        "captured_monotonic_s": 379527.986840958,
+        "frame_sha256": "8f0847eae434d8a8a85230961fd791fad99ebfec27b1bd1aee689d159c54c0af",
+        "view": "side",
+        "view_call_ms": [
+          1140.3682500240393,
+          1084.4309590174817
+        ]
+      }
+    }
+  },
+  "postreturn_diagnosis": {
+    "scope": "Exact retained model-input JPEG: screwdriver visible but heavily shadowed;model said uncertain. No shader/light/tool pose change was used. A second real optical view was added.",
+    "tools": {
+      "screwdriver": {
+        "visible": false,
+        "center": null
+      },
+      "wrench": {
+        "visible": true,
+        "center": [
+          0.528,
+          0.495
+        ]
+      },
+      "hammer": {
+        "visible": true,
+        "center": [
+          0.739,
+          0.476
+        ]
+      }
+    }
+  },
+  "regressions": {
+    "first_full_lab": 262,
+    "first_full_fork": 243,
+    "final_full": {
+      "lab_passed": 263,
+      "fork_passed": 244,
+      "lab_seconds": 106.04,
+      "fork_seconds": 104.02
+    },
+    "focused_after_recovery": 92,
+    "upstream_protected_files": 46
+  },
+  "main_browser_first_read": {
+    "scope": "Actual What do you see? browser button,read-only model route;no microphone or physical job",
+    "camera": {
+      "model": "workbench-vision-gemma",
+      "coordinates": "grid1000_yx",
+      "endpoint": "http://127.0.0.1:1234",
+      "last_read": {
+        "tools": {
+          "screwdriver": {
+            "visible": true,
+            "center": [
+              0.295,
+              0.483
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "center": [
+              0.526,
+              0.491
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "center": [
+              0.743,
+              0.47
+            ]
+          }
+        },
+        "raw": "{\"screwdriver\": [483, 295], \"wrench\": [491, 526], \"hammer\": [470, 743]}",
+        "model": "workbench-vision-gemma",
+        "elapsed_ms": 1367.4919169861823,
+        "usage": {
+          "prompt_tokens": 338,
+          "completion_tokens": 45,
+          "total_tokens": 383,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "coordinates": "grid1000_yx",
+        "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets",
+        "captured_monotonic_s": 380380.708139666,
+        "frame_sha256": "8f531480aa9882e64fe3b14e50f079ddb23bcb1f69d2be7dea754fe9d670077a",
+        "view": "front",
+        "view_call_ms": [
+          1367.4919169861823
+        ]
+      }
+    },
+    "busy": false,
+    "messages": [
+      {
+        "role": "user",
+        "content": "What can you see on the workbench?"
+      },
+      {
+        "role": "assistant",
+        "content": "In this simulator snapshot, I can make out the screwdriver near the left, the wrench near the middle, the hammer near the right."
+      }
+    ]
+  },
+  "passed_main_journey": {
+    "scope": "Saved synthetic speech,actual models/task bus/MuJoCo; no live mic or hardware",
+    "passed": true,
+    "saved_speech": {
+      "recognized": {
+        "text": "What can you see on the workbench?",
+        "audio_seconds": 1.88325,
+        "decoder_padding_seconds": 0,
+        "recognition_seconds": 0.156,
+        "audio_decode_seconds": 0.03,
+        "model_recognition_seconds": 0.126,
+        "model": "mlx-community/whisper-small.en-mlx",
+        "local": true,
+        "voice_mode": "request",
+        "likely_echo": false
+      },
+      "answer": {
+        "accepted": true,
+        "mode": "conversation",
+        "task_id": null,
+        "message": "In this simulator snapshot, I can make out the screwdriver near the left, the wrench near the middle, the hammer near the right.",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "In this simulator snapshot, I can make out the screwdriver near the left, the wrench near the middle, the hammer near the right."
+        },
+        "route": "camera",
+        "elapsed_ms": 1258.3191670128144,
+        "profile": {
+          "tools": {
+            "screwdriver": {
+              "visible": true,
+              "center": [
+                0.291,
+                0.483
+              ]
+            },
+            "wrench": {
+              "visible": true,
+              "center": [
+                0.526,
+                0.495
+              ]
+            },
+            "hammer": {
+              "visible": true,
+              "center": [
+                0.743,
+                0.47
+              ]
+            }
+          },
+          "raw": "{\"screwdriver\": [483, 291], \"wrench\": [495, 526], \"hammer\": [470, 743]}",
+          "model": "workbench-vision-gemma",
+          "elapsed_ms": 1258.2049999618903,
+          "usage": {
+            "prompt_tokens": 338,
+            "completion_tokens": 45,
+            "total_tokens": 383,
+            "completion_tokens_details": {
+              "reasoning_tokens": 0
+            }
+          },
+          "coordinates": "grid1000_yx",
+          "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets",
+          "captured_monotonic_s": 380598.0627305,
+          "frame_sha256": "8f531480aa9882e64fe3b14e50f079ddb23bcb1f69d2be7dea754fe9d670077a",
+          "view": "front",
+          "view_call_ms": [
+            1258.2049999618903
+          ]
+        }
+      },
+      "dispatch_to_observed_ms": 1274.3451669812202
+    },
+    "while_working": {
+      "accepted": true,
+      "mode": "conversation",
+      "task_id": null,
+      "message": "In this simulator snapshot, I can make out the screwdriver near the left.",
+      "intent": {
+        "action": "answer",
+        "object": null,
+        "destination": null,
+        "message": "In this simulator snapshot, I can make out the screwdriver near the left."
+      },
+      "route": "camera",
+      "elapsed_ms": 1737.763458979316,
+      "profile": {
+        "tools": {
+          "screwdriver": {
+            "visible": true,
+            "center": [
+              0.285,
+              0.436
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "center": [
+              0.526,
+              0.497
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "center": [
+              0.738,
+              0.466
+            ]
+          }
+        },
+        "raw": "{\n  \"screwdriver\": [436, 285],\n  \"wrench\": [497, 526],\n  \"hammer\": [466, 738]\n}",
+        "model": "workbench-vision-gemma",
+        "elapsed_ms": 1737.6659169676714,
+        "usage": {
+          "prompt_tokens": 338,
+          "completion_tokens": 54,
+          "total_tokens": 392,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "coordinates": "grid1000_yx",
+        "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets",
+        "captured_monotonic_s": 380605.655195,
+        "frame_sha256": "8d0f8aa9e8284c4f0ab31446a5d6217b8b9711253a7eca75ae34f891b62d53b8",
+        "view": "front",
+        "view_call_ms": [
+          1737.6659169676714
+        ]
+      }
+    },
+    "stop_observed_ms": 6.555542000569403,
+    "superseded_camera": {
+      "accepted": false,
+      "mode": "superseded",
+      "task_id": null
+    },
+    "hold": {
+      "wall_seconds": 32.10044937499333,
+      "minimum_height_m": 0.2253022129692136,
+      "maximum_joint_drift_rad": 0.004623947744525347
+    },
+    "delivery": {
+      "status": "completed",
+      "message": "Your screwdriver is ready in the handoff tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "fetch",
+        "object": "screwdriver",
+        "destination": "handoff",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "Your screwdriver is ready in the handoff tray.",
+        "distance_m": 0.009512396406000174
+      },
+      "observed": {
+        "screwdriver": [
+          0.6323706898230258,
+          -0.15431851149711598,
+          0.02165691164035453
+        ],
+        "wrench": [
+          0.4557375666541092,
+          0.0033005728196367225,
+          0.021696013756703617
+        ],
+        "hammer": [
+          0.4235068375622192,
+          0.23756164379641684,
+          0.021727383580930255
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [],
+      "task_id": "a3700160-5514-472e-9111-fb23a6a156d6"
+    },
+    "return": {
+      "status": "completed",
+      "message": "The screwdriver is back in its tool tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "return",
+        "object": "screwdriver",
+        "destination": "rack",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "The screwdriver is back in its tool tray.",
+        "distance_m": 0.012754484107882394
+      },
+      "observed": {
+        "screwdriver": [
+          0.42386255972171866,
+          -0.2188192714151203,
+          0.021656911633415404
+        ],
+        "wrench": [
+          0.4557375666549652,
+          0.0033005728201791784,
+          0.02169601375672487
+        ],
+        "hammer": [
+          0.42350683756223545,
+          0.23756164379644945,
+          0.02172738358090458
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [],
+      "task_id": "c3f0a0ab-3219-441a-afdb-f1c39e7a633a"
+    },
+    "final_camera": {
+      "accepted": true,
+      "mode": "conversation",
+      "task_id": null,
+      "message": "In this simulator snapshot, I can make out the screwdriver near the left, the wrench near the middle, the hammer near the middle.",
+      "intent": {
+        "action": "answer",
+        "object": null,
+        "destination": null,
+        "message": "In this simulator snapshot, I can make out the screwdriver near the left, the wrench near the middle, the hammer near the middle."
+      },
+      "route": "camera",
+      "elapsed_ms": 2515.7593750045635,
+      "profile": {
+        "tools": {
+          "screwdriver": {
+            "visible": true,
+            "center": [
+              0.312,
+              0.603
+            ]
+          },
+          "wrench": {
+            "visible": true,
+            "center": [
+              0.528,
+              0.547
+            ]
+          },
+          "hammer": {
+            "visible": true,
+            "center": [
+              0.648,
+              0.379
+            ]
+          }
+        },
+        "raw": "{\"screwdriver\": [603, 312], \"wrench\": [547, 528], \"hammer\": [379, 648]}",
+        "model": "workbench-vision-gemma",
+        "elapsed_ms": 1326.8390410230495,
+        "usage": {
+          "prompt_tokens": 338,
+          "completion_tokens": 45,
+          "total_tokens": 383,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "coordinates": "grid1000_yx",
+        "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets",
+        "captured_monotonic_s": 380668.714713708,
+        "frame_sha256": "5eca07c1ee050fa8746803cddfc1319b71cf49ef451d3d5b9729b3fab7eac338",
+        "view": "side",
+        "view_call_ms": [
+          1188.7570419930853,
+          1326.8390410230495
+        ]
+      }
+    }
+  },
+  "final_main": {
+    "scope": "Observed browser and real main journey;not a live human acoustic demonstration",
+    "url": "http://127.0.0.1:8766",
+    "exec_session": 74724,
+    "conversation_model": "prism-ml/bonsai-27b",
+    "vision_model": "workbench-vision-gemma",
+    "vision_coordinates": "grid1000_yx",
+    "phase": "Ready",
+    "inventory": "all three tool rack",
+    "voice_replies": true,
+    "listen_while_working": true,
+    "microphone": "idle at Ready",
+    "snapshot": "vision-language-ready.jpg",
+    "candidate_shutdown": true
+  },
+  "browser_layout": {
+    "scope": "Actual narrow in-app browser screenshot;initial fixed-height workspace hid the camera image behind conversation",
+    "change": "Open camera panel expands narrow workspace;desktop panel can scroll;CSS only after final263/244 suites",
+    "verification": "Rendered image visible together with current answer,Voice/listen ON,Ready/all tools rack"
+  }
+}

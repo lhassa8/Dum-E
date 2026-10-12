@@ -45,6 +45,23 @@ def tool_scene_xml():
         conaffinity="0",
     )
     metal = "0.70 0.74 0.78 1"
+    # Optical-only view for camera questions; no collider or physics change.
+    for camera_name, position in [
+        ("tool_view", [1.05, 0, 0.9]),
+        ("tool_view_side", [1.05, -0.38, 0.95]),
+    ]:
+        camera_z = np.array(position) - [0.46, 0, 0.03]
+        camera_z /= np.linalg.norm(camera_z)
+        camera_x = np.cross([0, 0, 1], camera_z)
+        camera_x /= np.linalg.norm(camera_x)
+        ET.SubElement(
+            world,
+            "camera",
+            name=camera_name,
+            pos=" ".join(map(str, position)),
+            fovy="40",
+            xyaxes=" ".join(map(str, np.r_[camera_x, np.cross(camera_z, camera_x)])),
+        )
     for name, (x, y) in TOOLS.items():
         body = ET.SubElement(world, "body", name=name, pos=f"{x} {y} 0.026")
         ET.SubElement(body, "freejoint", name=f"{name}_joint")

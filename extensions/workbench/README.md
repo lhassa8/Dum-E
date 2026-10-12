@@ -35,6 +35,13 @@ The [tool contact fix](docs/idle-contact-audit.md) preserves Stop holds and keep
 returned tools stable through 30 simulated minutes, followed by physical re-pickup.
 The launcher rejects older native contact profiles; restart the simulator to apply it.
 
+[Camera questions](docs/vision-language-audit.md) use actual simulator images and
+a separate pretrained vision model. The current instance is configured with:
+`--vision-model workbench-vision-gemma --vision-coordinates grid1000_yx`.
+Ask “What do you see?” and expand the snapshot to inspect the image behind its
+answer. A second optical view can resolve uncertainty; image estimates are for
+conversation and do not supply robot grasp coordinates.
+
 For [GPT-6 Luna with your ChatGPT subscription](docs/codex-luna-audit.md), use
 `WORKBENCH_LANGUAGE_BACKEND=codex uv run --locked dume-sim` with an existing
 ChatGPT-signed-in Codex CLI. General requests use subscription allowance; speech

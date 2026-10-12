@@ -150,10 +150,10 @@ class Workbench:
             target, self.model.actuator_ctrlrange[:7, 0], self.model.actuator_ctrlrange[:7, 1]
         )
 
-    def render(self):
+    def render(self, camera="overview"):
         if self.renderer is None:
             self.renderer = mujoco.Renderer(self.model, height=720, width=960)
-        self.renderer.update_scene(self.data, camera="overview")
+        self.renderer.update_scene(self.data, camera=camera)
         return self.renderer.render().copy()
 
     def close(self):

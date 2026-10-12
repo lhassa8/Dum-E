@@ -178,6 +178,18 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
             image.content, media_type="image/jpeg", headers={"Cache-Control": "no-store"}
         )
 
+    @api.get("/camera.jpg")
+    async def camera_frame(frame: str | None = None):
+        try:
+            response = await agent.controller.request(
+                "GET", "/camera.jpg", params={"frame": frame} if frame else None
+            )
+        except httpx.HTTPError as error:
+            raise HTTPException(404, "Ask a camera question first.") from error
+        return Response(
+            response.content, media_type="image/jpeg", headers={"Cache-Control": "no-store"}
+        )
+
     @api.post("/chat")
     async def chat(request: ChatRequest):
         if mcp_process.poll() is not None:
@@ -285,7 +297,9 @@ def check_port(port):
         probe.bind(("127.0.0.1", port))
 
 
-def ensure_simulator(port, logdir, tools=False):
+def ensure_simulator(
+    port, logdir, tools=False, vision_model=None, vision_coordinates="normalized_xy"
+):
     url = f"http://127.0.0.1:{port}"
     try:
         response = httpx.get(url + "/state", timeout=2, trust_env=False)
@@ -351,6 +365,22 @@ def ensure_simulator(port, logdir, tools=False):
                     "The existing native simulator uses older or unverified tool contacts. "
                     "Restart it, or choose an unused --sim-port to apply the current physics."
                 )
+        if vision_model:
+            camera = state.get("camera", {})
+            from physical_ai_lab.assistant.lmstudio import normalize_server_url
+
+            expected_url = normalize_server_url(
+                os.environ.get("WORKBENCH_LMSTUDIO_URL", "http://127.0.0.1:1234")
+            )
+            if (
+                camera.get("model") != vision_model
+                or camera.get("coordinates") != vision_coordinates
+                or camera.get("endpoint") != expected_url
+            ):
+                raise RuntimeError(
+                    "The existing simulator has a different or unverified camera model. "
+                    "Choose an unused --sim-port for the requested camera."
+                )
         print("Connected to existing local Workbench; it will remain running on exit.", flush=True)
         return None
     check_port(port)
@@ -365,7 +395,12 @@ def ensure_simulator(port, logdir, tools=False):
             "--log-dir",
             str(logdir / "physics"),
         ]
-        + (["--tools"] if tools else []),
+        + (["--tools"] if tools else [])
+        + (
+            ["--vision-model", vision_model, "--vision-coordinates", vision_coordinates]
+            if vision_model
+            else []
+        ),
         stdout=logfile,
         stderr=subprocess.STDOUT,
         start_new_session=True,
@@ -402,10 +437,16 @@ def _main():
     parser.add_argument("--language-backend", choices=["mlx", "lmstudio", "codex"])
     parser.add_argument("--model", help="MLX model folder or LM Studio model ID")
     parser.add_argument("--lmstudio-url", help="LM Studio server, default http://127.0.0.1:1234")
+    parser.add_argument("--vision-model", help="Optional already loaded LM Studio vision instance")
+    parser.add_argument(
+        "--vision-coordinates", choices=["normalized_xy", "grid1000_yx"], default="normalized_xy"
+    )
     args = parser.parse_args()
     from physical_ai_lab.assistant.tool_language import configure_tool_language
 
     try:
+        if args.vision_model and args.blocks:
+            raise ValueError("Camera questions require the tool scene")
         if args.blocks and args.language_backend not in {None, "mlx"}:
             raise ValueError("External language backends currently require the tool scene")
         configure_tool_language(
@@ -422,7 +463,13 @@ def _main():
             parser.error(f"Port {port} is in use; open the running app or choose another port.")
     logdir = (args.log_dir or Path("runs") / ("dume-" + uuid.uuid4().hex[:8])).resolve()
     logdir.mkdir(parents=True, exist_ok=False)
-    sim = ensure_simulator(args.sim_port, logdir, tools=not args.blocks)
+    sim = ensure_simulator(
+        args.sim_port,
+        logdir,
+        tools=not args.blocks,
+        vision_model=args.vision_model,
+        vision_coordinates=args.vision_coordinates,
+    )
     mcp = None
     try:
         manager = SharedMemoryManager()
