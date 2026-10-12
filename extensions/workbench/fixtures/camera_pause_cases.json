@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "scope": "Offline simulated long-held camera motion; not wall-clock or live speech Stop",
+  "layout_fixture": "release_model_cases.json",
+  "layout_fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+  "cases": ["validation-000", "validation-001", "validation-002"],
+  "continuations": ["resume", "return"],
+  "pause_phase": "Lifting tool",
+  "pause_at_tool_height_m": 0.13,
+  "hold_seconds": 32,
+  "criteria": {
+    "held_height_min_m": 0.13,
+    "joint_drift_max_rad": 0.02,
+    "held_translation_max_m": 0.01,
+    "unrelated_translation_max_m": 0.004,
+    "placement_distance_max_m": 0.035,
+    "rest_height_max_m": 0.04,
+    "rest_speed_max_m_s": 0.03,
+    "lift_min_m": 0.08
+  },
+  "profile": {
+    "recover_ik": true,
+    "verify_motion": true,
+    "release_fallback": true,
+    "linear_lifts": true,
+    "center_grasp": true,
+    "safe_handoff": true,
+    "carry_model": null,
+    "release_model": null
+  }
+}

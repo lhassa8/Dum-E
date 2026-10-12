@@ -1260,3 +1260,35 @@ B14 — faster Bonsai load configuration, October 12:
   retained evidence and documentation added to authorized fork export.
 - Full goal active: actual pretrained manipulation, camera-derived motion,
   room/acoustic/audible evidence and convincing human demonstration incomplete.
+
+
+B15 — camera-motion requalification and shared hold, October 12:
+- Previous goal turn: progress; faster Bonsai load qualified/published at
+  lab5f70eee/forkc4e6820. Revalidated clean repos and public Ready/Bonsai/Gemma/v2
+  session before offline camera work. No public task or microphone was started.
+- Earlier conventional v2 run is terminal:17/18, validation016 wrench36.667mm
+  outside35mm gate. Reused the existing optional straight-lift/centering profile,
+  with no solver/trajectory/model/physics changes:18/18 under current contacts.
+- Frozen32simsecond held-camera protocol SHA
+  02ce28490d678acf402b7434a4e32854403939956ea101216f659ab3d1fc5d17:
+  old position-only hold4/6, hammer minimum126.80mm below130mm retained gate;
+  existing shared gravity-feedforward hold6/6. SimRobot now delegates to that
+  method. No body freeze, weld, force/gain/friction change or learned weights.
+- Actual adapter6/6 long-hold continuations; minimum130.09mm (narrow margin),
+  maxjointdrift.00955rad, maxheldtranslation2.05mm; all physical placements<35mm,
+  unrelated centers<4mm. Offline simulation clocks, not wall/spoken Stop proof.
+- Final source/profile frozen before reserved test:18/18 validation,12returns;
+  first24reserved layouts22/24,17returns, FAIL unchanged95% fulljourney gate.
+  test009 screwdriver abstains atfit.7980<.8; test016 wrench loses encoder grip
+  indication during lift before planned Stop. No test-layout tuning or gate change.
+- Independent metric reconstruction matches all recorded verdicts; successful
+  actor legs/returns are released_unverified, separate physics judge proves place.
+  Three validation000 phase probes confirm resume unsupported during approach,
+  grasping and withdrawal. All-phase recovery remains incomplete.
+- Root269/fork250 regression suites,22focused camera tests and changed-file Ruff/
+  format checks pass. Upstream46 hashes preserved. Camera remains experimental,
+  not promoted to main. Raw frames/logs local; curated evidence/plot/protocol and
+  verified one-method hold correction exported for authorized fork publication.
+- Next major control path remains actual pretrained OpenPi/LIBERO in supported
+  workstation runtime; WSL/Ubuntu information still pending. No pretrained policy
+  inference/rollout, public camera motion or full-goal completion claimed.

@@ -37,6 +37,9 @@ one prediction slot, while keeping model selection interchangeable.
 The [tool contact fix](docs/idle-contact-audit.md) preserves Stop holds and keeps
 returned tools stable through 30 simulated minutes, followed by physical re-pickup.
 The launcher rejects older native contact profiles; restart the simulator to apply it.
+The experimental [camera-motion requalification](docs/camera-motion-requalification-audit.md)
+passes long held-tool recovery but remains below the reserved-layout success gate;
+it is not connected to the public assistant's motion controller.
 
 [Camera questions](docs/vision-language-audit.md) use actual simulator images and
 a separate pretrained vision model. The current instance is configured with:

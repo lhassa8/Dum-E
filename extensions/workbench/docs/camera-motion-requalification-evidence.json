@@ -1,0 +1,2910 @@
+{
+  "scope": "Curated offline simulated physics and known-primitive RGB-D measurements. No public camera motion, learned arm policy, live speech Stop or wall-clock hold proof. Raw frames/logs remain local.",
+  "physics_profile": "tool_contacts_v2",
+  "change": "SimRobot.hold reuses the existing Workbench.hold_joints method; no new solver, motion, physics or trained weights.",
+  "source_sha256": {
+    "src/physical_ai_lab/assistant/camera_robot.py": "8462f419bfe85eaea36d31563d55cd5756e6f6639fd18eb2b1dcfc864a3d7814",
+    "src/physical_ai_lab/assistant/camera_control.py": "d9a8652970e9fad9ec21de3d57a864304c9efc5636c4ca3b9b4c9643c4ba8254",
+    "src/physical_ai_lab/assistant/tool_scene.py": "8203ae26f9af020fa0037fb93ea96540256feddcdd538794040a6ccf10d3dad3",
+    "src/physical_ai_lab/assistant/perception.py": "c0ad627b244ae032b2c6abf98c87bc19ae5d0a657746d8b18e839ca689718408",
+    "src/physical_ai_lab/assistant/perception_scene.py": "f9488fd8fbdd4cfec82018372177d42c011753171e60e4fd7d9fc6d01ce4d23c"
+  },
+  "cohorts": {
+    "conventional_validation": {
+      "fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+      "split": "validation",
+      "cases": 18,
+      "physical_successes": 17,
+      "all_criteria_successes": 17,
+      "fresh_camera_return_count": 12,
+      "passed": false,
+      "carry_model_sha256": null,
+      "carry_policy": "rigid",
+      "release_model_sha256": null,
+      "release_kind": null,
+      "recover_ik": true,
+      "verify_motion": true,
+      "release_fallback": false,
+      "linear_lifts": false,
+      "center_grasp": false,
+      "safe_handoff": true,
+      "disturbance_judge": "Maximum across motion/hold frames, not just final position",
+      "cases_detail": [
+        {
+          "case": "validation-000",
+          "tool": "screwdriver",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.019400633786982344,
+            "max_lift_m": 0.20826352243900742,
+            "final_height_m": 0.021656911640333967,
+            "speed_m_s": 6.9272948866210286e-12,
+            "other_tool_disturbance_m": 2.60229600054516e-09,
+            "other_tool_final_displacement_m": 2.6021753898605983e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.01377005167170636,
+            "final_height_m": 0.021656911633413083,
+            "speed_m_s": 2.1246070103509854e-11,
+            "max_lift_m": 0.21928452612877286
+          }
+        },
+        {
+          "case": "validation-001",
+          "tool": "wrench",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.014834961637905228,
+            "max_lift_m": 0.21378717762484292,
+            "final_height_m": 0.0216960137567526,
+            "speed_m_s": 2.2485280806243324e-11,
+            "other_tool_disturbance_m": 2.602415913455379e-09,
+            "other_tool_final_displacement_m": 2.602263704593262e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.01025135445307224,
+            "final_height_m": 0.02169601374908772,
+            "speed_m_s": 6.491076316108313e-12,
+            "max_lift_m": 0.2588944029582388
+          }
+        },
+        {
+          "case": "validation-002",
+          "tool": "hammer",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.019287888974776058,
+            "max_lift_m": 0.22071715590831162,
+            "final_height_m": 0.021727383580888805,
+            "speed_m_s": 2.181602539092771e-11,
+            "other_tool_disturbance_m": 1.5108084823912637e-09,
+            "other_tool_final_displacement_m": 1.510394370571224e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.006581446921271138,
+            "final_height_m": 0.02172738358093302,
+            "speed_m_s": 1.8891763594986054e-11,
+            "max_lift_m": 0.21953402997228777
+          }
+        },
+        {
+          "case": "validation-003",
+          "tool": "screwdriver",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.017442657217871724,
+            "max_lift_m": 0.19984237309142255,
+            "final_height_m": 0.021656911633449717,
+            "speed_m_s": 1.8351024416781882e-11,
+            "other_tool_disturbance_m": 2.602495182797477e-09,
+            "other_tool_final_displacement_m": 2.5988827708836863e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005646649362884837,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21072410997291638
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.015683028797059174,
+            "final_height_m": 0.02165691164033491,
+            "speed_m_s": 6.8359612917298424e-12,
+            "max_lift_m": 0.21527031011643274
+          }
+        },
+        {
+          "case": "validation-004",
+          "tool": "wrench",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.007009217997452002,
+            "max_lift_m": 0.20941619673481868,
+            "final_height_m": 0.021696013756729034,
+            "speed_m_s": 4.183165102821296e-12,
+            "other_tool_disturbance_m": 2.6025145625825637e-09,
+            "other_tool_final_displacement_m": 2.602404855477976e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005756978775601329,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21413468186662082
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.011251455427201995,
+            "final_height_m": 0.021696013749119673,
+            "speed_m_s": 2.991148879613644e-11,
+            "max_lift_m": 0.21268477603226799
+          }
+        },
+        {
+          "case": "validation-005",
+          "tool": "hammer",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.012370117598652607,
+            "max_lift_m": 0.21465114381309958,
+            "final_height_m": 0.021727383580901587,
+            "speed_m_s": 3.373254484012943e-11,
+            "other_tool_disturbance_m": 1.5114898804761541e-09,
+            "other_tool_final_displacement_m": 1.5112130501425302e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005591710075888212,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21434871130094346
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.004509039318222804,
+            "final_height_m": 0.021727383578791573,
+            "speed_m_s": 2.1665681960954916e-11,
+            "max_lift_m": 0.2184395328531013
+          }
+        },
+        {
+          "case": "validation-006",
+          "tool": "screwdriver",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.013417228531277074,
+            "max_lift_m": 0.30472803596075954,
+            "final_height_m": 0.02165691163346455,
+            "speed_m_s": 2.781216272679292e-11,
+            "other_tool_disturbance_m": 2.6022757910068367e-09,
+            "other_tool_final_displacement_m": 2.598682656440268e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005669778827604777,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.2111045737049311
+          },
+          "return": null
+        },
+        {
+          "case": "validation-007",
+          "tool": "wrench",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.012254559752032271,
+            "max_lift_m": 0.30151996858184943,
+            "final_height_m": 0.02169601375673745,
+            "speed_m_s": 2.867032138271874e-11,
+            "other_tool_disturbance_m": 2.6022086604879974e-09,
+            "other_tool_final_displacement_m": 2.598722893081172e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.00639614557547042,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.20940451291063097
+          },
+          "return": null
+        },
+        {
+          "case": "validation-008",
+          "tool": "hammer",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.01157119123581093,
+            "max_lift_m": 0.3059921080074901,
+            "final_height_m": 0.021727383580928687,
+            "speed_m_s": 5.639065222838583e-12,
+            "other_tool_disturbance_m": 1.5104469318093394e-09,
+            "other_tool_final_displacement_m": 1.502122592284181e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005612844765593206,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21201191360793753
+          },
+          "return": null
+        },
+        {
+          "case": "validation-009",
+          "tool": "screwdriver",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.008889118495840608,
+            "max_lift_m": 0.22297288219160885,
+            "final_height_m": 0.021656911633381352,
+            "speed_m_s": 1.307433855344412e-11,
+            "other_tool_disturbance_m": 2.6023699879195276e-09,
+            "other_tool_final_displacement_m": 2.5987939601105652e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.011934393107863144,
+            "final_height_m": 0.0216569116334149,
+            "speed_m_s": 2.5311238159095155e-11,
+            "max_lift_m": 0.26146145441351004
+          }
+        },
+        {
+          "case": "validation-010",
+          "tool": "wrench",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.02166072262126631,
+            "max_lift_m": 0.22057884119305776,
+            "final_height_m": 0.02169601375671831,
+            "speed_m_s": 2.201945960707218e-11,
+            "other_tool_disturbance_m": 2.6022312622221817e-09,
+            "other_tool_final_displacement_m": 2.6021184334870634e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0030012017382208987,
+            "final_height_m": 0.021696013749141253,
+            "speed_m_s": 3.377896884390486e-11,
+            "max_lift_m": 0.22087985155540868
+          }
+        },
+        {
+          "case": "validation-011",
+          "tool": "hammer",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.010039396270867607,
+            "max_lift_m": 0.21457943612593816,
+            "final_height_m": 0.0217273835808942,
+            "speed_m_s": 2.1633661107637298e-11,
+            "other_tool_disturbance_m": 1.5109419182003977e-09,
+            "other_tool_final_displacement_m": 1.5034867224863234e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.007365706308664209,
+            "final_height_m": 0.02172738357876423,
+            "speed_m_s": 1.3238249895347964e-11,
+            "max_lift_m": 0.2217708784077981
+          }
+        },
+        {
+          "case": "validation-012",
+          "tool": "screwdriver",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.00889907962188046,
+            "max_lift_m": 0.21728641804334436,
+            "final_height_m": 0.021656911640370948,
+            "speed_m_s": 1.3902043622866444e-11,
+            "other_tool_disturbance_m": 2.6023677650886103e-09,
+            "other_tool_final_displacement_m": 2.6023071151874767e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005637086490254184,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21523089411508828
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.011797066502407243,
+            "final_height_m": 0.021656911640346208,
+            "speed_m_s": 2.4977918631584994e-12,
+            "max_lift_m": 0.25789566905599554
+          }
+        },
+        {
+          "case": "validation-013",
+          "tool": "wrench",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.008285972391665087,
+            "max_lift_m": 0.20385396302615832,
+            "final_height_m": 0.02169601375678138,
+            "speed_m_s": 4.8839717573281365e-12,
+            "other_tool_disturbance_m": 2.6022494111039646e-09,
+            "other_tool_final_displacement_m": 2.6004186171203002e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005593134785057963,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21313684465850732
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.008246508657484547,
+            "final_height_m": 0.02169601375290278,
+            "speed_m_s": 3.1590610201874466e-16,
+            "max_lift_m": 0.22967681606811408
+          }
+        },
+        {
+          "case": "validation-014",
+          "tool": "hammer",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.01350957855325511,
+            "max_lift_m": 0.22950512334129014,
+            "final_height_m": 0.021727383580974268,
+            "speed_m_s": 4.8636770611473336e-12,
+            "other_tool_disturbance_m": 1.5106018238831324e-09,
+            "other_tool_final_displacement_m": 1.5102622074602882e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005652609995104196,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21691892414897776
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.021832533951598298,
+            "final_height_m": 0.021727383580931407,
+            "speed_m_s": 2.7962747845367843e-12,
+            "max_lift_m": 0.28937154226169076
+          }
+        },
+        {
+          "case": "validation-015",
+          "tool": "screwdriver",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.01247802642204212,
+            "max_lift_m": 0.30833836785551244,
+            "final_height_m": 0.02165691163337787,
+            "speed_m_s": 5.139062911920886e-12,
+            "other_tool_disturbance_m": 2.602239779489349e-09,
+            "other_tool_final_displacement_m": 2.5986947800932556e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.0057351008135566595,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21357699699947816
+          },
+          "return": null
+        },
+        {
+          "case": "validation-016",
+          "tool": "wrench",
+          "journey": "redirect",
+          "passed": false,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": false,
+            "distance_m": 0.036666703381308396,
+            "max_lift_m": 0.30612593413688616,
+            "final_height_m": 0.021696013756748775,
+            "speed_m_s": 6.798577224930334e-12,
+            "other_tool_disturbance_m": 2.6028453063709175e-09,
+            "other_tool_final_displacement_m": 2.5993704343774476e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005660016680759217,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21243537875613985
+          },
+          "return": null
+        },
+        {
+          "case": "validation-017",
+          "tool": "hammer",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.016579127757205242,
+            "max_lift_m": 0.3077706587478533,
+            "final_height_m": 0.021727383578777695,
+            "speed_m_s": 6.630444738249603e-12,
+            "other_tool_disturbance_m": 1.5111925362872656e-09,
+            "other_tool_final_displacement_m": 1.5109749437094289e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005628502475914399,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21358895298524286
+          },
+          "return": null
+        }
+      ]
+    },
+    "optional_before_hold": {
+      "fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+      "split": "validation",
+      "cases": 18,
+      "physical_successes": 18,
+      "all_criteria_successes": 18,
+      "fresh_camera_return_count": 12,
+      "passed": true,
+      "carry_model_sha256": null,
+      "carry_policy": "rigid",
+      "release_model_sha256": null,
+      "release_kind": null,
+      "recover_ik": true,
+      "verify_motion": true,
+      "release_fallback": true,
+      "linear_lifts": true,
+      "center_grasp": true,
+      "safe_handoff": true,
+      "disturbance_judge": "Maximum across motion/hold frames, not just final position",
+      "cases_detail": [
+        {
+          "case": "validation-000",
+          "tool": "screwdriver",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0166085697250105,
+            "max_lift_m": 0.20489434958615496,
+            "final_height_m": 0.021656911640327858,
+            "speed_m_s": 1.2122682033488662e-12,
+            "other_tool_disturbance_m": 2.60230534790798e-09,
+            "other_tool_final_displacement_m": 2.6021621122475334e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.015886301240729112,
+            "final_height_m": 0.02165691164035351,
+            "speed_m_s": 1.289754883231368e-11,
+            "max_lift_m": 0.21406742661033998
+          }
+        },
+        {
+          "case": "validation-001",
+          "tool": "wrench",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.007439165379016931,
+            "max_lift_m": 0.20662142712122192,
+            "final_height_m": 0.02169601375667488,
+            "speed_m_s": 1.2392306252600385e-11,
+            "other_tool_disturbance_m": 2.6024218078990284e-09,
+            "other_tool_final_displacement_m": 2.6023034420546964e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.005365997579729551,
+            "final_height_m": 0.021696013756787827,
+            "speed_m_s": 4.757035998339162e-13,
+            "max_lift_m": 0.23828160504081622
+          }
+        },
+        {
+          "case": "validation-002",
+          "tool": "hammer",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.017117791011055157,
+            "max_lift_m": 0.21711753209731371,
+            "final_height_m": 0.02172738358093358,
+            "speed_m_s": 2.3790741361016116e-11,
+            "other_tool_disturbance_m": 1.510414625864707e-09,
+            "other_tool_final_displacement_m": 1.502338471499399e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.005021322372873199,
+            "final_height_m": 0.02172738358090441,
+            "speed_m_s": 3.385556572230575e-11,
+            "max_lift_m": 0.21780246914312304
+          }
+        },
+        {
+          "case": "validation-003",
+          "tool": "screwdriver",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.015909979394983058,
+            "max_lift_m": 0.19918277805892648,
+            "final_height_m": 0.021656911640372853,
+            "speed_m_s": 2.4863702634291713e-11,
+            "other_tool_disturbance_m": 2.602495182797477e-09,
+            "other_tool_final_displacement_m": 2.598740908604518e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005680509504355502,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21000247631409308
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.008642442545776036,
+            "final_height_m": 0.021656911640338748,
+            "speed_m_s": 5.113605002034853e-12,
+            "max_lift_m": 0.21387718092275565
+          }
+        },
+        {
+          "case": "validation-004",
+          "tool": "wrench",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.006903339199047328,
+            "max_lift_m": 0.20710110205742846,
+            "final_height_m": 0.021696013756688892,
+            "speed_m_s": 1.2495272421359104e-11,
+            "other_tool_disturbance_m": 2.6025131549288348e-09,
+            "other_tool_final_displacement_m": 2.602469887237468e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.00579523628481704,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21222787878353924
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0031267374220104224,
+            "final_height_m": 0.021696013756759586,
+            "speed_m_s": 2.221656488204224e-11,
+            "max_lift_m": 0.2127386639863675
+          }
+        },
+        {
+          "case": "validation-005",
+          "tool": "hammer",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.011637138683273826,
+            "max_lift_m": 0.20720589010785026,
+            "final_height_m": 0.021727383580932454,
+            "speed_m_s": 4.14631295361998e-12,
+            "other_tool_disturbance_m": 1.5107274624400718e-09,
+            "other_tool_final_displacement_m": 1.5026825731482454e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005634095672169437,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21290537803513415
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.005129085567991251,
+            "final_height_m": 0.02172738358086022,
+            "speed_m_s": 2.5050995093535457e-11,
+            "max_lift_m": 0.2150307726866865
+          }
+        },
+        {
+          "case": "validation-006",
+          "tool": "screwdriver",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.010125865920645396,
+            "max_lift_m": 0.30342035003758006,
+            "final_height_m": 0.021656911633404382,
+            "speed_m_s": 1.3902383205944161e-11,
+            "other_tool_disturbance_m": 2.602277482380221e-09,
+            "other_tool_final_displacement_m": 2.6020717100440224e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005779226401271573,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21024139110399134
+          },
+          "return": null
+        },
+        {
+          "case": "validation-007",
+          "tool": "wrench",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.010462536692576439,
+            "max_lift_m": 0.3012569390659499,
+            "final_height_m": 0.02169601375675972,
+            "speed_m_s": 1.1425834010505605e-12,
+            "other_tool_disturbance_m": 2.6022086604879974e-09,
+            "other_tool_final_displacement_m": 2.5986552753666664e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.006507948486920961,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.20917344343001365
+          },
+          "return": null
+        },
+        {
+          "case": "validation-008",
+          "tool": "hammer",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.011356335773062512,
+            "max_lift_m": 0.303980818868589,
+            "final_height_m": 0.02172738358092072,
+            "speed_m_s": 1.3136329709720373e-11,
+            "other_tool_disturbance_m": 1.5104469318093394e-09,
+            "other_tool_final_displacement_m": 1.5098370753851391e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.0056470125309227015,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.2106747255252345
+          },
+          "return": null
+        },
+        {
+          "case": "validation-009",
+          "tool": "screwdriver",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.007828002568365933,
+            "max_lift_m": 0.21779674762576665,
+            "final_height_m": 0.02165691163335757,
+            "speed_m_s": 2.0378877636133566e-11,
+            "other_tool_disturbance_m": 2.60238147069494e-09,
+            "other_tool_final_displacement_m": 2.598771846384097e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0072937359974121286,
+            "final_height_m": 0.021656911640358444,
+            "speed_m_s": 5.134619912195397e-12,
+            "max_lift_m": 0.22719242348712568
+          }
+        },
+        {
+          "case": "validation-010",
+          "tool": "wrench",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.014743499192680212,
+            "max_lift_m": 0.21703549652686732,
+            "final_height_m": 0.02169601375667526,
+            "speed_m_s": 1.5439006026846762e-11,
+            "other_tool_disturbance_m": 2.602192459505218e-09,
+            "other_tool_final_displacement_m": 2.5986522262408034e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.006085738345173068,
+            "final_height_m": 0.021696013756709966,
+            "speed_m_s": 2.6520411328140052e-11,
+            "max_lift_m": 0.2180357512502734
+          }
+        },
+        {
+          "case": "validation-011",
+          "tool": "hammer",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.009923132205491446,
+            "max_lift_m": 0.20633657659184906,
+            "final_height_m": 0.021727383580949566,
+            "speed_m_s": 4.861014983773027e-12,
+            "other_tool_disturbance_m": 1.5111595375722508e-09,
+            "other_tool_final_displacement_m": 1.5108845962554721e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.004493361018133118,
+            "final_height_m": 0.02172738358093225,
+            "speed_m_s": 9.474654499001552e-12,
+            "max_lift_m": 0.21628995931052358
+          }
+        },
+        {
+          "case": "validation-012",
+          "tool": "screwdriver",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.00859575999504699,
+            "max_lift_m": 0.21219432088047732,
+            "final_height_m": 0.021656911640342617,
+            "speed_m_s": 1.0273960912385148e-11,
+            "other_tool_disturbance_m": 2.602378483999375e-09,
+            "other_tool_final_displacement_m": 2.6005384444535895e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005669117039146965,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21370815789771389
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.009540654586150664,
+            "final_height_m": 0.02165691163687649,
+            "speed_m_s": 1.7527068340617452e-16,
+            "max_lift_m": 0.2350500966810221
+          }
+        },
+        {
+          "case": "validation-013",
+          "tool": "wrench",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.010691618041338068,
+            "max_lift_m": 0.20142854902499474,
+            "final_height_m": 0.021696013756729297,
+            "speed_m_s": 2.04232134575218e-11,
+            "other_tool_disturbance_m": 2.602239155247962e-09,
+            "other_tool_final_displacement_m": 2.5987015891290735e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005640807133422854,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21082960730592512
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.007845532616631993,
+            "final_height_m": 0.021696013749052386,
+            "speed_m_s": 5.023229194004092e-12,
+            "max_lift_m": 0.21910112161572032
+          }
+        },
+        {
+          "case": "validation-014",
+          "tool": "hammer",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.013121252582194197,
+            "max_lift_m": 0.2229968588779919,
+            "final_height_m": 0.021727383580910784,
+            "speed_m_s": 6.863856522155933e-13,
+            "other_tool_disturbance_m": 1.5106018238831324e-09,
+            "other_tool_final_displacement_m": 1.5023431783158585e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005682386620777802,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21525319983313201
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.025182644174130103,
+            "final_height_m": 0.02172738358089483,
+            "speed_m_s": 1.482963508305088e-11,
+            "max_lift_m": 0.2717773256256619
+          }
+        },
+        {
+          "case": "validation-015",
+          "tool": "screwdriver",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.012875662837247129,
+            "max_lift_m": 0.30414583163060244,
+            "final_height_m": 0.021656911640341753,
+            "speed_m_s": 2.5044003141853047e-11,
+            "other_tool_disturbance_m": 2.602254404060074e-09,
+            "other_tool_final_displacement_m": 2.598680593442861e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005789016614114337,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.2110957377507492
+          },
+          "return": null
+        },
+        {
+          "case": "validation-016",
+          "tool": "wrench",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.032045310369820744,
+            "max_lift_m": 0.3034024062039625,
+            "final_height_m": 0.02169601375663726,
+            "speed_m_s": 1.465463463409217e-11,
+            "other_tool_disturbance_m": 2.6028380803781582e-09,
+            "other_tool_final_displacement_m": 2.599239110024284e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.005701059959501986,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21036531070583522
+          },
+          "return": null
+        },
+        {
+          "case": "validation-017",
+          "tool": "hammer",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0099615309882105,
+            "max_lift_m": 0.3042802843672739,
+            "final_height_m": 0.021727383580927073,
+            "speed_m_s": 1.7565529309487466e-11,
+            "other_tool_disturbance_m": 1.511247176896893e-09,
+            "other_tool_final_displacement_m": 1.5032429575317456e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.0056688147577106385,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.2112919418568227
+          },
+          "return": null
+        }
+      ]
+    },
+    "final_validation": {
+      "fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+      "split": "validation",
+      "cases": 18,
+      "physical_successes": 18,
+      "all_criteria_successes": 18,
+      "fresh_camera_return_count": 12,
+      "passed": true,
+      "carry_model_sha256": null,
+      "carry_policy": "rigid",
+      "release_model_sha256": null,
+      "release_kind": null,
+      "recover_ik": true,
+      "verify_motion": true,
+      "release_fallback": true,
+      "linear_lifts": true,
+      "center_grasp": true,
+      "safe_handoff": true,
+      "disturbance_judge": "Maximum across motion/hold frames, not just final position",
+      "cases_detail": [
+        {
+          "case": "validation-000",
+          "tool": "screwdriver",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0166085697250105,
+            "max_lift_m": 0.20489434958615496,
+            "final_height_m": 0.021656911640327858,
+            "speed_m_s": 1.2122682033488662e-12,
+            "other_tool_disturbance_m": 2.60230534790798e-09,
+            "other_tool_final_displacement_m": 2.6021621122475334e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.015886301240729112,
+            "final_height_m": 0.02165691164035351,
+            "speed_m_s": 1.289754883231368e-11,
+            "max_lift_m": 0.21406742661033998
+          }
+        },
+        {
+          "case": "validation-001",
+          "tool": "wrench",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.007439165379016931,
+            "max_lift_m": 0.20662142712122192,
+            "final_height_m": 0.02169601375667488,
+            "speed_m_s": 1.2392306252600385e-11,
+            "other_tool_disturbance_m": 2.6024218078990284e-09,
+            "other_tool_final_displacement_m": 2.6023034420546964e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.005365997579729551,
+            "final_height_m": 0.021696013756787827,
+            "speed_m_s": 4.757035998339162e-13,
+            "max_lift_m": 0.23828160504081622
+          }
+        },
+        {
+          "case": "validation-002",
+          "tool": "hammer",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.017117791011055157,
+            "max_lift_m": 0.21711753209731371,
+            "final_height_m": 0.02172738358093358,
+            "speed_m_s": 2.3790741361016116e-11,
+            "other_tool_disturbance_m": 1.510414625864707e-09,
+            "other_tool_final_displacement_m": 1.502338471499399e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.005021322372873199,
+            "final_height_m": 0.02172738358090441,
+            "speed_m_s": 3.385556572230575e-11,
+            "max_lift_m": 0.21780246914312304
+          }
+        },
+        {
+          "case": "validation-003",
+          "tool": "screwdriver",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.015960266424022335,
+            "max_lift_m": 0.2006274757616372,
+            "final_height_m": 0.021656911640393475,
+            "speed_m_s": 2.0056708679662262e-11,
+            "other_tool_disturbance_m": 2.602495182797477e-09,
+            "other_tool_final_displacement_m": 2.598781733085163e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 8.682281170413475e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21493675657388517
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.00861118815626592,
+            "final_height_m": 0.02165691163342914,
+            "speed_m_s": 1.3814289154333342e-11,
+            "max_lift_m": 0.2138576383969198
+          }
+        },
+        {
+          "case": "validation-004",
+          "tool": "wrench",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.006971035993775778,
+            "max_lift_m": 0.2084568015419943,
+            "final_height_m": 0.021696013756672895,
+            "speed_m_s": 1.241895558156669e-11,
+            "other_tool_disturbance_m": 2.602513352358915e-09,
+            "other_tool_final_displacement_m": 2.5989462368884445e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.00011237556740661958,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21713930246015492
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0030949656018152165,
+            "final_height_m": 0.021696013756702662,
+            "speed_m_s": 2.921374460821703e-11,
+            "max_lift_m": 0.2126878194340227
+          }
+        },
+        {
+          "case": "validation-005",
+          "tool": "hammer",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.011840127200690794,
+            "max_lift_m": 0.20891124696124472,
+            "final_height_m": 0.021727383580877373,
+            "speed_m_s": 2.6082230263561987e-11,
+            "other_tool_disturbance_m": 1.510684272260898e-09,
+            "other_tool_final_displacement_m": 1.509299621929898e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 6.986813424791904e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.2169882501793382
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.005047868681896775,
+            "final_height_m": 0.02172738358089902,
+            "speed_m_s": 2.1526636292876407e-11,
+            "max_lift_m": 0.21501380876511955
+          }
+        },
+        {
+          "case": "validation-006",
+          "tool": "screwdriver",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.010666728694311938,
+            "max_lift_m": 0.30855624376824414,
+            "final_height_m": 0.021656911640391324,
+            "speed_m_s": 2.2554567339521903e-11,
+            "other_tool_disturbance_m": 2.602277482380221e-09,
+            "other_tool_final_displacement_m": 2.5987273375790553e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 8.76473006634626e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21539365040542346
+          },
+          "return": null
+        },
+        {
+          "case": "validation-007",
+          "tool": "wrench",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.011287105538393091,
+            "max_lift_m": 0.3069686843221528,
+            "final_height_m": 0.021696013756754926,
+            "speed_m_s": 2.3277704093718215e-11,
+            "other_tool_disturbance_m": 2.6022086604879974e-09,
+            "other_tool_final_displacement_m": 2.5986572923133792e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.00010775135686014181,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21489603067481217
+          },
+          "return": null
+        },
+        {
+          "case": "validation-008",
+          "tool": "hammer",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.011080004517973929,
+            "max_lift_m": 0.3086510082016242,
+            "final_height_m": 0.021727383580915093,
+            "speed_m_s": 1.3799716770451326e-11,
+            "other_tool_disturbance_m": 1.5104469318093394e-09,
+            "other_tool_final_displacement_m": 1.5098418712643446e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 7.080926140767829e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21538212955110342
+          },
+          "return": null
+        },
+        {
+          "case": "validation-009",
+          "tool": "screwdriver",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.007828002568365933,
+            "max_lift_m": 0.21779674762576665,
+            "final_height_m": 0.02165691163335757,
+            "speed_m_s": 2.0378877636133566e-11,
+            "other_tool_disturbance_m": 2.60238147069494e-09,
+            "other_tool_final_displacement_m": 2.598771846384097e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0072937359974121286,
+            "final_height_m": 0.021656911640358444,
+            "speed_m_s": 5.134619912195397e-12,
+            "max_lift_m": 0.22719242348712568
+          }
+        },
+        {
+          "case": "validation-010",
+          "tool": "wrench",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.014743499192680212,
+            "max_lift_m": 0.21703549652686732,
+            "final_height_m": 0.02169601375667526,
+            "speed_m_s": 1.5439006026846762e-11,
+            "other_tool_disturbance_m": 2.602192459505218e-09,
+            "other_tool_final_displacement_m": 2.5986522262408034e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.006085738345173068,
+            "final_height_m": 0.021696013756709966,
+            "speed_m_s": 2.6520411328140052e-11,
+            "max_lift_m": 0.2180357512502734
+          }
+        },
+        {
+          "case": "validation-011",
+          "tool": "hammer",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.009923132205491446,
+            "max_lift_m": 0.20633657659184906,
+            "final_height_m": 0.021727383580949566,
+            "speed_m_s": 4.861014983773027e-12,
+            "other_tool_disturbance_m": 1.5111595375722508e-09,
+            "other_tool_final_displacement_m": 1.5108845962554721e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.004493361018133118,
+            "final_height_m": 0.02172738358093225,
+            "speed_m_s": 9.474654499001552e-12,
+            "max_lift_m": 0.21628995931052358
+          }
+        },
+        {
+          "case": "validation-012",
+          "tool": "screwdriver",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.008431966214796652,
+            "max_lift_m": 0.21445512886795093,
+            "final_height_m": 0.021656911640326154,
+            "speed_m_s": 2.5225191112667227e-11,
+            "other_tool_disturbance_m": 2.602370034887876e-09,
+            "other_tool_final_displacement_m": 2.6005368570152257e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 8.848453266185885e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21763036183541254
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.009419304626693286,
+            "final_height_m": 0.02165691163687646,
+            "speed_m_s": 5.25906646145207e-16,
+            "max_lift_m": 0.23509383517720664
+          }
+        },
+        {
+          "case": "validation-013",
+          "tool": "wrench",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.010779054156188675,
+            "max_lift_m": 0.20321176011465333,
+            "final_height_m": 0.021696013756704397,
+            "speed_m_s": 2.8198474905765774e-11,
+            "other_tool_disturbance_m": 2.6022483476015593e-09,
+            "other_tool_final_displacement_m": 2.6021774010880157e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 9.87482290577546e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.2150269012210101
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.007894696284443552,
+            "final_height_m": 0.02169601374905092,
+            "speed_m_s": 5.024198091164622e-12,
+            "max_lift_m": 0.21910304317143803
+          }
+        },
+        {
+          "case": "validation-014",
+          "tool": "hammer",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.01325525442803185,
+            "max_lift_m": 0.22527873256215628,
+            "final_height_m": 0.021727383580915815,
+            "speed_m_s": 8.062156846863726e-12,
+            "other_tool_disturbance_m": 1.5106018238831324e-09,
+            "other_tool_final_displacement_m": 1.5103387707650487e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 7.374614568167459e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21886148085348905
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.025049234940159204,
+            "final_height_m": 0.021727383578776467,
+            "speed_m_s": 1.005598632404458e-11,
+            "max_lift_m": 0.2717919339592865
+          }
+        },
+        {
+          "case": "validation-015",
+          "tool": "screwdriver",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.01479663055305459,
+            "max_lift_m": 0.3093216884567941,
+            "final_height_m": 0.021656911640247682,
+            "speed_m_s": 1.728621070752303e-11,
+            "other_tool_disturbance_m": 2.60225895169209e-09,
+            "other_tool_final_displacement_m": 2.598694970643299e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 9.000609348497335e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21623746242539008
+          },
+          "return": null
+        },
+        {
+          "case": "validation-016",
+          "tool": "wrench",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0320239987033108,
+            "max_lift_m": 0.30777865571064,
+            "final_height_m": 0.021696013756688212,
+            "speed_m_s": 1.2470557346151508e-11,
+            "other_tool_disturbance_m": 2.6028380803781582e-09,
+            "other_tool_final_displacement_m": 2.602819931129155e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.00010044230464556492,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21479995635938892
+          },
+          "return": null
+        },
+        {
+          "case": "validation-017",
+          "tool": "hammer",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.009814115242202687,
+            "max_lift_m": 0.3086870333899993,
+            "final_height_m": 0.021727383580884455,
+            "speed_m_s": 2.1704684647502905e-11,
+            "other_tool_disturbance_m": 1.5112709116865903e-09,
+            "other_tool_final_displacement_m": 1.5033187753949622e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 7.039304744482777e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21576185763196698
+          },
+          "return": null
+        }
+      ]
+    },
+    "reserved_test": {
+      "fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+      "split": "test",
+      "cases": 24,
+      "physical_successes": 22,
+      "all_criteria_successes": 22,
+      "fresh_camera_return_count": 17,
+      "passed": false,
+      "carry_model_sha256": null,
+      "carry_policy": "rigid",
+      "release_model_sha256": null,
+      "release_kind": null,
+      "recover_ik": true,
+      "verify_motion": true,
+      "release_fallback": true,
+      "linear_lifts": true,
+      "center_grasp": true,
+      "safe_handoff": true,
+      "disturbance_judge": "Maximum across motion/hold frames, not just final position",
+      "cases_detail": [
+        {
+          "case": "test-000",
+          "tool": "screwdriver",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.022702297027780444,
+            "max_lift_m": 0.20350028117321314,
+            "final_height_m": 0.021656911640302305,
+            "speed_m_s": 1.9941844824852076e-11,
+            "other_tool_disturbance_m": 2.6022650892361866e-09,
+            "other_tool_final_displacement_m": 2.602067358990847e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.005426081632623613,
+            "final_height_m": 0.021656911633394046,
+            "speed_m_s": 9.546244562388371e-12,
+            "max_lift_m": 0.21952047008483008
+          }
+        },
+        {
+          "case": "test-001",
+          "tool": "wrench",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.008774423683563076,
+            "max_lift_m": 0.20136359674319138,
+            "final_height_m": 0.021696013756638283,
+            "speed_m_s": 1.11524085380813e-11,
+            "other_tool_disturbance_m": 2.6022699905579483e-09,
+            "other_tool_final_displacement_m": 2.598748465107188e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.008884700959948534,
+            "final_height_m": 0.02169601375674508,
+            "speed_m_s": 2.220857085016446e-11,
+            "max_lift_m": 0.21186571016058986
+          }
+        },
+        {
+          "case": "test-002",
+          "tool": "hammer",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.010779951350896289,
+            "max_lift_m": 0.2042049378446709,
+            "final_height_m": 0.021727383580926678,
+            "speed_m_s": 1.3168743009889433e-11,
+            "other_tool_disturbance_m": 1.5106759333504509e-09,
+            "other_tool_final_displacement_m": 1.5105643311051355e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.005980611163492033,
+            "final_height_m": 0.021727383580897024,
+            "speed_m_s": 2.1489061345396683e-11,
+            "max_lift_m": 0.21532136405219915
+          }
+        },
+        {
+          "case": "test-003",
+          "tool": "screwdriver",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.008123941787217112,
+            "max_lift_m": 0.20315355299444987,
+            "final_height_m": 0.021656911640321217,
+            "speed_m_s": 5.087343711394386e-12,
+            "other_tool_disturbance_m": 2.6022175055905806e-09,
+            "other_tool_final_displacement_m": 2.5985555678087354e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 8.815558180819139e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21557360621949448
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.009398362111267121,
+            "final_height_m": 0.021656911633447743,
+            "speed_m_s": 1.784063829996684e-11,
+            "max_lift_m": 0.22022300382325982
+          }
+        },
+        {
+          "case": "test-004",
+          "tool": "wrench",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.008895803985444001,
+            "max_lift_m": 0.20669863617368692,
+            "final_height_m": 0.021696013756722435,
+            "speed_m_s": 3.020911465077434e-11,
+            "other_tool_disturbance_m": 2.6023204291907794e-09,
+            "other_tool_final_displacement_m": 2.598801881526251e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.00010728956000027878,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21555724216654149
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0068998206089556525,
+            "final_height_m": 0.021696013756769224,
+            "speed_m_s": 1.8584798455387322e-11,
+            "max_lift_m": 0.23066277784278205
+          }
+        },
+        {
+          "case": "test-005",
+          "tool": "hammer",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.007663070659185806,
+            "max_lift_m": 0.21905135738319048,
+            "final_height_m": 0.021727383580874213,
+            "speed_m_s": 3.083538585952775e-11,
+            "other_tool_disturbance_m": 1.5112166963669695e-09,
+            "other_tool_final_displacement_m": 1.510937859431979e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 7.358659327127981e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21721840390533254
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0033182648436977935,
+            "final_height_m": 0.02172738357877229,
+            "speed_m_s": 1.0048608270030708e-11,
+            "max_lift_m": 0.2337629794193739
+          }
+        },
+        {
+          "case": "test-006",
+          "tool": "screwdriver",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.01332998468843833,
+            "max_lift_m": 0.30955447837693273,
+            "final_height_m": 0.021656911633404833,
+            "speed_m_s": 1.57268576255898e-11,
+            "other_tool_disturbance_m": 2.6021814814473487e-09,
+            "other_tool_final_displacement_m": 2.602054008051506e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 8.969710936623798e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21577716663799945
+          },
+          "return": null
+        },
+        {
+          "case": "test-007",
+          "tool": "wrench",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.014684117874173059,
+            "max_lift_m": 0.3081562175778594,
+            "final_height_m": 0.02169601375676091,
+            "speed_m_s": 8.91250066757418e-12,
+            "other_tool_disturbance_m": 2.602352594860111e-09,
+            "other_tool_final_displacement_m": 2.5987575230443906e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.00010091128151801243,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.2154724844187799
+          },
+          "return": null
+        },
+        {
+          "case": "test-008",
+          "tool": "hammer",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.01053138798137374,
+            "max_lift_m": 0.3074830715532364,
+            "final_height_m": 0.021727383580918264,
+            "speed_m_s": 1.3790236443434003e-11,
+            "other_tool_disturbance_m": 1.5109215016305364e-09,
+            "other_tool_final_displacement_m": 1.5029176867604994e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 7.082366910493576e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21533734880104774
+          },
+          "return": null
+        },
+        {
+          "case": "test-009",
+          "tool": "screwdriver",
+          "journey": "deliver",
+          "passed": false,
+          "actor_outcome": {
+            "status": "failed",
+            "message": "Handle is missing, ambiguous or a weak geometric fit; no motion planned",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": false,
+            "placed": false,
+            "distance_m": 0.23924818572138346,
+            "max_lift_m": 0.0,
+            "final_height_m": 0.021656911617222798,
+            "speed_m_s": 1.7125928294086388e-09,
+            "other_tool_disturbance_m": 0.0,
+            "other_tool_final_displacement_m": 0.0,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": null
+        },
+        {
+          "case": "test-010",
+          "tool": "wrench",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.015484060395080275,
+            "max_lift_m": 0.20203196577769314,
+            "final_height_m": 0.021696013756704945,
+            "speed_m_s": 4.703390636406064e-12,
+            "other_tool_disturbance_m": 2.6022710872275003e-09,
+            "other_tool_final_displacement_m": 2.602255332739136e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0061334526674696474,
+            "final_height_m": 0.021696013756758604,
+            "speed_m_s": 2.7253491834519086e-11,
+            "max_lift_m": 0.21343895523261852
+          }
+        },
+        {
+          "case": "test-011",
+          "tool": "hammer",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.007405730363141367,
+            "max_lift_m": 0.20675313067473217,
+            "final_height_m": 0.02172738358091229,
+            "speed_m_s": 1.7208134248209957e-11,
+            "other_tool_disturbance_m": 1.5106034663000307e-09,
+            "other_tool_final_displacement_m": 1.5025371883612828e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.008329582468710257,
+            "final_height_m": 0.021727383578803914,
+            "speed_m_s": 2.2546602942667003e-11,
+            "max_lift_m": 0.23124924456131954
+          }
+        },
+        {
+          "case": "test-012",
+          "tool": "screwdriver",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.009941036605418497,
+            "max_lift_m": 0.19974357038546972,
+            "final_height_m": 0.021656911640319607,
+            "speed_m_s": 1.0979698873799294e-11,
+            "other_tool_disturbance_m": 2.602513104643992e-09,
+            "other_tool_final_displacement_m": 2.5992617533647335e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 8.632690927701248e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.2147114279536267
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.009894588037737479,
+            "final_height_m": 0.021656911640361813,
+            "speed_m_s": 2.3342037257546406e-11,
+            "max_lift_m": 0.2126416731149467
+          }
+        },
+        {
+          "case": "test-013",
+          "tool": "wrench",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.006959703585208168,
+            "max_lift_m": 0.20549186405486947,
+            "final_height_m": 0.021696013756730394,
+            "speed_m_s": 2.3776281984700387e-11,
+            "other_tool_disturbance_m": 2.602154050654688e-09,
+            "other_tool_final_displacement_m": 2.598570226849192e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.00010938557779383018,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21534781519466892
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.005652976445204378,
+            "final_height_m": 0.021696013756638613,
+            "speed_m_s": 1.122476466839071e-11,
+            "max_lift_m": 0.21843469991724232
+          }
+        },
+        {
+          "case": "test-014",
+          "tool": "hammer",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.015402711362303983,
+            "max_lift_m": 0.20481455403164345,
+            "final_height_m": 0.02172738358086874,
+            "speed_m_s": 2.8338053091940556e-11,
+            "other_tool_disturbance_m": 1.5107545242565383e-09,
+            "other_tool_final_displacement_m": 1.5024273668891226e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 7.08036595815642e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21571634731893308
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.012129306274735106,
+            "final_height_m": 0.021727383580932628,
+            "speed_m_s": 5.625911627664859e-12,
+            "max_lift_m": 0.2173034129326848
+          }
+        },
+        {
+          "case": "test-015",
+          "tool": "screwdriver",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.011653199593601206,
+            "max_lift_m": 0.31709180590940933,
+            "final_height_m": 0.021656911633372678,
+            "speed_m_s": 5.083209985791625e-12,
+            "other_tool_disturbance_m": 2.60218379507272e-09,
+            "other_tool_final_displacement_m": 2.598562336619089e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 9.145386990638826e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.2206576913945362
+          },
+          "return": null
+        },
+        {
+          "case": "test-016",
+          "tool": "wrench",
+          "journey": "redirect",
+          "passed": false,
+          "actor_outcome": {
+            "status": "failed",
+            "message": "Gripper no longer indicates a held handle; holding position",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": false,
+            "distance_m": 0.011083507521264867,
+            "max_lift_m": 0.1647026354916325,
+            "final_height_m": 0.14844631571951253,
+            "speed_m_s": 0.8756189919342948,
+            "other_tool_disturbance_m": 2.602524621533853e-09,
+            "other_tool_final_displacement_m": 2.6025053115178056e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": null
+        },
+        {
+          "case": "test-017",
+          "tool": "hammer",
+          "journey": "redirect",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.009304913229057257,
+            "max_lift_m": 0.3097436291128874,
+            "final_height_m": 0.021727383578762884,
+            "speed_m_s": 1.0151784936546542e-11,
+            "other_tool_disturbance_m": 1.5107040714967373e-09,
+            "other_tool_final_displacement_m": 1.5095509379040816e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 6.972531129711967e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.2162096548445687
+          },
+          "return": null
+        },
+        {
+          "case": "test-018",
+          "tool": "screwdriver",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.015295929905843938,
+            "max_lift_m": 0.20251111080058368,
+            "final_height_m": 0.02165691163340537,
+            "speed_m_s": 9.253241328726376e-12,
+            "other_tool_disturbance_m": 2.6021064979591923e-09,
+            "other_tool_final_displacement_m": 2.598574245658616e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.00544420907250586,
+            "final_height_m": 0.021656911640335823,
+            "speed_m_s": 2.8922883301346552e-11,
+            "max_lift_m": 0.21305891515696762
+          }
+        },
+        {
+          "case": "test-019",
+          "tool": "wrench",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.015404834887712531,
+            "max_lift_m": 0.20129176388826597,
+            "final_height_m": 0.021696013756689614,
+            "speed_m_s": 3.833199589854883e-12,
+            "other_tool_disturbance_m": 2.6022113596406187e-09,
+            "other_tool_final_displacement_m": 2.5986092213528144e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.007224904582839462,
+            "final_height_m": 0.021696013756778678,
+            "speed_m_s": 2.2430484183856606e-11,
+            "max_lift_m": 0.21328460132197105
+          }
+        },
+        {
+          "case": "test-020",
+          "tool": "hammer",
+          "journey": "deliver",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.008685738350244929,
+            "max_lift_m": 0.20285660150627774,
+            "final_height_m": 0.02172738358092151,
+            "speed_m_s": 8.88022754148072e-12,
+            "other_tool_disturbance_m": 1.5105596463025875e-09,
+            "other_tool_final_displacement_m": 1.5025006756200212e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": null,
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0112166685252856,
+            "final_height_m": 0.021727383580907415,
+            "speed_m_s": 2.30030852442448e-11,
+            "max_lift_m": 0.21385614841701317
+          }
+        },
+        {
+          "case": "test-021",
+          "tool": "screwdriver",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.010946522417477228,
+            "max_lift_m": 0.20914750393083176,
+            "final_height_m": 0.021656911640374314,
+            "speed_m_s": 1.3708145631421602e-11,
+            "other_tool_disturbance_m": 2.602666959002015e-09,
+            "other_tool_final_displacement_m": 2.599328627644125e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 9.18547799231284e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21727607653169012
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.008257768863882228,
+            "final_height_m": 0.021656911640304873,
+            "speed_m_s": 6.933727236759095e-12,
+            "max_lift_m": 0.21336240269124956
+          }
+        },
+        {
+          "case": "test-022",
+          "tool": "wrench",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.009262670185778357,
+            "max_lift_m": 0.2037912722723232,
+            "final_height_m": 0.02169601375674677,
+            "speed_m_s": 2.2155919672770698e-11,
+            "other_tool_disturbance_m": 2.602237019122926e-09,
+            "other_tool_final_displacement_m": 2.5987262100225213e-09,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 0.00010458196953422316,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21451042481093377
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.010188948473176375,
+            "final_height_m": 0.021696013749112897,
+            "speed_m_s": 2.992641899550601e-11,
+            "max_lift_m": 0.21429311611459712
+          }
+        },
+        {
+          "case": "test-023",
+          "tool": "hammer",
+          "journey": "resume",
+          "passed": true,
+          "actor_outcome": {
+            "status": "released_unverified",
+            "message": "Released the tool; placement needs checking.",
+            "distance_m": null
+          },
+          "physics": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0015496795817689084,
+            "max_lift_m": 0.23340857310035112,
+            "final_height_m": 0.021727383578794952,
+            "speed_m_s": 1.4893348494964303e-11,
+            "other_tool_disturbance_m": 1.5864919413539316e-08,
+            "other_tool_final_displacement_m": 1.5864919413539316e-08,
+            "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs"
+          },
+          "hold": {
+            "duration_s": 0.608,
+            "joint_drift_rad": 7.211875400203738e-05,
+            "grip_retained": true,
+            "actual_tool_height_m": 0.21813641944824985
+          },
+          "return": {
+            "lifted": true,
+            "placed": true,
+            "distance_m": 0.0084896670367994,
+            "final_height_m": 0.02172738357984869,
+            "speed_m_s": 1.439656084616658e-16,
+            "max_lift_m": 0.2510216407236657
+          }
+        }
+      ]
+    }
+  },
+  "baseline_hold": {
+    "scope": "Offline simulated long-held camera motion; not wall-clock or live speech Stop",
+    "hold_profile": "position",
+    "protocol_sha256": "02ce28490d678acf402b7434a4e32854403939956ea101216f659ab3d1fc5d17",
+    "cases": 6,
+    "passes": 4,
+    "passed": false,
+    "rows": [
+      {
+        "case": "validation-000",
+        "tool": "screwdriver",
+        "continuation": "resume",
+        "hold": {
+          "simulation_seconds": 32.00000000000083,
+          "minimum_tool_height_m": 0.1301038751823341,
+          "maximum_joint_drift_rad": 0.0067724449326938,
+          "maximum_tool_translation_m": 0.006932422666905932,
+          "grip_retained": true,
+          "passed": true
+        },
+        "distance_m": 0.016165390037343148,
+        "rest_height_m": 0.021656911640319704,
+        "speed_m_s": 1.3799060322858382e-11,
+        "max_lift_m": 0.20539348494971318,
+        "max_unrelated_translation_m": 2.6022952953703757e-09,
+        "actor_status": "released_unverified",
+        "actor_message": "Released the tool; placement needs checking.",
+        "passed": true
+      },
+      {
+        "case": "validation-000",
+        "tool": "screwdriver",
+        "continuation": "return",
+        "hold": {
+          "simulation_seconds": 32.00000000000083,
+          "minimum_tool_height_m": 0.1301038751823341,
+          "maximum_joint_drift_rad": 0.0067724449326938,
+          "maximum_tool_translation_m": 0.006932422666905932,
+          "grip_retained": true,
+          "passed": true
+        },
+        "distance_m": 0.01091082347116471,
+        "rest_height_m": 0.021656911633385303,
+        "speed_m_s": 2.506236705986429e-12,
+        "max_lift_m": 0.22407436065266892,
+        "max_unrelated_translation_m": 2.6022952953703757e-09,
+        "actor_status": "released_unverified",
+        "actor_message": "Released the tool; placement needs checking.",
+        "passed": true
+      },
+      {
+        "case": "validation-001",
+        "tool": "wrench",
+        "continuation": "resume",
+        "hold": {
+          "simulation_seconds": 32.00000000000083,
+          "minimum_tool_height_m": 0.13092977600874445,
+          "maximum_joint_drift_rad": 0.005958370287424047,
+          "maximum_tool_translation_m": 0.006176299398098537,
+          "grip_retained": true,
+          "passed": true
+        },
+        "distance_m": 0.007455598769164319,
+        "rest_height_m": 0.021696013756723066,
+        "speed_m_s": 1.8987680910932115e-11,
+        "max_lift_m": 0.20785744043967158,
+        "max_unrelated_translation_m": 2.6024109565122633e-09,
+        "actor_status": "released_unverified",
+        "actor_message": "Released the tool; placement needs checking.",
+        "passed": true
+      },
+      {
+        "case": "validation-001",
+        "tool": "wrench",
+        "continuation": "return",
+        "hold": {
+          "simulation_seconds": 32.00000000000083,
+          "minimum_tool_height_m": 0.13092977600874445,
+          "maximum_joint_drift_rad": 0.005958370287424047,
+          "maximum_tool_translation_m": 0.006176299398098537,
+          "grip_retained": true,
+          "passed": true
+        },
+        "distance_m": 0.0070951878061522155,
+        "rest_height_m": 0.021696013756685693,
+        "speed_m_s": 1.957817670660533e-11,
+        "max_lift_m": 0.2255919435220031,
+        "max_unrelated_translation_m": 2.6024109565122633e-09,
+        "actor_status": "released_unverified",
+        "actor_message": "Released the tool; placement needs checking.",
+        "passed": true
+      },
+      {
+        "case": "validation-002",
+        "tool": "hammer",
+        "continuation": "resume",
+        "hold": {
+          "simulation_seconds": 32.000000000001215,
+          "minimum_tool_height_m": 0.12679755204316198,
+          "maximum_joint_drift_rad": 0.010892860943890192,
+          "maximum_tool_translation_m": 0.004527371100203291,
+          "grip_retained": true,
+          "passed": false
+        },
+        "distance_m": 0.015436932114625691,
+        "rest_height_m": 0.021727383580931597,
+        "speed_m_s": 1.3098440412377071e-11,
+        "max_lift_m": 0.21836694127863912,
+        "max_unrelated_translation_m": 1.5124008870261764e-09,
+        "actor_status": "released_unverified",
+        "actor_message": "Released the tool; placement needs checking.",
+        "passed": false
+      },
+      {
+        "case": "validation-002",
+        "tool": "hammer",
+        "continuation": "return",
+        "hold": {
+          "simulation_seconds": 32.000000000001215,
+          "minimum_tool_height_m": 0.12679755204316198,
+          "maximum_joint_drift_rad": 0.010892860943890192,
+          "maximum_tool_translation_m": 0.004527371100203291,
+          "grip_retained": true,
+          "passed": false
+        },
+        "distance_m": 0.005255593335567381,
+        "rest_height_m": 0.021727383580874948,
+        "speed_m_s": 2.8992412620748173e-11,
+        "max_lift_m": 0.22241479679886467,
+        "max_unrelated_translation_m": 1.5129301264341801e-09,
+        "actor_status": "released_unverified",
+        "actor_message": "Released the tool; placement needs checking.",
+        "passed": false
+      }
+    ]
+  },
+  "shared_hold": {
+    "scope": "Offline simulated long-held camera motion; not wall-clock or live speech Stop",
+    "hold_profile": "shared",
+    "protocol_sha256": "02ce28490d678acf402b7434a4e32854403939956ea101216f659ab3d1fc5d17",
+    "cases": 6,
+    "passes": 6,
+    "passed": true,
+    "rows": [
+      {
+        "case": "validation-000",
+        "tool": "screwdriver",
+        "continuation": "resume",
+        "hold": {
+          "simulation_seconds": 32.00000000000083,
+          "minimum_tool_height_m": 0.1351582772072651,
+          "maximum_joint_drift_rad": 0.004562536696166131,
+          "maximum_tool_translation_m": 0.0010901333814219867,
+          "grip_retained": true,
+          "passed": true
+        },
+        "distance_m": 0.015344151157561893,
+        "rest_height_m": 0.021656911640383813,
+        "speed_m_s": 1.0748533642396763e-11,
+        "max_lift_m": 0.20532446810155908,
+        "max_unrelated_translation_m": 2.602246321197983e-09,
+        "actor_status": "released_unverified",
+        "actor_message": "Released the tool; placement needs checking.",
+        "passed": true
+      },
+      {
+        "case": "validation-000",
+        "tool": "screwdriver",
+        "continuation": "return",
+        "hold": {
+          "simulation_seconds": 32.00000000000083,
+          "minimum_tool_height_m": 0.1351582772072651,
+          "maximum_joint_drift_rad": 0.004562536696166131,
+          "maximum_tool_translation_m": 0.0010901333814219867,
+          "grip_retained": true,
+          "passed": true
+        },
+        "distance_m": 0.011319982492625454,
+        "rest_height_m": 0.021656911633364712,
+        "speed_m_s": 2.0437904432524333e-11,
+        "max_lift_m": 0.22907591626260798,
+        "max_unrelated_translation_m": 2.6022996034680716e-09,
+        "actor_status": "released_unverified",
+        "actor_message": "Released the tool; placement needs checking.",
+        "passed": true
+      },
+      {
+        "case": "validation-001",
+        "tool": "wrench",
+        "continuation": "resume",
+        "hold": {
+          "simulation_seconds": 32.00000000000083,
+          "minimum_tool_height_m": 0.1349791557570541,
+          "maximum_joint_drift_rad": 0.0014523043422337012,
+          "maximum_tool_translation_m": 0.0010246301275096186,
+          "grip_retained": true,
+          "passed": true
+        },
+        "distance_m": 0.007474739184056509,
+        "rest_height_m": 0.02169601375673864,
+        "speed_m_s": 9.753912533495131e-12,
+        "max_lift_m": 0.2077694536780154,
+        "max_unrelated_translation_m": 2.6024109565122633e-09,
+        "actor_status": "released_unverified",
+        "actor_message": "Released the tool; placement needs checking.",
+        "passed": true
+      },
+      {
+        "case": "validation-001",
+        "tool": "wrench",
+        "continuation": "return",
+        "hold": {
+          "simulation_seconds": 32.00000000000083,
+          "minimum_tool_height_m": 0.1349791557570541,
+          "maximum_joint_drift_rad": 0.0014523043422337012,
+          "maximum_tool_translation_m": 0.0010246301275096186,
+          "grip_retained": true,
+          "passed": true
+        },
+        "distance_m": 0.007002042298425902,
+        "rest_height_m": 0.021696013749106152,
+        "speed_m_s": 2.9970401458575645e-11,
+        "max_lift_m": 0.2295879633535487,
+        "max_unrelated_translation_m": 2.6024109565122633e-09,
+        "actor_status": "released_unverified",
+        "actor_message": "Released the tool; placement needs checking.",
+        "passed": true
+      },
+      {
+        "case": "validation-002",
+        "tool": "hammer",
+        "continuation": "resume",
+        "hold": {
+          "simulation_seconds": 32.000000000001215,
+          "minimum_tool_height_m": 0.13008945883395634,
+          "maximum_joint_drift_rad": 0.009554643234895077,
+          "maximum_tool_translation_m": 0.0020534211560943034,
+          "grip_retained": true,
+          "passed": true
+        },
+        "distance_m": 0.01578772346179353,
+        "rest_height_m": 0.021727383580936732,
+        "speed_m_s": 1.3160561220997694e-11,
+        "max_lift_m": 0.21830544654372444,
+        "max_unrelated_translation_m": 1.510414625864707e-09,
+        "actor_status": "released_unverified",
+        "actor_message": "Released the tool; placement needs checking.",
+        "passed": true
+      },
+      {
+        "case": "validation-002",
+        "tool": "hammer",
+        "continuation": "return",
+        "hold": {
+          "simulation_seconds": 32.000000000001215,
+          "minimum_tool_height_m": 0.13008945883395634,
+          "maximum_joint_drift_rad": 0.009554643234895077,
+          "maximum_tool_translation_m": 0.0020534211560943034,
+          "grip_retained": true,
+          "passed": true
+        },
+        "distance_m": 0.004882833851602966,
+        "rest_height_m": 0.02172738358090883,
+        "speed_m_s": 2.171438796054505e-11,
+        "max_lift_m": 0.2257872510519056,
+        "max_unrelated_translation_m": 1.510414625864707e-09,
+        "actor_status": "released_unverified",
+        "actor_message": "Released the tool; placement needs checking.",
+        "passed": true
+      }
+    ]
+  },
+  "protected_layout_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+  "verdict": "Shared hold accepted; camera workflow NOT promoted: reserved22/24=91.7percent fails unchanged95percent gate, and non-held-phase resume remains unsupported.",
+  "tests": {
+    "focused_camera_tests": 22,
+    "full_lab_tests": 269,
+    "full_fork_tests": 250,
+    "protected_upstream_hashes": 46
+  },
+  "nonheld_phase_audit": [
+    {
+      "case": "validation-000",
+      "phase": "Approaching tool",
+      "hold_simulation_seconds": 32,
+      "continued": false,
+      "outcome": {
+        "status": "failed",
+        "message": "Resume needs a supported held handle; rescan required.",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "validation-000",
+      "phase": "Grasping",
+      "hold_simulation_seconds": 32,
+      "continued": false,
+      "outcome": {
+        "status": "failed",
+        "message": "Resume needs a supported held handle; rescan required.",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "validation-000",
+      "phase": "Withdrawing gripper",
+      "hold_simulation_seconds": 32,
+      "continued": false,
+      "outcome": {
+        "status": "failed",
+        "message": "Resume needs a supported held handle; rescan required.",
+        "distance_m": null
+      }
+    }
+  ]
+}

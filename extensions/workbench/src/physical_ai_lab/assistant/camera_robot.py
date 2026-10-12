@@ -128,7 +128,7 @@ class SimRobot:
         )
 
     def hold(self):
-        self._bench.data.ctrl[:7] = self._bench.data.qpos[:7]
+        self._bench.hold_joints()
 
     def observation_point(self):
         # Known robot home kinematics, not a nominal tool position or teleport.

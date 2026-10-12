@@ -3,6 +3,11 @@
 October 11, 2026. Full goal remains active. Public A4 voice assistant is unchanged;
 these opt-in camera controllers are not connected to the public app.
 
+The later [October 12 requalification](camera-motion-requalification-audit.md)
+reuses shared hold and the existing optional profile: validation18/18, reserved
+layouts22/24. That reserved result still fails the95% gate. The report below
+describes the historical October11 runs; camera motion remains experimental.
+
 ## Outcome and acceptance
 
 On the frozen 18 C3 validation journeys, final conventional camera recovery and
