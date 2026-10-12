@@ -1034,3 +1034,32 @@ B7 — recorded browser speech to native physical Stop, October 12:
   reset; cancelled test tasks retained. Close temporary judge tab/server afterward.
   Full goal active; trained arm control, camera journey failures, acoustics, audible
   responsiveness and human live demonstration remain incomplete.
+
+
+B8 — critical-path access audit, October 12:
+- Previous goal turn: progress; full browser/models/task-bus/native-physics Stop
+  qualification published at fork ae0a729 / lab bf3723a. No functional change
+  or new policy result is claimed by this read-only access audit.
+- Revalidated clean checkouts, public runtime exec46066 live and Ready, tools
+  on rack, Voice/listen ON, microphone idle. No trained-policy process runs
+  remotely; the local simulator is left available.
+- Available project inventory still exposes only local Mac projects. No local
+  SSH configuration/connection exists; available tools expose no remote shell
+  for this workspace. Native desktop surfaces cannot currently be inspected
+  because the Mac is locked; browser access remains available. This is not
+  evidence that the Windows PC lacks remote access, only that this chat has
+  no usable route to it yet. No unknown hosts scanned or credentials changed.
+- The same missing workstation connection has persisted through R0/R1 and
+  B5/B6/B7. Useful Mac-side speech work was completed while it remained open.
+  The next major requested result is actual pretrained manipulation in its
+  supported Linux/NVIDIA simulator, followed by adaptation to Dum-E. No
+  unsupported Mac port, extra custom controller or unrelated benchmark will
+  substitute for that result. The overall goal is not achieved.
+- Mark goal blocked on workstation access rather than keep automatic work
+  cycling through small side tasks. A concise access/setup question is pending.
+  Resume with the existing read-only Windows/Linux preflight, verify installed
+  WSL/Linux, driver and Blackwell-compatible GPU backend, then load the pinned
+  policy and record actual supported rollouts/success/video/timings.
+- Existing live-room/human demonstration, camera/manipulation failures and
+  precise mechanical settling duration remain incomplete. Full objective,
+  physical gates and authorization boundaries are preserved.
