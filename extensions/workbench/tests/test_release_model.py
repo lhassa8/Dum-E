@@ -10,6 +10,7 @@ from physical_ai_lab.assistant.release_model import (
     FEATURE_COUNT,
     FEATURE_VERSION,
     ReleaseModel,
+    ReleaseRefusal,
     release_features,
 )
 
@@ -134,3 +135,16 @@ def test_unreachable_best_prediction_cannot_be_selected(tmp_path):
     np.testing.assert_allclose(point, [0.62, -0.14, 0.04])
     assert not evidence["candidate_reachable"][1]
     assert not evidence["candidate_valid"][1]
+
+
+def test_supported_but_unsafe_future_is_distinct_from_missing_model_support(tmp_path):
+    path = tmp_path / "model.npz"
+    checkpoint(path)
+    with np.load(path, allow_pickle=False) as data:
+        weights = {k: data[k].copy() for k in data.files}
+    for member in range(3):
+        weights[f"bias_{member}_2"][2] = 60  # Future height above40mm.
+    np.savez(path, **weights)
+    with pytest.raises(ReleaseRefusal) as error:
+        ReleaseModel(path).choose(actor(), [0.64, -0.16, 0.04])
+    assert error.value.reason == "unsafe_future"

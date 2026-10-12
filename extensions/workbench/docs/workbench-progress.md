@@ -665,3 +665,81 @@ Next active D2d — verified motion and recovery before camera integration:
   coherent full-loop policy passesvalidation. Learningmustimprovewholejourneys.
 - Camera-informedpublicoperation, meaningfullearninggains,live/noise/audible/
   coldresponsiveness, hardwareadapter/plan andhumanlive demonstration stayopen.
+
+
+D2d active contract — motion/perception recovery:
+- Previous goal turn is progress: fork50d8c76/root9ad4c4e published and clean.
+  Full goal still active; C3futuremodel offlinepasses but physical14/18vs16/18.
+- [O] Baseline servo endpoints on3known journeys are~3.6–10.5mm TCP error,
+  ~.007–.017rad orientation error. Saturatedwrist case has smallTCPerror5.49mm
+  but−.109rad/s instantaneouswristvelocity/−12Nm; contacts show fingers/tool,
+  no wrist/table/selfcollision at sampled endpoint. Exactcause stillunknown.
+- [O] Wrench reobservation failures occur afterapproach; initialfits.896/.989
+  pass. Atfailurebothfront/sideviews missing despite visibly exposedtool inarm
+  shadow. Alternateview hypothesis rejected for these cases; brightness-dependent
+  metalidentity is invalidated. Sidecamera stays optional/probe-only.
+- [D] Hypothesis: normalized neutralcolor + unchangeddepth/geometry/ambiguity/
+  fit.8 gate recovers shadows. Judge protectedD1clear72/occluded12 andactual
+  reobservation, duplicates/coloredhandle/nondepth tests; no brightness fudge of
+  source frames or trueposes. New source RGB is untouched.
+- [D] Robot IK recovery uses boundedhome seed in a separateFKbuffer whencurrent
+  seed fails; original.8mm/.008rad criteria, joint/forcecaps preserved. FKproof
+  is not collision-free motionproof. Actualphysics/journeys independentlyjudge.
+- [D] New tracking gate15mm TCP/.035rad orientation is provisional, based on
+  normalobservedendpointdata, separate from unchanged35mmplacementcheck.
+  Boundedsettling/hold onmiss, no pretending commandedpose was measured.
+- Keep learned modelguard8 unchanged and record refusals. A separately tested
+  conventional camera+trackedrobot plan may recover a refused model action;
+  it must use observedrack/knowncatalog, never trueposefallback, and independently
+  verifyplacement. Explicitly label such recovery, never claimNNconfidence.
+- Freezepolicybefore24newC3tests; use18validationandoldD2/D2b regressions first.
+  Attemptbudget2 perhypothesis; replanfromactualfailures. No thirdblindfit,
+  gains/forcecaps/physicaljudges unchanged. PublicA4voice remainsready.
+
+D2d execution — camera/motion recovery, October 11:
+- [O] Final opt-in recovery profiles pass17/18 frozen validation journeys,
+  12fresh-camera returns each. Conventional mean initial error12.261mm;
+  same17 learned placements10.548mm. Remaining wrench redirect36.424mm
+  exceeds unchanged35mm;95%whole-journey gate fails. No promotion.
+- [O] Shadow-only neutral pass plus limited measured tilted-plane fitting
+  preserves72/72 clear detections,p95.257mm,max.404mm;all12hiddenwithheld.
+  Separate shadow pass avoids the rejected combined-mask regression71/72.
+- [O] Bounded robot-only home IK + independent FK; actual endpoint motion
+  verification with bounded settling/hold. Currentpose/forcecaps unchanged.
+- [O] Wrist2ms trace alternates±12Nm127times/128samples,mean0Nm,
+  netjointdrift1.433e-5rad/256ms. Earlier sustained-load interpretation invalid.
+  No gain/force/inputguard change; diagnostic traces retained.
+- [O] Catalog footprint clearance changes wrench orientation to avoid observed
+  screwdriver overlap. Empty-hand survey + explicitly predicted stationary
+  neighbor history solves occluded-neighbor planning, not fresh target sensing.
+  History≤30simulationsec;uncertainty.5mm+.2mm/s is provisional/un-calibrated.
+  Invalid/ambiguous/contradictory/neverobserved neighbors refuse; fresh target
+  requires≤.25sec. No true object state or nominalrack fallback enters actor.
+- [O] Release NN refuses deliberate reorientation as changed recipe; threelegs
+  finallearnedrun use explicit conventionalfallback. Supported unsafe predicted
+  futures cannot fallback. Existingweights/guard8/fit.8 thresholds preserved.
+- [O] Stronger disturbance judge maxbody-centertranslation every32msframe
+  acrossbothlegs, same4mm threshold; nottip/rotation/sub-frame collisionproof.
+  Failedlinear-lift/centering/heldsurvey variants preserved; finalprofile omits.
+- [O] Isolated30frame camera pipeline median77.245/p9582.512ms, first97.564ms;
+  no motion/IPC/disk/speech included. Newfit modestly increases camera cost.
+- All24C3test layouts stillunopened; D2/D2b legacyphysical sets not newlyrerun.
+  Fullroot175tests passed before export, independentfork checks below.
+  Scientificfigure inspected; publicA4 assistant unchanged; goalactive.
+
+Next active D2e — changed-grasp evidence, then camera integration:
+- Prediction: deliberate carry reorientation changes grasp/held-tool geometry;
+  old release-model recipe cannot substantiate the remaining36.424mm redirect.
+  Collect separate reoriented training/validation evidence or measure heldpose;
+  judge full18journeys, then onlyopen24test after passing wholevalidation.
+- Preserve35mmplacement/4mmneighbor/95%fullgate, inputguard8 and testfixtures.
+  No blind residual offset or tolerance widening. Bounded2 hypotheses before
+  replan. Camera actors must complete all-phase Stop/resume/replan before public
+  integration, including failedgrasp/pregrasp; currentresume supports held only.
+- Publicvoice/live/noise/audible/cold responsiveness, usefulmodel whole-loopgain,
+  hardwareadapter/plan and convincinguserlive demonstration remain unfinished.
+
+D2d publication checks: fresh native-access175lab/156forktests passed;
+Ruff/format93lab/69forkfilespassed;46pinnedupstreamhashesintact. Restricted
+CoreGraphics/IPC run failedenvironmentaccess, correctednative-accessrun passed
+without changing/skipping tests. Final source/fixture/asset parity verified.

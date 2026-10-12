@@ -15,6 +15,14 @@ FEATURE_COUNT = 76
 TOOLS = ("screwdriver", "wrench", "hammer")
 
 
+class ReleaseRefusal(ValueError):
+    """Model cannot support an action; separate from malformed feature/program errors."""
+
+    def __init__(self, message, reason="unsupported_input"):
+        super().__init__(message)
+        self.reason = reason
+
+
 def release_features(actor, point, action_xy):
     reading, start = actor.robot.read(), actor.grasp_reading
     if start is None or actor.observation is None or actor.offset_local is None:
@@ -124,6 +132,13 @@ class ReleaseModel:
             & (prediction[:, 3] < 0.03)
             & (prediction[:, 4] < 0.004)
         )
+        geometry_supported = np.ones(len(actions), dtype=bool)
+        if hasattr(actor, "placement_clearance"):
+            geometry_supported = np.array(
+                [actor.placement_clearance(p[:2]) >= 0.006 for p in prediction]
+            )
+        valid &= geometry_supported
+        predicted_supported = valid.copy()
         # A good predicted result cannot make an unreachable robot action valid.
         reachable = np.zeros(len(actions), dtype=bool)
         for i in np.flatnonzero(valid):
@@ -148,7 +163,14 @@ class ReleaseModel:
                     "latency_ms": (perf_counter() - began) * 1000,
                 }
             )
-            raise ValueError("No release action has a supported predicted outcome; holding")
+            reason = (
+                "unsupported_input"
+                if not input_supported.any()
+                else ("unreachable_future" if predicted_supported.any() else "unsafe_future")
+            )
+            raise ReleaseRefusal(
+                "No release action has a supported predicted outcome; holding", reason
+            )
         costs = np.linalg.norm(prediction[:, :2], axis=1)
         index = int(np.argmin(np.where(valid, costs, np.inf)))
         chosen = np.asarray(point, float).copy()

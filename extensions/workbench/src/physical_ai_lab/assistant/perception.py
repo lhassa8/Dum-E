@@ -103,7 +103,7 @@ def components(mask):
             yield np.asarray(island)
 
 
-def locate_tools(frame):
+def _locate_tools(frame, shadow_recovery=False, names=None, tilted_face=False):
     """Find complete 44x56mm top faces by appearance and measured depth.
 
     Supports tabletop tools with roughly horizontal primitive handles. Refuses
@@ -125,13 +125,27 @@ def locate_tools(frame):
     normalized = rgb / np.maximum(total[..., None], 1e-9)
     r, g, b = np.moveaxis(normalized, -1, 0)
     chroma = rgb.max(axis=-1) - rgb.min(axis=-1)
+    # Neutral material remains neutral in an arm shadow. Absolute brightness
+    # wrongly loses a visible metal handle during pre-grasp reobservation.
+    # Depth/tabletop geometry still gates candidates; truly dark/noisy pixels
+    # are withheld and colored handles stay outside this normalized hue range.
+    brightness = rgb.mean(axis=-1)
+    neutral = (chroma < 0.16) & (brightness > 0.28)
+    if shadow_recovery:
+        neutral |= (
+            (normalized.max(axis=-1) - normalized.min(axis=-1) < 0.14)
+            & (brightness > 0.04)
+            & (brightness <= 0.28)
+        )
     masks = {
         "screwdriver": valid & (r > 0.48) & (g > 0.23) & (b < 0.13),
         "hammer": valid & (r > 0.43) & (g > 0.23) & (b >= 0.13) & (b < 0.23),
-        "wrench": valid & (chroma < 0.16) & (rgb.mean(axis=-1) > 0.28),
+        "wrench": valid & neutral,
     }
     result = {}
     for name, mask in masks.items():
+        if names is not None and name not in names:
+            continue
         candidates = []
         for pixels in components(mask):
             points = cloud[pixels[:, 0], pixels[:, 1]]
@@ -139,11 +153,25 @@ def locate_tools(frame):
             top_points = points[np.abs(points[:, 2] - top) < 0.001]
             if len(top_points) < 40:
                 continue
+            normal = np.array([0.0, 0.0, 1.0])
+            anchor = np.array([0.0, 0.0, top])
+            basis = np.array([[1.0, 0.0], [0.0, 1.0], [0.0, 0.0]])
+            if tilted_face:
+                anchor = top_points.mean(0)
+                _, _, axes3 = np.linalg.svd(top_points - anchor, full_matrices=False)
+                normal = axes3[-1]
+                if normal[2] < 0:
+                    normal = -normal
+                if normal[2] < 0.95:
+                    continue  # Limited tabletop tilt, not arbitrary tool pose.
+                horizontal = np.array([1.0, 0.0, -normal[0] / normal[2]])
+                horizontal /= np.linalg.norm(horizontal)
+                basis = np.stack([horizontal, np.cross(normal, horizontal)], axis=1)
             density = len(top_points) / max(len(points), 1)
             # Color supplies identity seeds; coplanar depth supplies geometry.
             # Specular edge pixels can lose the handle's material hue. Expand
             # only through a connected measured plane, never an inferred edge.
-            plane = valid & (np.abs(cloud[..., 2] - top) < 0.001)
+            plane = valid & (np.abs((cloud - anchor) @ normal) < 0.001)
             seed = np.zeros(valid.shape, dtype=bool)
             seed[pixels[:, 0], pixels[:, 1]] = True
             patches = list(components(plane))
@@ -151,7 +179,7 @@ def locate_tools(frame):
                 patch = max(patches, key=lambda p: seed[p[:, 0], p[:, 1]].sum())
                 if seed[patch[:, 0], patch[:, 1]].sum() >= 40:
                     top_points = cloud[patch[:, 0], patch[:, 1]]
-            xy = top_points[:, :2]
+            xy = (top_points - anchor) @ basis
             # PCA depends on pixel density and perspective; it can rotate a
             # rectangular face even when its edges are clear. Fit the enclosing
             # rectangle instead, using only the measured top-face points.
@@ -168,10 +196,12 @@ def locate_tools(frame):
             sides = np.sort(high - low)
             if not (0.035 < sides[0] < 0.050 and 0.048 < sides[1] < 0.065):
                 continue
-            center = ((low + high) / 2) @ axes.T
+            plane_center = ((low + high) / 2) @ axes.T
+            center3 = anchor + basis @ plane_center - normal * 0.022
+            center = center3[:2]
             # Handle local Y is the longer (56mm) side. The sign remains
             # ambiguous by 180 degrees, which a parallel gripper does not need.
-            long_axis = axes[:, np.argmax(high - low)]
+            long_axis = basis @ axes[:, np.argmax(high - low)]
             yaw = float(np.arctan2(long_axis[1], long_axis[0]) - np.pi / 2)
             yaw = float((yaw + np.pi / 2) % np.pi - np.pi / 2)
             # The rectangle alone has a 180-degree ambiguity. A declared tool
@@ -183,7 +213,7 @@ def locate_tools(frame):
             lateral, longitudinal = relative @ across, relative @ along
             distal = 0.05 if name == "hammer" else 0.08
             limit = 0.052 if name == "hammer" else 0.045
-            metal = valid & (chroma < 0.16) & (rgb.mean(axis=-1) > 0.28)
+            metal = (valid & neutral,)
             cue = (
                 metal
                 & (np.abs(lateral) < limit)
@@ -203,7 +233,8 @@ def locate_tools(frame):
             score = float(np.exp(-np.linalg.norm(sides - [0.044, 0.056]) / 0.01))
             candidates.append(
                 {
-                    "position_m": [float(center[0]), float(center[1]), float(top - 0.022)],
+                    "position_m": center3.tolist(),
+                    "surface_normal": normal.tolist(),
                     "fit_score": score,
                     "surface_pixels": len(top_points),
                     "observed_sides_m": sides.tolist(),
@@ -224,3 +255,24 @@ def locate_tools(frame):
                 "candidate_count": len(candidates),
             }
     return result
+
+
+def locate_tools(frame):
+    predictions = _locate_tools(frame)
+    # Broader shadow seeds can join otherwise separate surfaces. Preserve the
+    # accepted bright-material estimate; try a separate pass only on a miss.
+    # An ambiguous primary observation stays ambiguous.
+    if predictions["wrench"]["status"] == "missing":
+        recovered = _locate_tools(frame, shadow_recovery=True, names={"wrench"})["wrench"]
+        recovered["appearance_recovery"] = "normalized_color_in_shadow"
+        predictions["wrench"] = recovered
+    for name, prediction in predictions.items():
+        if prediction["status"] == "missing" or (
+            prediction["status"] == "observed" and prediction["fit_score"] < 0.8
+        ):
+            recovered = _locate_tools(
+                frame, shadow_recovery=name == "wrench", names={name}, tilted_face=True
+            )[name]
+            recovered["appearance_recovery"] = "measured_tilted_face"
+            predictions[name] = recovered
+    return predictions

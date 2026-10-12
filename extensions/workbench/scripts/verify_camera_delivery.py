@@ -24,6 +24,12 @@ parser.add_argument("--return-after-delivery", action="store_true")
 parser.add_argument("--carry-model", type=Path)
 parser.add_argument("--carry-policy", choices=["full_xyz", "xy_descent"], default="xy_descent")
 parser.add_argument("--release-model", type=Path)
+parser.add_argument("--recover-ik", action="store_true")
+parser.add_argument("--verify-motion", action="store_true")
+parser.add_argument("--release-fallback", action="store_true")
+parser.add_argument("--linear-lifts", action="store_true")
+parser.add_argument("--center-grasp", action="store_true")
+parser.add_argument("--safe-handoff", action="store_true")
 parser.add_argument(
     "--release-kind", choices=["ensemble", "linear", "constant"], default="ensemble"
 )
@@ -45,24 +51,39 @@ for case in fixture["cases"]:
     initial = start_truth[case["tool"]]
     target = HANDOFF["handoff"] if case["journey"] != "redirect" else initial[:2]
     controller = CameraDelivery(
-        SimRobot(b),
+        SimRobot(b, recover_ik=args.recover_ik),
         sensor,
         case["tool"],
         HANDOFF["handoff"],
         carry_model=carry_model,
         carry_policy=args.carry_policy,
         release_model=release_model,
+        verify_motion=args.verify_motion,
+        release_fallback=args.release_fallback,
+        linear_lifts=args.linear_lifts,
+        center_grasp=args.center_grasp,
+        safe_handoff=args.safe_handoff,
     )
     images = args.output / case["id"]
     images.mkdir()
     max_height = float(initial[2])
     previous, paused, hold = None, False, None
     began = perf_counter()
+    maximum_disturbance = 0.0
+
+    def measured_disturbance():
+        return max(
+            float(np.linalg.norm(b.observe()[n] - xyz))
+            for n, xyz in start_truth.items()
+            if n != case["tool"]
+        )
+
     try:
         for tick in range(3000):
             if not controller.advance():
                 break
             actual = b.observe()[case["tool"]]
+            maximum_disturbance = max(maximum_disturbance, measured_disturbance())
             max_height = max(max_height, float(actual[2]))
             if controller.phase != previous:
                 Image.fromarray(sensor.capture().rgb).save(images / f"{tick:04d}.png")
@@ -77,6 +98,7 @@ for case in fixture["cases"]:
                 grip_command = float(b.data.ctrl[7])
                 for _ in range(19):
                     b.tick()
+                    maximum_disturbance = max(maximum_disturbance, measured_disturbance())
                 hold = {
                     "duration_s": 19 * 0.032,
                     "joint_drift_rad": float(np.max(np.abs(b.data.qpos[:7] - stopped))),
@@ -104,19 +126,25 @@ for case in fixture["cases"]:
         return_result = None
         if args.return_after_delivery and case["journey"] != "redirect" and lifted and placed:
             returned = CameraDelivery(
-                SimRobot(b),
+                SimRobot(b, recover_ik=args.recover_ik),
                 sensor,
                 case["tool"],
                 controller.rack_xy,
                 carry_model=carry_model,
                 carry_policy=args.carry_policy,
                 release_model=release_model,
+                verify_motion=args.verify_motion,
+                release_fallback=args.release_fallback,
+                linear_lifts=args.linear_lifts,
+                center_grasp=args.center_grasp,
+                safe_handoff=args.safe_handoff,
             )
             return_initial = b.observe()[case["tool"]].copy()
             return_max = float(return_initial[2])
             for _ in range(3000):
                 if not returned.advance():
                     break
+                maximum_disturbance = max(maximum_disturbance, measured_disturbance())
                 return_max = max(return_max, float(b.observe()[case["tool"]][2]))
             else:
                 raise RuntimeError("Return exceeded the fixed 3000-frame limit")
@@ -126,6 +154,7 @@ for case in fixture["cases"]:
             return_result = {
                 "actor_outcome": returned.outcome.__dict__,
                 "observations": returned.evidence,
+                "ik_events": returned.robot.ik_events,
                 "lifted": bool(return_max - return_initial[2] >= 0.08),
                 "placed": bool(
                     return_distance < 0.035 and actual_return[2] < 0.04 and return_speed < 0.03
@@ -144,6 +173,8 @@ for case in fixture["cases"]:
                 ),
             )
             Image.fromarray(sensor.capture().rgb).save(images / "returned.png")
+        final_disturbance = measured_disturbance()
+        disturbance = max(disturbance, maximum_disturbance)
         passed = bool(
             lifted
             and placed
@@ -162,12 +193,15 @@ for case in fixture["cases"]:
                 "final_height_m": float(final[2]),
                 "speed_m_s": speed,
                 "other_tool_disturbance_m": disturbance,
+                "other_tool_final_displacement_m": final_disturbance,
+                "disturbance_scope": "Maximum at every32ms motion/hold frame; both legs",
             },
             "hold": hold,
             "return": return_result,
             "passed": passed,
             "wall_s": perf_counter() - began,
             "observations": controller.evidence,
+            "ik_events": controller.robot.ik_events,
         }
         rows.append(row)
         (args.output / "results.json").write_text(json.dumps(rows, indent=2) + "\n")
@@ -205,6 +239,13 @@ summary = {
     if args.release_model is None
     else hashlib.sha256(args.release_model.read_bytes()).hexdigest(),
     "release_kind": args.release_kind if args.release_model else None,
+    "recover_ik": args.recover_ik,
+    "verify_motion": args.verify_motion,
+    "release_fallback": args.release_fallback,
+    "linear_lifts": args.linear_lifts,
+    "center_grasp": args.center_grasp,
+    "safe_handoff": args.safe_handoff,
+    "disturbance_judge": "Maximum across motion/hold frames, not just final position",
 }
 (args.output / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 print(json.dumps(summary), flush=True)
