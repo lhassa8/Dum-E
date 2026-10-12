@@ -941,3 +941,43 @@ F preparation — hardware adaptation plan, October 11:
   anonymous data-only download started in exec session 46246 and observed live.
   Candidate not loaded or accepted; original default remains enabled. Keep the
   whole goal active for this responsiveness work. RTX access question is pending.
+
+B5 — model selection and idle responsiveness, October 11–12:
+- Previous turn is progress: verified inventory/plan publication at 9f77efe,
+  actual 27.386 s idle response evidence, downloaded/publisher-verified 9B weights.
+  Downloads and hash worker finished; do not restart those jobs.
+- Sequential 9B native comparison: original 2/45 wrong (hammer falsely unavailable),
+  context 0/18, pairs 1/36 wrong (unrequested Stop), quality schema 0/30. Actual
+  reply review 27 complete/3 partial. Peak MLX 6.166 GB, but warm requests slower.
+  Reject candidate; no prompt/gate changes or candidate speech/physical promotion.
+- Inspected official MLX residency fix a59cc23190f1e26fabcba8693607bb4c34b2ac2b.
+  Installed 0.32.3 lacks it. Separate build failed first on CMake PATH, then on
+  missing xcrun metal even with CUDA OFF and supported Metal JIT ON. No wheel
+  installed, no working dependency/system changes. Do not repeat without a new
+  capability/hypothesis; preserve source/build logs under external/.cache.
+- Supported-API 1 GiB mechanism probe: 12 s idle first sum 49.337 ms without
+  maintenance, 15.807 ms with 1 s scalar work, 46.369 ms with 3 s work. One sample
+  per setting, fixed order, not LLM proof. Process budget restored on cleanup.
+- Added bounded process residency + independent scalar work while worker idle;
+  requests/active inference take priority, no text generation/audio/task commands.
+  MacOS 15+ automatic mode enables only with supported allocation budget; logs
+  fallback reason, 0 opts out, 1 requires support. Requested budget 18.50 GiB;
+  sampled tiny refresh ~0.2–0.7 ms. Power/heavy-app costs unmeasured.
+- Actual accepted model after three ~12.3 s idles: off median/max 1.434/1.475 s,
+  on 1.144/1.153 s. One 120.262 s idle answers correctly in 1.134 s. Not proof
+  that the earlier unknown-duration 27 s stall, hours, sleep/wake or stress is solved.
+  Off raw completion timestamp corrected by subtracting request duration; retained.
+- Native 129/129 decisions and 30 reviewed replies pass within case contexts;
+  early native timing overlapped lab checks (not clean causal timing). New-waveform
+  speech pilot retained; primary reused actual responsiveness-fixtures-001 after
+  other checks finish: 30/30; common median/p95 1.162/1.194 s; general 1.562/2.044;
+  guards 1.569/2.054. Same old last-voiced-sample boundaries, no target lowering.
+- Real saved Stop during pending inference reaches POST at588 ms, late reply
+  superseded, grip retained, settled maximum joint drift0.000572 rad. Live mic and
+  speakers disabled during automated motion; restore previous settings afterward.
+- Final lab186/fork167 checks pass; Ruff/format pass. Explicit and automatic mode
+  paths/fallbacks tested; actual default runtime observed Ready with budget enabled.
+  Public default runtime exec58488, ports8766/8765/8001, logs
+  Dum-E/extensions/workbench/runs/residency-default-ready-001. Old runtimes exited.
+  Benchmarks/build/probe handles are terminal. Full goal still active; camera/VLA,
+  long-idle/live/acoustic/audible proof and user demonstration remain incomplete.

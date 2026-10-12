@@ -93,6 +93,12 @@ classical scripted manipulation. Physical contact, lift, release and final posit
 determine success; tools are never teleported or welded to the gripper. The green
 tray stands in for the user's pickup location; no human handoff is simulated.
 This is not yet a camera-based VLA policy, learned grasping or a real SO-101 driver.
+
+The accepted local model now keeps a bounded memory residency budget on supported
+macOS hosts while the app runs. This improves measured idle response behavior;
+it can retain substantial RAM. Set `WORKBENCH_KEEP_MODEL_RESIDENT=0` to disable it.
+See [the measured residency results](docs/residency-audit.md) for limits, resource
+cost, saved-speech/Stop evidence and the still-unverified long-idle conditions.
 Tool geometry/masses/friction are approximate. Hardware purchases remain deferred.
 The tool scene uses doubled gripper servo stiffness to prevent observed hammer
 slip, preserving its original gap mapping and force cap. That measured simulation

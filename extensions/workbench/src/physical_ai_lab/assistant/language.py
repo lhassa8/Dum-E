@@ -3,6 +3,7 @@
 import copy
 import json
 import os
+import platform
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -91,6 +92,24 @@ class LocalLanguage:
             self.interpret("What can you help me with?", observations={})
             self.startup_warmup_ms = (time.perf_counter() - started) * 1000
             self.last_profile = {}
+        self.residency = None
+        self.residency_error = None
+        residency_mode = os.environ.get("WORKBENCH_KEEP_MODEL_RESIDENT", "auto")
+        if residency_mode not in {"0", "1", "auto"}:
+            raise ValueError("WORKBENCH_KEEP_MODEL_RESIDENT must be 0, 1 or auto")
+        if residency_mode != "0":
+            import mlx.core as mx
+
+            from physical_ai_lab.assistant.residency import ModelResidency
+
+            try:
+                if platform.system() != "Darwin" or int(platform.mac_ver()[0].split(".")[0]) < 15:
+                    raise RuntimeError("Idle residency maintenance requires macOS 15 or later")
+                self.residency = ModelResidency(mx)
+            except Exception as error:
+                if residency_mode == "1":
+                    raise
+                self.residency_error = str(error)
 
     def encode_prompt(self, text):
         add_special = self.tokenizer.bos_token is None or not text.startswith(
@@ -193,4 +212,6 @@ class LocalLanguage:
             "elapsed_ms": (time.perf_counter() - started) * 1000,
             "finish_reason": final.finish_reason,
         }
+        if getattr(self, "residency", None) is not None:
+            self.last_profile["residency"] = self.residency.profile()
         return self.parser(raw), raw

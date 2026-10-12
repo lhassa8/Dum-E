@@ -1,0 +1,35 @@
+{
+  "scope": "1 GiB array residency mechanism probe; not LLM, voice or robot performance",
+  "mlx": "0.32.3",
+  "warm_compute_ms": 45.152958016842604,
+  "array_bytes": 1073741824,
+  "rows": [
+    {
+      "interval_s": null,
+      "idle_s": 12,
+      "lowest_global_wired_gib": 2.9147186279296875,
+      "first_compute_ms": 49.33729098411277,
+      "second_compute_ms": 10.594959021545947,
+      "tiny_gpu_ops": 0
+    },
+    {
+      "interval_s": 1,
+      "idle_s": 12,
+      "lowest_global_wired_gib": 3.9503021240234375,
+      "first_compute_ms": 15.806707961019129,
+      "second_compute_ms": 9.181166999042034,
+      "tiny_gpu_ops": 11
+    },
+    {
+      "interval_s": 3,
+      "idle_s": 12,
+      "lowest_global_wired_gib": 2.9575042724609375,
+      "first_compute_ms": 46.36912501882762,
+      "second_compute_ms": 9.01400001021102,
+      "tiny_gpu_ops": 3
+    }
+  ],
+  "page_size_assumed_bytes": 16384,
+  "order_randomized": false,
+  "system_settings_changed": false
+}

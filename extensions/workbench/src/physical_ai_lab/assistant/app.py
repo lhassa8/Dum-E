@@ -272,6 +272,10 @@ class Application:
                     prefix_prepare_ms=getattr(self.language, "prefix_prepare_ms", 0),
                     startup_warmup_ms=getattr(self.language, "startup_warmup_ms", 0),
                     cached_prefix_tokens=len(getattr(self.language, "prefix_tokens", [])),
+                    residency=getattr(self.language, "residency", None).profile()
+                    if getattr(self.language, "residency", None)
+                    else None,
+                    residency_error=getattr(self.language, "residency_error", None),
                 )
         except Exception as error:
             with self.lock:
@@ -282,6 +286,19 @@ class Application:
             try:
                 epoch, job, text, history = self.requests.get(timeout=0.2)
             except queue.Empty:
+                keeper = getattr(self.language, "residency", None)
+                if keeper is not None and self.language_lock.acquire(blocking=False):
+                    try:
+                        keeper.refresh()
+                    except Exception as error:
+                        self.language.residency = None
+                        try:
+                            keeper.close()
+                        except Exception as cleanup_error:
+                            self.event("residency_cleanup_failed", error=str(cleanup_error))
+                        self.event("residency_disabled", error=str(error))
+                    finally:
+                        self.language_lock.release()
                 continue
             try:
                 self.timing_point("interpretation_started_ms", job)
@@ -322,6 +339,13 @@ class Application:
                 with self.lock:
                     if epoch == self.epoch:
                         self.commands.put(("language_error", (epoch, str(error))))
+        keeper = getattr(self.language, "residency", None)
+        if keeper is not None:
+            with self.language_lock:
+                try:
+                    keeper.close()
+                except Exception as error:
+                    self.event("residency_cleanup_failed", error=str(error))
 
     def inventory(self, positions=None):
         if not self.tools:

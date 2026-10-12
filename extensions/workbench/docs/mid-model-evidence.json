@@ -1,0 +1,4356 @@
+{
+  "scope": "Sequential read-only native model comparison; excludes speech, audible onset, motion and controlled idle.",
+  "decision": "Reject 9B as default: three incorrect decisions and three reply-quality partials; accepted model restored.",
+  "candidate": {
+    "repo": "mlx-community/Qwen3.5-9B-MLX-4bit",
+    "revision": "938d8919941c6e7efd3c7150eff7fe9d12afa631",
+    "weights": [
+      {
+        "file": "model-00001-of-00002.safetensors",
+        "bytes": 5349771222,
+        "sha256": "a68b87558c6ef43f74c2bd63ce7e9092ceddc3101f3def0030774bae5f42aadd",
+        "matches_publisher": true
+      },
+      {
+        "file": "model-00002-of-00002.safetensors",
+        "bytes": 600449850,
+        "sha256": "b0a770bf8469c7f3f18756a0e0283f1c1174344a83e059a4e483f6af4907352d",
+        "matches_publisher": true
+      }
+    ],
+    "model_type": "qwen3_5",
+    "text_model_type": "qwen3_5_text",
+    "scope": "Downloaded files verified against pinned publisher metadata; no inference or acceptance"
+  },
+  "candidate_native": {
+    "original": {
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "2f4dd3530e5cc35a59e6716e0dfd96c16d773b989d956d01d87438086875695d",
+      "ready_wait_ms": 1651.1177499778569,
+      "count": 45,
+      "incorrect": 2,
+      "median_ms": 1642.440625000745,
+      "p95_ms": 2162.4667500145733,
+      "initial_job": null,
+      "final_job": null,
+      "rows": [
+        {
+          "repeat": 0,
+          "name": "screws",
+          "elapsed_ms": 1258.684833010193,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "screwdriver",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1248.606999986805,
+            "profile": {
+              "first_token_ms": 480.00587499700487,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 478.17908303113654,
+              "generation_tokens": 20,
+              "generation_ms": 743.5515000252053,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1243.248458020389,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "nuts",
+          "elapsed_ms": 1214.409959036857,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1210.4642920312472,
+            "profile": {
+              "first_token_ms": 484.97958295047283,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 483.2279169932008,
+              "generation_tokens": 19,
+              "generation_ms": 702.5379999540746,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1205.7956249918789,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "nails",
+          "elapsed_ms": 1176.0421670041978,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1173.4635419561528,
+            "profile": {
+              "first_token_ms": 481.6262500244193,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 480.5647500324994,
+              "generation_tokens": 18,
+              "generation_ms": 671.1222079466097,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1169.7287089773454,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "ambiguous",
+          "elapsed_ms": 1538.8714169966988,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool would you like me to bring?"
+            },
+            "route": "model",
+            "elapsed_ms": 1536.191624996718,
+            "profile": {
+              "first_token_ms": 490.0611670454964,
+              "prompt_tokens": 287,
+              "full_prompt_tokens": 1428,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 489.0838749706745,
+              "generation_tokens": 27,
+              "generation_ms": 1024.9095000326633,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1532.3152920464054,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "multiple",
+          "elapsed_ms": 1769.6789159672335,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1767.1037089894526,
+            "profile": {
+              "first_token_ms": 487.8829999943264,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 486.4031249890104,
+              "generation_tokens": 32,
+              "generation_ms": 1257.2400830104016,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1762.9726249724627,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "negative",
+          "elapsed_ms": 1827.9482499929145,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Understood! I won't fetch the hammer. Is there anything else you need?"
+            },
+            "route": "model",
+            "elapsed_ms": 1825.1291669439524,
+            "profile": {
+              "first_token_ms": 480.0884170108475,
+              "prompt_tokens": 291,
+              "full_prompt_tokens": 1432,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 478.8685419480316,
+              "generation_tokens": 34,
+              "generation_ms": 1322.9990000254475,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1820.859792002011,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "hypothetical",
+          "elapsed_ms": 1642.440625000745,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I would fetch the screwdriver and hand it to you."
+            },
+            "route": "model",
+            "elapsed_ms": 1639.3305000383407,
+            "profile": {
+              "first_token_ms": 486.0377499717288,
+              "prompt_tokens": 297,
+              "full_prompt_tokens": 1438,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 484.8955409834161,
+              "generation_tokens": 29,
+              "generation_ms": 1131.393207993824,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1635.826084006112,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "tool_question",
+          "elapsed_ms": 1560.0964579498395,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench is the best tool for tightening nuts."
+            },
+            "route": "model",
+            "elapsed_ms": 1557.2522499714978,
+            "profile": {
+              "first_token_ms": 487.6621249713935,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 486.1417079810053,
+              "generation_tokens": 27,
+              "generation_ms": 1049.2419170332141,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1553.4181660041213,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "impossible",
+          "elapsed_ms": 2087.2891250182875,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can't use tools to assemble things or operate on objects. I can only bring and return tools to you."
+            },
+            "route": "model",
+            "elapsed_ms": 2084.423291031271,
+            "profile": {
+              "first_token_ms": 488.16437495406717,
+              "prompt_tokens": 292,
+              "full_prompt_tokens": 1433,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 486.027083999943,
+              "generation_tokens": 40,
+              "generation_ms": 1573.4873749897815,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2079.349832958542,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "joke",
+          "elapsed_ms": 1817.7562920027412,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Why did the robot go to the doctor? Because it felt a little screw-y!"
+            },
+            "route": "model",
+            "elapsed_ms": 1813.9056249638088,
+            "profile": {
+              "first_token_ms": 489.72079099621624,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 488.0733340396546,
+              "generation_tokens": 34,
+              "generation_ms": 1302.2730419761501,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1809.7093749674968,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "chat",
+          "elapsed_ms": 1528.2258339575492,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Ready to help! How was your day?"
+            },
+            "route": "model",
+            "elapsed_ms": 1524.1482920246199,
+            "profile": {
+              "first_token_ms": 487.4465839820914,
+              "prompt_tokens": 294,
+              "full_prompt_tokens": 1435,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 486.27812496852135,
+              "generation_tokens": 26,
+              "generation_ms": 1014.6840419620275,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1520.296333997976,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "capability",
+          "elapsed_ms": 1744.8598330374807,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I don't have a camera; I get my view from simulator positions."
+            },
+            "route": "model",
+            "elapsed_ms": 1739.342124958057,
+            "profile": {
+              "first_token_ms": 490.3982909745537,
+              "prompt_tokens": 291,
+              "full_prompt_tokens": 1432,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 488.346875004936,
+              "generation_tokens": 32,
+              "generation_ms": 1226.5037500183098,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1734.5228329650126,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "clarified_wrench",
+          "elapsed_ms": 1234.9954170058481,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1231.378125026822,
+            "profile": {
+              "first_token_ms": 497.2445829771459,
+              "prompt_tokens": 307,
+              "full_prompt_tokens": 1448,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 495.7366249873303,
+              "generation_tokens": 19,
+              "generation_ms": 711.8314169929363,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1226.54349997174,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "clarified_hammer",
+          "elapsed_ms": 1198.8176250015385,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1195.8560000057332,
+            "profile": {
+              "first_token_ms": 496.8520419788547,
+              "prompt_tokens": 309,
+              "full_prompt_tokens": 1450,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 495.32387498766184,
+              "generation_tokens": 18,
+              "generation_ms": 676.8347909674048,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1191.5791250066832,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "negated_stop",
+          "elapsed_ms": 1675.5682090297341,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I'm always thinking about how to help you with your tasks!"
+            },
+            "route": "model",
+            "elapsed_ms": 1671.2569169467315,
+            "profile": {
+              "first_token_ms": 487.9472079919651,
+              "prompt_tokens": 291,
+              "full_prompt_tokens": 1432,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 486.393791041337,
+              "generation_tokens": 30,
+              "generation_ms": 1161.1169169773348,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1667.118625016883,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "screws",
+          "elapsed_ms": 1297.0254159881733,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "screwdriver",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1293.4592079836875,
+            "profile": {
+              "first_token_ms": 499.97170898132026,
+              "prompt_tokens": 289,
+              "full_prompt_tokens": 1430,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 498.03766701370483,
+              "generation_tokens": 20,
+              "generation_ms": 770.7484170095995,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1288.7551669846289,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "nuts",
+          "elapsed_ms": 1277.5208750390448,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1274.5978750172071,
+            "profile": {
+              "first_token_ms": 495.00391603214666,
+              "prompt_tokens": 291,
+              "full_prompt_tokens": 1432,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 493.13762498786673,
+              "generation_tokens": 19,
+              "generation_ms": 751.5628329711035,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1264.6685829968192,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "nails",
+          "elapsed_ms": 2247.867459023837,
+          "correct": false,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I don't have a hammer for driving nails right now, but I can bring you the wrench or screwdriver if you need them!"
+            },
+            "route": "model",
+            "elapsed_ms": 2244.527874980122,
+            "profile": {
+              "first_token_ms": 488.5347079834901,
+              "prompt_tokens": 291,
+              "full_prompt_tokens": 1432,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 487.0319579495117,
+              "generation_tokens": 44,
+              "generation_ms": 1731.807750009466,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2240.3653749497607,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "ambiguous",
+          "elapsed_ms": 1539.7237080032937,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool would you like me to bring?"
+            },
+            "route": "model",
+            "elapsed_ms": 1536.8923749774694,
+            "profile": {
+              "first_token_ms": 486.4723330247216,
+              "prompt_tokens": 289,
+              "full_prompt_tokens": 1430,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 484.89299998618657,
+              "generation_tokens": 27,
+              "generation_ms": 1028.4007919835858,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1532.7427909942344,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "multiple",
+          "elapsed_ms": 1778.8806249736808,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1775.7458330015652,
+            "profile": {
+              "first_token_ms": 492.16504098149016,
+              "prompt_tokens": 288,
+              "full_prompt_tokens": 1429,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 490.4900420224294,
+              "generation_tokens": 32,
+              "generation_ms": 1260.8725830214098,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1771.1429159971885,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "negative",
+          "elapsed_ms": 1853.2945410115644,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Understood! I won't fetch the hammer. Is there anything else you need?"
+            },
+            "route": "model",
+            "elapsed_ms": 1849.970083043445,
+            "profile": {
+              "first_token_ms": 495.45179202686995,
+              "prompt_tokens": 292,
+              "full_prompt_tokens": 1433,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 493.3639579685405,
+              "generation_tokens": 34,
+              "generation_ms": 1332.595499989111,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1845.736334042158,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "hypothetical",
+          "elapsed_ms": 1642.628750007134,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I would fetch the screwdriver and hand it to you."
+            },
+            "route": "model",
+            "elapsed_ms": 1639.291667030193,
+            "profile": {
+              "first_token_ms": 493.9758330001496,
+              "prompt_tokens": 297,
+              "full_prompt_tokens": 1438,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.4394590198062,
+              "generation_tokens": 29,
+              "generation_ms": 1123.1385410064831,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1635.10212500114,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "tool_question",
+          "elapsed_ms": 1568.1299999705516,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench is the best tool for tightening nuts."
+            },
+            "route": "model",
+            "elapsed_ms": 1564.8157090181485,
+            "profile": {
+              "first_token_ms": 493.2480829884298,
+              "prompt_tokens": 289,
+              "full_prompt_tokens": 1430,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 491.7597500025294,
+              "generation_tokens": 27,
+              "generation_ms": 1049.1742500453256,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1560.480916989036,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "impossible",
+          "elapsed_ms": 2169.0745829837397,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can't use tools to assemble things or operate on objects. I can only bring and return tools for you to use."
+            },
+            "route": "model",
+            "elapsed_ms": 2165.872917044908,
+            "profile": {
+              "first_token_ms": 493.1435420294292,
+              "prompt_tokens": 292,
+              "full_prompt_tokens": 1433,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 491.38787499396125,
+              "generation_tokens": 42,
+              "generation_ms": 1650.9390419814736,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2161.927958019078,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "joke",
+          "elapsed_ms": 1826.525166979991,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Why did the robot go to the doctor? Because it felt a little screw-y!"
+            },
+            "route": "model",
+            "elapsed_ms": 1823.641958006192,
+            "profile": {
+              "first_token_ms": 490.8640829962678,
+              "prompt_tokens": 289,
+              "full_prompt_tokens": 1430,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 488.76808298518876,
+              "generation_tokens": 34,
+              "generation_ms": 1311.3273750059307,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1819.7264579939656,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "chat",
+          "elapsed_ms": 1511.4757909905165,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Ready to help! How was your day?"
+            },
+            "route": "model",
+            "elapsed_ms": 1508.27087496873,
+            "profile": {
+              "first_token_ms": 493.2458749972284,
+              "prompt_tokens": 293,
+              "full_prompt_tokens": 1434,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 491.51725001866004,
+              "generation_tokens": 26,
+              "generation_ms": 991.833875013981,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1504.141665995121,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "capability",
+          "elapsed_ms": 1755.1074580405839,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I don't have a camera; I get my view from simulator positions."
+            },
+            "route": "model",
+            "elapsed_ms": 1752.2156669874676,
+            "profile": {
+              "first_token_ms": 494.4975409889594,
+              "prompt_tokens": 288,
+              "full_prompt_tokens": 1429,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.99070797860617,
+              "generation_tokens": 32,
+              "generation_ms": 1235.993292008061,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1748.1515830149874,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "clarified_wrench",
+          "elapsed_ms": 1236.442666966468,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1233.1665000529028,
+            "profile": {
+              "first_token_ms": 496.72204203670844,
+              "prompt_tokens": 306,
+              "full_prompt_tokens": 1447,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 495.2452500001527,
+              "generation_tokens": 19,
+              "generation_ms": 714.673499984201,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1229.1318330098875,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "clarified_hammer",
+          "elapsed_ms": 1199.335457989946,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1194.3999170325696,
+            "profile": {
+              "first_token_ms": 498.28504101606086,
+              "prompt_tokens": 309,
+              "full_prompt_tokens": 1450,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 496.44875002559274,
+              "generation_tokens": 18,
+              "generation_ms": 673.578166984953,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1189.6984999766573,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "negated_stop",
+          "elapsed_ms": 1674.6909170178697,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I'm always thinking about how to help you with your tasks!"
+            },
+            "route": "model",
+            "elapsed_ms": 1671.067540999502,
+            "profile": {
+              "first_token_ms": 494.3081249948591,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.6558340084739,
+              "generation_tokens": 30,
+              "generation_ms": 1153.9492909796536,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1665.799791982863,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "screws",
+          "elapsed_ms": 1279.8289590282366,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "screwdriver",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1277.1757500013337,
+            "profile": {
+              "first_token_ms": 497.3595410119742,
+              "prompt_tokens": 288,
+              "full_prompt_tokens": 1429,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 495.85400003707036,
+              "generation_tokens": 20,
+              "generation_ms": 757.9759579966776,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1273.2124580070376,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "nuts",
+          "elapsed_ms": 1242.575875017792,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1237.7805410069413,
+            "profile": {
+              "first_token_ms": 489.8901249980554,
+              "prompt_tokens": 289,
+              "full_prompt_tokens": 1430,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 488.3039169944823,
+              "generation_tokens": 19,
+              "generation_ms": 725.6741669843905,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1233.6785839870572,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "nails",
+          "elapsed_ms": 2044.3075000075623,
+          "correct": false,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I don't have a hammer for driving nails right now, but I can fetch one if you'd like!"
+            },
+            "route": "model",
+            "elapsed_ms": 2040.2501659700647,
+            "profile": {
+              "first_token_ms": 494.5982079952955,
+              "prompt_tokens": 292,
+              "full_prompt_tokens": 1433,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.89599998155603,
+              "generation_tokens": 39,
+              "generation_ms": 1522.294458001852,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2035.4914999916218,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "ambiguous",
+          "elapsed_ms": 1571.3799169752747,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool would you like me to bring?"
+            },
+            "route": "model",
+            "elapsed_ms": 1568.1229589972645,
+            "profile": {
+              "first_token_ms": 496.655750030186,
+              "prompt_tokens": 289,
+              "full_prompt_tokens": 1430,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 494.7565420297906,
+              "generation_tokens": 27,
+              "generation_ms": 1049.1741670412011,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1563.564041047357,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "multiple",
+          "elapsed_ms": 1760.1819999981672,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1757.2995000518858,
+            "profile": {
+              "first_token_ms": 487.4133749981411,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 485.85587501293054,
+              "generation_tokens": 32,
+              "generation_ms": 1247.8251659777015,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1752.9268749640323,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "negative",
+          "elapsed_ms": 1843.8595829647966,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Understood! I won't fetch the hammer. Is there anything else you need?"
+            },
+            "route": "model",
+            "elapsed_ms": 1840.7872089883313,
+            "profile": {
+              "first_token_ms": 486.083708005026,
+              "prompt_tokens": 294,
+              "full_prompt_tokens": 1435,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 485.1673750090413,
+              "generation_tokens": 34,
+              "generation_ms": 1332.8276249812916,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1836.9731249986216,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "hypothetical",
+          "elapsed_ms": 1650.9763749781996,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I would fetch the screwdriver and hand it to you."
+            },
+            "route": "model",
+            "elapsed_ms": 1648.1392089626752,
+            "profile": {
+              "first_token_ms": 497.4122089915909,
+              "prompt_tokens": 297,
+              "full_prompt_tokens": 1438,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 495.11041695950547,
+              "generation_tokens": 29,
+              "generation_ms": 1128.0402910197154,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1642.821167013608,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "tool_question",
+          "elapsed_ms": 1568.5200419975445,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench is the best tool for tightening nuts."
+            },
+            "route": "model",
+            "elapsed_ms": 1566.5587909752503,
+            "profile": {
+              "first_token_ms": 490.38470903178677,
+              "prompt_tokens": 289,
+              "full_prompt_tokens": 1430,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 489.7595420479775,
+              "generation_tokens": 27,
+              "generation_ms": 1055.8113750303164,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1564.6747500286438,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "impossible",
+          "elapsed_ms": 2162.4667500145733,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can't use tools to assemble things or operate on objects. I can only bring and return tools for you to use."
+            },
+            "route": "model",
+            "elapsed_ms": 2159.5527920289896,
+            "profile": {
+              "first_token_ms": 494.43595798220485,
+              "prompt_tokens": 292,
+              "full_prompt_tokens": 1433,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.7332910010591,
+              "generation_tokens": 42,
+              "generation_ms": 1640.9623749786988,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2155.3162079653703,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "joke",
+          "elapsed_ms": 1828.178791969549,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Why did the robot go to the doctor? Because it felt a little screw-y!"
+            },
+            "route": "model",
+            "elapsed_ms": 1824.3260000017472,
+            "profile": {
+              "first_token_ms": 490.61358300969005,
+              "prompt_tokens": 289,
+              "full_prompt_tokens": 1430,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 489.4571249606087,
+              "generation_tokens": 34,
+              "generation_ms": 1311.605957977008,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1820.149582985323,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "chat",
+          "elapsed_ms": 1525.5337079870515,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Ready to help! How was your day?"
+            },
+            "route": "model",
+            "elapsed_ms": 1522.405499999877,
+            "profile": {
+              "first_token_ms": 493.7230420182459,
+              "prompt_tokens": 293,
+              "full_prompt_tokens": 1434,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.38920799689373,
+              "generation_tokens": 26,
+              "generation_ms": 1006.1001250287518,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1517.6208750344813,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "capability",
+          "elapsed_ms": 1772.0592499827035,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I don't have a camera; I get my view from simulator positions."
+            },
+            "route": "model",
+            "elapsed_ms": 1767.2257500234991,
+            "profile": {
+              "first_token_ms": 496.08383304439485,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 494.9353749980219,
+              "generation_tokens": 32,
+              "generation_ms": 1249.287834041752,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1763.4009580360726,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "clarified_wrench",
+          "elapsed_ms": 1241.8640420073643,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1238.0762079847045,
+            "profile": {
+              "first_token_ms": 500.47737499698997,
+              "prompt_tokens": 307,
+              "full_prompt_tokens": 1448,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 499.26008400507277,
+              "generation_tokens": 19,
+              "generation_ms": 714.7562909522094,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1232.8963750042021,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "clarified_hammer",
+          "elapsed_ms": 1204.047916980926,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1200.710208970122,
+            "profile": {
+              "first_token_ms": 504.0760829579085,
+              "prompt_tokens": 309,
+              "full_prompt_tokens": 1450,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 502.526999975089,
+              "generation_tokens": 18,
+              "generation_ms": 674.0420830319636,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1196.0573749965988,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "negated_stop",
+          "elapsed_ms": 1673.8476249738596,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I'm always thinking about how to help you with your tasks!"
+            },
+            "route": "model",
+            "elapsed_ms": 1670.018958975561,
+            "profile": {
+              "first_token_ms": 494.67983399517834,
+              "prompt_tokens": 289,
+              "full_prompt_tokens": 1430,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 493.6559579800815,
+              "generation_tokens": 30,
+              "generation_ms": 1152.9429590445943,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1665.6684589688666,
+              "finish_reason": "stop"
+            }
+          }
+        }
+      ]
+    },
+    "context": {
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "b0d7118ce4c9711126a555287ffa2b4c775bac619f1acf82b885095ac41951d8",
+      "ready_wait_ms": 1.9402079633437097,
+      "count": 18,
+      "incorrect": 0,
+      "median_ms": 1581.827832997078,
+      "p95_ms": 2061.2647499656305,
+      "initial_job": null,
+      "final_job": null,
+      "rows": [
+        {
+          "repeat": 0,
+          "name": "need_screws_after_chat",
+          "elapsed_ms": 1955.7350000250153,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "screwdriver",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1952.6362920296378,
+            "profile": {
+              "first_token_ms": 502.80700001167133,
+              "prompt_tokens": 318,
+              "full_prompt_tokens": 1459,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 502.2427079966292,
+              "generation_tokens": 37,
+              "generation_ms": 1429.8708330024965,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1950.852166977711,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "need_nuts_after_information",
+          "elapsed_ms": 1246.5622910531238,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1243.53166698711,
+            "profile": {
+              "first_token_ms": 501.98883400298655,
+              "prompt_tokens": 313,
+              "full_prompt_tokens": 1454,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 499.99708298128104,
+              "generation_tokens": 19,
+              "generation_ms": 719.0922499867156,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1238.7315839878283,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "need_nails_after_chat",
+          "elapsed_ms": 1203.4219999914058,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1200.8670410141349,
+            "profile": {
+              "first_token_ms": 501.7789170378819,
+              "prompt_tokens": 315,
+              "full_prompt_tokens": 1456,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 500.25387498317286,
+              "generation_tokens": 18,
+              "generation_ms": 677.4475409765728,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1196.7596250469796,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "question_screws_after_fetch",
+          "elapsed_ms": 1620.2800840255804,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A screwdriver is the best tool for turning screws."
+            },
+            "route": "model",
+            "elapsed_ms": 1616.663333028555,
+            "profile": {
+              "first_token_ms": 503.58374998904765,
+              "prompt_tokens": 315,
+              "full_prompt_tokens": 1456,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 502.12974997702986,
+              "generation_tokens": 28,
+              "generation_ms": 1090.4442080063745,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1612.0238329749554,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "question_nuts_after_fetch",
+          "elapsed_ms": 1574.1329579614103,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench is the tool used for tightening nuts."
+            },
+            "route": "model",
+            "elapsed_ms": 1571.1769580375403,
+            "profile": {
+              "first_token_ms": 508.4912079619244,
+              "prompt_tokens": 314,
+              "full_prompt_tokens": 1455,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 506.81212497875094,
+              "generation_tokens": 27,
+              "generation_ms": 1040.6881250091828,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1566.6937499772757,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "hypothetical_after_fetch",
+          "elapsed_ms": 2061.2647499656305,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I would fetch the hammer and bring it to you, but I can only deliver one tool at a time."
+            },
+            "route": "model",
+            "elapsed_ms": 2058.500874962192,
+            "profile": {
+              "first_token_ms": 504.68549999641255,
+              "prompt_tokens": 316,
+              "full_prompt_tokens": 1457,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 503.1349170021713,
+              "generation_tokens": 39,
+              "generation_ms": 1528.9170420146547,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2054.248041007668,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "need_screws_after_chat",
+          "elapsed_ms": 1979.0755420108326,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "screwdriver",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1975.9702080045827,
+            "profile": {
+              "first_token_ms": 504.5107920304872,
+              "prompt_tokens": 318,
+              "full_prompt_tokens": 1459,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 502.7517499984242,
+              "generation_tokens": 37,
+              "generation_ms": 1447.2678329912014,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1970.9291250328533,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "need_nuts_after_information",
+          "elapsed_ms": 1239.6001250017434,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1234.541125013493,
+            "profile": {
+              "first_token_ms": 498.84670798201114,
+              "prompt_tokens": 311,
+              "full_prompt_tokens": 1452,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 497.62362497858703,
+              "generation_tokens": 19,
+              "generation_ms": 713.3012499543838,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1230.2828750107437,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "need_nails_after_chat",
+          "elapsed_ms": 1210.1944999885745,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1207.066000031773,
+            "profile": {
+              "first_token_ms": 511.7754159728065,
+              "prompt_tokens": 317,
+              "full_prompt_tokens": 1458,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 510.10437501827255,
+              "generation_tokens": 18,
+              "generation_ms": 670.6843749852851,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1202.5104580097832,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "question_screws_after_fetch",
+          "elapsed_ms": 1600.8062499458902,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A screwdriver is the best tool for turning screws."
+            },
+            "route": "model",
+            "elapsed_ms": 1596.6076250188053,
+            "profile": {
+              "first_token_ms": 502.21195799531415,
+              "prompt_tokens": 313,
+              "full_prompt_tokens": 1454,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 500.2882090047933,
+              "generation_tokens": 28,
+              "generation_ms": 1072.2144579631276,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1592.2842500149272,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "question_nuts_after_fetch",
+          "elapsed_ms": 1558.7755840388127,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench is the tool used for tightening nuts."
+            },
+            "route": "model",
+            "elapsed_ms": 1554.184750013519,
+            "profile": {
+              "first_token_ms": 502.62687500799075,
+              "prompt_tokens": 311,
+              "full_prompt_tokens": 1452,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 500.9615839808248,
+              "generation_tokens": 27,
+              "generation_ms": 1028.8384170271456,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1549.3902920279652,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "hypothetical_after_fetch",
+          "elapsed_ms": 1605.2813340211287,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I would fetch the hammer and bring it to you."
+            },
+            "route": "model",
+            "elapsed_ms": 1600.7212500553578,
+            "profile": {
+              "first_token_ms": 506.5312079968862,
+              "prompt_tokens": 315,
+              "full_prompt_tokens": 1456,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 504.6512080007233,
+              "generation_tokens": 28,
+              "generation_ms": 1071.111666969955,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1595.357874990441,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "need_screws_after_chat",
+          "elapsed_ms": 1957.559707982,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "screwdriver",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1954.5659589930438,
+            "profile": {
+              "first_token_ms": 499.42466599168256,
+              "prompt_tokens": 321,
+              "full_prompt_tokens": 1462,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 497.57945799501607,
+              "generation_tokens": 37,
+              "generation_ms": 1432.582875015214,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1949.6539160027169,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "need_nuts_after_information",
+          "elapsed_ms": 1255.0433340365998,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1251.021625008434,
+            "profile": {
+              "first_token_ms": 506.5595419728197,
+              "prompt_tokens": 313,
+              "full_prompt_tokens": 1454,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 500.35958300577477,
+              "generation_tokens": 19,
+              "generation_ms": 721.564874984324,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1245.9478749660775,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "need_nails_after_chat",
+          "elapsed_ms": 1213.4702079929411,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1210.9750829986297,
+            "profile": {
+              "first_token_ms": 508.83358297869563,
+              "prompt_tokens": 317,
+              "full_prompt_tokens": 1458,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 506.94637501146644,
+              "generation_tokens": 18,
+              "generation_ms": 680.122333986219,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1206.8388749612495,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "question_screws_after_fetch",
+          "elapsed_ms": 1597.1212500007823,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A screwdriver is the best tool for turning screws."
+            },
+            "route": "model",
+            "elapsed_ms": 1594.327999977395,
+            "profile": {
+              "first_token_ms": 504.4084169785492,
+              "prompt_tokens": 316,
+              "full_prompt_tokens": 1457,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 503.4509589895606,
+              "generation_tokens": 28,
+              "generation_ms": 1068.4017920284532,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1590.8970420132391,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "question_nuts_after_fetch",
+          "elapsed_ms": 1564.5523749990389,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench is the tool used for tightening nuts."
+            },
+            "route": "model",
+            "elapsed_ms": 1561.6349579649977,
+            "profile": {
+              "first_token_ms": 507.51608301652595,
+              "prompt_tokens": 315,
+              "full_prompt_tokens": 1456,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 505.5410420172848,
+              "generation_tokens": 27,
+              "generation_ms": 1032.2340829879977,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1557.138083036989,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "hypothetical_after_fetch",
+          "elapsed_ms": 1589.5227080327459,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I would fetch the hammer and bring it to you."
+            },
+            "route": "model",
+            "elapsed_ms": 1586.329041980207,
+            "profile": {
+              "first_token_ms": 498.0329999816604,
+              "prompt_tokens": 318,
+              "full_prompt_tokens": 1459,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 497.02858302043745,
+              "generation_tokens": 28,
+              "generation_ms": 1066.9347909861244,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1582.8538749483414,
+              "finish_reason": "stop"
+            }
+          }
+        }
+      ]
+    },
+    "pairs": {
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "8b97a4bd1278576e281170ce82ab1dfa8cd3857807c969c2e3e0a1977a40541d",
+      "ready_wait_ms": 1.9391250098124146,
+      "count": 36,
+      "incorrect": 1,
+      "median_ms": 1823.5191459825728,
+      "p95_ms": 2417.1971660107374,
+      "initial_job": null,
+      "final_job": null,
+      "rows": [
+        {
+          "repeat": 0,
+          "name": "fresh_screwdriver_wrench",
+          "elapsed_ms": 1457.9480420215987,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 1455.8688329998404,
+            "profile": {
+              "first_token_ms": 484.74166699452326,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 484.1874580015428,
+              "generation_tokens": 25,
+              "generation_ms": 949.7445420129226,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1454.2341670021415,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "fresh_screwdriver_hammer",
+          "elapsed_ms": 1760.5945830000564,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1756.9468750152737,
+            "profile": {
+              "first_token_ms": 494.850791990757,
+              "prompt_tokens": 291,
+              "full_prompt_tokens": 1432,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 493.2354579796084,
+              "generation_tokens": 32,
+              "generation_ms": 1239.92525000358,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1753.0004170257598,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "fresh_wrench_hammer",
+          "elapsed_ms": 1716.6529999813065,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the wrench or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1714.0285409986973,
+            "profile": {
+              "first_token_ms": 486.28212499897927,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 485.39300000993535,
+              "generation_tokens": 31,
+              "generation_ms": 1204.7157079796307,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1709.4736250001006,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_capabilities_screwdriver_wrench",
+          "elapsed_ms": 2427.931374986656,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the wrench?"
+            },
+            "route": "model",
+            "elapsed_ms": 2424.8777080210857,
+            "profile": {
+              "first_token_ms": 578.9372500148602,
+              "prompt_tokens": 348,
+              "full_prompt_tokens": 1489,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 577.8848750051111,
+              "generation_tokens": 47,
+              "generation_ms": 1823.954584018793,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2420.416250010021,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_capabilities_screwdriver_hammer",
+          "elapsed_ms": 1832.426042004954,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1829.4239169918,
+            "profile": {
+              "first_token_ms": 576.0171660222113,
+              "prompt_tokens": 347,
+              "full_prompt_tokens": 1488,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 574.433708039578,
+              "generation_tokens": 32,
+              "generation_ms": 1229.6103749540634,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1825.1750830095261,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_capabilities_wrench_hammer",
+          "elapsed_ms": 2398.057499958668,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the wrench or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 2393.6992500093766,
+            "profile": {
+              "first_token_ms": 576.9684999831952,
+              "prompt_tokens": 344,
+              "full_prompt_tokens": 1485,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 575.6892079953104,
+              "generation_tokens": 46,
+              "generation_ms": 1793.7550829956308,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2388.4473749785684,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_fetch_and_decline_screwdriver_wrench",
+          "elapsed_ms": 1828.7716250051744,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the wrench?"
+            },
+            "route": "model",
+            "elapsed_ms": 1825.19720797427,
+            "profile": {
+              "first_token_ms": 579.286083986517,
+              "prompt_tokens": 341,
+              "full_prompt_tokens": 1482,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 577.478083956521,
+              "generation_tokens": 32,
+              "generation_ms": 1222.8221670375206,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1819.9454169953242,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_fetch_and_decline_screwdriver_hammer",
+          "elapsed_ms": 1840.0452920468524,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1837.3831249773502,
+            "profile": {
+              "first_token_ms": 575.1016660360619,
+              "prompt_tokens": 344,
+              "full_prompt_tokens": 1485,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 572.9755409993231,
+              "generation_tokens": 32,
+              "generation_ms": 1239.6187920239754,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1832.6272910344414,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_fetch_and_decline_wrench_hammer",
+          "elapsed_ms": 1794.4343329872936,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the wrench or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1791.2812500144355,
+            "profile": {
+              "first_token_ms": 574.58937499905,
+              "prompt_tokens": 342,
+              "full_prompt_tokens": 1483,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 573.070083046332,
+              "generation_tokens": 31,
+              "generation_ms": 1192.4837499973364,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1787.0054590166546,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "single_alternative",
+          "elapsed_ms": 1246.5310000116006,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1242.5172079820186,
+            "profile": {
+              "first_token_ms": 494.3309999653138,
+              "prompt_tokens": 292,
+              "full_prompt_tokens": 1433,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 493.17379097919905,
+              "generation_tokens": 19,
+              "generation_ms": 726.1906249914318,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1238.4597079944797,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "two_tool_information",
+          "elapsed_ms": 1913.4435000014491,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench turns nuts and bolts, while a hammer hits things to drive nails or break objects."
+            },
+            "route": "model",
+            "elapsed_ms": 1910.4245000053197,
+            "profile": {
+              "first_token_ms": 494.9445410165936,
+              "prompt_tokens": 293,
+              "full_prompt_tokens": 1434,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 493.0206250282936,
+              "generation_tokens": 36,
+              "generation_ms": 1392.23416603636,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1905.9880410204642,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "two_tool_negative",
+          "elapsed_ms": 1785.6495410087518,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Understood! I'll hold onto both the wrench and the hammer for now."
+            },
+            "route": "model",
+            "elapsed_ms": 1782.394458015915,
+            "profile": {
+              "first_token_ms": 493.2845000294037,
+              "prompt_tokens": 293,
+              "full_prompt_tokens": 1434,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 491.61958298645914,
+              "generation_tokens": 33,
+              "generation_ms": 1266.2985000060871,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1778.465542010963,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "fresh_screwdriver_wrench",
+          "elapsed_ms": 1472.955082950648,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 1470.3862500027753,
+            "profile": {
+              "first_token_ms": 496.3053329847753,
+              "prompt_tokens": 292,
+              "full_prompt_tokens": 1433,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 494.4019170361571,
+              "generation_tokens": 25,
+              "generation_ms": 949.8359579592943,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1465.8587909652852,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "fresh_screwdriver_hammer",
+          "elapsed_ms": 1743.28220798634,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1740.4048750177026,
+            "profile": {
+              "first_token_ms": 493.61991696059704,
+              "prompt_tokens": 291,
+              "full_prompt_tokens": 1432,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.23137495573604,
+              "generation_tokens": 32,
+              "generation_ms": 1223.8761669723317,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1736.4119999692775,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "fresh_wrench_hammer",
+          "elapsed_ms": 1698.405458999332,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the wrench or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1695.9777909796685,
+            "profile": {
+              "first_token_ms": 488.6553750257008,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 487.63987497659406,
+              "generation_tokens": 31,
+              "generation_ms": 1186.4147909800522,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1692.6893750205636,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "after_capabilities_screwdriver_wrench",
+          "elapsed_ms": 2417.1971660107374,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the wrench?"
+            },
+            "route": "model",
+            "elapsed_ms": 2414.727416995447,
+            "profile": {
+              "first_token_ms": 579.3845829903148,
+              "prompt_tokens": 345,
+              "full_prompt_tokens": 1486,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 578.342791995965,
+              "generation_tokens": 47,
+              "generation_ms": 1811.6165000246838,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2411.2163750105537,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "after_capabilities_screwdriver_hammer",
+          "elapsed_ms": 1841.3062089821324,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1838.5157089796849,
+            "profile": {
+              "first_token_ms": 578.8467910024337,
+              "prompt_tokens": 348,
+              "full_prompt_tokens": 1489,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 577.264333027415,
+              "generation_tokens": 32,
+              "generation_ms": 1235.1977080106735,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1834.1883330140263,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "after_capabilities_wrench_hammer",
+          "elapsed_ms": 2380.3868330433033,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the wrench or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 2377.528083976358,
+            "profile": {
+              "first_token_ms": 584.4234999967739,
+              "prompt_tokens": 347,
+              "full_prompt_tokens": 1488,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 583.1187080475502,
+              "generation_tokens": 46,
+              "generation_ms": 1771.7172909760848,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2373.7400000100024,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "after_fetch_and_decline_screwdriver_wrench",
+          "elapsed_ms": 1825.446957955137,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the wrench?"
+            },
+            "route": "model",
+            "elapsed_ms": 1821.2519999942742,
+            "profile": {
+              "first_token_ms": 578.2848750241101,
+              "prompt_tokens": 342,
+              "full_prompt_tokens": 1483,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 576.7123749828897,
+              "generation_tokens": 32,
+              "generation_ms": 1220.6611669971608,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1816.788500000257,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "after_fetch_and_decline_screwdriver_hammer",
+          "elapsed_ms": 1824.764916964341,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1821.2437920155935,
+            "profile": {
+              "first_token_ms": 577.2810410126112,
+              "prompt_tokens": 344,
+              "full_prompt_tokens": 1485,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 575.6369169685058,
+              "generation_tokens": 32,
+              "generation_ms": 1218.9293330302462,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1816.6032080189325,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "after_fetch_and_decline_wrench_hammer",
+          "elapsed_ms": 1787.8402499482036,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the wrench or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1782.9982080147602,
+            "profile": {
+              "first_token_ms": 574.2032080306672,
+              "prompt_tokens": 341,
+              "full_prompt_tokens": 1482,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 572.5927090388723,
+              "generation_tokens": 31,
+              "generation_ms": 1186.8986249901354,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1778.8009170326404,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "single_alternative",
+          "elapsed_ms": 1228.6194170010276,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1225.5000830045901,
+            "profile": {
+              "first_token_ms": 493.26625000685453,
+              "prompt_tokens": 292,
+              "full_prompt_tokens": 1433,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 491.7618749896065,
+              "generation_tokens": 19,
+              "generation_ms": 708.1324169994332,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1221.0141660179943,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "two_tool_information",
+          "elapsed_ms": 1906.3599160290323,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench turns nuts and bolts, while a hammer hits things to drive nails or break objects."
+            },
+            "route": "model",
+            "elapsed_ms": 1901.7391669913195,
+            "profile": {
+              "first_token_ms": 494.186041993089,
+              "prompt_tokens": 293,
+              "full_prompt_tokens": 1434,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.6062500453554,
+              "generation_tokens": 36,
+              "generation_ms": 1385.0954160443507,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1897.5309579982422,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "two_tool_negative",
+          "elapsed_ms": 1698.7835000036284,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Understood! I won't bring either the wrench or the hammer."
+            },
+            "route": "model",
+            "elapsed_ms": 1695.1680419733748,
+            "profile": {
+              "first_token_ms": 493.9432920073159,
+              "prompt_tokens": 292,
+              "full_prompt_tokens": 1433,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.4524999805726,
+              "generation_tokens": 31,
+              "generation_ms": 1178.860292013269,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1690.9556669997983,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "fresh_screwdriver_wrench",
+          "elapsed_ms": 1472.3151250509545,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 1468.1425419985317,
+            "profile": {
+              "first_token_ms": 496.91704200813547,
+              "prompt_tokens": 291,
+              "full_prompt_tokens": 1432,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 495.3944170265459,
+              "generation_tokens": 25,
+              "generation_ms": 949.0837500197812,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1463.6272090137936,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "fresh_screwdriver_hammer",
+          "elapsed_ms": 2331.8079999880865,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 2328.610541007947,
+            "profile": {
+              "first_token_ms": 488.23862499557436,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 486.64824996376404,
+              "generation_tokens": 47,
+              "generation_ms": 1818.3738330262713,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2324.0686670178548,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "fresh_wrench_hammer",
+          "elapsed_ms": 1704.239958024118,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the wrench or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1701.0781249846332,
+            "profile": {
+              "first_token_ms": 496.78874999517575,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 494.7401249664835,
+              "generation_tokens": 31,
+              "generation_ms": 1182.5229999958538,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1696.6607919894159,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "after_capabilities_screwdriver_wrench",
+          "elapsed_ms": 1833.8030420127325,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the wrench?"
+            },
+            "route": "model",
+            "elapsed_ms": 1830.6493330164813,
+            "profile": {
+              "first_token_ms": 583.6539169540629,
+              "prompt_tokens": 348,
+              "full_prompt_tokens": 1489,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 582.0362080121413,
+              "generation_tokens": 32,
+              "generation_ms": 1224.4329589884728,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1825.6811669562012,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "after_capabilities_screwdriver_hammer",
+          "elapsed_ms": 1826.8139999709092,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1823.0391250108369,
+            "profile": {
+              "first_token_ms": 580.1663750316948,
+              "prompt_tokens": 347,
+              "full_prompt_tokens": 1488,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 578.6241250461899,
+              "generation_tokens": 32,
+              "generation_ms": 1220.9104580106214,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1818.668833002448,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "after_capabilities_wrench_hammer",
+          "elapsed_ms": 2390.156625013333,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the wrench or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 2385.683959000744,
+            "profile": {
+              "first_token_ms": 578.0763329821639,
+              "prompt_tokens": 346,
+              "full_prompt_tokens": 1487,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 576.1168749886565,
+              "generation_tokens": 46,
+              "generation_ms": 1785.0177090149375,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2380.7939999969676,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "after_fetch_and_decline_screwdriver_wrench",
+          "elapsed_ms": 1827.1709579857998,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the wrench?"
+            },
+            "route": "model",
+            "elapsed_ms": 1823.7589999916963,
+            "profile": {
+              "first_token_ms": 580.0968750263564,
+              "prompt_tokens": 343,
+              "full_prompt_tokens": 1484,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 578.5514580202289,
+              "generation_tokens": 32,
+              "generation_ms": 1221.0212919744663,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1819.1251670359634,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "after_fetch_and_decline_screwdriver_hammer",
+          "elapsed_ms": 1822.2733750008047,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the screwdriver or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1819.6748329792172,
+            "profile": {
+              "first_token_ms": 571.7664170078933,
+              "prompt_tokens": 342,
+              "full_prompt_tokens": 1483,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 570.0549159664661,
+              "generation_tokens": 32,
+              "generation_ms": 1225.1176250283606,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1814.640959026292,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "after_fetch_and_decline_wrench_hammer",
+          "elapsed_ms": 1792.1463340171613,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first, the wrench or the hammer?"
+            },
+            "route": "model",
+            "elapsed_ms": 1788.1446249666624,
+            "profile": {
+              "first_token_ms": 583.3237080369145,
+              "prompt_tokens": 343,
+              "full_prompt_tokens": 1484,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 581.5572079736739,
+              "generation_tokens": 31,
+              "generation_ms": 1181.822791986633,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1783.3779170177877,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "single_alternative",
+          "elapsed_ms": 1228.509208012838,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1225.5142909707502,
+            "profile": {
+              "first_token_ms": 495.95854099607095,
+              "prompt_tokens": 290,
+              "full_prompt_tokens": 1431,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 494.1760000074283,
+              "generation_tokens": 19,
+              "generation_ms": 706.5237910137512,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1220.4021659563296,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "two_tool_information",
+          "elapsed_ms": 1894.8154169484042,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench turns nuts and bolts, while a hammer hits things to drive nails or break objects."
+            },
+            "route": "model",
+            "elapsed_ms": 1892.6164169679396,
+            "profile": {
+              "first_token_ms": 493.9712499617599,
+              "prompt_tokens": 294,
+              "full_prompt_tokens": 1435,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.9892499931157,
+              "generation_tokens": 36,
+              "generation_ms": 1376.399832952302,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1888.9495419571176,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "two_tool_negative",
+          "elapsed_ms": 1147.721916961018,
+          "correct": false,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "stop",
+              "object": null,
+              "destination": null,
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 1145.1520000118762,
+            "profile": {
+              "first_token_ms": 495.8390420069918,
+              "prompt_tokens": 292,
+              "full_prompt_tokens": 1433,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 494.2697919905186,
+              "generation_tokens": 17,
+              "generation_ms": 627.2153750178404,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1140.4311250080355,
+              "finish_reason": "stop"
+            }
+          }
+        }
+      ]
+    },
+    "quality": {
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "823f8ca3c50f1244239326454052f7a60dd92b92adf91f1a058b63b352ad0e8f",
+      "ready_wait_ms": 1.902832998894155,
+      "count": 30,
+      "incorrect": 0,
+      "median_ms": 1861.1908335005865,
+      "p95_ms": 2304.141291999258,
+      "initial_job": null,
+      "final_job": null,
+      "rows": [
+        {
+          "repeat": 0,
+          "name": "abilities",
+          "elapsed_ms": 2045.9306670236401,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+            },
+            "route": "model",
+            "elapsed_ms": 2044.237374968361,
+            "profile": {
+              "first_token_ms": 480.0684580113739,
+              "prompt_tokens": 295,
+              "full_prompt_tokens": 1436,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 479.4455420342274,
+              "generation_tokens": 40,
+              "generation_ms": 1546.8750839936547,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2042.5807919818908,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "camera_truth",
+          "elapsed_ms": 2562.7392909955233,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I don't have a camera, but I can see where tools are from my position in the simulation."
+            },
+            "route": "model",
+            "elapsed_ms": 2559.630124946125,
+            "profile": {
+              "first_token_ms": 491.4374169893563,
+              "prompt_tokens": 295,
+              "full_prompt_tokens": 1436,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 490.0022910442204,
+              "generation_tokens": 53,
+              "generation_ms": 2044.59670803044,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2555.2627500146627,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "feelings_truth",
+          "elapsed_ms": 1831.6563330008648,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I don't have feelings, but I'm ready to help whenever you need me!"
+            },
+            "route": "model",
+            "elapsed_ms": 1827.0375829888508,
+            "profile": {
+              "first_token_ms": 495.6135840038769,
+              "prompt_tokens": 291,
+              "full_prompt_tokens": 1432,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 494.03508298564697,
+              "generation_tokens": 34,
+              "generation_ms": 1309.659666963853,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1822.9859590064734,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "screw_tool_information",
+          "elapsed_ms": 1947.5677919690497,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A screwdriver is designed with a tip that fits screw heads, allowing you to turn them easily."
+            },
+            "route": "model",
+            "elapsed_ms": 1945.4737500054762,
+            "profile": {
+              "first_token_ms": 492.79670795658603,
+              "prompt_tokens": 296,
+              "full_prompt_tokens": 1437,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.190707998816,
+              "generation_tokens": 37,
+              "generation_ms": 1433.089124970138,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1943.0947079672478,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "spanner_information",
+          "elapsed_ms": 1653.3844170044176,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Yes, a spanner is just another name for a wrench."
+            },
+            "route": "model",
+            "elapsed_ms": 1651.2745830114,
+            "profile": {
+              "first_token_ms": 487.09108401089907,
+              "prompt_tokens": 294,
+              "full_prompt_tokens": 1435,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 486.4141669822857,
+              "generation_tokens": 30,
+              "generation_ms": 1144.171666004695,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1648.7757920403965,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "conversation",
+          "elapsed_ms": 1590.7970000407659,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I'm here to listen. How was your day?"
+            },
+            "route": "model",
+            "elapsed_ms": 1587.6520419842564,
+            "profile": {
+              "first_token_ms": 494.7577500133775,
+              "prompt_tokens": 296,
+              "full_prompt_tokens": 1437,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 493.1619589915499,
+              "generation_tokens": 28,
+              "generation_ms": 1068.1267909822054,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1583.279041980859,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "remember_question",
+          "elapsed_ms": 1406.886000011582,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "You asked about a hammer."
+            },
+            "route": "model",
+            "elapsed_ms": 1404.5631249900907,
+            "profile": {
+              "first_token_ms": 504.74033295176923,
+              "prompt_tokens": 312,
+              "full_prompt_tokens": 1453,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 503.64779197843745,
+              "generation_tokens": 23,
+              "generation_ms": 877.376832999289,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1400.1365829608403,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "hardware_truth",
+          "elapsed_ms": 1854.6681249863468,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I'm a simulated arm in a virtual workspace, not a physical one on your desk."
+            },
+            "route": "model",
+            "elapsed_ms": 1851.4241250231862,
+            "profile": {
+              "first_token_ms": 494.40654198406264,
+              "prompt_tokens": 293,
+              "full_prompt_tokens": 1434,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.556000011973,
+              "generation_tokens": 35,
+              "generation_ms": 1333.4079170017503,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1846.2768329773098,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "outcome_truth",
+          "elapsed_ms": 2120.256083959248,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can't pretend to deliver tools you haven't asked for, but I'm here to help whenever you need one!"
+            },
+            "route": "model",
+            "elapsed_ms": 2117.267500027083,
+            "profile": {
+              "first_token_ms": 501.96991697885096,
+              "prompt_tokens": 298,
+              "full_prompt_tokens": 1439,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 500.2915000077337,
+              "generation_tokens": 41,
+              "generation_ms": 1591.3206670084037,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2113.150332996156,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "impossible_skill",
+          "elapsed_ms": 2212.656416988466,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can't repair laptops or operate on people, but I can fetch the screwdriver for you if you need it for another task."
+            },
+            "route": "model",
+            "elapsed_ms": 2208.6465840111487,
+            "profile": {
+              "first_token_ms": 494.5936250151135,
+              "prompt_tokens": 295,
+              "full_prompt_tokens": 1436,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.9820830002427,
+              "generation_tokens": 44,
+              "generation_ms": 1692.5634159706533,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2204.656000016257,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "abilities",
+          "elapsed_ms": 2103.805916965939,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I can bring or return tools, pause and resume tasks, wave hello, nod, and chat while you work."
+            },
+            "route": "model",
+            "elapsed_ms": 2101.6693339915946,
+            "profile": {
+              "first_token_ms": 480.24175001773983,
+              "prompt_tokens": 293,
+              "full_prompt_tokens": 1434,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 479.61866599507624,
+              "generation_tokens": 40,
+              "generation_ms": 1599.5171669637784,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2099.68129202025,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "camera_truth",
+          "elapsed_ms": 1813.5431660339236,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I don't have a camera, but I can see tool positions from the simulator."
+            },
+            "route": "model",
+            "elapsed_ms": 1811.0539999906905,
+            "profile": {
+              "first_token_ms": 491.0317499889061,
+              "prompt_tokens": 295,
+              "full_prompt_tokens": 1436,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 489.9629169958643,
+              "generation_tokens": 34,
+              "generation_ms": 1299.1986249689944,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1807.6914169942029,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "feelings_truth",
+          "elapsed_ms": 2044.9954160139896,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "As an arm in simulation, I don't have feelings, but I'm ready to help whenever you need!"
+            },
+            "route": "model",
+            "elapsed_ms": 2041.673792002257,
+            "profile": {
+              "first_token_ms": 492.1969169517979,
+              "prompt_tokens": 291,
+              "full_prompt_tokens": 1432,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 490.42708298657095,
+              "generation_tokens": 39,
+              "generation_ms": 1527.1817090106197,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2036.9958749506623,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "screw_tool_information",
+          "elapsed_ms": 1932.579209038522,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A screwdriver is designed with a tip that fits screw heads, allowing you to turn them easily."
+            },
+            "route": "model",
+            "elapsed_ms": 1929.9219580134377,
+            "profile": {
+              "first_token_ms": 494.5279579842463,
+              "prompt_tokens": 294,
+              "full_prompt_tokens": 1435,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.8020419902168,
+              "generation_tokens": 37,
+              "generation_ms": 1413.3157500182278,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1925.5289579741657,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "spanner_information",
+          "elapsed_ms": 1662.0547500206158,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Yes, a spanner is just another name for a wrench."
+            },
+            "route": "model",
+            "elapsed_ms": 1659.5382919767871,
+            "profile": {
+              "first_token_ms": 495.8963750395924,
+              "prompt_tokens": 294,
+              "full_prompt_tokens": 1435,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 494.3050410365685,
+              "generation_tokens": 30,
+              "generation_ms": 1141.175500000827,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1655.2955420338549,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "conversation",
+          "elapsed_ms": 1582.4360000551678,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I'm here to listen. How was your day?"
+            },
+            "route": "model",
+            "elapsed_ms": 1579.7985829995014,
+            "profile": {
+              "first_token_ms": 492.5405419780873,
+              "prompt_tokens": 297,
+              "full_prompt_tokens": 1438,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 491.5347080095671,
+              "generation_tokens": 28,
+              "generation_ms": 1063.9234579866752,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1575.642458978109,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "remember_question",
+          "elapsed_ms": 1396.579209016636,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "You asked about a hammer."
+            },
+            "route": "model",
+            "elapsed_ms": 1393.4448749641888,
+            "profile": {
+              "first_token_ms": 500.74104202212766,
+              "prompt_tokens": 314,
+              "full_prompt_tokens": 1455,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 500.12724997941405,
+              "generation_tokens": 23,
+              "generation_ms": 872.440125036519,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1390.988708997611,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "hardware_truth",
+          "elapsed_ms": 1857.0606670109555,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I'm a simulated arm in a digital workspace, not a physical one on your desk."
+            },
+            "route": "model",
+            "elapsed_ms": 1853.486041945871,
+            "profile": {
+              "first_token_ms": 497.1672079991549,
+              "prompt_tokens": 292,
+              "full_prompt_tokens": 1433,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 495.47495902515954,
+              "generation_tokens": 35,
+              "generation_ms": 1333.9632080169395,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1848.8101660041139,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "outcome_truth",
+          "elapsed_ms": 2304.141291999258,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can't pretend to deliver tools you haven't asked for, but I'm here to help whenever you need a hammer or any other tool!"
+            },
+            "route": "model",
+            "elapsed_ms": 2301.419374998659,
+            "profile": {
+              "first_token_ms": 501.2665000394918,
+              "prompt_tokens": 300,
+              "full_prompt_tokens": 1441,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 499.6032500057481,
+              "generation_tokens": 46,
+              "generation_ms": 1777.4386669625528,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2297.326667001471,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 1,
+          "name": "impossible_skill",
+          "elapsed_ms": 2207.7146670199,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can't repair laptops or operate on people, but I can fetch the screwdriver for you if you need it for another task."
+            },
+            "route": "model",
+            "elapsed_ms": 2204.8244170146063,
+            "profile": {
+              "first_token_ms": 494.3254169775173,
+              "prompt_tokens": 295,
+              "full_prompt_tokens": 1436,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.63587495079264,
+              "generation_tokens": 44,
+              "generation_ms": 1686.8924159789458,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2200.502499996219,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "abilities",
+          "elapsed_ms": 2078.346666006837,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I can bring or return tools, pause and resume tasks, wave hello, nod, and chat while you work."
+            },
+            "route": "model",
+            "elapsed_ms": 2075.9602499892935,
+            "profile": {
+              "first_token_ms": 494.8506659711711,
+              "prompt_tokens": 294,
+              "full_prompt_tokens": 1435,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 493.3772920048796,
+              "generation_tokens": 40,
+              "generation_ms": 1557.4939170037396,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2071.9756659818813,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "camera_truth",
+          "elapsed_ms": 1814.7412500111386,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I don't have a camera, but I can see tool positions from the simulator."
+            },
+            "route": "model",
+            "elapsed_ms": 1812.043541984167,
+            "profile": {
+              "first_token_ms": 495.3356250189245,
+              "prompt_tokens": 296,
+              "full_prompt_tokens": 1437,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 493.862374976743,
+              "generation_tokens": 34,
+              "generation_ms": 1295.1265829615295,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1807.874666992575,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "feelings_truth",
+          "elapsed_ms": 1824.729667045176,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I don't have feelings, but I'm ready to help whenever you need me!"
+            },
+            "route": "model",
+            "elapsed_ms": 1822.0009159995243,
+            "profile": {
+              "first_token_ms": 492.19399999128655,
+              "prompt_tokens": 292,
+              "full_prompt_tokens": 1433,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 490.5927919899114,
+              "generation_tokens": 34,
+              "generation_ms": 1308.2673749886453,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1817.829207982868,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "screw_tool_information",
+          "elapsed_ms": 1929.5109999948181,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A screwdriver is designed with a tip that fits screw heads, allowing you to turn them easily."
+            },
+            "route": "model",
+            "elapsed_ms": 1926.4237909810618,
+            "profile": {
+              "first_token_ms": 493.06458298815414,
+              "prompt_tokens": 295,
+              "full_prompt_tokens": 1436,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 491.58616701606667,
+              "generation_tokens": 37,
+              "generation_ms": 1411.4116670098156,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1922.3782909684815,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "spanner_information",
+          "elapsed_ms": 1668.078666960355,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Yes, a spanner is just another name for a wrench."
+            },
+            "route": "model",
+            "elapsed_ms": 1664.8660419741645,
+            "profile": {
+              "first_token_ms": 495.07812497904524,
+              "prompt_tokens": 295,
+              "full_prompt_tokens": 1436,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 493.3517499594018,
+              "generation_tokens": 30,
+              "generation_ms": 1144.8164580506273,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1659.3049159855582,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "conversation",
+          "elapsed_ms": 1587.4703339650296,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I'm here to listen. How was your day?"
+            },
+            "route": "model",
+            "elapsed_ms": 1582.9455829807557,
+            "profile": {
+              "first_token_ms": 499.22800000058487,
+              "prompt_tokens": 297,
+              "full_prompt_tokens": 1438,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 497.5052499794402,
+              "generation_tokens": 28,
+              "generation_ms": 1061.9052079855464,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1578.9000829681754,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "remember_question",
+          "elapsed_ms": 1391.311916988343,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "You asked about a hammer."
+            },
+            "route": "model",
+            "elapsed_ms": 1388.2736249943264,
+            "profile": {
+              "first_token_ms": 502.63920798897743,
+              "prompt_tokens": 315,
+              "full_prompt_tokens": 1456,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 501.06249999953434,
+              "generation_tokens": 23,
+              "generation_ms": 860.9389999764971,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1383.5406659636647,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "hardware_truth",
+          "elapsed_ms": 1865.3209999902174,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I'm a simulated arm in a digital workspace, not a physical one on your desk."
+            },
+            "route": "model",
+            "elapsed_ms": 1862.560250039678,
+            "profile": {
+              "first_token_ms": 494.11995796253905,
+              "prompt_tokens": 295,
+              "full_prompt_tokens": 1436,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 492.6696660113521,
+              "generation_tokens": 35,
+              "generation_ms": 1347.1670420258306,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 1858.5900000180118,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "outcome_truth",
+          "elapsed_ms": 2205.522917036433,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can't pretend to deliver tools you haven't asked for, but I'm ready to help with the hammer whenever you need it!"
+            },
+            "route": "model",
+            "elapsed_ms": 2202.8262080275454,
+            "profile": {
+              "first_token_ms": 492.51962499693036,
+              "prompt_tokens": 302,
+              "full_prompt_tokens": 1443,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 490.96108303638175,
+              "generation_tokens": 44,
+              "generation_ms": 1689.9980829912238,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2198.6875000293367,
+              "finish_reason": "stop"
+            }
+          }
+        },
+        {
+          "repeat": 2,
+          "name": "impossible_skill",
+          "elapsed_ms": 2220.098167017568,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can't repair laptops or operate on people, but I can fetch the screwdriver for you if you need it for another task."
+            },
+            "route": "model",
+            "elapsed_ms": 2216.8258329620585,
+            "profile": {
+              "first_token_ms": 492.31462500756606,
+              "prompt_tokens": 295,
+              "full_prompt_tokens": 1436,
+              "cached_prefix_tokens": 1141,
+              "prefix_cache_bytes": 93454336,
+              "prefix_prepare_ms": 1463.6877920129336,
+              "prompt_ms": 490.3219999978319,
+              "generation_tokens": 44,
+              "generation_ms": 1702.2986660012975,
+              "peak_memory_gb": 6.165670472,
+              "elapsed_ms": 2212.539750034921,
+              "finish_reason": "stop"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "retained_large_native": {
+    "original": {
+      "run": "ambiguity-large-final-original-001",
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "2f4dd3530e5cc35a59e6716e0dfd96c16d773b989d956d01d87438086875695d",
+      "ready_wait_ms": 2.721124968957156,
+      "count": 45,
+      "incorrect": 0,
+      "median_ms": 941.8280419777147,
+      "p95_ms": 1188.7172920396551,
+      "initial_job": null,
+      "final_job": null,
+      "full_evidence_reference": "dialogue-revision-evidence.json/native/large_final_original"
+    },
+    "context": {
+      "run": "ambiguity-large-final-context-001",
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "b0d7118ce4c9711126a555287ffa2b4c775bac619f1acf82b885095ac41951d8",
+      "ready_wait_ms": 2.7117920108139515,
+      "count": 18,
+      "incorrect": 0,
+      "median_ms": 964.6550624747761,
+      "p95_ms": 1196.5876659960486,
+      "initial_job": null,
+      "final_job": null,
+      "full_evidence_reference": "dialogue-revision-evidence.json/native/large_final_context"
+    },
+    "pairs": {
+      "run": "ambiguity-large-final-pairs-001",
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "8b97a4bd1278576e281170ce82ab1dfa8cd3857807c969c2e3e0a1977a40541d",
+      "ready_wait_ms": 2.0197920384816825,
+      "count": 36,
+      "incorrect": 0,
+      "median_ms": 918.2393754890654,
+      "p95_ms": 1189.0699589857832,
+      "initial_job": null,
+      "final_job": null,
+      "full_evidence_reference": "dialogue-revision-evidence.json/native/large_final_pairs"
+    },
+    "quality": {
+      "run": "ambiguity-large-final-quality-001",
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "823f8ca3c50f1244239326454052f7a60dd92b92adf91f1a058b63b352ad0e8f",
+      "ready_wait_ms": 15396.61391597474,
+      "count": 30,
+      "incorrect": 0,
+      "median_ms": 1025.9320414916147,
+      "p95_ms": 1272.7044580387883,
+      "initial_job": null,
+      "final_job": null,
+      "full_evidence_reference": "dialogue-revision-evidence.json/native/large_final_quality"
+    }
+  },
+  "large_baseline_scope": "Retained A4 same-fixture comparison, not a new randomized or matched-idle run.",
+  "candidate_peak_mlx_gb": 6.165670472,
+  "retained_large_peak_mlx_gb": 20.653998064,
+  "reply_review": {
+    "reviewer": "Lead-agent reading of actual messages; not human approval",
+    "complete": 27,
+    "partial": 3,
+    "rows": [
+      {
+        "name": "abilities",
+        "repeat": 0,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+      },
+      {
+        "name": "camera_truth",
+        "repeat": 0,
+        "verdict": "partial",
+        "reason": "Denies camera access but attributes knowledge to its position in simulation rather than simulator-provided positions.",
+        "message": "I don't have a camera, but I can see where tools are from my position in the simulation."
+      },
+      {
+        "name": "feelings_truth",
+        "repeat": 0,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I don't have feelings, but I'm ready to help whenever you need me!"
+      },
+      {
+        "name": "screw_tool_information",
+        "repeat": 0,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "A screwdriver is designed with a tip that fits screw heads, allowing you to turn them easily."
+      },
+      {
+        "name": "spanner_information",
+        "repeat": 0,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "Yes, a spanner is just another name for a wrench."
+      },
+      {
+        "name": "conversation",
+        "repeat": 0,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I'm here to listen. How was your day?"
+      },
+      {
+        "name": "remember_question",
+        "repeat": 0,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "You asked about a hammer."
+      },
+      {
+        "name": "hardware_truth",
+        "repeat": 0,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I'm a simulated arm in a virtual workspace, not a physical one on your desk."
+      },
+      {
+        "name": "outcome_truth",
+        "repeat": 0,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I can't pretend to deliver tools you haven't asked for, but I'm here to help whenever you need one!"
+      },
+      {
+        "name": "impossible_skill",
+        "repeat": 0,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I can't repair laptops or operate on people, but I can fetch the screwdriver for you if you need it for another task."
+      },
+      {
+        "name": "abilities",
+        "repeat": 1,
+        "verdict": "partial",
+        "reason": "Omits simulation in the capability explanation.",
+        "message": "I can bring or return tools, pause and resume tasks, wave hello, nod, and chat while you work."
+      },
+      {
+        "name": "camera_truth",
+        "repeat": 1,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I don't have a camera, but I can see tool positions from the simulator."
+      },
+      {
+        "name": "feelings_truth",
+        "repeat": 1,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "As an arm in simulation, I don't have feelings, but I'm ready to help whenever you need!"
+      },
+      {
+        "name": "screw_tool_information",
+        "repeat": 1,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "A screwdriver is designed with a tip that fits screw heads, allowing you to turn them easily."
+      },
+      {
+        "name": "spanner_information",
+        "repeat": 1,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "Yes, a spanner is just another name for a wrench."
+      },
+      {
+        "name": "conversation",
+        "repeat": 1,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I'm here to listen. How was your day?"
+      },
+      {
+        "name": "remember_question",
+        "repeat": 1,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "You asked about a hammer."
+      },
+      {
+        "name": "hardware_truth",
+        "repeat": 1,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I'm a simulated arm in a digital workspace, not a physical one on your desk."
+      },
+      {
+        "name": "outcome_truth",
+        "repeat": 1,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I can't pretend to deliver tools you haven't asked for, but I'm here to help whenever you need a hammer or any other tool!"
+      },
+      {
+        "name": "impossible_skill",
+        "repeat": 1,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I can't repair laptops or operate on people, but I can fetch the screwdriver for you if you need it for another task."
+      },
+      {
+        "name": "abilities",
+        "repeat": 2,
+        "verdict": "partial",
+        "reason": "Omits simulation in the capability explanation.",
+        "message": "I can bring or return tools, pause and resume tasks, wave hello, nod, and chat while you work."
+      },
+      {
+        "name": "camera_truth",
+        "repeat": 2,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I don't have a camera, but I can see tool positions from the simulator."
+      },
+      {
+        "name": "feelings_truth",
+        "repeat": 2,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I don't have feelings, but I'm ready to help whenever you need me!"
+      },
+      {
+        "name": "screw_tool_information",
+        "repeat": 2,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "A screwdriver is designed with a tip that fits screw heads, allowing you to turn them easily."
+      },
+      {
+        "name": "spanner_information",
+        "repeat": 2,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "Yes, a spanner is just another name for a wrench."
+      },
+      {
+        "name": "conversation",
+        "repeat": 2,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I'm here to listen. How was your day?"
+      },
+      {
+        "name": "remember_question",
+        "repeat": 2,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "You asked about a hammer."
+      },
+      {
+        "name": "hardware_truth",
+        "repeat": 2,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I'm a simulated arm in a digital workspace, not a physical one on your desk."
+      },
+      {
+        "name": "outcome_truth",
+        "repeat": 2,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I can't pretend to deliver tools you haven't asked for, but I'm ready to help with the hammer whenever you need it!"
+      },
+      {
+        "name": "impossible_skill",
+        "repeat": 2,
+        "verdict": "complete",
+        "reason": "Satisfies the published case review criterion.",
+        "message": "I can't repair laptops or operate on people, but I can fetch the screwdriver for you if you need it for another task."
+      }
+    ]
+  },
+  "physical_jobs_created": 0,
+  "saved_speech_tested": false,
+  "default_changed": false,
+  "working_dependency_changes": false
+}
