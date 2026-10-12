@@ -1,0 +1,10 @@
+{
+  "name": "dume-speech-vad-evaluation",
+  "private": true,
+  "type": "module",
+  "description": "Isolated browser speech-detector evaluation; no microphone or robot access",
+  "dependencies": {
+    "@ricky0123/vad-web": "0.0.31",
+    "onnxruntime-web": "1.22.0"
+  }
+}

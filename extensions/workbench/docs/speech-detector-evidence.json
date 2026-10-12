@@ -1,0 +1,1362 @@
+{
+  "version": 1,
+  "scope": "B6: pretrained speech activity detection; no arm policy improvement claim",
+  "protocol_sha256": "babe8ffd33c4e625c8d8a2aa3f91996f4aec573fe4ccbc5ecd9078d6e241c102",
+  "pcm_manifest": {
+    "version": 1,
+    "scope": "Synthetic stationary noise/quiet saved speech; not room acoustics, echo or speaker identity",
+    "sample_rate": 16000,
+    "capture_max_s": 12,
+    "seed": 20261012,
+    "speech_reference": "Last 40ms clean-source frame with RMS>=.008, before gain/noise; existing timing boundary",
+    "criteria": {
+      "no_early_completion": true,
+      "must_complete_before_limit": true,
+      "noise_only_never_submit": true
+    },
+    "cases": [
+      {
+        "id": "screwdriver-gain1-clean",
+        "source": "runs/responsiveness-fixtures-001/screwdriver.wav",
+        "source_sha256": "d3ee77a8a41ca3760bdffa3d2d2a2f202673b72ba0ab985831819cba4233e833",
+        "speech_gain": 1,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "screwdriver-gain1-clean.f32",
+        "last_clean_voiced_ms": 1880.0,
+        "pcm_sha256": "87d31ae3210224befec398ed1363a39f83378fe6f1cfc0f0434469d461b29875",
+        "sample_count": 192000
+      },
+      {
+        "id": "screwdriver-gain1-white",
+        "source": "runs/responsiveness-fixtures-001/screwdriver.wav",
+        "source_sha256": "d3ee77a8a41ca3760bdffa3d2d2a2f202673b72ba0ab985831819cba4233e833",
+        "speech_gain": 1,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "screwdriver-gain1-white.f32",
+        "last_clean_voiced_ms": 1880.0,
+        "pcm_sha256": "cab64a3198590aeb5fad83ffb1bab833cd97bd3c6deef843255305249163ed58",
+        "sample_count": 192000
+      },
+      {
+        "id": "screwdriver-gain1-hum",
+        "source": "runs/responsiveness-fixtures-001/screwdriver.wav",
+        "source_sha256": "d3ee77a8a41ca3760bdffa3d2d2a2f202673b72ba0ab985831819cba4233e833",
+        "speech_gain": 1,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "screwdriver-gain1-hum.f32",
+        "last_clean_voiced_ms": 1880.0,
+        "pcm_sha256": "4f72d0a7fc393234f2e6fb009605c44e301034e80150ada5b3bc2057184ad8fa",
+        "sample_count": 192000
+      },
+      {
+        "id": "screwdriver-gain0.2-clean",
+        "source": "runs/responsiveness-fixtures-001/screwdriver.wav",
+        "source_sha256": "d3ee77a8a41ca3760bdffa3d2d2a2f202673b72ba0ab985831819cba4233e833",
+        "speech_gain": 0.2,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "screwdriver-gain0.2-clean.f32",
+        "last_clean_voiced_ms": 1880.0,
+        "pcm_sha256": "e88fb02c4396092729c90065fae1c8c1c39ec36bafa0e33be1fd6c338acd81d0",
+        "sample_count": 192000
+      },
+      {
+        "id": "screwdriver-gain0.2-white",
+        "source": "runs/responsiveness-fixtures-001/screwdriver.wav",
+        "source_sha256": "d3ee77a8a41ca3760bdffa3d2d2a2f202673b72ba0ab985831819cba4233e833",
+        "speech_gain": 0.2,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "screwdriver-gain0.2-white.f32",
+        "last_clean_voiced_ms": 1880.0,
+        "pcm_sha256": "09651045e08e349c9731a84678c8db3684da4d0fd836c9d2ded4b5ccdfaec402",
+        "sample_count": 192000
+      },
+      {
+        "id": "screwdriver-gain0.2-hum",
+        "source": "runs/responsiveness-fixtures-001/screwdriver.wav",
+        "source_sha256": "d3ee77a8a41ca3760bdffa3d2d2a2f202673b72ba0ab985831819cba4233e833",
+        "speech_gain": 0.2,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "screwdriver-gain0.2-hum.f32",
+        "last_clean_voiced_ms": 1880.0,
+        "pcm_sha256": "5b7850c5d4d1de454a8a5ae96f9973e418ec0bd9055319983a358db1cc37b6e3",
+        "sample_count": 192000
+      },
+      {
+        "id": "wrench-gain1-clean",
+        "source": "runs/responsiveness-fixtures-001/wrench.wav",
+        "source_sha256": "36ef99843f39553a1253ffe97bea4938e1cf9a0b40a289201e5c56167bc53180",
+        "speech_gain": 1,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "wrench-gain1-clean.f32",
+        "last_clean_voiced_ms": 1320.0,
+        "pcm_sha256": "9b0c8aec4d65225478c68117ce2d395f012914cddbcd85ec3dd1076843138f90",
+        "sample_count": 192000
+      },
+      {
+        "id": "wrench-gain1-white",
+        "source": "runs/responsiveness-fixtures-001/wrench.wav",
+        "source_sha256": "36ef99843f39553a1253ffe97bea4938e1cf9a0b40a289201e5c56167bc53180",
+        "speech_gain": 1,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "wrench-gain1-white.f32",
+        "last_clean_voiced_ms": 1320.0,
+        "pcm_sha256": "12feafee11d5f478de98fc8845a34e4a4a9805807343f396d9ed19a0bbe19543",
+        "sample_count": 192000
+      },
+      {
+        "id": "wrench-gain1-hum",
+        "source": "runs/responsiveness-fixtures-001/wrench.wav",
+        "source_sha256": "36ef99843f39553a1253ffe97bea4938e1cf9a0b40a289201e5c56167bc53180",
+        "speech_gain": 1,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "wrench-gain1-hum.f32",
+        "last_clean_voiced_ms": 1320.0,
+        "pcm_sha256": "a44078b3c8b62925d1ed9c421daa4c90e800e5bfddcc8344986df0bdc9089a2f",
+        "sample_count": 192000
+      },
+      {
+        "id": "wrench-gain0.2-clean",
+        "source": "runs/responsiveness-fixtures-001/wrench.wav",
+        "source_sha256": "36ef99843f39553a1253ffe97bea4938e1cf9a0b40a289201e5c56167bc53180",
+        "speech_gain": 0.2,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "wrench-gain0.2-clean.f32",
+        "last_clean_voiced_ms": 1320.0,
+        "pcm_sha256": "a2445b0105c8abb3643a0456cbb46cbd9498b811765c587e87caaf585f8fc4fd",
+        "sample_count": 192000
+      },
+      {
+        "id": "wrench-gain0.2-white",
+        "source": "runs/responsiveness-fixtures-001/wrench.wav",
+        "source_sha256": "36ef99843f39553a1253ffe97bea4938e1cf9a0b40a289201e5c56167bc53180",
+        "speech_gain": 0.2,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "wrench-gain0.2-white.f32",
+        "last_clean_voiced_ms": 1320.0,
+        "pcm_sha256": "b75da72454f717e6ecfc460e79bb9594c47b80720f1a6944a6777d534f608e5e",
+        "sample_count": 192000
+      },
+      {
+        "id": "wrench-gain0.2-hum",
+        "source": "runs/responsiveness-fixtures-001/wrench.wav",
+        "source_sha256": "36ef99843f39553a1253ffe97bea4938e1cf9a0b40a289201e5c56167bc53180",
+        "speech_gain": 0.2,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "wrench-gain0.2-hum.f32",
+        "last_clean_voiced_ms": 1320.0,
+        "pcm_sha256": "1708d8196f7c2a87666b80d846f5249b832c9aab111d448bd302ebb19b7bc696",
+        "sample_count": 192000
+      },
+      {
+        "id": "multiple-gain1-clean",
+        "source": "runs/responsiveness-fixtures-001/multiple.wav",
+        "source_sha256": "13629ea09af2d07a9007ad06f4ad9dc5b540dc7959a7209b8a97155fadf6420e",
+        "speech_gain": 1,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "multiple-gain1-clean.f32",
+        "last_clean_voiced_ms": 1400.0,
+        "pcm_sha256": "28bce207c2848b894fbadfb3d0006ae2e2cbec62b1b9170c4e368ca61e321763",
+        "sample_count": 192000
+      },
+      {
+        "id": "multiple-gain1-white",
+        "source": "runs/responsiveness-fixtures-001/multiple.wav",
+        "source_sha256": "13629ea09af2d07a9007ad06f4ad9dc5b540dc7959a7209b8a97155fadf6420e",
+        "speech_gain": 1,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "multiple-gain1-white.f32",
+        "last_clean_voiced_ms": 1400.0,
+        "pcm_sha256": "c8ebc054f065f78fae754c591b9c252aef7ce4bae597901f03e41a30389c1c88",
+        "sample_count": 192000
+      },
+      {
+        "id": "multiple-gain1-hum",
+        "source": "runs/responsiveness-fixtures-001/multiple.wav",
+        "source_sha256": "13629ea09af2d07a9007ad06f4ad9dc5b540dc7959a7209b8a97155fadf6420e",
+        "speech_gain": 1,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "multiple-gain1-hum.f32",
+        "last_clean_voiced_ms": 1400.0,
+        "pcm_sha256": "cf4fb195a820b61b7876631531f5227c553e6b017e13badb03fa44a3077a6613",
+        "sample_count": 192000
+      },
+      {
+        "id": "multiple-gain0.2-clean",
+        "source": "runs/responsiveness-fixtures-001/multiple.wav",
+        "source_sha256": "13629ea09af2d07a9007ad06f4ad9dc5b540dc7959a7209b8a97155fadf6420e",
+        "speech_gain": 0.2,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "multiple-gain0.2-clean.f32",
+        "last_clean_voiced_ms": 1400.0,
+        "pcm_sha256": "6945c0a0e4752b327a801fd2194f6c6a7a1a19aea9986f6a6be5fc90d39d52e8",
+        "sample_count": 192000
+      },
+      {
+        "id": "multiple-gain0.2-white",
+        "source": "runs/responsiveness-fixtures-001/multiple.wav",
+        "source_sha256": "13629ea09af2d07a9007ad06f4ad9dc5b540dc7959a7209b8a97155fadf6420e",
+        "speech_gain": 0.2,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "multiple-gain0.2-white.f32",
+        "last_clean_voiced_ms": 1400.0,
+        "pcm_sha256": "8b9c974b4d00e4928dd91e5bbb176471a535329b4ec82e1e8a880a6e26fc864e",
+        "sample_count": 192000
+      },
+      {
+        "id": "multiple-gain0.2-hum",
+        "source": "runs/responsiveness-fixtures-001/multiple.wav",
+        "source_sha256": "13629ea09af2d07a9007ad06f4ad9dc5b540dc7959a7209b8a97155fadf6420e",
+        "speech_gain": 0.2,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "multiple-gain0.2-hum.f32",
+        "last_clean_voiced_ms": 1400.0,
+        "pcm_sha256": "230f4a69eaddb07d98ea0fa8982f5083b884e6135e252c62d15481f366d0a980",
+        "sample_count": 192000
+      },
+      {
+        "id": "negative-gain1-clean",
+        "source": "runs/responsiveness-fixtures-001/negative.wav",
+        "source_sha256": "ef1806564d88ae3f94309bb32777673d8f3064a6ad04c890ce93bf9fe400a8ec",
+        "speech_gain": 1,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "negative-gain1-clean.f32",
+        "last_clean_voiced_ms": 1160.0,
+        "pcm_sha256": "b1f305d3bac3c5f9f89674b0bc0f825a1d8c39ff3179ae878f1216e17d8adfb4",
+        "sample_count": 192000
+      },
+      {
+        "id": "negative-gain1-white",
+        "source": "runs/responsiveness-fixtures-001/negative.wav",
+        "source_sha256": "ef1806564d88ae3f94309bb32777673d8f3064a6ad04c890ce93bf9fe400a8ec",
+        "speech_gain": 1,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "negative-gain1-white.f32",
+        "last_clean_voiced_ms": 1160.0,
+        "pcm_sha256": "5d6e33b64880cd913ef7405f0cc9e47f916fed0fef0db5378502824a1659d3e7",
+        "sample_count": 192000
+      },
+      {
+        "id": "negative-gain1-hum",
+        "source": "runs/responsiveness-fixtures-001/negative.wav",
+        "source_sha256": "ef1806564d88ae3f94309bb32777673d8f3064a6ad04c890ce93bf9fe400a8ec",
+        "speech_gain": 1,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "negative-gain1-hum.f32",
+        "last_clean_voiced_ms": 1160.0,
+        "pcm_sha256": "9f45e50fdb250fa3859d273830644e92f672d4562619941c5772595e82e48b1a",
+        "sample_count": 192000
+      },
+      {
+        "id": "negative-gain0.2-clean",
+        "source": "runs/responsiveness-fixtures-001/negative.wav",
+        "source_sha256": "ef1806564d88ae3f94309bb32777673d8f3064a6ad04c890ce93bf9fe400a8ec",
+        "speech_gain": 0.2,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "negative-gain0.2-clean.f32",
+        "last_clean_voiced_ms": 1160.0,
+        "pcm_sha256": "0e2dd2be6b3ef15f11360057de401d131182ea3f78f5e3e559e69ffb71fb9ae6",
+        "sample_count": 192000
+      },
+      {
+        "id": "negative-gain0.2-white",
+        "source": "runs/responsiveness-fixtures-001/negative.wav",
+        "source_sha256": "ef1806564d88ae3f94309bb32777673d8f3064a6ad04c890ce93bf9fe400a8ec",
+        "speech_gain": 0.2,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "negative-gain0.2-white.f32",
+        "last_clean_voiced_ms": 1160.0,
+        "pcm_sha256": "1fed616f45416cfbe7d82ee2252389d3dfdec53b5f5806a4ad5e836f00871c85",
+        "sample_count": 192000
+      },
+      {
+        "id": "negative-gain0.2-hum",
+        "source": "runs/responsiveness-fixtures-001/negative.wav",
+        "source_sha256": "ef1806564d88ae3f94309bb32777673d8f3064a6ad04c890ce93bf9fe400a8ec",
+        "speech_gain": 0.2,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 900,
+        "expected_speech": true,
+        "file": "negative-gain0.2-hum.f32",
+        "last_clean_voiced_ms": 1160.0,
+        "pcm_sha256": "88fb25d2746e6d729066b5bb374d9c968c414b496adc163b9c9a5a6614977461",
+        "sample_count": 192000
+      },
+      {
+        "id": "stop-gain1-clean",
+        "source": "runs/residency-pending-stop-001/stop.wav",
+        "source_sha256": "c363936ebac6bb5e740b6834d9e774b86fc3f3cb4ee43dad7fafd0dbaab36c3a",
+        "speech_gain": 1,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 350,
+        "expected_speech": true,
+        "file": "stop-gain1-clean.f32",
+        "last_clean_voiced_ms": 440.0,
+        "pcm_sha256": "afd42046aa537e8d0180b67fc424599f86f950550623309708ba5e32ca30be01",
+        "sample_count": 192000
+      },
+      {
+        "id": "stop-gain1-white",
+        "source": "runs/residency-pending-stop-001/stop.wav",
+        "source_sha256": "c363936ebac6bb5e740b6834d9e774b86fc3f3cb4ee43dad7fafd0dbaab36c3a",
+        "speech_gain": 1,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 350,
+        "expected_speech": true,
+        "file": "stop-gain1-white.f32",
+        "last_clean_voiced_ms": 440.0,
+        "pcm_sha256": "575bbe5bffcd04811eb1495e3fdedf8ceaab24b1d1d7b22086ac088c88e8847e",
+        "sample_count": 192000
+      },
+      {
+        "id": "stop-gain1-hum",
+        "source": "runs/residency-pending-stop-001/stop.wav",
+        "source_sha256": "c363936ebac6bb5e740b6834d9e774b86fc3f3cb4ee43dad7fafd0dbaab36c3a",
+        "speech_gain": 1,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 350,
+        "expected_speech": true,
+        "file": "stop-gain1-hum.f32",
+        "last_clean_voiced_ms": 440.0,
+        "pcm_sha256": "e4e62c482669a987e8892cec0f175232d9781e75898313e9033153abfb440359",
+        "sample_count": 192000
+      },
+      {
+        "id": "stop-gain0.2-clean",
+        "source": "runs/residency-pending-stop-001/stop.wav",
+        "source_sha256": "c363936ebac6bb5e740b6834d9e774b86fc3f3cb4ee43dad7fafd0dbaab36c3a",
+        "speech_gain": 0.2,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 350,
+        "expected_speech": true,
+        "file": "stop-gain0.2-clean.f32",
+        "last_clean_voiced_ms": 440.0,
+        "pcm_sha256": "3f30b462d10958d25cb238ea848a82a02c2000536bd5d9a506cdc6c03cd63bd8",
+        "sample_count": 192000
+      },
+      {
+        "id": "stop-gain0.2-white",
+        "source": "runs/residency-pending-stop-001/stop.wav",
+        "source_sha256": "c363936ebac6bb5e740b6834d9e774b86fc3f3cb4ee43dad7fafd0dbaab36c3a",
+        "speech_gain": 0.2,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 350,
+        "expected_speech": true,
+        "file": "stop-gain0.2-white.f32",
+        "last_clean_voiced_ms": 440.0,
+        "pcm_sha256": "03f9fa414e3833b140612b493cd3401c1d7c60f63f4804bcb62c68a740229411",
+        "sample_count": 192000
+      },
+      {
+        "id": "stop-gain0.2-hum",
+        "source": "runs/residency-pending-stop-001/stop.wav",
+        "source_sha256": "c363936ebac6bb5e740b6834d9e774b86fc3f3cb4ee43dad7fafd0dbaab36c3a",
+        "speech_gain": 0.2,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 350,
+        "expected_speech": true,
+        "file": "stop-gain0.2-hum.f32",
+        "last_clean_voiced_ms": 440.0,
+        "pcm_sha256": "47e7b07ecbbdad1ce948eb79553e8191b995a241377d25c2617a04124f9da5a4",
+        "sample_count": 192000
+      },
+      {
+        "id": "control-clean-0",
+        "source": null,
+        "speech_gain": 0,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 350,
+        "expected_speech": false,
+        "file": "control-clean-0.f32",
+        "last_clean_voiced_ms": null,
+        "pcm_sha256": "351a8054b23144894668c6a51d5dbba82f56523ef43cc45b6f4d7060a969c31a",
+        "sample_count": 192000
+      },
+      {
+        "id": "control-white-0.004",
+        "source": null,
+        "speech_gain": 0,
+        "background": "white",
+        "noise_rms": 0.004,
+        "pause_ms": 350,
+        "expected_speech": false,
+        "file": "control-white-0.004.f32",
+        "last_clean_voiced_ms": null,
+        "pcm_sha256": "241c5aee9e76676142399943192160a17a4df1eed7880c462634852e4569abf0",
+        "sample_count": 192000
+      },
+      {
+        "id": "control-white-0.012",
+        "source": null,
+        "speech_gain": 0,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 350,
+        "expected_speech": false,
+        "file": "control-white-0.012.f32",
+        "last_clean_voiced_ms": null,
+        "pcm_sha256": "a4acebd722fadeeb6e4aecdba120a12abeade4b3fb8a6cf97b10e1b7a2ac3a9e",
+        "sample_count": 192000
+      },
+      {
+        "id": "control-hum-0.004",
+        "source": null,
+        "speech_gain": 0,
+        "background": "hum",
+        "noise_rms": 0.004,
+        "pause_ms": 350,
+        "expected_speech": false,
+        "file": "control-hum-0.004.f32",
+        "last_clean_voiced_ms": null,
+        "pcm_sha256": "b11427a7c89c74ef30465ef10816f64fdb5e406d17fdb88c2024026ed48b3a37",
+        "sample_count": 192000
+      },
+      {
+        "id": "control-hum-0.012",
+        "source": null,
+        "speech_gain": 0,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 350,
+        "expected_speech": false,
+        "file": "control-hum-0.012.f32",
+        "last_clean_voiced_ms": null,
+        "pcm_sha256": "cac0f29e5231b8a4a791c7a49f6bb9be17fbabd9c95518baacc9eb78c658bdb9",
+        "sample_count": 192000
+      }
+    ],
+    "protocol_sha256": "babe8ffd33c4e625c8d8a2aa3f91996f4aec573fe4ccbc5ecd9078d6e241c102"
+  },
+  "assets": {
+    "bundle.min.js": {
+      "package": "vad-web",
+      "sha256": "4b3f72db78dc5f65c0ba9047a9033581e15fe57810a3ac5742aca274d1702e1f",
+      "bytes": 69345
+    },
+    "vad.worklet.bundle.min.js": {
+      "package": "vad-web",
+      "sha256": "8a48fdc7429948a2fde3d29a84bb1a64c1f67b4ba578ccaa7548b7f989f06a74",
+      "bytes": 2480
+    },
+    "silero_vad_v5.onnx": {
+      "package": "vad-web",
+      "sha256": "2623a2953f6ff3d2c1e61740c6cdb7168133479b267dfef114a4a3cc5bdd788f",
+      "bytes": 2327524
+    },
+    "ort.wasm.min.js": {
+      "package": "onnxruntime-web",
+      "sha256": "65e09376df69107e881b5c34d2d37aed333a366b6d941073ec518168e269b87d",
+      "bytes": 48327
+    },
+    "ort-wasm-simd-threaded.mjs": {
+      "package": "onnxruntime-web",
+      "sha256": "30dd851d9c00622940500f71ddd2ff8820c5cb65270816080175b958705385a8",
+      "bytes": 20856
+    },
+    "ort-wasm-simd-threaded.wasm": {
+      "package": "onnxruntime-web",
+      "sha256": "71aef04959c5c1b6de461b6538e2058e306610034a85aad2742d0c7fd4533fe4",
+      "bytes": 11210254
+    }
+  },
+  "reports": {
+    "energy-baseline": {
+      "scope": "Actual shipped energy pause gate, frozen recorded PCM, virtual clock. No ASR, microphone or robot jobs.",
+      "protocol_sha256": "babe8ffd33c4e625c8d8a2aa3f91996f4aec573fe4ccbc5ecd9078d6e241c102",
+      "rows": [
+        {
+          "id": "screwdriver-gain1-clean",
+          "expected_speech": true,
+          "completed_ms": 2800,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 920
+        },
+        {
+          "id": "screwdriver-gain1-white",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "screwdriver-gain1-hum",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "screwdriver-gain0.2-clean",
+          "expected_speech": true,
+          "completed_ms": 2680,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 800
+        },
+        {
+          "id": "screwdriver-gain0.2-white",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "screwdriver-gain0.2-hum",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "wrench-gain1-clean",
+          "expected_speech": true,
+          "completed_ms": 2240,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 920
+        },
+        {
+          "id": "wrench-gain1-white",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "wrench-gain1-hum",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "wrench-gain0.2-clean",
+          "expected_speech": true,
+          "completed_ms": 2200,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 880
+        },
+        {
+          "id": "wrench-gain0.2-white",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "wrench-gain0.2-hum",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "multiple-gain1-clean",
+          "expected_speech": true,
+          "completed_ms": 2320,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 920
+        },
+        {
+          "id": "multiple-gain1-white",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "multiple-gain1-hum",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "multiple-gain0.2-clean",
+          "expected_speech": true,
+          "completed_ms": 2320,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 920
+        },
+        {
+          "id": "multiple-gain0.2-white",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "multiple-gain0.2-hum",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "negative-gain1-clean",
+          "expected_speech": true,
+          "completed_ms": 2080,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 920
+        },
+        {
+          "id": "negative-gain1-white",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "negative-gain1-hum",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "negative-gain0.2-clean",
+          "expected_speech": true,
+          "completed_ms": 2040,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 880
+        },
+        {
+          "id": "negative-gain0.2-white",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "negative-gain0.2-hum",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "stop-gain1-clean",
+          "expected_speech": true,
+          "completed_ms": 800,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 360
+        },
+        {
+          "id": "stop-gain1-white",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "stop-gain1-hum",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "stop-gain0.2-clean",
+          "expected_speech": true,
+          "completed_ms": 800,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 360
+        },
+        {
+          "id": "stop-gain0.2-white",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "stop-gain0.2-hum",
+          "expected_speech": true,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "control-clean-0",
+          "expected_speech": false,
+          "completed_ms": null,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "control-white-0.004",
+          "expected_speech": false,
+          "completed_ms": null,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "control-white-0.012",
+          "expected_speech": false,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "control-hum-0.004",
+          "expected_speech": false,
+          "completed_ms": null,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "control-hum-0.012",
+          "expected_speech": false,
+          "completed_ms": null,
+          "forced_submit_at_limit": true,
+          "premature": false,
+          "passed": false,
+          "completion_after_clean_voice_ms": null
+        }
+      ],
+      "count": 35,
+      "failures": 22,
+      "noise_only_false_submissions": 2
+    },
+    "silero-browser": {
+      "scope": "Actual browser WASM Silero v5 probabilities + shipped pause gate, saved PCM in virtual time. No microphone, ASR or motion.",
+      "protocol_sha256": "babe8ffd33c4e625c8d8a2aa3f91996f4aec573fe4ccbc5ecd9078d6e241c102",
+      "model": "Silero v5 from @ricky0123/vad-web 0.0.31",
+      "ort": "onnxruntime-web 1.22.0",
+      "threshold": 0.3,
+      "load_ms": 78.69999998807907,
+      "frame_inference_ms": {
+        "count": 3871,
+        "median": 0.10000002384185791,
+        "p95": 0.20000004768371582,
+        "max": 0.5
+      },
+      "rows": [
+        {
+          "id": "screwdriver-gain1-clean",
+          "expected_speech": true,
+          "completed_ms": 2880,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 1000
+        },
+        {
+          "id": "screwdriver-gain1-white",
+          "expected_speech": true,
+          "completed_ms": 2880,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 1000
+        },
+        {
+          "id": "screwdriver-gain1-hum",
+          "expected_speech": true,
+          "completed_ms": 2880,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 1000
+        },
+        {
+          "id": "screwdriver-gain0.2-clean",
+          "expected_speech": true,
+          "completed_ms": 2880,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 1000
+        },
+        {
+          "id": "screwdriver-gain0.2-white",
+          "expected_speech": true,
+          "completed_ms": 2912,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 1032
+        },
+        {
+          "id": "screwdriver-gain0.2-hum",
+          "expected_speech": true,
+          "completed_ms": 2912,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 1032
+        },
+        {
+          "id": "wrench-gain1-clean",
+          "expected_speech": true,
+          "completed_ms": 2304,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 984
+        },
+        {
+          "id": "wrench-gain1-white",
+          "expected_speech": true,
+          "completed_ms": 2304,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 984
+        },
+        {
+          "id": "wrench-gain1-hum",
+          "expected_speech": true,
+          "completed_ms": 2304,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 984
+        },
+        {
+          "id": "wrench-gain0.2-clean",
+          "expected_speech": true,
+          "completed_ms": 2336,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 1016
+        },
+        {
+          "id": "wrench-gain0.2-white",
+          "expected_speech": true,
+          "completed_ms": 2304,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 984
+        },
+        {
+          "id": "wrench-gain0.2-hum",
+          "expected_speech": true,
+          "completed_ms": 2336,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 1016
+        },
+        {
+          "id": "multiple-gain1-clean",
+          "expected_speech": true,
+          "completed_ms": 2368,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 968
+        },
+        {
+          "id": "multiple-gain1-white",
+          "expected_speech": true,
+          "completed_ms": 2400,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 1000
+        },
+        {
+          "id": "multiple-gain1-hum",
+          "expected_speech": true,
+          "completed_ms": 2368,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 968
+        },
+        {
+          "id": "multiple-gain0.2-clean",
+          "expected_speech": true,
+          "completed_ms": 2368,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 968
+        },
+        {
+          "id": "multiple-gain0.2-white",
+          "expected_speech": true,
+          "completed_ms": 2528,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 1128
+        },
+        {
+          "id": "multiple-gain0.2-hum",
+          "expected_speech": true,
+          "completed_ms": 2400,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 1000
+        },
+        {
+          "id": "negative-gain1-clean",
+          "expected_speech": true,
+          "completed_ms": 2144,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 984
+        },
+        {
+          "id": "negative-gain1-white",
+          "expected_speech": true,
+          "completed_ms": 2144,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 984
+        },
+        {
+          "id": "negative-gain1-hum",
+          "expected_speech": true,
+          "completed_ms": 2144,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 984
+        },
+        {
+          "id": "negative-gain0.2-clean",
+          "expected_speech": true,
+          "completed_ms": 2176,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 1016
+        },
+        {
+          "id": "negative-gain0.2-white",
+          "expected_speech": true,
+          "completed_ms": 2112,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 952
+        },
+        {
+          "id": "negative-gain0.2-hum",
+          "expected_speech": true,
+          "completed_ms": 2144,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 984
+        },
+        {
+          "id": "stop-gain1-clean",
+          "expected_speech": true,
+          "completed_ms": 864,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 424
+        },
+        {
+          "id": "stop-gain1-white",
+          "expected_speech": true,
+          "completed_ms": 928,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 488
+        },
+        {
+          "id": "stop-gain1-hum",
+          "expected_speech": true,
+          "completed_ms": 864,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 424
+        },
+        {
+          "id": "stop-gain0.2-clean",
+          "expected_speech": true,
+          "completed_ms": 896,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 456
+        },
+        {
+          "id": "stop-gain0.2-white",
+          "expected_speech": true,
+          "completed_ms": 928,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 488
+        },
+        {
+          "id": "stop-gain0.2-hum",
+          "expected_speech": true,
+          "completed_ms": 864,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": 424
+        },
+        {
+          "id": "control-clean-0",
+          "expected_speech": false,
+          "completed_ms": null,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "control-white-0.004",
+          "expected_speech": false,
+          "completed_ms": null,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "control-white-0.012",
+          "expected_speech": false,
+          "completed_ms": null,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "control-hum-0.004",
+          "expected_speech": false,
+          "completed_ms": null,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": null
+        },
+        {
+          "id": "control-hum-0.012",
+          "expected_speech": false,
+          "completed_ms": null,
+          "forced_submit_at_limit": false,
+          "premature": false,
+          "passed": true,
+          "completion_after_clean_voice_ms": null
+        }
+      ],
+      "count": 35,
+      "failures": 0,
+      "noise_only_false_submissions": 0
+    },
+    "silero-stream": {
+      "kind": "stream",
+      "scope": "Actual browser AudioBuffer -> MediaStream -> shipped recorder and Silero AudioWorklet. Mock ASR; no microphone, speakers or robot commands.",
+      "protocol_sha256": "babe8ffd33c4e625c8d8a2aa3f91996f4aec573fe4ccbc5ecd9078d6e241c102",
+      "rows": [
+        {
+          "id": "screwdriver-gain0.2-white",
+          "passed": true,
+          "error": "",
+          "submissions": 1,
+          "stop_calls": 0,
+          "completed_ms": 3016.800000011921,
+          "premature": false,
+          "completion_after_clean_voice_ms": 1136.800000011921
+        },
+        {
+          "id": "negative-gain1-hum",
+          "passed": true,
+          "error": "",
+          "submissions": 1,
+          "stop_calls": 0,
+          "completed_ms": 2143.199999988079,
+          "premature": false,
+          "completion_after_clean_voice_ms": 983.1999999880791
+        },
+        {
+          "id": "stop-gain0.2-white",
+          "passed": true,
+          "error": null,
+          "submissions": 1,
+          "stop_calls": 1,
+          "completed_ms": 989.4000000357628,
+          "premature": false,
+          "completion_after_clean_voice_ms": 549.4000000357628
+        },
+        {
+          "id": "stop-gain1-hum",
+          "passed": true,
+          "error": null,
+          "submissions": 1,
+          "stop_calls": 1,
+          "completed_ms": 862.1999999880791,
+          "premature": false,
+          "completion_after_clean_voice_ms": 422.19999998807907
+        },
+        {
+          "id": "control-white-0.012",
+          "passed": true,
+          "error": "No speech heard. Check your microphone and try again.",
+          "submissions": 0,
+          "stop_calls": 0,
+          "completed_ms": null,
+          "premature": false,
+          "completion_after_clean_voice_ms": null
+        }
+      ],
+      "count": 5,
+      "failures": 0
+    },
+    "silero-asr-stream": {
+      "kind": "asr-stream",
+      "scope": "Actual browser AudioBuffer -> MediaStream -> shipped recorder and Silero AudioWorklet. Actual local Whisper; no microphone, speakers or robot commands.",
+      "protocol_sha256": "babe8ffd33c4e625c8d8a2aa3f91996f4aec573fe4ccbc5ecd9078d6e241c102",
+      "rows": [
+        {
+          "id": "screwdriver-gain0.2-white",
+          "passed": true,
+          "error": "",
+          "submissions": 1,
+          "recognized": "Bring me the screwdriver, please.",
+          "recognized_correctly": true,
+          "stop_calls": 0,
+          "completed_ms": 3312.599999964237,
+          "premature": false,
+          "completion_after_clean_voice_ms": 1432.5999999642372
+        },
+        {
+          "id": "negative-gain1-hum",
+          "passed": true,
+          "error": "",
+          "submissions": 1,
+          "recognized": "Don't bring me the wrench.",
+          "recognized_correctly": true,
+          "stop_calls": 0,
+          "completed_ms": 2319.300000011921,
+          "premature": false,
+          "completion_after_clean_voice_ms": 1159.300000011921
+        },
+        {
+          "id": "stop-gain0.2-white",
+          "passed": true,
+          "error": null,
+          "submissions": 1,
+          "recognized": null,
+          "recognized_correctly": true,
+          "stop_calls": 1,
+          "completed_ms": 1136,
+          "premature": false,
+          "completion_after_clean_voice_ms": 696
+        },
+        {
+          "id": "stop-gain1-hum",
+          "passed": true,
+          "error": null,
+          "submissions": 1,
+          "recognized": null,
+          "recognized_correctly": true,
+          "stop_calls": 1,
+          "completed_ms": 1001.0999999642372,
+          "premature": false,
+          "completion_after_clean_voice_ms": 561.0999999642372
+        },
+        {
+          "id": "control-white-0.012",
+          "passed": true,
+          "error": "No speech heard. Check your microphone and try again.",
+          "submissions": 0,
+          "recognized": null,
+          "recognized_correctly": true,
+          "stop_calls": 0,
+          "completed_ms": null,
+          "premature": false,
+          "completion_after_clean_voice_ms": null
+        }
+      ],
+      "count": 5,
+      "failures": 0
+    }
+  },
+  "judge_correction": {
+    "raw_report": "runs/voice-endpoint-001/silero-stream-judge-bug.json",
+    "reason": "Expected silence/no-speech UI error was incorrectly counted against the frozen noise-only-never-submit requirement; no model or physical gate was changed."
+  },
+  "checks": {
+    "root_pytest": 187,
+    "fork_pytest": 168,
+    "node_recorder_contract": "passed including cancelled/stalled async detector initialization",
+    "node_pretrained_adapter": "passed including preloading without audio acquisition and late-frame isolation",
+    "all_46_upstream_hashes": "match"
+  },
+  "limitations": [
+    "Synthetic stationary white noise and harmonic hum; five source utterances only.",
+    "Virtual-clock 35-case gate check is not real-time latency.",
+    "Five real-time stream checks use generated MediaStream audio without microphone or speakers.",
+    "Real ASR stream checks end at local callbacks, not physical arm cancellation.",
+    "Actual room noise, speaker echo, long pauses, human live demonstration and pretrained arm control remain unverified."
+  ],
+  "public_runtime": {
+    "session": 46066,
+    "log_directory": "Dum-E/extensions/workbench/runs/silero-default-ready-001",
+    "model_status": "ready",
+    "speech_input_status": "ready",
+    "busy": false,
+    "served_asset_sha256": {
+      "bundle.min.js": "4b3f72db78dc5f65c0ba9047a9033581e15fe57810a3ac5742aca274d1702e1f",
+      "vad.worklet.bundle.min.js": "8a48fdc7429948a2fde3d29a84bb1a64c1f67b4ba578ccaa7548b7f989f06a74",
+      "silero_vad_v5.onnx": "2623a2953f6ff3d2c1e61740c6cdb7168133479b267dfef114a4a3cc5bdd788f",
+      "ort.wasm.min.js": "65e09376df69107e881b5c34d2d37aed333a366b6d941073ec518168e269b87d",
+      "ort-wasm-simd-threaded.mjs": "30dd851d9c00622940500f71ddd2ff8820c5cb65270816080175b958705385a8",
+      "ort-wasm-simd-threaded.wasm": "71aef04959c5c1b6de461b6538e2058e306610034a85aad2742d0c7fd4533fe4"
+    },
+    "browser_observation": "Ready, Speak enabled, Voice/listen ON, microphone idle; no captured audio",
+    "screenshot": "docs/speech-detector-browser.jpg",
+    "console_errors_or_warnings": []
+  }
+}

@@ -28,6 +28,7 @@ cd extensions/workbench
 uv sync --locked
 # Install ffmpeg if absent: brew install ffmpeg
 uv run --locked python scripts/prepare_voice.py
+python3 scripts/prepare_speech_vad.py
 # If not already cached, download the language model:
 uv run --locked hf download mlx-community/Qwen3.6-35B-A3B-4bit
 uv run --locked dume-sim
@@ -35,7 +36,7 @@ uv run --locked dume-sim
 
 Open http://127.0.0.1:8766. Click **Speak**, allow microphone access, say
 **“Bring me the screwdriver, please,”** then pause. Recording finishes automatically
-after 900 ms of quiet following speech; **Finish** remains a manual fallback. Dum-E displays
+after 900 ms classified as non-speech by the local pretrained Silero detector; **Finish** remains a manual fallback. Dum-E displays
 what it heard, submits the request, speaks and moves the actual simulated arm.
 You can also type. Say **“Put it back”** to return the most recent tool. After
 a stop, **“resume”** continues the interrupted destination; **“put it back”**
@@ -154,9 +155,11 @@ voice check separately recognizes an actual saved spoken request, submits it to
 the unchanged task bus, and measures physical delivery. Synthetic speech tests
 cannot establish accuracy for a user's own microphone or room acoustics.
 
-Automatic completion uses a lightweight waveform energy gate, not a learned speech
-activity model. Very quiet speech or continuous room noise may require manual
-Finish. Spoken Stop depends on microphone capture, pause detection and local ASR;
+Automatic completion now uses pretrained Silero v5 running locally in your browser.
+The fixed synthetic-noise comparison improved from 13/35 to 35/35 passing cases;
+actual room noise, speaker echo and natural pauses still need live evaluation.
+See [the detector audit](docs/speech-detector-audit.md) for recorded-stream/Whisper
+checks, timing boundaries and limitations. Stop recognition still depends on ASR;
 the onscreen Stop button remains available independently. The native saved-speech
 test reached the Stop endpoint in approximately 0.9 seconds from speech onset and
 confirmed cancellation and settled joints; room-dependent timing can differ.

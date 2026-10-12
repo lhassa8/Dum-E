@@ -118,3 +118,31 @@ releaseDialogue();await tick();assert.equal(thinking.mic.mode,'idle','Late reply
 thinking.mic.close();
 console.log('PASS: spoken Stop remains reachable while a conversation response is pending.');
 for(const mic of probes)mic.close();
+
+// Loading a pretrained detector is asynchronous. Cancellation must release both
+// the already-owned track and a monitor that arrives after cancellation.
+let resolveMonitor,lateCleanup=0;
+const loadingDetector=setup({monitor:()=>new Promise(resolve=>resolveMonitor=resolve)});
+const loadingStart=loadingDetector.mic.start();await tick();loadingDetector.mic.abort();
+resolveMonitor(()=>lateCleanup++);await loadingStart;
+assert.equal(loadingDetector.mic.mode,'idle');assert.equal(loadingDetector.releases(),1);
+assert.equal(lateCleanup,1);assert.equal(loadingDetector.submitted.length,0);
+const detectorFailure=setup({monitor:async()=>{throw Error('model unavailable');}});
+await detectorFailure.mic.start();assert.equal(detectorFailure.releases(),1);
+assert.equal(detectorFailure.mic.mode,'idle');assert.match(detectorFailure.ui.error,/model unavailable/);
+loadingDetector.mic.close();detectorFailure.mic.close();
+console.log('PASS: asynchronous detector cancellation and startup failure release capture without submitting.');
+
+const realTimeout=globalThis.setTimeout;let startupTimeout,resolveSlow;
+try{
+ globalThis.setTimeout=(callback,delay)=>{
+  if(delay===5000){startupTimeout=callback;return 0;}
+  return realTimeout(callback,delay);
+ };
+ const slow=setup({monitor:()=>new Promise(resolve=>resolveSlow=resolve)});
+ const slowStart=slow.mic.start();await tick();startupTimeout();
+ assert.equal(slow.releases(),1);assert.equal(slow.mic.mode,'idle');
+ assert.match(slow.ui.error,/did not start/);assert.equal(slow.submitted.length,0);
+ resolveSlow(()=>{});await slowStart;slow.mic.close();
+}finally{globalThis.setTimeout=realTimeout;}
+console.log('PASS: stalled detector initialization releases the owned microphone at its startup deadline.');

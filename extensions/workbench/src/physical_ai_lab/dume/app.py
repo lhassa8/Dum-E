@@ -34,6 +34,15 @@ from shared.message_broker import SharedMemoryMessageBroker  # noqa: E402
 from shared.task_manager import SharedMemoryTaskManager  # noqa: E402
 
 WEB = Path(__file__).parent / "web"
+SPEECH_VAD = Path(__file__).resolve().parents[3] / ".cache/speech-vad"
+SPEECH_VAD_FILES = {
+    "bundle.min.js",
+    "vad.worklet.bundle.min.js",
+    "silero_vad_v5.onnx",
+    "ort.wasm.min.js",
+    "ort-wasm-simd-threaded.mjs",
+    "ort-wasm-simd-threaded.wasm",
+}
 
 
 class InteractionRequest(ChatRequest):
@@ -109,6 +118,22 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
     @api.get("/voice-input.mjs")
     async def microphone_script():
         return FileResponse(WEB / "voice-input.mjs", media_type="application/javascript")
+
+    @api.get("/speech-detector.mjs")
+    async def speech_detector_script():
+        return FileResponse(WEB / "speech-detector.mjs", media_type="application/javascript")
+
+    @api.get("/speech-vad/{filename}")
+    async def speech_detector_asset(filename: str):
+        if filename not in SPEECH_VAD_FILES:
+            raise HTTPException(404, "Unknown speech detector asset")
+        asset = SPEECH_VAD / filename
+        if not asset.is_file():
+            raise HTTPException(
+                503, "Run scripts/prepare_speech_vad.py to prepare local voice input"
+            )
+        media_type = "application/javascript" if asset.suffix in {".js", ".mjs"} else None
+        return FileResponse(asset, media_type=media_type)
 
     @api.get("/state")
     async def state():

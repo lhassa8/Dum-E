@@ -216,3 +216,32 @@ def test_transcription_never_submits_task(tmp_path):
             ).status_code == 400
 
     asyncio.run(run())
+
+
+def test_local_speech_detector_assets_missing_unknown_and_available(tmp_path, monkeypatch):
+    from physical_ai_lab.dume import app
+
+    monkeypatch.setattr(app, "SPEECH_VAD", tmp_path)
+    api = app.make_api(
+        SimpleNamespace(),
+        SimpleNamespace(poll=lambda: None),
+        tools=True,
+        speech_input=RecognitionProbe(),
+    )
+
+    async def run():
+        async with httpx.AsyncClient(
+            transport=httpx.ASGITransport(app=api), base_url="http://testserver"
+        ) as client:
+            missing = await client.get("/speech-vad/silero_vad_v5.onnx")
+            assert missing.status_code == 503
+            assert "prepare_speech_vad.py" in missing.json()["detail"]
+            assert (await client.get("/speech-vad/private.txt")).status_code == 404
+            (tmp_path / "bundle.min.js").write_text("// probe")
+            present = await client.get("/speech-vad/bundle.min.js")
+            assert present.status_code == 200
+            assert present.text == "// probe"
+            assert present.headers["content-type"].startswith("application/javascript")
+            assert (await client.get("/speech-detector.mjs")).status_code == 200
+
+    asyncio.run(run())

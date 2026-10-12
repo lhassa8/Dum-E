@@ -16,6 +16,10 @@ export class PauseDetector {
     return this.speechMs>=this.minimumSpeechMs && now-this.lastSpeech>=this.pauseMs;
   }
   get heardSpeech(){return this.speechMs>=this.minimumSpeechMs;}
+  sampleProbability(probability,now){
+    if(!Number.isFinite(probability))return false;
+    return this.sample(probability>=.3?this.threshold:0,now);
+  }
 }
 
 export function monitorMicrophone(stream,detector,onPause) {
@@ -80,6 +84,7 @@ export class MicrophoneInput {
     this.cancel.hidden=this.mode==='idle';
   }
   release() {
+    this.monitorRequest?.abort();
     clearTimeout(this.timer);this.stopMonitor?.();this.stopMonitor=null;
     this.stream?.getTracks().forEach(track=>track.stop());this.stream=null;
   }
@@ -118,7 +123,18 @@ export class MicrophoneInput {
       recorder.onstop=()=>this.recognize(new Blob(chunks,{type:recorder.mimeType||'audio/webm'}),generation,kind);
       this.detector=new PauseDetector({pauseMs:kind==='interrupt'?350:900});
       recorder.start();this.mode='recording';
-      this.stopMonitor=this.monitor(stream,this.detector,()=>this.finish());
+      this.monitorRequest=new AbortController();
+      this.timer=setTimeout(()=>{
+        if(generation!==this.generation)return;
+        this.abort();this.onError('Speech detection did not start. Click Speak to try again.');
+      },5000);
+      const stopMonitor=await this.monitor(stream,this.detector,()=>this.finish(),this.monitorRequest.signal,error=>{
+        if(generation!==this.generation)return;
+        this.abort();this.onError('Speech detection failed: '+error.message);
+      });
+      if(generation!==this.generation||this.mode!=='recording'){stopMonitor();return;}
+      clearTimeout(this.timer);
+      this.stopMonitor=stopMonitor;
       this.note.textContent=kind==='interrupt'?(this.onDuringWork?'Listening while I work. Ask a question, change tools, or say “stop”…':'Listening for “stop” while the arm works…'):
         'Listening… speak normally. I’ll finish when you pause.';
       this.paint();

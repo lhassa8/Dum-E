@@ -981,3 +981,30 @@ B5 — model selection and idle responsiveness, October 11–12:
   Dum-E/extensions/workbench/runs/residency-default-ready-001. Old runtimes exited.
   Benchmarks/build/probe handles are terminal. Full goal still active; camera/VLA,
   long-idle/live/acoustic/audible proof and user demonstration remain incomplete.
+
+
+B6 — reuse pretrained speech detection, October 12:
+- Previous goal turn: no progress; its read-only confirmation did not change
+  authoritative state or the next action. Revalidated current source/runtime. This turn
+  tests and integrates Silero v5 through pinned browser VAD/ONNX packages.
+  No custom manipulation work resumed; actual OpenPi/Linux GPU demo still awaits
+  the outstanding workstation connection. No policy job is running remotely.
+- Frozen 35-case saved PCM protocol SHA
+  babe8ffd33c4e625c8d8a2aa3f91996f4aec573fe4ccbc5ecd9078d6e241c102.
+  Energy gate13/35, two noise-only submissions; browser Silero35/35, zero.
+  Model cached load79ms, inference p95~.20ms. Virtual time, not live latency.
+- Actual AudioWorklet/recorder streams5/5; real local Whisper streams5/5.
+  No actual mic/speakers/robot command. Noisy Stop callback561/696ms after
+  clean voiced boundary; ordinary request1159/1433ms. Physical Stop not measured.
+  Expected silence message was initially misjudged; retained original raw report,
+  corrected only that judge and reran. Fixture/model/gates unchanged.
+- Local-only checksum-verified assets, no npm install, no CUDA/cloud/new mic
+  permissions or idle listening. Preload never acquires audio. Cancellation
+  isolates frames and bounds initialization to5s; missing assets disable Speak.
+- Lab187/fork168 regressions; recorder/adapter Node contracts and Ruff pass.
+  Upstream46 hashes match; Python locks unchanged. Public runtime exec46066
+  runs/silero-default-ready-001 independently observed Ready, Speak enabled,
+  Voice/listen ON, microphone idle. Prior public runtime58488 exited normally.
+- docs/speech-detector-audit.md + evidence retain exact scopes and failures.
+  Real acoustics, natural pauses, physical/VLA work and human demo remain.
+  Full goal active; this speech milestone is not completion.
