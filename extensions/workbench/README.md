@@ -17,11 +17,19 @@ can be reused and what must be measured before choosing an arm. Our primitive
 61 g hammer and Panda layout do not establish capacity for real workbench tools.
 No hardware is selected or operated.
 
-The optional [LM Studio / LM Link trial](docs/lmstudio-audit.md) can use your loaded
-`qwen/qwen3.8-27b` conversation model. Set `WORKBENCH_LANGUAGE_BACKEND=lmstudio`
-before launching a new simulator. Existing native simulators cannot switch models
-in place. This is independent of the pretrained OpenPi arm-control integration;
-the qualified local MLX model remains the default.
+The [Bonsai-27B integration](docs/bonsai-audit.md) uses your loaded LM Studio model
+for conversation and general requests. Model selection is configurable:
+
+```sh
+uv run --locked dume-sim --language-backend lmstudio --model prism-ml/bonsai-27b
+```
+
+Change `--model` to a compatible model ID exposed by your server; `--lmstudio-url`
+selects its address. Environment variables remain supported. The earlier
+[Qwen trial](docs/lmstudio-audit.md) is retained. Existing native simulators cannot
+switch models in place, and reuse requires matching provider, model and endpoint.
+This is independent of the pretrained OpenPi arm-control integration; the local
+MLX backend remains the portable default.
 
 For [GPT-6 Luna with your ChatGPT subscription](docs/codex-luna-audit.md), use
 `WORKBENCH_LANGUAGE_BACKEND=codex uv run --locked dume-sim` with an existing

@@ -1,4 +1,4 @@
-"""Real local task bus, paused contacts and subscription cancellation; no live mic."""
+"""Real local task bus, paused contacts and cancelled model replies; no live mic."""
 
 import argparse
 import concurrent.futures
@@ -13,12 +13,14 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("output", type=Path)
 parser.add_argument("--url", default="http://127.0.0.1:8766")
 parser.add_argument("--hold-seconds", type=float, default=32)
+parser.add_argument("--expected-model", default="gpt-6-luna")
 args = parser.parse_args()
 if args.hold_seconds < 32:
     parser.error("The acceptance hold must be at least 32 seconds")
 args.output.mkdir(parents=True, exist_ok=False)
 client = httpx.Client(base_url=args.url, timeout=60, trust_env=False)
-evidence = {"scope": "Typed HTTP requests, actual MuJoCo contacts, real Luna; no live voice",
+evidence = {"scope": "Typed HTTP requests, actual MuJoCo contacts, real model; no live voice",
+            "expected_model": args.expected_model,
             "journeys": [], "passed": False}
 
 
@@ -75,7 +77,7 @@ def pending_question():
 
 try:
     ready = wait(lambda s: s["model_status"] == "ready" and not s["busy"])
-    assert ready["language_model"] == "gpt-6-luna"
+    assert ready["language_model"] == args.expected_model
     post("/reset")
     wait(lambda s: s["phase"] == "Ready" and not s["recovery"]["can_resume"])
     for tool in ["screwdriver", "wrench", "hammer"]:

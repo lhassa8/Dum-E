@@ -70,6 +70,9 @@ Examples:
 "How are you doing?" -> answer/null/null, "Ready to help! How was your day?"
 "Tell me what you can do" -> answer/null/null,
 "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+Final reply check: an answer about your capabilities MUST start its message with
+"In simulation," and mention bringing/returning tools and conversation. This
+scope disclosure is required even when the question does not ask about hardware.
 """  # noqa: E501
 
 
@@ -116,15 +119,43 @@ class ToolLanguage(LocalLanguage):
         super().__init__(model_path, system=TOOL_SYSTEM, parser=ToolIntent.parse)
 
 
+def configure_tool_language(backend=None, model=None, url=None):
+    """CLI choices affect this launcher and its children, never machine settings."""
+    selected = backend or os.environ.get("WORKBENCH_LANGUAGE_BACKEND", "mlx")
+    if selected not in {"mlx", "lmstudio", "codex"}:
+        raise ValueError("WORKBENCH_LANGUAGE_BACKEND must be mlx, lmstudio or codex")
+    if model is not None and not model.strip():
+        raise ValueError("Model must not be empty")
+    if selected == "codex" and model not in {None, "gpt-6-luna"}:
+        raise ValueError("The qualified Codex backend currently supports gpt-6-luna")
+    if url is not None:
+        if selected != "lmstudio":
+            raise ValueError("--lmstudio-url requires the lmstudio language backend")
+        from physical_ai_lab.assistant.lmstudio import normalize_server_url
+
+        url = normalize_server_url(url)
+    # Validate the complete selection before changing the child environment.
+    if backend is not None:
+        os.environ["WORKBENCH_LANGUAGE_BACKEND"] = selected
+    if model is not None and selected != "codex":
+        key = "WORKBENCH_MODEL" if selected == "mlx" else "WORKBENCH_LMSTUDIO_MODEL"
+        os.environ[key] = model
+    if url is not None:
+        os.environ["WORKBENCH_LMSTUDIO_URL"] = url
+    return selected
+
+
 def make_tool_language(model_path=None):
     backend = os.environ.get("WORKBENCH_LANGUAGE_BACKEND", "mlx")
     if backend == "mlx":
-        return ToolLanguage(model_path)
+        return ToolLanguage(model_path or os.environ.get("WORKBENCH_MODEL"))
     if backend == "lmstudio":
         from physical_ai_lab.assistant.lmstudio import LMStudioLanguage
 
-        return LMStudioLanguage(system=TOOL_SYSTEM, parser=ToolIntent.parse)
+        return LMStudioLanguage(system=TOOL_SYSTEM, parser=ToolIntent.parse, model=model_path)
     if backend == "codex":
+        if model_path not in {None, "gpt-6-luna"}:
+            raise ValueError("The qualified Codex backend currently supports gpt-6-luna")
         from physical_ai_lab.assistant.codex_language import CodexLanguage
 
         return CodexLanguage(system=TOOL_SYSTEM, parser=ToolIntent.parse)

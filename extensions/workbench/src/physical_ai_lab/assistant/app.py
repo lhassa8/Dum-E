@@ -123,6 +123,7 @@ class Application:
                 "language_model": str(getattr(self.language, "path", "unknown"))
                 if self.language
                 else None,
+                "language_endpoint": getattr(self.language, "url", None),
                 "objects": self.observations,
                 "targets": self.scene_targets,
                 "robot_joints": self.joint_positions,
@@ -726,11 +727,25 @@ def make_api(state):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=8765)
-    parser.add_argument("--model", default=os.environ.get("WORKBENCH_MODEL"))
+    parser.add_argument("--model", help="MLX model folder or LM Studio model ID")
+    parser.add_argument("--language-backend", choices=["mlx", "lmstudio", "codex"])
+    parser.add_argument("--lmstudio-url", help="LM Studio server, default http://127.0.0.1:1234")
     parser.add_argument("--tools", action="store_true")
     parser.add_argument("--log-dir", type=Path)
     parser.add_argument("--test-gripper-fault", action="store_true", help=argparse.SUPPRESS)
     args = parser.parse_args()
+    from physical_ai_lab.assistant.tool_language import configure_tool_language
+
+    try:
+        if not args.tools and args.language_backend not in {None, "mlx"}:
+            raise ValueError("External language backends currently require --tools")
+        configure_tool_language(
+            args.language_backend if args.tools else "mlx", args.model, args.lmstudio_url
+        )
+    except ValueError as error:
+        parser.error(str(error))
+    if not args.tools and args.model is None:
+        args.model = os.environ.get("WORKBENCH_MODEL")
     with socket.socket() as probe:
         probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         try:

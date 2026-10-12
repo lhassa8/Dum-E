@@ -1,5 +1,46 @@
 # Workbench goal progress
 
+October 12, B11 — user-selected Bonsai and replaceable conversation models:
+- Previous goal turn was progress: published B10 grip/latency fixes at lab
+  ae62140 / fork6213fe2. User loaded Bonsai on the preferred 5090 device and
+  requested trying it, with future model flexibility.
+- Actual LM Studio ID prism-ml/bonsai-27b, Q1_0, reported4.735GB/27B parameters,
+  loaded8192context. API does not identify the executing device; retain the user's
+  host/preference report without inventing GPU telemetry. No model download/load,
+  device-selection change, paid service or expanded microphone/data scope.
+- Initial129intent checks pass but abilities omits simulation3/3. One shared
+  scope instruction fixes that factual failure; unchanged43cases×3 now pass129/129
+  and lead-review30factual replies meets original criteria. Some repetitive
+  capabilities remain a style limit; original replies are retained.
+- Final129 text trials median/p95 .560/.760s, max1.149s. Alternating5cases×2
+  matched pair: Bonsai .510s vs Luna2.407s median (78.8% lower), zero errors;
+  retain Luna12.360s outlier. Excludes voice/motion and other-device contention.
+  Selected model ID is returned correctly, not an independent weight hash.
+- CLI provider/model/server choices are shared by launcher/native; LM Studio
+  no longer guesses Qwen. Explicit MLX folder, LM model/endpoint and fixed Luna
+  choices cannot silently reuse another setup. Substitution/timeouts fail without
+  motion/retry; next request recovers. No model-specific control/parser branch.
+  Full234lab/215fork suites pass, plus a local-folder reuse guard afterward;
+  final34focused transport/API checks pass each. Upstream46hashes match.
+- Main8766/native8765/MCP8001 now use Bonsai. Actual three32-wall-second holds,
+  resume/return and pending-reply supersession pass; errors6.09–13.90mm. Reply
+  supersession observed within308ms; remote inference may continue.
+- Synthesized semantic speech is recognized, model-interpreted and physically
+  delivered/returned (9.48/11.72mm). ASR upload .152s, native decision .736s:
+  separate clocks, not end-of-live-speech latency. Existing complete saved-speech
+  change/Stop/resume/return/withdrawal/clarification sequence passes; real Bonsai
+  joke during lift .850s keeps task running. Browser abilities answer is truthful;
+  voice/listening restored ON with microphone idle.
+- Secondary camera recheck before model steering passes18/18 for an optional
+  linear-lift/centering variant, not a contact-only baseline. No promotion or
+  reserved-test opening. Reusing robot policies remains the manipulation direction.
+- Old main preflight finds screwdriver72.67mm from its earlier successful rack
+  placement while idle. Snapshot retained; cause/exact time unproven. Conversation
+  model selection does not fix this long-idle physics gap. Next investigate it
+  while preserving held-tool checks. Full goal active: public camera operation,
+  pretrained arm runtime and human live/noise proof remain open.
+- See bonsai-audit.md, evidence JSON, comparison and ready screenshot.
+
 October 12, B10 — paused grip and subscription latency:
 - Reproduced the long-hold failure across all nine tool/seed combinations. Soft
   friction contacts creep and an uncompensated arm position hold sags. Three

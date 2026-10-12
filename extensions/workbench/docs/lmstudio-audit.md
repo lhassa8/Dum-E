@@ -1,5 +1,11 @@
 # LM Studio / LM Link trial
 
+Historical Qwen3.8 trial. The current working session uses
+[Bonsai-27B](bonsai-audit.md), with configurable launcher provider/model/endpoint
+options and a measured latency improvement. LM Studio now requires an explicit
+model choice, and matching server identity before reusing a native simulator.
+The following observations preserve the original trial and its limitations.
+
 The user provided `http://127.0.0.1:1234` with Qwen3.8-27B loaded through LM Link.
 The endpoint exposes `qwen/qwen3.8-27b`; a real inference call returned the expected
 screwdriver intent. LM Studio metadata reports GGUF Q4_K_M, 17,742,040,464 bytes,

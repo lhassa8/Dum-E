@@ -16,6 +16,9 @@ import httpx
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default="http://127.0.0.1:8766")
+    parser.add_argument("--message", default="Bring me the screwdriver, please.")
+    parser.add_argument("--return-after-delivery", action="store_true")
+    parser.add_argument("--expect-model-interpretation", action="store_true")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=False)
@@ -74,19 +77,24 @@ def main():
         with tempfile.TemporaryDirectory() as directory:
             request = Path(directory) / "request.txt"
             recording = Path(directory) / "request.aiff"
-            request.write_text("Bring me the screwdriver, please.\n")
+            request.write_text(args.message + "\n")
             subprocess.run(["/usr/bin/say", "-o", str(recording), "-f", str(request)], check=True)
+            recognition_started = time.monotonic()
             response = client.post(
                 "/transcribe",
                 content=recording.read_bytes(),
                 headers={"Content-Type": "audio/aiff"},
             )
+            recognition_ms = (time.monotonic() - recognition_started) * 1000
         response.raise_for_status()
         recognized = response.json()
-        assert "screwdriver" in recognized["text"].lower()
+        if "screwdriver" in args.message.lower():
+            assert "screwdriver" in recognized["text"].lower()
         assert len(state()["tasks"]) == count  # Recognition itself never actuates.
         final, trace = run_task(recognized["text"])
         result = final["last_result"]
+        if args.expect_model_interpretation:
+            assert "interpretation_started_ms" in final["responsiveness"]
         assert result["physical_success"] and result["status"] == "completed"
         assert result["intent"]["action"] == "fetch"
         assert result["intent"]["object"] == "screwdriver"
@@ -98,10 +106,20 @@ def main():
             - initial["objects"]["screwdriver"][2]
         )
         assert error < 0.035 and actual[2] < 0.04 and lift > 0.08
+        return_result = None
+        if args.return_after_delivery:
+            returned, _ = run_task("Put the screwdriver back in its rack.")
+            assert returned["last_result"]["physical_success"]
+            assert returned["inventory"]["screwdriver"] == "tool rack"
+            return_result = returned["last_result"]
         (args.output / "verification.json").write_text(
             json.dumps(
                 {
                     "source": "native Mac synthesized speech, not user's microphone",
+                    "requested_speech": args.message,
+                    "recognition_ms": recognition_ms,
+                    "native_responsiveness": final["responsiveness"],
+                    "model": final["language_model"],
                     "recognition": recognized,
                     "result": result,
                     "actual_position_m": actual,
@@ -110,6 +128,7 @@ def main():
                     "distance_m": error,
                     "silence_status": silence.status_code,
                     "trace": trace,
+                    "return_result": return_result,
                 },
                 indent=2,
             )

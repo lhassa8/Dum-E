@@ -314,12 +314,32 @@ def ensure_simulator(port, logdir, tools=False):
                 "The existing native simulator uses a different language backend. "
                 "Choose an unused --sim-port to start the requested backend."
             )
+        if requested_backend == "mlx" and os.environ.get("WORKBENCH_MODEL"):
+            requested_folder = Path(os.environ["WORKBENCH_MODEL"]).expanduser().resolve()
+            loaded_model = state.get("language_model")
+            if not loaded_model or Path(loaded_model).expanduser().resolve() != requested_folder:
+                raise RuntimeError(
+                    "The existing native simulator uses a different MLX model. "
+                    "Choose an unused --sim-port to start the requested model."
+                )
         if requested_backend == "lmstudio":
-            requested_model = os.environ.get("WORKBENCH_LMSTUDIO_MODEL", "qwen/qwen3.8-27b")
+            from physical_ai_lab.assistant.lmstudio import normalize_server_url
+
+            requested_model = os.environ.get("WORKBENCH_LMSTUDIO_MODEL")
+            if not requested_model:
+                raise RuntimeError("Choose an LM Studio model with --model before launching")
             if state.get("language_model") != requested_model:
                 raise RuntimeError(
                     "The existing native simulator uses a different LM Studio model. "
                     "Choose an unused --sim-port to start the requested model."
+                )
+            requested_url = normalize_server_url(
+                os.environ.get("WORKBENCH_LMSTUDIO_URL", "http://127.0.0.1:1234")
+            )
+            if state.get("language_endpoint") != requested_url:
+                raise RuntimeError(
+                    "The existing native simulator uses a different or unverified LM Studio "
+                    "server. Choose an unused --sim-port to start the requested server."
                 )
         if requested_backend == "codex" and state.get("language_model") != "gpt-6-luna":
             raise RuntimeError("The existing native simulator is not running GPT-6 Luna.")
@@ -371,7 +391,20 @@ def _main():
     parser.add_argument("--mcp-port", type=int, default=8001)
     parser.add_argument("--log-dir", type=Path)
     parser.add_argument("--blocks", action="store_true", help="Run the earlier colored-block demo")
+    parser.add_argument("--language-backend", choices=["mlx", "lmstudio", "codex"])
+    parser.add_argument("--model", help="MLX model folder or LM Studio model ID")
+    parser.add_argument("--lmstudio-url", help="LM Studio server, default http://127.0.0.1:1234")
     args = parser.parse_args()
+    from physical_ai_lab.assistant.tool_language import configure_tool_language
+
+    try:
+        if args.blocks and args.language_backend not in {None, "mlx"}:
+            raise ValueError("External language backends currently require the tool scene")
+        configure_tool_language(
+            "mlx" if args.blocks else args.language_backend, args.model, args.lmstudio_url
+        )
+    except ValueError as error:
+        parser.error(str(error))
     if len({args.port, args.sim_port, args.mcp_port}) != 3:
         parser.error("Browser, simulator and MCP ports must be different.")
     for port in [args.port, args.mcp_port]:
