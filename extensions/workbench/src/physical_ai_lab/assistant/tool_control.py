@@ -17,7 +17,7 @@ class ToolDelivery(PickPlace):
 
     def pause(self):
         # Retain the generator, grip and waypoint progress; Stop never opens fingers.
-        self.bench.data.ctrl[:7] = self.bench.data.qpos[:7]
+        self.bench.hold_joints()
         self.outcome = Outcome("interrupted", "Stopped. Placement is not confirmed.")
 
     def resume(self):
@@ -118,7 +118,7 @@ class Gesture:
         self.frames = self._run(gesture)
 
     def pause(self):
-        self.bench.data.ctrl[:7] = self.bench.data.qpos[:7]
+        self.bench.hold_joints()
         self.outcome = Outcome("interrupted", "Stopped. I'll hold still.")
 
     def resume(self):
@@ -155,7 +155,7 @@ class Gesture:
         self.outcome = Outcome("expressed", self.message)
 
     def stop(self):
-        self.bench.data.ctrl[:7] = self.bench.data.qpos[:7]
+        self.bench.hold_joints()
         self.outcome = Outcome("interrupted", "Stopped. I'll hold still.")
         self.phase = "Stopped"
 
@@ -268,7 +268,7 @@ class EmptyTransit:
         self.outcome = Outcome("expressed", "")
 
     def pause(self):
-        self.bench.data.ctrl[:7] = self.bench.data.qpos[:7]
+        self.bench.hold_joints()
         self.outcome = Outcome("interrupted", "Stopped. I'll hold still.")
 
     def resume(self):

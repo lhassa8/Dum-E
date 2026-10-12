@@ -1,5 +1,36 @@
 # Workbench goal progress
 
+October 12, B10 — paused grip and subscription latency:
+- Reproduced the long-hold failure across all nine tool/seed combinations. Soft
+  friction contacts creep and an uncompensated arm position hold sags. Three
+  NoSlip contact iterations plus gravity feedforward in paused arm targets now
+  pass 9/9 unchanged 32-s retention gates. No object weld/pose freeze, grip/force
+  cap change or relaxed physical judge. Nine opening-finger drop tests and six
+  long-hold continuation tests pass. Historical learning results use old contacts;
+  NoSlip's inverse-dynamics/contact limitations are documented.
+- Persistent official Codex app-server; fresh ephemeral context per utterance,
+  process-scoped host-tool/skill isolation, ChatGPT account required, no API-key
+  fallback. Stop interrupts the active turn; queued stale requests are skipped.
+  Runtime cleanup closes the subscription child with the native simulator.
+- Alternating same-model/same-schema paired test: 10 calls per path, zero errors;
+  median 3.332 -> 2.642 s (20.7% improvement), input tokens 7,329 -> 5,780.
+  Sample p95 worsens 4.089 -> 6.664 s due to a retained cloud delay. Do not claim
+  reliably improved tail or voice latency. Separate 43-case qualification passes
+  once each, factual replies reviewed against the unchanged content criteria.
+- Actual task-bus/main-app Stop + 32-wall-second holds + resume/return pass for
+  all three tools; placement errors 6.09–13.91 mm within the unchanged 35 mm gate.
+  A real pending Luna reply is superseded by Stop with no task and observed within
+  70.7 ms; next model question works while grip stays closed. This is typed HTTP
+  cancellation, not live spoken Stop or mechanical velocity-settling evidence.
+- Full regressions 224 lab / 205 fork, plus two new authentication/protocol cases
+  checked afterward in each checkout; focused transport/API suite nine passes
+  each. Protected upstream 46 hashes intact. Final main app remains 8766, now
+  native 8765, subscription Luna; no new purchase or microphone scope.
+- See hold-luna-audit.md / evidence JSON / comparison for scopes and retained
+  failures. Full goal remains incomplete; next large improvements concern live
+  voice/room responsiveness and camera-informed default tool handling. Actual
+  pretrained arm policy still needs a supported OpenPi workstation runtime.
+
 October 12, B9 — user-requested conversation hosting options:
 - User connected Qwen3.8-27B through LM Studio/LM Link and confirmed the RTX 5090
   PC is preferred. Implemented opt-in HTTP inference; structured output resolves

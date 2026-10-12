@@ -1,0 +1,4806 @@
+{
+  "scope": "Synthetic text and actual MuJoCo task/physics; no live microphone proof.",
+  "model": "gpt-6-luna",
+  "hold_comparison": [
+    {
+      "mode": "baseline",
+      "tool": "screwdriver",
+      "seed": 42,
+      "initial_height_m": 0.13037005705680127,
+      "final_height_m": 0.02184487468375377,
+      "minimum_height_m": 0.02044119260523048,
+      "maximum_joint_drift_rad": 0.008862324656045167,
+      "retained": false
+    },
+    {
+      "mode": "baseline",
+      "tool": "screwdriver",
+      "seed": 51,
+      "initial_height_m": 0.13001285193008827,
+      "final_height_m": 0.02184487468375374,
+      "minimum_height_m": 0.02075254787959526,
+      "maximum_joint_drift_rad": 0.008774303098558013,
+      "retained": false
+    },
+    {
+      "mode": "baseline",
+      "tool": "screwdriver",
+      "seed": 52,
+      "initial_height_m": 0.1302757110617142,
+      "final_height_m": 0.021844874683753755,
+      "minimum_height_m": 0.02055005615360767,
+      "maximum_joint_drift_rad": 0.008888172923492844,
+      "retained": false
+    },
+    {
+      "mode": "baseline",
+      "tool": "wrench",
+      "seed": 42,
+      "initial_height_m": 0.13549209108179514,
+      "final_height_m": 0.0218504151412049,
+      "minimum_height_m": 0.01692992792123579,
+      "maximum_joint_drift_rad": 0.00625574895136656,
+      "retained": false
+    },
+    {
+      "mode": "baseline",
+      "tool": "wrench",
+      "seed": 51,
+      "initial_height_m": 0.13511236896835618,
+      "final_height_m": 0.021850415141204914,
+      "minimum_height_m": 0.015697995576448742,
+      "maximum_joint_drift_rad": 0.006072599334130457,
+      "retained": false
+    },
+    {
+      "mode": "baseline",
+      "tool": "wrench",
+      "seed": 52,
+      "initial_height_m": 0.13535994791689843,
+      "final_height_m": 0.021850415141204872,
+      "minimum_height_m": 0.017276351290342124,
+      "maximum_joint_drift_rad": 0.006157347229389071,
+      "retained": false
+    },
+    {
+      "mode": "baseline",
+      "tool": "hammer",
+      "seed": 42,
+      "initial_height_m": 0.13135878359772263,
+      "final_height_m": 0.021880385438156208,
+      "minimum_height_m": 0.02029272523228607,
+      "maximum_joint_drift_rad": 0.009461788199055653,
+      "retained": false
+    },
+    {
+      "mode": "baseline",
+      "tool": "hammer",
+      "seed": 51,
+      "initial_height_m": 0.1301620543114111,
+      "final_height_m": 0.021880385438156257,
+      "minimum_height_m": 0.021819931663638374,
+      "maximum_joint_drift_rad": 0.009569606074875302,
+      "retained": false
+    },
+    {
+      "mode": "baseline",
+      "tool": "hammer",
+      "seed": 52,
+      "initial_height_m": 0.1305118322895559,
+      "final_height_m": 0.0218803854381562,
+      "minimum_height_m": 0.016129115103857658,
+      "maximum_joint_drift_rad": 0.009350945529505703,
+      "retained": false
+    },
+    {
+      "mode": "contact_only",
+      "tool": "screwdriver",
+      "seed": 42,
+      "initial_height_m": 0.13125452923127498,
+      "final_height_m": 0.12613094602366218,
+      "minimum_height_m": 0.12613094602366218,
+      "maximum_joint_drift_rad": 0.008861683996247191,
+      "retained": false
+    },
+    {
+      "mode": "contact_only",
+      "tool": "screwdriver",
+      "seed": 51,
+      "initial_height_m": 0.13093256678538318,
+      "final_height_m": 0.12579268570303961,
+      "minimum_height_m": 0.12579268570303961,
+      "maximum_joint_drift_rad": 0.008772678712544994,
+      "retained": false
+    },
+    {
+      "mode": "contact_only",
+      "tool": "screwdriver",
+      "seed": 52,
+      "initial_height_m": 0.1311750689633369,
+      "final_height_m": 0.126138218980179,
+      "minimum_height_m": 0.126138218980179,
+      "maximum_joint_drift_rad": 0.008892997720636363,
+      "retained": false
+    },
+    {
+      "mode": "contact_only",
+      "tool": "wrench",
+      "seed": 42,
+      "initial_height_m": 0.13648073620211484,
+      "final_height_m": 0.13178222442304033,
+      "minimum_height_m": 0.13178222442304033,
+      "maximum_joint_drift_rad": 0.006255833258469859,
+      "retained": true
+    },
+    {
+      "mode": "contact_only",
+      "tool": "wrench",
+      "seed": 51,
+      "initial_height_m": 0.13617581132710044,
+      "final_height_m": 0.13163170806018124,
+      "minimum_height_m": 0.13163170806018124,
+      "maximum_joint_drift_rad": 0.006072683860924397,
+      "retained": true
+    },
+    {
+      "mode": "contact_only",
+      "tool": "wrench",
+      "seed": 52,
+      "initial_height_m": 0.136458928582715,
+      "final_height_m": 0.13186754827865863,
+      "minimum_height_m": 0.13186754827865863,
+      "maximum_joint_drift_rad": 0.006157418538885018,
+      "retained": true
+    },
+    {
+      "mode": "contact_only",
+      "tool": "hammer",
+      "seed": 42,
+      "initial_height_m": 0.13190187390156588,
+      "final_height_m": 0.1271555507891302,
+      "minimum_height_m": 0.1271555507891302,
+      "maximum_joint_drift_rad": 0.00946510837841634,
+      "retained": false
+    },
+    {
+      "mode": "contact_only",
+      "tool": "hammer",
+      "seed": 51,
+      "initial_height_m": 0.1308318697529311,
+      "final_height_m": 0.12608519745076766,
+      "minimum_height_m": 0.12608519745076766,
+      "maximum_joint_drift_rad": 0.009564536600693813,
+      "retained": false
+    },
+    {
+      "mode": "contact_only",
+      "tool": "hammer",
+      "seed": 52,
+      "initial_height_m": 0.1312578695755498,
+      "final_height_m": 0.1264435819669805,
+      "minimum_height_m": 0.1264435819669805,
+      "maximum_joint_drift_rad": 0.009350245310438515,
+      "retained": false
+    },
+    {
+      "mode": "fixed",
+      "tool": "screwdriver",
+      "seed": 42,
+      "initial_height_m": 0.13125452923127498,
+      "final_height_m": 0.1309435485997437,
+      "minimum_height_m": 0.1309435485997437,
+      "maximum_joint_drift_rad": 0.00958456918869606,
+      "retained": true
+    },
+    {
+      "mode": "fixed",
+      "tool": "screwdriver",
+      "seed": 51,
+      "initial_height_m": 0.13093256678538318,
+      "final_height_m": 0.13056853928757498,
+      "minimum_height_m": 0.13056853928757498,
+      "maximum_joint_drift_rad": 0.007976771172157206,
+      "retained": true
+    },
+    {
+      "mode": "fixed",
+      "tool": "screwdriver",
+      "seed": 52,
+      "initial_height_m": 0.1311750689633369,
+      "final_height_m": 0.13084142114608008,
+      "minimum_height_m": 0.13084142114608008,
+      "maximum_joint_drift_rad": 0.00959426632496152,
+      "retained": true
+    },
+    {
+      "mode": "fixed",
+      "tool": "wrench",
+      "seed": 42,
+      "initial_height_m": 0.13648073620211484,
+      "final_height_m": 0.13604225739294268,
+      "minimum_height_m": 0.13604225739294268,
+      "maximum_joint_drift_rad": 0.0014780488423651178,
+      "retained": true
+    },
+    {
+      "mode": "fixed",
+      "tool": "wrench",
+      "seed": 51,
+      "initial_height_m": 0.13617581132710044,
+      "final_height_m": 0.13574511358060146,
+      "minimum_height_m": 0.13574511358060146,
+      "maximum_joint_drift_rad": 0.0015025523154715698,
+      "retained": true
+    },
+    {
+      "mode": "fixed",
+      "tool": "wrench",
+      "seed": 52,
+      "initial_height_m": 0.136458928582715,
+      "final_height_m": 0.13604856689226993,
+      "minimum_height_m": 0.13604856689226993,
+      "maximum_joint_drift_rad": 0.0014922763117814764,
+      "retained": true
+    },
+    {
+      "mode": "fixed",
+      "tool": "hammer",
+      "seed": 42,
+      "initial_height_m": 0.13190187390156588,
+      "final_height_m": 0.13179007418706995,
+      "minimum_height_m": 0.13179007418706995,
+      "maximum_joint_drift_rad": 0.008252509253012366,
+      "retained": true
+    },
+    {
+      "mode": "fixed",
+      "tool": "hammer",
+      "seed": 51,
+      "initial_height_m": 0.1308318697529311,
+      "final_height_m": 0.1307569622135705,
+      "minimum_height_m": 0.1307569622135705,
+      "maximum_joint_drift_rad": 0.008348081902889597,
+      "retained": true
+    },
+    {
+      "mode": "fixed",
+      "tool": "hammer",
+      "seed": 52,
+      "initial_height_m": 0.1312578695755498,
+      "final_height_m": 0.1311232186580897,
+      "minimum_height_m": 0.1311232186580897,
+      "maximum_joint_drift_rad": 0.00817919346965363,
+      "retained": true
+    }
+  ],
+  "hold_plot": {
+    "baseline": [
+      {
+        "seconds": 0.032,
+        "height_m": 0.13027357214605972,
+        "joint_drift_rad": 0.008862324656045167,
+        "grip_force_N": -4.414569433276189
+      },
+      {
+        "seconds": 0.352,
+        "height_m": 0.12523394443215277,
+        "joint_drift_rad": 0.006447242815909304,
+        "grip_force_N": -4.371889705799255
+      },
+      {
+        "seconds": 0.672,
+        "height_m": 0.12467053485267592,
+        "joint_drift_rad": 0.006666158166655001,
+        "grip_force_N": -4.371884221745156
+      },
+      {
+        "seconds": 0.992,
+        "height_m": 0.12423347225673784,
+        "joint_drift_rad": 0.006673467317114101,
+        "grip_force_N": -4.371883698368242
+      },
+      {
+        "seconds": 1.312,
+        "height_m": 0.12380030079744404,
+        "joint_drift_rad": 0.0066737115506329825,
+        "grip_force_N": -4.37188366967284
+      },
+      {
+        "seconds": 1.6320000000000001,
+        "height_m": 0.12336719245644115,
+        "joint_drift_rad": 0.006673718437587517,
+        "grip_force_N": -4.371883670286984
+      },
+      {
+        "seconds": 1.952,
+        "height_m": 0.12293403528642065,
+        "joint_drift_rad": 0.006673717274796986,
+        "grip_force_N": -4.371883670398557
+      },
+      {
+        "seconds": 2.2720000000000002,
+        "height_m": 0.1225008357479809,
+        "joint_drift_rad": 0.006673715820615239,
+        "grip_force_N": -4.371883669943297
+      },
+      {
+        "seconds": 2.592,
+        "height_m": 0.12206760471551306,
+        "joint_drift_rad": 0.006673714342021797,
+        "grip_force_N": -4.371883669506472
+      },
+      {
+        "seconds": 2.912,
+        "height_m": 0.12163435341838885,
+        "joint_drift_rad": 0.006673712848981411,
+        "grip_force_N": -4.371883669272064
+      },
+      {
+        "seconds": 3.232,
+        "height_m": 0.1212010931671777,
+        "joint_drift_rad": 0.006673711342050415,
+        "grip_force_N": -4.371883669283567
+      },
+      {
+        "seconds": 3.552,
+        "height_m": 0.12076783529625554,
+        "joint_drift_rad": 0.006673709821314128,
+        "grip_force_N": -4.371883669549258
+      },
+      {
+        "seconds": 3.872,
+        "height_m": 0.12033459113915242,
+        "joint_drift_rad": 0.006673708286813046,
+        "grip_force_N": -4.371883670069997
+      },
+      {
+        "seconds": 4.192,
+        "height_m": 0.1199013720116492,
+        "joint_drift_rad": 0.006673706738587332,
+        "grip_force_N": -4.371883670845298
+      },
+      {
+        "seconds": 4.5120000000000005,
+        "height_m": 0.11946818919685571,
+        "joint_drift_rad": 0.006673705176684391,
+        "grip_force_N": -4.371883671874576
+      },
+      {
+        "seconds": 4.832,
+        "height_m": 0.1190350539308384,
+        "joint_drift_rad": 0.006673703601161096,
+        "grip_force_N": -4.371883673157386
+      },
+      {
+        "seconds": 5.152,
+        "height_m": 0.11860197738847393,
+        "joint_drift_rad": 0.006673702012083782,
+        "grip_force_N": -4.371883674693307
+      },
+      {
+        "seconds": 5.472,
+        "height_m": 0.11816897066946307,
+        "joint_drift_rad": 0.006673700409528527,
+        "grip_force_N": -4.371883676481945
+      },
+      {
+        "seconds": 5.792,
+        "height_m": 0.11773604478451674,
+        "joint_drift_rad": 0.006673698793581012,
+        "grip_force_N": -4.37188367852293
+      },
+      {
+        "seconds": 6.112,
+        "height_m": 0.11730321064174283,
+        "joint_drift_rad": 0.0066736971643361065,
+        "grip_force_N": -4.371883680815956
+      },
+      {
+        "seconds": 6.432,
+        "height_m": 0.11687047903325927,
+        "joint_drift_rad": 0.006673695521898115,
+        "grip_force_N": -4.3718836833606955
+      },
+      {
+        "seconds": 6.752,
+        "height_m": 0.11643786062205815,
+        "joint_drift_rad": 0.006673693866380892,
+        "grip_force_N": -4.371883686156903
+      },
+      {
+        "seconds": 7.072,
+        "height_m": 0.1160053659291658,
+        "joint_drift_rad": 0.006673692197906783,
+        "grip_force_N": -4.371883689204276
+      },
+      {
+        "seconds": 7.392,
+        "height_m": 0.11557300532110223,
+        "joint_drift_rad": 0.0066736905166076,
+        "grip_force_N": -4.371883692502607
+      },
+      {
+        "seconds": 7.712,
+        "height_m": 0.11514078899767984,
+        "joint_drift_rad": 0.0066736888226235636,
+        "grip_force_N": -4.371883696051652
+      },
+      {
+        "seconds": 8.032,
+        "height_m": 0.11470872698016929,
+        "joint_drift_rad": 0.00667368711610411,
+        "grip_force_N": -4.371883699851227
+      },
+      {
+        "seconds": 8.352,
+        "height_m": 0.11427682909984871,
+        "joint_drift_rad": 0.0066736853972066135,
+        "grip_force_N": -4.371883703901159
+      },
+      {
+        "seconds": 8.672,
+        "height_m": 0.11384510498696228,
+        "joint_drift_rad": 0.006673683666096886,
+        "grip_force_N": -4.371883708201281
+      },
+      {
+        "seconds": 8.992,
+        "height_m": 0.11341356406010182,
+        "joint_drift_rad": 0.0066736819229493705,
+        "grip_force_N": -4.371883712751449
+      },
+      {
+        "seconds": 9.312,
+        "height_m": 0.11298221551604953,
+        "joint_drift_rad": 0.006673680167945756,
+        "grip_force_N": -4.371883717551569
+      },
+      {
+        "seconds": 9.632,
+        "height_m": 0.11255106832008305,
+        "joint_drift_rad": 0.006673678401275973,
+        "grip_force_N": -4.3718837226015
+      },
+      {
+        "seconds": 9.952,
+        "height_m": 0.11212013119676273,
+        "joint_drift_rad": 0.0066736766231370315,
+        "grip_force_N": -4.37188372790117
+      },
+      {
+        "seconds": 10.272,
+        "height_m": 0.11168941262122449,
+        "joint_drift_rad": 0.0066736748337339336,
+        "grip_force_N": -4.371883733450536
+      },
+      {
+        "seconds": 10.592,
+        "height_m": 0.11125892081099352,
+        "joint_drift_rad": 0.006673673033277955,
+        "grip_force_N": -4.371883739249508
+      },
+      {
+        "seconds": 10.912,
+        "height_m": 0.1108286637183114,
+        "joint_drift_rad": 0.006673671221987865,
+        "grip_force_N": -4.371883745298059
+      },
+      {
+        "seconds": 11.232000000000001,
+        "height_m": 0.11039864902301343,
+        "joint_drift_rad": 0.006673669400088733,
+        "grip_force_N": -4.371883751596158
+      },
+      {
+        "seconds": 11.552,
+        "height_m": 0.10996888412595135,
+        "joint_drift_rad": 0.006673667567812319,
+        "grip_force_N": -4.3718837581438175
+      },
+      {
+        "seconds": 11.872,
+        "height_m": 0.10953937614296913,
+        "joint_drift_rad": 0.006673665725396016,
+        "grip_force_N": -4.371883764941011
+      },
+      {
+        "seconds": 12.192,
+        "height_m": 0.10911013189944319,
+        "joint_drift_rad": 0.006673663873083435,
+        "grip_force_N": -4.37188377198776
+      },
+      {
+        "seconds": 12.512,
+        "height_m": 0.10868115792538896,
+        "joint_drift_rad": 0.006673662011123599,
+        "grip_force_N": -4.371883779284102
+      },
+      {
+        "seconds": 12.832,
+        "height_m": 0.10825246045113734,
+        "joint_drift_rad": 0.0066736601397710815,
+        "grip_force_N": -4.371883786830044
+      },
+      {
+        "seconds": 13.152000000000001,
+        "height_m": 0.10784901962105725,
+        "joint_drift_rad": 0.006673658522837217,
+        "grip_force_N": -4.373457433728203
+      },
+      {
+        "seconds": 13.472,
+        "height_m": 0.10743433227451418,
+        "joint_drift_rad": 0.006673655142206525,
+        "grip_force_N": -4.371869109908635
+      },
+      {
+        "seconds": 13.792,
+        "height_m": 0.10701165629859755,
+        "joint_drift_rad": 0.006673657481049755,
+        "grip_force_N": -4.373724147360382
+      },
+      {
+        "seconds": 14.112,
+        "height_m": 0.10660623531511199,
+        "joint_drift_rad": 0.006673652788178053,
+        "grip_force_N": -4.373457385697671
+      },
+      {
+        "seconds": 14.432,
+        "height_m": 0.10618937671595155,
+        "joint_drift_rad": 0.006673649882064786,
+        "grip_force_N": -4.371873792065994
+      },
+      {
+        "seconds": 14.752,
+        "height_m": 0.10576227324125587,
+        "joint_drift_rad": 0.006673649038673818,
+        "grip_force_N": -4.371883828364703
+      },
+      {
+        "seconds": 15.072000000000001,
+        "height_m": 0.10533543469654892,
+        "joint_drift_rad": 0.006673647163311841,
+        "grip_force_N": -4.371883842168356
+      },
+      {
+        "seconds": 15.392,
+        "height_m": 0.10490886575631073,
+        "joint_drift_rad": 0.006673645256099425,
+        "grip_force_N": -4.371883858318578
+      },
+      {
+        "seconds": 15.712,
+        "height_m": 0.10448257166030997,
+        "joint_drift_rad": 0.006673643346845559,
+        "grip_force_N": -4.371883876323473
+      },
+      {
+        "seconds": 16.032,
+        "height_m": 0.10405655723994393,
+        "joint_drift_rad": 0.006673641436013095,
+        "grip_force_N": -4.371883896068657
+      },
+      {
+        "seconds": 16.352,
+        "height_m": 0.10363082699045861,
+        "joint_drift_rad": 0.006673639523731317,
+        "grip_force_N": -4.371883917585218
+      },
+      {
+        "seconds": 16.672,
+        "height_m": 0.1032053723840166,
+        "joint_drift_rad": 0.006673637607398697,
+        "grip_force_N": -4.371883838730274
+      },
+      {
+        "seconds": 16.992,
+        "height_m": 0.10278015613911248,
+        "joint_drift_rad": 0.006673635698161401,
+        "grip_force_N": -4.37188377186435
+      },
+      {
+        "seconds": 17.312,
+        "height_m": 0.10235521053510899,
+        "joint_drift_rad": 0.006673633790188677,
+        "grip_force_N": -4.371883789323477
+      },
+      {
+        "seconds": 17.632,
+        "height_m": 0.10193053963912277,
+        "joint_drift_rad": 0.006673631876045916,
+        "grip_force_N": -4.371883681562201
+      },
+      {
+        "seconds": 17.952,
+        "height_m": 0.10150611398705114,
+        "joint_drift_rad": 0.006673629965828709,
+        "grip_force_N": -4.3718835505334
+      },
+      {
+        "seconds": 18.272000000000002,
+        "height_m": 0.10106984366531523,
+        "joint_drift_rad": 0.006673625607315797,
+        "grip_force_N": -4.370068371127297
+      },
+      {
+        "seconds": 18.592,
+        "height_m": 0.10061348729065284,
+        "joint_drift_rad": 0.006673625787305598,
+        "grip_force_N": -4.370116535138221
+      },
+      {
+        "seconds": 18.912,
+        "height_m": 0.10005348891708954,
+        "joint_drift_rad": 0.006673622502503307,
+        "grip_force_N": -4.363235104556135
+      },
+      {
+        "seconds": 19.232,
+        "height_m": 0.09947668926816307,
+        "joint_drift_rad": 0.006673613184407429,
+        "grip_force_N": -4.358390535255261
+      },
+      {
+        "seconds": 19.552,
+        "height_m": 0.09885608599956168,
+        "joint_drift_rad": 0.006673617565716383,
+        "grip_force_N": -4.360212474936313
+      },
+      {
+        "seconds": 19.872,
+        "height_m": 0.0980877903440706,
+        "joint_drift_rad": 0.006673613703796821,
+        "grip_force_N": -4.347470354480788
+      },
+      {
+        "seconds": 20.192,
+        "height_m": 0.09729305382710522,
+        "joint_drift_rad": 0.0066736212025577946,
+        "grip_force_N": -4.35081440724974
+      },
+      {
+        "seconds": 20.512,
+        "height_m": 0.09658123334627777,
+        "joint_drift_rad": 0.00667360982364365,
+        "grip_force_N": -4.352488656924669
+      },
+      {
+        "seconds": 20.832,
+        "height_m": 0.09582790626362309,
+        "joint_drift_rad": 0.0066736017748231236,
+        "grip_force_N": -4.347454211416304
+      },
+      {
+        "seconds": 21.152,
+        "height_m": 0.09505848160552781,
+        "joint_drift_rad": 0.006673610275497871,
+        "grip_force_N": -4.352794875067319
+      },
+      {
+        "seconds": 21.472,
+        "height_m": 0.0943375364930143,
+        "joint_drift_rad": 0.006673599340065117,
+        "grip_force_N": -4.352484707117373
+      },
+      {
+        "seconds": 21.792,
+        "height_m": 0.09357158280787353,
+        "joint_drift_rad": 0.0066735944102681855,
+        "grip_force_N": -4.347465146795503
+      },
+      {
+        "seconds": 22.112000000000002,
+        "height_m": 0.09278091544138324,
+        "joint_drift_rad": 0.006673594218859935,
+        "grip_force_N": -4.347458020909459
+      },
+      {
+        "seconds": 22.432000000000002,
+        "height_m": 0.09198707165922725,
+        "joint_drift_rad": 0.006673592171288462,
+        "grip_force_N": -4.347455777241995
+      },
+      {
+        "seconds": 22.752,
+        "height_m": 0.09117007385374686,
+        "joint_drift_rad": 0.006673580268178603,
+        "grip_force_N": -4.33946068861958
+      },
+      {
+        "seconds": 23.072,
+        "height_m": 0.09005051181144669,
+        "joint_drift_rad": 0.006673646219582108,
+        "grip_force_N": -4.317375733941442
+      },
+      {
+        "seconds": 23.392,
+        "height_m": 0.08837756056621268,
+        "joint_drift_rad": 0.006672958575211357,
+        "grip_force_N": -4.242444166418465
+      },
+      {
+        "seconds": 23.712,
+        "height_m": 0.030342774762245627,
+        "joint_drift_rad": 0.006601227655872788,
+        "grip_force_N": 0.005813136389621704
+      },
+      {
+        "seconds": 24.032,
+        "height_m": 0.021841913873853643,
+        "joint_drift_rad": 0.00659887418093047,
+        "grip_force_N": 3.338917004950354e-05
+      },
+      {
+        "seconds": 24.352,
+        "height_m": 0.021844874667668525,
+        "joint_drift_rad": 0.0065987974835232666,
+        "grip_force_N": -2.358423767021523e-06
+      },
+      {
+        "seconds": 24.672,
+        "height_m": 0.021844874683753675,
+        "joint_drift_rad": 0.006598794982335232,
+        "grip_force_N": -2.5433258741123797e-05
+      },
+      {
+        "seconds": 24.992,
+        "height_m": 0.02184487468375377,
+        "joint_drift_rad": 0.006598794908369371,
+        "grip_force_N": 5.077861302860701e-07
+      },
+      {
+        "seconds": 25.312,
+        "height_m": 0.021844874683753773,
+        "joint_drift_rad": 0.006598794914416672,
+        "grip_force_N": 7.974133463461371e-07
+      },
+      {
+        "seconds": 25.632,
+        "height_m": 0.021844874683753773,
+        "joint_drift_rad": 0.006598794923096951,
+        "grip_force_N": 1.0402297579580572e-06
+      },
+      {
+        "seconds": 25.952,
+        "height_m": 0.021844874683753773,
+        "joint_drift_rad": 0.006598794931862578,
+        "grip_force_N": 1.0136782961470937e-07
+      },
+      {
+        "seconds": 26.272000000000002,
+        "height_m": 0.021844874683753773,
+        "joint_drift_rad": 0.006598794940679414,
+        "grip_force_N": -8.942164581420261e-06
+      },
+      {
+        "seconds": 26.592000000000002,
+        "height_m": 0.021844874683753773,
+        "joint_drift_rad": 0.006598794949606052,
+        "grip_force_N": -6.556818991725344e-05
+      },
+      {
+        "seconds": 26.912,
+        "height_m": 0.021844874683753773,
+        "joint_drift_rad": 0.006598794958174364,
+        "grip_force_N": 6.426029498374337e-07
+      },
+      {
+        "seconds": 27.232,
+        "height_m": 0.021844874683753773,
+        "joint_drift_rad": 0.006598794966934607,
+        "grip_force_N": 9.510547189989181e-07
+      },
+      {
+        "seconds": 27.552,
+        "height_m": 0.021844874683753773,
+        "joint_drift_rad": 0.006598794975691519,
+        "grip_force_N": 8.967244854375261e-07
+      },
+      {
+        "seconds": 27.872,
+        "height_m": 0.02184487468375376,
+        "joint_drift_rad": 0.006598794984453871,
+        "grip_force_N": -2.364707104496144e-06
+      },
+      {
+        "seconds": 28.192,
+        "height_m": 0.021844874683753773,
+        "joint_drift_rad": 0.006598794993436435,
+        "grip_force_N": -2.5429910698899163e-05
+      },
+      {
+        "seconds": 28.512,
+        "height_m": 0.021844874683753773,
+        "joint_drift_rad": 0.006598795001969471,
+        "grip_force_N": 5.077183802396128e-07
+      },
+      {
+        "seconds": 28.832,
+        "height_m": 0.021844874683753773,
+        "joint_drift_rad": 0.006598795010719055,
+        "grip_force_N": 7.973072413354253e-07
+      },
+      {
+        "seconds": 29.152,
+        "height_m": 0.02184487468375377,
+        "joint_drift_rad": 0.006598795019465226,
+        "grip_force_N": 1.0400913743029613e-06
+      },
+      {
+        "seconds": 29.472,
+        "height_m": 0.02184487468375377,
+        "joint_drift_rad": 0.006598795028209231,
+        "grip_force_N": 1.0135434532269932e-07
+      },
+      {
+        "seconds": 29.792,
+        "height_m": 0.021844874683753766,
+        "joint_drift_rad": 0.006598795037001309,
+        "grip_force_N": -8.94097551489065e-06
+      },
+      {
+        "seconds": 30.112000000000002,
+        "height_m": 0.021844874683753776,
+        "joint_drift_rad": 0.006598795045903244,
+        "grip_force_N": -6.55594729703135e-05
+      },
+      {
+        "seconds": 30.432000000000002,
+        "height_m": 0.021844874683753776,
+        "joint_drift_rad": 0.006598795054446993,
+        "grip_force_N": 6.425175276658551e-07
+      },
+      {
+        "seconds": 30.752,
+        "height_m": 0.021844874683753776,
+        "joint_drift_rad": 0.0065987950631826164,
+        "grip_force_N": 9.509283209249614e-07
+      },
+      {
+        "seconds": 31.072,
+        "height_m": 0.02184487468375377,
+        "joint_drift_rad": 0.006598795071914715,
+        "grip_force_N": 8.966053328957554e-07
+      },
+      {
+        "seconds": 31.392,
+        "height_m": 0.021844874683753766,
+        "joint_drift_rad": 0.006598795080652281,
+        "grip_force_N": -2.3643929680151226e-06
+      },
+      {
+        "seconds": 31.712,
+        "height_m": 0.02184487468375377,
+        "joint_drift_rad": 0.0065987950896102265,
+        "grip_force_N": -2.5426533195529304e-05
+      },
+      {
+        "seconds": 32.0,
+        "height_m": 0.02184487468375377,
+        "joint_drift_rad": 0.006598795097243287,
+        "grip_force_N": 7.9721195459781e-07
+      }
+    ],
+    "contact_only": [
+      {
+        "seconds": 0.032,
+        "height_m": 0.13106741744427425,
+        "joint_drift_rad": 0.008861683996247191,
+        "grip_force_N": -4.524583105388772
+      },
+      {
+        "seconds": 0.352,
+        "height_m": 0.1263615898464141,
+        "joint_drift_rad": 0.006447250512409242,
+        "grip_force_N": -4.380235732614687
+      },
+      {
+        "seconds": 0.672,
+        "height_m": 0.12622994020879494,
+        "joint_drift_rad": 0.006666163735369435,
+        "grip_force_N": -4.380402129589969
+      },
+      {
+        "seconds": 0.992,
+        "height_m": 0.12622489007237075,
+        "joint_drift_rad": 0.006673473952955894,
+        "grip_force_N": -4.380402529903679
+      },
+      {
+        "seconds": 1.312,
+        "height_m": 0.12622379676265713,
+        "joint_drift_rad": 0.0066737195162982765,
+        "grip_force_N": -4.380402510255105
+      },
+      {
+        "seconds": 1.6320000000000001,
+        "height_m": 0.1262228267374447,
+        "joint_drift_rad": 0.006673727819700465,
+        "grip_force_N": -4.380402474945689
+      },
+      {
+        "seconds": 1.952,
+        "height_m": 0.12622186049579814,
+        "joint_drift_rad": 0.006673728106943361,
+        "grip_force_N": -4.380402439063984
+      },
+      {
+        "seconds": 2.2720000000000002,
+        "height_m": 0.12622089432851813,
+        "joint_drift_rad": 0.006673728121705885,
+        "grip_force_N": -4.380402403182195
+      },
+      {
+        "seconds": 2.592,
+        "height_m": 0.12621992812112287,
+        "joint_drift_rad": 0.006673728127150752,
+        "grip_force_N": -4.380402367322184
+      },
+      {
+        "seconds": 2.912,
+        "height_m": 0.12621896187009746,
+        "joint_drift_rad": 0.006673728132274931,
+        "grip_force_N": -4.380402331484814
+      },
+      {
+        "seconds": 3.232,
+        "height_m": 0.12621799557532834,
+        "joint_drift_rad": 0.006673728137388063,
+        "grip_force_N": -4.380402295670087
+      },
+      {
+        "seconds": 3.552,
+        "height_m": 0.1262170292368053,
+        "joint_drift_rad": 0.00667372814250064,
+        "grip_force_N": -4.380402259878028
+      },
+      {
+        "seconds": 3.872,
+        "height_m": 0.12621606285452097,
+        "joint_drift_rad": 0.006673728147613134,
+        "grip_force_N": -4.380402224108615
+      },
+      {
+        "seconds": 4.192,
+        "height_m": 0.1262150964284718,
+        "joint_drift_rad": 0.006673728152725461,
+        "grip_force_N": -4.380402188361855
+      },
+      {
+        "seconds": 4.5120000000000005,
+        "height_m": 0.12621412995864323,
+        "joint_drift_rad": 0.006673728157837955,
+        "grip_force_N": -4.38040215263778
+      },
+      {
+        "seconds": 4.832,
+        "height_m": 0.12621316344503292,
+        "joint_drift_rad": 0.006673728162950199,
+        "grip_force_N": -4.380402116936365
+      },
+      {
+        "seconds": 5.152,
+        "height_m": 0.12621219688763233,
+        "joint_drift_rad": 0.006673728168062387,
+        "grip_force_N": -4.380402081257612
+      },
+      {
+        "seconds": 5.472,
+        "height_m": 0.12621123028643447,
+        "joint_drift_rad": 0.006673728173174437,
+        "grip_force_N": -4.380402045601522
+      },
+      {
+        "seconds": 5.792,
+        "height_m": 0.1262102636414325,
+        "joint_drift_rad": 0.006673728178286431,
+        "grip_force_N": -4.3804020099681
+      },
+      {
+        "seconds": 6.112,
+        "height_m": 0.1262092969526192,
+        "joint_drift_rad": 0.006673728183398342,
+        "grip_force_N": -4.380401974357359
+      },
+      {
+        "seconds": 6.432,
+        "height_m": 0.12620833021998742,
+        "joint_drift_rad": 0.006673728188510225,
+        "grip_force_N": -4.380401938769284
+      },
+      {
+        "seconds": 6.752,
+        "height_m": 0.1262073634435295,
+        "joint_drift_rad": 0.006673728193621997,
+        "grip_force_N": -4.380401903203894
+      },
+      {
+        "seconds": 7.072,
+        "height_m": 0.12620639662323838,
+        "joint_drift_rad": 0.006673728198733714,
+        "grip_force_N": -4.380401867661173
+      },
+      {
+        "seconds": 7.392,
+        "height_m": 0.12620542975910684,
+        "joint_drift_rad": 0.006673728203845347,
+        "grip_force_N": -4.380401832141124
+      },
+      {
+        "seconds": 7.712,
+        "height_m": 0.12620446285112763,
+        "joint_drift_rad": 0.006673728208956897,
+        "grip_force_N": -4.380401796643741
+      },
+      {
+        "seconds": 8.032,
+        "height_m": 0.12620349589929325,
+        "joint_drift_rad": 0.006673728214068392,
+        "grip_force_N": -4.380401761169055
+      },
+      {
+        "seconds": 8.352,
+        "height_m": 0.12620252890359734,
+        "joint_drift_rad": 0.006673728219179859,
+        "grip_force_N": -4.380401725717039
+      },
+      {
+        "seconds": 8.672,
+        "height_m": 0.12620156186403203,
+        "joint_drift_rad": 0.006673728224291242,
+        "grip_force_N": -4.380401690287706
+      },
+      {
+        "seconds": 8.992,
+        "height_m": 0.1262005947805901,
+        "joint_drift_rad": 0.006673728229402487,
+        "grip_force_N": -4.3804016548810605
+      },
+      {
+        "seconds": 9.312,
+        "height_m": 0.12619962765326395,
+        "joint_drift_rad": 0.006673728234513759,
+        "grip_force_N": -4.3804016194970945
+      },
+      {
+        "seconds": 9.632,
+        "height_m": 0.1261986604820467,
+        "joint_drift_rad": 0.006673728239624921,
+        "grip_force_N": -4.3804015841358295
+      },
+      {
+        "seconds": 9.952,
+        "height_m": 0.12619769326693114,
+        "joint_drift_rad": 0.006673728244735999,
+        "grip_force_N": -4.380401548797242
+      },
+      {
+        "seconds": 10.272,
+        "height_m": 0.1261967260079101,
+        "joint_drift_rad": 0.006673728249847077,
+        "grip_force_N": -4.380401513481349
+      },
+      {
+        "seconds": 10.592,
+        "height_m": 0.1261957587049764,
+        "joint_drift_rad": 0.006673728254958128,
+        "grip_force_N": -4.380401478188151
+      },
+      {
+        "seconds": 10.912,
+        "height_m": 0.12619479135812325,
+        "joint_drift_rad": 0.0066737282600690395,
+        "grip_force_N": -4.380401442917627
+      },
+      {
+        "seconds": 11.232000000000001,
+        "height_m": 0.1261938239673428,
+        "joint_drift_rad": 0.006673728265179896,
+        "grip_force_N": -4.380401407669817
+      },
+      {
+        "seconds": 11.552,
+        "height_m": 0.12619285653262804,
+        "joint_drift_rad": 0.006673728270290724,
+        "grip_force_N": -4.380401372444693
+      },
+      {
+        "seconds": 11.872,
+        "height_m": 0.1261918890539713,
+        "joint_drift_rad": 0.0066737282754015526,
+        "grip_force_N": -4.380401337242274
+      },
+      {
+        "seconds": 12.192,
+        "height_m": 0.12619092153136557,
+        "joint_drift_rad": 0.006673728280512242,
+        "grip_force_N": -4.3804013020625465
+      },
+      {
+        "seconds": 12.512,
+        "height_m": 0.1261899539648039,
+        "joint_drift_rad": 0.006673728285622876,
+        "grip_force_N": -4.380401266905521
+      },
+      {
+        "seconds": 12.832,
+        "height_m": 0.12618898635427891,
+        "joint_drift_rad": 0.006673728290733538,
+        "grip_force_N": -4.380401231771191
+      },
+      {
+        "seconds": 13.152000000000001,
+        "height_m": 0.12618801869978288,
+        "joint_drift_rad": 0.006673728295844089,
+        "grip_force_N": -4.380401196659564
+      },
+      {
+        "seconds": 13.472,
+        "height_m": 0.12618705100130934,
+        "joint_drift_rad": 0.006673728300954612,
+        "grip_force_N": -4.380401161570641
+      },
+      {
+        "seconds": 13.792,
+        "height_m": 0.1261860832588504,
+        "joint_drift_rad": 0.006673728306065108,
+        "grip_force_N": -4.380401126504431
+      },
+      {
+        "seconds": 14.112,
+        "height_m": 0.12618511547239916,
+        "joint_drift_rad": 0.006673728311175575,
+        "grip_force_N": -4.3804010914609295
+      },
+      {
+        "seconds": 14.432,
+        "height_m": 0.12618414764194832,
+        "joint_drift_rad": 0.006673728316285932,
+        "grip_force_N": -4.380401056440141
+      },
+      {
+        "seconds": 14.752,
+        "height_m": 0.1261831797674911,
+        "joint_drift_rad": 0.006673728321396316,
+        "grip_force_N": -4.380401021442046
+      },
+      {
+        "seconds": 15.072000000000001,
+        "height_m": 0.12618221184901982,
+        "joint_drift_rad": 0.006673728326506589,
+        "grip_force_N": -4.380400986466675
+      },
+      {
+        "seconds": 15.392,
+        "height_m": 0.12618124388652638,
+        "joint_drift_rad": 0.006673728331616807,
+        "grip_force_N": -4.380400951514016
+      },
+      {
+        "seconds": 15.712,
+        "height_m": 0.12618027588000486,
+        "joint_drift_rad": 0.0066737283367270805,
+        "grip_force_N": -4.380400916584072
+      },
+      {
+        "seconds": 16.032,
+        "height_m": 0.1261793078294479,
+        "joint_drift_rad": 0.006673728341837271,
+        "grip_force_N": -4.380400881676827
+      },
+      {
+        "seconds": 16.352,
+        "height_m": 0.12617833973484735,
+        "joint_drift_rad": 0.006673728346947405,
+        "grip_force_N": -4.3804008467923135
+      },
+      {
+        "seconds": 16.672,
+        "height_m": 0.1261773715961964,
+        "joint_drift_rad": 0.006673728352057456,
+        "grip_force_N": -4.38040081193053
+      },
+      {
+        "seconds": 16.992,
+        "height_m": 0.1261764034134885,
+        "joint_drift_rad": 0.006673728357167619,
+        "grip_force_N": -4.380400777091465
+      },
+      {
+        "seconds": 17.312,
+        "height_m": 0.12617543518672167,
+        "joint_drift_rad": 0.0066737283622776145,
+        "grip_force_N": -4.3804007422751265
+      },
+      {
+        "seconds": 17.632,
+        "height_m": 0.12617446691587678,
+        "joint_drift_rad": 0.0066737283673876935,
+        "grip_force_N": -4.3804007074814955
+      },
+      {
+        "seconds": 17.952,
+        "height_m": 0.1261734986009525,
+        "joint_drift_rad": 0.006673728372497689,
+        "grip_force_N": -4.380400672710595
+      },
+      {
+        "seconds": 18.272000000000002,
+        "height_m": 0.1261725302419414,
+        "joint_drift_rad": 0.0066737283776076295,
+        "grip_force_N": -4.3804006379624125
+      },
+      {
+        "seconds": 18.592,
+        "height_m": 0.12617156183883668,
+        "joint_drift_rad": 0.00667372838271757,
+        "grip_force_N": -4.380400603236974
+      },
+      {
+        "seconds": 18.912,
+        "height_m": 0.12617059339163078,
+        "joint_drift_rad": 0.0066737283878274545,
+        "grip_force_N": -4.380400568534255
+      },
+      {
+        "seconds": 19.232,
+        "height_m": 0.12616962490031666,
+        "joint_drift_rad": 0.006673728392937395,
+        "grip_force_N": -4.380400533854263
+      },
+      {
+        "seconds": 19.552,
+        "height_m": 0.126168656364887,
+        "joint_drift_rad": 0.006673728398047196,
+        "grip_force_N": -4.380400499197011
+      },
+      {
+        "seconds": 19.872,
+        "height_m": 0.12616768778533413,
+        "joint_drift_rad": 0.006673728403157053,
+        "grip_force_N": -4.380400464562485
+      },
+      {
+        "seconds": 20.192,
+        "height_m": 0.12616671916165106,
+        "joint_drift_rad": 0.00667372840826691,
+        "grip_force_N": -4.380400429950708
+      },
+      {
+        "seconds": 20.512,
+        "height_m": 0.12616575049383053,
+        "joint_drift_rad": 0.006673728413376684,
+        "grip_force_N": -4.380400395361652
+      },
+      {
+        "seconds": 20.832,
+        "height_m": 0.12616478178186544,
+        "joint_drift_rad": 0.006673728418486458,
+        "grip_force_N": -4.380400360795339
+      },
+      {
+        "seconds": 21.152,
+        "height_m": 0.12616381302574908,
+        "joint_drift_rad": 0.0066737284235962036,
+        "grip_force_N": -4.380400326251769
+      },
+      {
+        "seconds": 21.472,
+        "height_m": 0.12616284422547286,
+        "joint_drift_rad": 0.006673728428705977,
+        "grip_force_N": -4.380400291730942
+      },
+      {
+        "seconds": 21.792,
+        "height_m": 0.12616187538103013,
+        "joint_drift_rad": 0.006673728433815723,
+        "grip_force_N": -4.380400257232846
+      },
+      {
+        "seconds": 22.112000000000002,
+        "height_m": 0.1261609064924142,
+        "joint_drift_rad": 0.006673728438925414,
+        "grip_force_N": -4.38040022275753
+      },
+      {
+        "seconds": 22.432000000000002,
+        "height_m": 0.12615993755961827,
+        "joint_drift_rad": 0.006673728444035132,
+        "grip_force_N": -4.380400188304923
+      },
+      {
+        "seconds": 22.752,
+        "height_m": 0.1261589685826332,
+        "joint_drift_rad": 0.00667372844914485,
+        "grip_force_N": -4.3804001538750805
+      },
+      {
+        "seconds": 23.072,
+        "height_m": 0.1261579995614525,
+        "joint_drift_rad": 0.006673728454254457,
+        "grip_force_N": -4.380400119467987
+      },
+      {
+        "seconds": 23.392,
+        "height_m": 0.12615703049606897,
+        "joint_drift_rad": 0.0066737284593641755,
+        "grip_force_N": -4.380400085083641
+      },
+      {
+        "seconds": 23.712,
+        "height_m": 0.12615606138647573,
+        "joint_drift_rad": 0.006673728464473894,
+        "grip_force_N": -4.380400050722036
+      },
+      {
+        "seconds": 24.032,
+        "height_m": 0.12615509223266433,
+        "joint_drift_rad": 0.006673728469583612,
+        "grip_force_N": -4.3804000163831915
+      },
+      {
+        "seconds": 24.352,
+        "height_m": 0.12615412303462883,
+        "joint_drift_rad": 0.006673728474692858,
+        "grip_force_N": -4.38039998206712
+      },
+      {
+        "seconds": 24.672,
+        "height_m": 0.1261531537923615,
+        "joint_drift_rad": 0.006673728479802854,
+        "grip_force_N": -4.380399947773783
+      },
+      {
+        "seconds": 24.992,
+        "height_m": 0.12615218450585522,
+        "joint_drift_rad": 0.006673728484912489,
+        "grip_force_N": -4.380399913503203
+      },
+      {
+        "seconds": 25.312,
+        "height_m": 0.1261512151751023,
+        "joint_drift_rad": 0.006673728490022207,
+        "grip_force_N": -4.380399879255385
+      },
+      {
+        "seconds": 25.632,
+        "height_m": 0.12615024580009643,
+        "joint_drift_rad": 0.006673728495131842,
+        "grip_force_N": -4.380399845030341
+      },
+      {
+        "seconds": 25.952,
+        "height_m": 0.12614927638083,
+        "joint_drift_rad": 0.006673728500241505,
+        "grip_force_N": -4.380399810828048
+      },
+      {
+        "seconds": 26.272000000000002,
+        "height_m": 0.12614830691729506,
+        "joint_drift_rad": 0.006673728505351084,
+        "grip_force_N": -4.3803997766485185
+      },
+      {
+        "seconds": 26.592000000000002,
+        "height_m": 0.1261473374094842,
+        "joint_drift_rad": 0.006673728510460747,
+        "grip_force_N": -4.380399742491756
+      },
+      {
+        "seconds": 26.912,
+        "height_m": 0.12614636785739095,
+        "joint_drift_rad": 0.006673728515570437,
+        "grip_force_N": -4.380399708357765
+      },
+      {
+        "seconds": 27.232,
+        "height_m": 0.12614539826100796,
+        "joint_drift_rad": 0.0066737285206801,
+        "grip_force_N": -4.380399674246533
+      },
+      {
+        "seconds": 27.552,
+        "height_m": 0.12614442862032726,
+        "joint_drift_rad": 0.006673728525789818,
+        "grip_force_N": -4.380399640158086
+      },
+      {
+        "seconds": 27.872,
+        "height_m": 0.12614345893534218,
+        "joint_drift_rad": 0.006673728530899453,
+        "grip_force_N": -4.380399606092391
+      },
+      {
+        "seconds": 28.192,
+        "height_m": 0.12614248920604537,
+        "joint_drift_rad": 0.006673728536009144,
+        "grip_force_N": -4.38039957204949
+      },
+      {
+        "seconds": 28.512,
+        "height_m": 0.1261415194324293,
+        "joint_drift_rad": 0.00667372854111889,
+        "grip_force_N": -4.380399538029335
+      },
+      {
+        "seconds": 28.832,
+        "height_m": 0.12614054961448648,
+        "joint_drift_rad": 0.006673728546228552,
+        "grip_force_N": -4.380399504031973
+      },
+      {
+        "seconds": 29.152,
+        "height_m": 0.12613957975221,
+        "joint_drift_rad": 0.006673728551338326,
+        "grip_force_N": -4.3803994700574025
+      },
+      {
+        "seconds": 29.472,
+        "height_m": 0.12613860984559294,
+        "joint_drift_rad": 0.006673728556448072,
+        "grip_force_N": -4.380399436105592
+      },
+      {
+        "seconds": 29.792,
+        "height_m": 0.12613763989462765,
+        "joint_drift_rad": 0.006673728561557818,
+        "grip_force_N": -4.380399402176558
+      },
+      {
+        "seconds": 30.112000000000002,
+        "height_m": 0.1261366698993066,
+        "joint_drift_rad": 0.006673728566667619,
+        "grip_force_N": -4.380399368270323
+      },
+      {
+        "seconds": 30.432000000000002,
+        "height_m": 0.12613569985962167,
+        "joint_drift_rad": 0.006673728571777449,
+        "grip_force_N": -4.380399334386859
+      },
+      {
+        "seconds": 30.752,
+        "height_m": 0.12613472977556572,
+        "joint_drift_rad": 0.0066737285768871946,
+        "grip_force_N": -4.380399300526177
+      },
+      {
+        "seconds": 31.072,
+        "height_m": 0.12613375964713447,
+        "joint_drift_rad": 0.006673728581997079,
+        "grip_force_N": -4.3803992666882925
+      },
+      {
+        "seconds": 31.392,
+        "height_m": 0.12613278947431847,
+        "joint_drift_rad": 0.006673728587106964,
+        "grip_force_N": -4.380399232873199
+      },
+      {
+        "seconds": 31.712,
+        "height_m": 0.1261318192571105,
+        "joint_drift_rad": 0.0066737285922168765,
+        "grip_force_N": -4.380399199080884
+      },
+      {
+        "seconds": 32.0,
+        "height_m": 0.12613094602366218,
+        "joint_drift_rad": 0.006673728596815753,
+        "grip_force_N": -4.380399168687304
+      }
+    ],
+    "fixed": [
+      {
+        "seconds": 0.032,
+        "height_m": 0.1320910480429697,
+        "joint_drift_rad": 0.00958456918869606,
+        "grip_force_N": -4.524994733652176
+      },
+      {
+        "seconds": 0.352,
+        "height_m": 0.13107929413715816,
+        "joint_drift_rad": 0.003256144935082972,
+        "grip_force_N": -4.382772623912975
+      },
+      {
+        "seconds": 0.672,
+        "height_m": 0.13105960061310917,
+        "joint_drift_rad": 0.003327450566154466,
+        "grip_force_N": -4.382730192906378
+      },
+      {
+        "seconds": 0.992,
+        "height_m": 0.1310578935554455,
+        "joint_drift_rad": 0.0032784065524331663,
+        "grip_force_N": -4.382730529597662
+      },
+      {
+        "seconds": 1.312,
+        "height_m": 0.13105670075518341,
+        "joint_drift_rad": 0.0032230750342043812,
+        "grip_force_N": -4.382730543380336
+      },
+      {
+        "seconds": 1.6320000000000001,
+        "height_m": 0.131055521954135,
+        "joint_drift_rad": 0.0031674178426390753,
+        "grip_force_N": -4.382730542741079
+      },
+      {
+        "seconds": 1.952,
+        "height_m": 0.13105434347650838,
+        "joint_drift_rad": 0.003111747301043799,
+        "grip_force_N": -4.382730541573276
+      },
+      {
+        "seconds": 2.2720000000000002,
+        "height_m": 0.13105316497476893,
+        "joint_drift_rad": 0.003056079751250662,
+        "grip_force_N": -4.382730540420401
+      },
+      {
+        "seconds": 2.592,
+        "height_m": 0.13105198644128846,
+        "joint_drift_rad": 0.003000416045917831,
+        "grip_force_N": -4.382730539303774
+      },
+      {
+        "seconds": 2.912,
+        "height_m": 0.13105080787595302,
+        "joint_drift_rad": 0.002944756229138479,
+        "grip_force_N": -4.382730538224271
+      },
+      {
+        "seconds": 3.232,
+        "height_m": 0.13104962927875877,
+        "joint_drift_rad": 0.002889100302918779,
+        "grip_force_N": -4.382730537181899
+      },
+      {
+        "seconds": 3.552,
+        "height_m": 0.13104845064969983,
+        "joint_drift_rad": 0.0028334482670739902,
+        "grip_force_N": -4.382730536176655
+      },
+      {
+        "seconds": 3.872,
+        "height_m": 0.1310472719887717,
+        "joint_drift_rad": 0.0027778001213103476,
+        "grip_force_N": -4.382730535208549
+      },
+      {
+        "seconds": 4.192,
+        "height_m": 0.13104609329596748,
+        "joint_drift_rad": 0.0027221558653265365,
+        "grip_force_N": -4.382730534277589
+      },
+      {
+        "seconds": 4.5120000000000005,
+        "height_m": 0.13104491457128267,
+        "joint_drift_rad": 0.0026665154988223527,
+        "grip_force_N": -4.38273053338377
+      },
+      {
+        "seconds": 4.832,
+        "height_m": 0.13104373581471027,
+        "joint_drift_rad": 0.0026108790214962596,
+        "grip_force_N": -4.382730532527091
+      },
+      {
+        "seconds": 5.152,
+        "height_m": 0.13104255702624584,
+        "joint_drift_rad": 0.002555246433048053,
+        "grip_force_N": -4.382730531707564
+      },
+      {
+        "seconds": 5.472,
+        "height_m": 0.13104137820588296,
+        "joint_drift_rad": 0.0024996177331753078,
+        "grip_force_N": -4.382730530925186
+      },
+      {
+        "seconds": 5.792,
+        "height_m": 0.13104019935361605,
+        "joint_drift_rad": 0.00244399292157782,
+        "grip_force_N": -4.382730530179952
+      },
+      {
+        "seconds": 6.112,
+        "height_m": 0.13103902046943938,
+        "joint_drift_rad": 0.002388371997953831,
+        "grip_force_N": -4.382730529471851
+      },
+      {
+        "seconds": 6.432,
+        "height_m": 0.1310378415533471,
+        "joint_drift_rad": 0.002332754962001138,
+        "grip_force_N": -4.3827305288009155
+      },
+      {
+        "seconds": 6.752,
+        "height_m": 0.1310366626053338,
+        "joint_drift_rad": 0.002277141813421535,
+        "grip_force_N": -4.382730528167151
+      },
+      {
+        "seconds": 7.072,
+        "height_m": 0.1310354836253943,
+        "joint_drift_rad": 0.002221532551911487,
+        "grip_force_N": -4.38273052757054
+      },
+      {
+        "seconds": 7.392,
+        "height_m": 0.13103430461352283,
+        "joint_drift_rad": 0.002165927177171012,
+        "grip_force_N": -4.3827305270110894
+      },
+      {
+        "seconds": 7.712,
+        "height_m": 0.13103312556971322,
+        "joint_drift_rad": 0.0021103256888987953,
+        "grip_force_N": -4.382730526488784
+      },
+      {
+        "seconds": 8.032,
+        "height_m": 0.13103194649396058,
+        "joint_drift_rad": 0.002054728086795521,
+        "grip_force_N": -4.382730526003643
+      },
+      {
+        "seconds": 8.352,
+        "height_m": 0.13103076738625863,
+        "joint_drift_rad": 0.0019991343705558773,
+        "grip_force_N": -4.382730525555678
+      },
+      {
+        "seconds": 8.672,
+        "height_m": 0.13102958824660194,
+        "joint_drift_rad": 0.0019435445398805484,
+        "grip_force_N": -4.382730525144887
+      },
+      {
+        "seconds": 8.992,
+        "height_m": 0.13102840907498423,
+        "joint_drift_rad": 0.0018879585944682198,
+        "grip_force_N": -4.382730524771233
+      },
+      {
+        "seconds": 9.312,
+        "height_m": 0.13102722987140072,
+        "joint_drift_rad": 0.001832376534018465,
+        "grip_force_N": -4.382730524434782
+      },
+      {
+        "seconds": 9.632,
+        "height_m": 0.13102605063584544,
+        "joint_drift_rad": 0.0017767983582301916,
+        "grip_force_N": -4.3827305241354795
+      },
+      {
+        "seconds": 9.952,
+        "height_m": 0.13102487136831317,
+        "joint_drift_rad": 0.0017212240668009748,
+        "grip_force_N": -4.382730523873364
+      },
+      {
+        "seconds": 10.272,
+        "height_m": 0.13102369206879697,
+        "joint_drift_rad": 0.0016656536594299443,
+        "grip_force_N": -4.382730523648413
+      },
+      {
+        "seconds": 10.592,
+        "height_m": 0.1310225127372919,
+        "joint_drift_rad": 0.0016100871358164515,
+        "grip_force_N": -4.38273052346064
+      },
+      {
+        "seconds": 10.912,
+        "height_m": 0.1310213333737923,
+        "joint_drift_rad": 0.0015545244956576276,
+        "grip_force_N": -4.382730523310047
+      },
+      {
+        "seconds": 11.232000000000001,
+        "height_m": 0.13102015397829228,
+        "joint_drift_rad": 0.0014989657386534905,
+        "grip_force_N": -4.382730523196629
+      },
+      {
+        "seconds": 11.552,
+        "height_m": 0.1310189745507868,
+        "joint_drift_rad": 0.0014434108645033916,
+        "grip_force_N": -4.382730523120417
+      },
+      {
+        "seconds": 11.872,
+        "height_m": 0.13101779509126962,
+        "joint_drift_rad": 0.0013878598729055724,
+        "grip_force_N": -4.382730523081374
+      },
+      {
+        "seconds": 12.192,
+        "height_m": 0.13101661559973515,
+        "joint_drift_rad": 0.0013323127635582743,
+        "grip_force_N": -4.38273052307952
+      },
+      {
+        "seconds": 12.512,
+        "height_m": 0.13101543607617772,
+        "joint_drift_rad": 0.0012767695361606268,
+        "grip_force_N": -4.382730523114838
+      },
+      {
+        "seconds": 12.832,
+        "height_m": 0.13101425652059184,
+        "joint_drift_rad": 0.0012212301904110934,
+        "grip_force_N": -4.382730523187358
+      },
+      {
+        "seconds": 13.152000000000001,
+        "height_m": 0.13101307693297173,
+        "joint_drift_rad": 0.0011656947260081374,
+        "grip_force_N": -4.382730523297079
+      },
+      {
+        "seconds": 13.472,
+        "height_m": 0.1310118973133113,
+        "joint_drift_rad": 0.0011101631426504444,
+        "grip_force_N": -4.382730523443971
+      },
+      {
+        "seconds": 13.792,
+        "height_m": 0.13101071766160574,
+        "joint_drift_rad": 0.0010546354400371438,
+        "grip_force_N": -4.382730523628086
+      },
+      {
+        "seconds": 14.112,
+        "height_m": 0.13100953797784784,
+        "joint_drift_rad": 0.0009991116178664772,
+        "grip_force_N": -4.382730523849384
+      },
+      {
+        "seconds": 14.432,
+        "height_m": 0.131008358262033,
+        "joint_drift_rad": 0.0009435916758369078,
+        "grip_force_N": -4.3827305241078784
+      },
+      {
+        "seconds": 14.752,
+        "height_m": 0.1310071785141553,
+        "joint_drift_rad": 0.0008880756136468992,
+        "grip_force_N": -4.382730524403573
+      },
+      {
+        "seconds": 15.072000000000001,
+        "height_m": 0.1310059987342099,
+        "joint_drift_rad": 0.000832563430995803,
+        "grip_force_N": -4.382730524736469
+      },
+      {
+        "seconds": 15.392,
+        "height_m": 0.13100481892218982,
+        "joint_drift_rad": 0.0007770551275816384,
+        "grip_force_N": -4.382730525106582
+      },
+      {
+        "seconds": 15.712,
+        "height_m": 0.13100363907809007,
+        "joint_drift_rad": 0.0007215507031035351,
+        "grip_force_N": -4.382730525513882
+      },
+      {
+        "seconds": 16.032,
+        "height_m": 0.1310024592019056,
+        "joint_drift_rad": 0.0006660501572601785,
+        "grip_force_N": -4.382730525958411
+      },
+      {
+        "seconds": 16.352,
+        "height_m": 0.13100127929365826,
+        "joint_drift_rad": 0.0006105534897586917,
+        "grip_force_N": -4.38273052726245
+      },
+      {
+        "seconds": 16.672,
+        "height_m": 0.13100009938556295,
+        "joint_drift_rad": 0.0005550607022890564,
+        "grip_force_N": -4.382730545197492
+      },
+      {
+        "seconds": 16.992,
+        "height_m": 0.13099891945149708,
+        "joint_drift_rad": 0.000499571788761255,
+        "grip_force_N": -4.382730561444969
+      },
+      {
+        "seconds": 17.312,
+        "height_m": 0.1309977394890183,
+        "joint_drift_rad": 0.0004440867507613522,
+        "grip_force_N": -4.382730577745133
+      },
+      {
+        "seconds": 17.632,
+        "height_m": 0.13099655949813926,
+        "joint_drift_rad": 0.0003886055881217043,
+        "grip_force_N": -4.3827305940980334
+      },
+      {
+        "seconds": 17.952,
+        "height_m": 0.13099537947885811,
+        "joint_drift_rad": 0.00033312830055298726,
+        "grip_force_N": -4.382730610503642
+      },
+      {
+        "seconds": 18.272000000000002,
+        "height_m": 0.13099419943117216,
+        "joint_drift_rad": 0.00027765488775477465,
+        "grip_force_N": -4.382730626961981
+      },
+      {
+        "seconds": 18.592,
+        "height_m": 0.13099301935507854,
+        "joint_drift_rad": 0.0002221853494324133,
+        "grip_force_N": -4.3827306434730575
+      },
+      {
+        "seconds": 18.912,
+        "height_m": 0.13099183925057453,
+        "joint_drift_rad": 0.00016671968528925163,
+        "grip_force_N": -4.382730660036876
+      },
+      {
+        "seconds": 19.232,
+        "height_m": 0.13099065911765817,
+        "joint_drift_rad": 0.00011125789502752781,
+        "grip_force_N": -4.382730676653458
+      },
+      {
+        "seconds": 19.552,
+        "height_m": 0.1309894789563255,
+        "joint_drift_rad": 7.548137662971577e-05,
+        "grip_force_N": -4.382730693322795
+      },
+      {
+        "seconds": 19.872,
+        "height_m": 0.13098829876657514,
+        "joint_drift_rad": 7.548138170579421e-05,
+        "grip_force_N": -4.382730710044899
+      },
+      {
+        "seconds": 20.192,
+        "height_m": 0.13098711854840356,
+        "joint_drift_rad": 7.548138677082594e-05,
+        "grip_force_N": -4.382730726819797
+      },
+      {
+        "seconds": 20.512,
+        "height_m": 0.1309859383018081,
+        "joint_drift_rad": 0.0001105505331346901,
+        "grip_force_N": -4.382730743647483
+      },
+      {
+        "seconds": 20.832,
+        "height_m": 0.13098475802678639,
+        "joint_drift_rad": 0.00016599295844077488,
+        "grip_force_N": -4.382730760527947
+      },
+      {
+        "seconds": 21.152,
+        "height_m": 0.13098357772333513,
+        "joint_drift_rad": 0.0002214315116479959,
+        "grip_force_N": -4.382730777461227
+      },
+      {
+        "seconds": 21.472,
+        "height_m": 0.13098239739145104,
+        "joint_drift_rad": 0.00027686619304900795,
+        "grip_force_N": -4.382730794447313
+      },
+      {
+        "seconds": 21.792,
+        "height_m": 0.1309812170311324,
+        "joint_drift_rad": 0.0003322970029449035,
+        "grip_force_N": -4.382730811486219
+      },
+      {
+        "seconds": 22.112000000000002,
+        "height_m": 0.13098003664237717,
+        "joint_drift_rad": 0.0003877239416310019,
+        "grip_force_N": -4.382730828577958
+      },
+      {
+        "seconds": 22.432000000000002,
+        "height_m": 0.13097885622518202,
+        "joint_drift_rad": 0.000443147009405509,
+        "grip_force_N": -4.382730845722532
+      },
+      {
+        "seconds": 22.752,
+        "height_m": 0.13097767577954444,
+        "joint_drift_rad": 0.0004985662065633001,
+        "grip_force_N": -4.382730862919968
+      },
+      {
+        "seconds": 23.072,
+        "height_m": 0.1309764953054618,
+        "joint_drift_rad": 0.0005539815334039133,
+        "grip_force_N": -4.382730880170232
+      },
+      {
+        "seconds": 23.392,
+        "height_m": 0.13097531480293045,
+        "joint_drift_rad": 0.0006093929902244444,
+        "grip_force_N": -4.382730897473387
+      },
+      {
+        "seconds": 23.712,
+        "height_m": 0.1309741342719485,
+        "joint_drift_rad": 0.0006648005773182142,
+        "grip_force_N": -4.382730914829402
+      },
+      {
+        "seconds": 24.032,
+        "height_m": 0.1309729537125132,
+        "joint_drift_rad": 0.0007202042949827625,
+        "grip_force_N": -4.382730932238286
+      },
+      {
+        "seconds": 24.352,
+        "height_m": 0.13097177312462116,
+        "joint_drift_rad": 0.0007756041435187377,
+        "grip_force_N": -4.382730949700056
+      },
+      {
+        "seconds": 24.672,
+        "height_m": 0.1309705925082706,
+        "joint_drift_rad": 0.0008310001232221254,
+        "grip_force_N": -4.382730967214732
+      },
+      {
+        "seconds": 24.992,
+        "height_m": 0.1309694118634581,
+        "joint_drift_rad": 0.0008863922343895769,
+        "grip_force_N": -4.3827309847823095
+      },
+      {
+        "seconds": 25.312,
+        "height_m": 0.13096823119018078,
+        "joint_drift_rad": 0.0009417804773166338,
+        "grip_force_N": -4.382731002402793
+      },
+      {
+        "seconds": 25.632,
+        "height_m": 0.13096705048843668,
+        "joint_drift_rad": 0.000997164852301502,
+        "grip_force_N": -4.382731020076202
+      },
+      {
+        "seconds": 25.952,
+        "height_m": 0.130965869758223,
+        "joint_drift_rad": 0.0010525453596423873,
+        "grip_force_N": -4.3827310378025315
+      },
+      {
+        "seconds": 26.272000000000002,
+        "height_m": 0.13096468899953767,
+        "joint_drift_rad": 0.0011079219996388279,
+        "grip_force_N": -4.382731055581812
+      },
+      {
+        "seconds": 26.592000000000002,
+        "height_m": 0.1309635082123752,
+        "joint_drift_rad": 0.0011632947725814802,
+        "grip_force_N": -4.382731073414026
+      },
+      {
+        "seconds": 26.912,
+        "height_m": 0.1309623273967356,
+        "joint_drift_rad": 0.0012186636787701044,
+        "grip_force_N": -4.382731091299199
+      },
+      {
+        "seconds": 27.232,
+        "height_m": 0.1309611465526151,
+        "joint_drift_rad": 0.001274028718500908,
+        "grip_force_N": -4.38273110923733
+      },
+      {
+        "seconds": 27.552,
+        "height_m": 0.13095996568001148,
+        "joint_drift_rad": 0.0013293898920732072,
+        "grip_force_N": -4.382731127228444
+      },
+      {
+        "seconds": 27.872,
+        "height_m": 0.13095878477892167,
+        "joint_drift_rad": 0.0013847471997836536,
+        "grip_force_N": -4.382731145272524
+      },
+      {
+        "seconds": 28.192,
+        "height_m": 0.13095760384934324,
+        "joint_drift_rad": 0.0014401006419291207,
+        "grip_force_N": -4.382731163369586
+      },
+      {
+        "seconds": 28.512,
+        "height_m": 0.13095642289127396,
+        "joint_drift_rad": 0.0014954502188060381,
+        "grip_force_N": -4.38273118151965
+      },
+      {
+        "seconds": 28.832,
+        "height_m": 0.1309552419047102,
+        "joint_drift_rad": 0.0015507959307130559,
+        "grip_force_N": -4.382731199722724
+      },
+      {
+        "seconds": 29.152,
+        "height_m": 0.13095406088964934,
+        "joint_drift_rad": 0.0016061377779466035,
+        "grip_force_N": -4.382731217978782
+      },
+      {
+        "seconds": 29.472,
+        "height_m": 0.13095287984608972,
+        "joint_drift_rad": 0.001661475760805553,
+        "grip_force_N": -4.382731236287887
+      },
+      {
+        "seconds": 29.792,
+        "height_m": 0.1309516987740266,
+        "joint_drift_rad": 0.0017168098795830034,
+        "grip_force_N": -4.382731254650014
+      },
+      {
+        "seconds": 30.112000000000002,
+        "height_m": 0.13095051767345875,
+        "joint_drift_rad": 0.0017721401345773824,
+        "grip_force_N": -4.382731273065165
+      },
+      {
+        "seconds": 30.432000000000002,
+        "height_m": 0.13094933654438323,
+        "joint_drift_rad": 0.0018274665260884504,
+        "grip_force_N": -4.382731291533371
+      },
+      {
+        "seconds": 30.752,
+        "height_m": 0.13094815538679738,
+        "joint_drift_rad": 0.0018827890544110826,
+        "grip_force_N": -4.382731310054615
+      },
+      {
+        "seconds": 31.072,
+        "height_m": 0.1309469742006983,
+        "joint_drift_rad": 0.0019381077198434848,
+        "grip_force_N": -4.38273132862894
+      },
+      {
+        "seconds": 31.392,
+        "height_m": 0.130945792986083,
+        "joint_drift_rad": 0.001993422522682975,
+        "grip_force_N": -4.382731347256319
+      },
+      {
+        "seconds": 31.712,
+        "height_m": 0.13094461174294944,
+        "joint_drift_rad": 0.0020487334632259824,
+        "grip_force_N": -4.382731365936781
+      },
+      {
+        "seconds": 32.0,
+        "height_m": 0.1309435485997437,
+        "joint_drift_rad": 0.0020985100076973406,
+        "grip_force_N": -4.382731382794591
+      }
+    ]
+  },
+  "qualification": {
+    "dialogue": {
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "2f4dd3530e5cc35a59e6716e0dfd96c16d773b989d956d01d87438086875695d",
+      "ready_wait_ms": 14.725791988894343,
+      "count": 15,
+      "incorrect": 0,
+      "median_ms": 2548.1356660020538,
+      "p95_ms": 5163.1064169923775,
+      "initial_job": null,
+      "final_job": null,
+      "rows": [
+        {
+          "repeat": 0,
+          "name": "screws",
+          "elapsed_ms": 2409.986292012036,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "screwdriver",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 2406.4176669926383,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2225.7289579720236,
+              "elapsed_ms": 2406.1828330159187,
+              "usage": {
+                "totalTokens": 5934,
+                "inputTokens": 5904,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 30,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "nuts",
+          "elapsed_ms": 2548.1356660020538,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 2545.3201660420746,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2430.4148329538293,
+              "elapsed_ms": 2545.153416984249,
+              "usage": {
+                "totalTokens": 5933,
+                "inputTokens": 5904,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 29,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "nails",
+          "elapsed_ms": 2112.3022499959916,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 2109.035582980141,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2074.5200000237674,
+              "elapsed_ms": 2108.8449159869924,
+              "usage": {
+                "totalTokens": 5934,
+                "inputTokens": 5906,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 28,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "ambiguous",
+          "elapsed_ms": 3628.1591249862686,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool would you like?"
+            },
+            "route": "model",
+            "elapsed_ms": 3623.860290972516,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 3098.7048749811947,
+              "elapsed_ms": 3623.670000000857,
+              "usage": {
+                "totalTokens": 5935,
+                "inputTokens": 5902,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 33,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "multiple",
+          "elapsed_ms": 2806.147333991248,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 2802.669166994747,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2288.1958330399357,
+              "elapsed_ms": 2802.3914160439745,
+              "usage": {
+                "totalTokens": 5937,
+                "inputTokens": 5903,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 34,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "negative",
+          "elapsed_ms": 2314.6104590268806,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Understood\u2014I won\u2019t fetch the hammer."
+            },
+            "route": "model",
+            "elapsed_ms": 2311.3796249963343,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2137.983374996111,
+              "elapsed_ms": 2311.1495829652995,
+              "usage": {
+                "totalTokens": 5940,
+                "inputTokens": 5905,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 35,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "hypothetical",
+          "elapsed_ms": 3660.8218339970335,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I\u2019d bring the screwdriver to the simulated handoff tray."
+            },
+            "route": "model",
+            "elapsed_ms": 3657.77099999832,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2875.481791968923,
+              "elapsed_ms": 3657.4839579989202,
+              "usage": {
+                "totalTokens": 5947,
+                "inputTokens": 5909,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 38,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "tool_question",
+          "elapsed_ms": 2300.217541051097,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench is useful for tightening nuts."
+            },
+            "route": "model",
+            "elapsed_ms": 2297.0543329720385,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2152.003875002265,
+              "elapsed_ms": 2296.8320419895463,
+              "usage": {
+                "totalTokens": 5937,
+                "inputTokens": 5903,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 34,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "impossible",
+          "elapsed_ms": 2723.360790987499,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can\u2019t assemble the shelf, but I can bring you the screwdriver."
+            },
+            "route": "model",
+            "elapsed_ms": 2720.266750024166,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2429.370875004679,
+              "elapsed_ms": 2720.0873750261962,
+              "usage": {
+                "totalTokens": 5946,
+                "inputTokens": 5905,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 41,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "joke",
+          "elapsed_ms": 2493.5573340044357,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Why did the robot go on vacation? It needed to recharge!"
+            },
+            "route": "model",
+            "elapsed_ms": 2489.5722080254927,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2186.7453749873675,
+              "elapsed_ms": 2489.362165972125,
+              "usage": {
+                "totalTokens": 5944,
+                "inputTokens": 5905,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 39,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "chat",
+          "elapsed_ms": 2485.445875034202,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Ready to help! Sorry it was a long day\u2014what's been keeping you busy?"
+            },
+            "route": "model",
+            "elapsed_ms": 2482.160000014119,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2291.9216660084203,
+              "elapsed_ms": 2481.9199580233544,
+              "usage": {
+                "totalTokens": 5952,
+                "inputTokens": 5908,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 44,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "capability",
+          "elapsed_ms": 2681.8523749825545,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "No\u2014I don\u2019t see you through a camera; I get scene information from simulator positions."
+            },
+            "route": "model",
+            "elapsed_ms": 2679.2916659615003,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2388.246790971607,
+              "elapsed_ms": 2679.0738749550655,
+              "usage": {
+                "totalTokens": 5949,
+                "inputTokens": 5905,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 44,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "clarified_wrench",
+          "elapsed_ms": 2780.3658330230974,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 2777.2174580022693,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2675.779082986992,
+              "elapsed_ms": 2776.956416957546,
+              "usage": {
+                "totalTokens": 5961,
+                "inputTokens": 5932,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 29,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "clarified_hammer",
+          "elapsed_ms": 2517.926083994098,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 2514.607082994189,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2375.2045829896815,
+              "elapsed_ms": 2514.3879579845816,
+              "usage": {
+                "totalTokens": 5961,
+                "inputTokens": 5933,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 28,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "negated_stop",
+          "elapsed_ms": 5163.1064169923775,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I\u2019ll keep considering your question\u2014what would you like to know?"
+            },
+            "route": "model",
+            "elapsed_ms": 5160.022374999244,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 4945.550333010033,
+              "elapsed_ms": 5159.749249985907,
+              "usage": {
+                "totalTokens": 5943,
+                "inputTokens": 5903,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 40,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        }
+      ]
+    },
+    "context": {
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "b0d7118ce4c9711126a555287ffa2b4c775bac619f1acf82b885095ac41951d8",
+      "ready_wait_ms": 3.038124996237457,
+      "count": 6,
+      "incorrect": 0,
+      "median_ms": 2713.8965415069833,
+      "p95_ms": 4365.76945905108,
+      "initial_job": null,
+      "final_job": null,
+      "rows": [
+        {
+          "repeat": 0,
+          "name": "need_screws_after_chat",
+          "elapsed_ms": 2724.407500005327,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "screwdriver",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 2721.6318750288337,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2345.457791991066,
+              "elapsed_ms": 2721.4667499647476,
+              "usage": {
+                "totalTokens": 5975,
+                "inputTokens": 5945,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 30,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "need_nuts_after_information",
+          "elapsed_ms": 2703.3855830086395,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 2700.255334028043,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2268.5608330066316,
+              "elapsed_ms": 2700.0690000131726,
+              "usage": {
+                "totalTokens": 5966,
+                "inputTokens": 5937,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 29,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "need_nails_after_chat",
+          "elapsed_ms": 2764.2106669954956,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 2761.4620000240393,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2611.9102090015076,
+              "elapsed_ms": 2761.2553750514053,
+              "usage": {
+                "totalTokens": 5971,
+                "inputTokens": 5943,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 28,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "question_screws_after_fetch",
+          "elapsed_ms": 2514.6529170451686,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A screwdriver is useful for turning screws."
+            },
+            "route": "model",
+            "elapsed_ms": 2512.460583995562,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2096.9244579900987,
+              "elapsed_ms": 2512.126707995776,
+              "usage": {
+                "totalTokens": 5973,
+                "inputTokens": 5939,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 34,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "question_nuts_after_fetch",
+          "elapsed_ms": 4365.76945905108,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench helps tighten nuts."
+            },
+            "route": "model",
+            "elapsed_ms": 4363.077291985974,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 4190.245000005234,
+              "elapsed_ms": 4362.935041019227,
+              "usage": {
+                "totalTokens": 5969,
+                "inputTokens": 5937,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 32,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "hypothetical_after_fetch",
+          "elapsed_ms": 2526.509999996051,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "In simulation, I\u2019d bring the hammer to the handoff tray if you asked for it."
+            },
+            "route": "model",
+            "elapsed_ms": 2524.21449997928,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2323.2435419922695,
+              "elapsed_ms": 2524.031874956563,
+              "usage": {
+                "totalTokens": 5987,
+                "inputTokens": 5942,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 45,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        }
+      ]
+    },
+    "pairs": {
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "8b97a4bd1278576e281170ce82ab1dfa8cd3857807c969c2e3e0a1977a40541d",
+      "ready_wait_ms": 2.11612501880154,
+      "count": 12,
+      "incorrect": 0,
+      "median_ms": 2680.243291979423,
+      "p95_ms": 6980.946834024508,
+      "initial_job": null,
+      "final_job": null,
+      "rows": [
+        {
+          "repeat": 0,
+          "name": "fresh_screwdriver_wrench",
+          "elapsed_ms": 1922.9740420123562,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 1921.297875000164,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 1749.4682079995982,
+              "elapsed_ms": 1921.1891670129262,
+              "usage": {
+                "totalTokens": 5938,
+                "inputTokens": 5904,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 34,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "fresh_screwdriver_hammer",
+          "elapsed_ms": 6980.946834024508,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 6978.832333988976,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 6288.658834004309,
+              "elapsed_ms": 6978.646834031679,
+              "usage": {
+                "totalTokens": 5938,
+                "inputTokens": 5904,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 34,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "fresh_wrench_hammer",
+          "elapsed_ms": 2316.1531249643303,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 2314.155041007325,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2131.5118329948746,
+              "elapsed_ms": 2314.0168330282904,
+              "usage": {
+                "totalTokens": 5939,
+                "inputTokens": 5905,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 34,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_capabilities_screwdriver_wrench",
+          "elapsed_ms": 2802.645916992333,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 2800.8071670192294,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2316.8549590045586,
+              "elapsed_ms": 2800.679209001828,
+              "usage": {
+                "totalTokens": 6003,
+                "inputTokens": 5969,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 34,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_capabilities_screwdriver_hammer",
+          "elapsed_ms": 3414.1775830066763,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 3412.0972499949858,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2882.7763329609297,
+              "elapsed_ms": 3411.9366660015658,
+              "usage": {
+                "totalTokens": 6003,
+                "inputTokens": 5969,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 34,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_capabilities_wrench_hammer",
+          "elapsed_ms": 2302.1169169805944,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 2300.1190409995615,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2109.9851250182837,
+              "elapsed_ms": 2299.9810419860296,
+              "usage": {
+                "totalTokens": 6003,
+                "inputTokens": 5969,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 34,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_fetch_and_decline_screwdriver_wrench",
+          "elapsed_ms": 2991.890167002566,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 2989.687416004017,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2798.3583750319667,
+              "elapsed_ms": 2989.539959002286,
+              "usage": {
+                "totalTokens": 6007,
+                "inputTokens": 5973,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 34,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_fetch_and_decline_screwdriver_hammer",
+          "elapsed_ms": 2180.0164580345154,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 2177.996875019744,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2039.4623749889433,
+              "elapsed_ms": 2177.8674999950454,
+              "usage": {
+                "totalTokens": 6008,
+                "inputTokens": 5974,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 34,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_fetch_and_decline_wrench_hammer",
+          "elapsed_ms": 6159.818917047232,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 6157.271792006213,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 5951.234583975747,
+              "elapsed_ms": 6157.047499960754,
+              "usage": {
+                "totalTokens": 6008,
+                "inputTokens": 5974,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 34,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "single_alternative",
+          "elapsed_ms": 3142.6985830185004,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 3139.9341669748537,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2709.2606659862213,
+              "elapsed_ms": 3139.7724160342477,
+              "usage": {
+                "totalTokens": 5934,
+                "inputTokens": 5905,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 29,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "two_tool_information",
+          "elapsed_ms": 2230.3284170338884,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench tightens or loosens nuts and bolts; a hammer drives nails or strikes objects."
+            },
+            "route": "model",
+            "elapsed_ms": 2228.3191250171512,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2093.271541991271,
+              "elapsed_ms": 2228.192792041227,
+              "usage": {
+                "totalTokens": 5952,
+                "inputTokens": 5907,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 45,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "two_tool_negative",
+          "elapsed_ms": 2557.840666966513,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Understood\u2014I won\u2019t bring either one."
+            },
+            "route": "model",
+            "elapsed_ms": 2555.6885420228355,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2005.9447919484228,
+              "elapsed_ms": 2555.485291988589,
+              "usage": {
+                "totalTokens": 5941,
+                "inputTokens": 5906,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 35,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        }
+      ]
+    },
+    "quality": {
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "823f8ca3c50f1244239326454052f7a60dd92b92adf91f1a058b63b352ad0e8f",
+      "ready_wait_ms": 1.9775420078076422,
+      "count": 10,
+      "incorrect": 0,
+      "median_ms": 3005.3513544844463,
+      "p95_ms": 3219.2799579934217,
+      "initial_job": null,
+      "final_job": null,
+      "rows": [
+        {
+          "repeat": 0,
+          "name": "abilities",
+          "elapsed_ms": 3037.2176250093617,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "In simulation, I can bring and return tools, pause and resume tasks, and chat; I can\u2019t operate tools on things."
+            },
+            "route": "model",
+            "elapsed_ms": 3034.810709010344,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2148.747540952172,
+              "elapsed_ms": 3034.676707990002,
+              "usage": {
+                "totalTokens": 5960,
+                "inputTokens": 5908,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 52,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "camera_truth",
+          "elapsed_ms": 2422.4585000192747,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "No. I can\u2019t access your webcam; my scene information comes from simulator positions."
+            },
+            "route": "model",
+            "elapsed_ms": 2419.6888330043294,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2094.802792009432,
+              "elapsed_ms": 2419.5667080348358,
+              "usage": {
+                "totalTokens": 5952,
+                "inputTokens": 5909,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 43,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "feelings_truth",
+          "elapsed_ms": 3000.5298749892972,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I don\u2019t have feelings, but I\u2019m here to help whenever you need."
+            },
+            "route": "model",
+            "elapsed_ms": 2998.5062920022756,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2837.2297500027344,
+              "elapsed_ms": 2998.3722919714637,
+              "usage": {
+                "totalTokens": 5948,
+                "inputTokens": 5906,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 42,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "screw_tool_information",
+          "elapsed_ms": 3219.2799579934217,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A screwdriver helps turn screws because its tip fits the screw head."
+            },
+            "route": "model",
+            "elapsed_ms": 3217.2122499905527,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2585.633291047998,
+              "elapsed_ms": 3216.965458006598,
+              "usage": {
+                "totalTokens": 5947,
+                "inputTokens": 5908,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 39,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "spanner_information",
+          "elapsed_ms": 3010.1728339795955,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Yes. A spanner is another name for a wrench."
+            },
+            "route": "model",
+            "elapsed_ms": 3008.169042004738,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2829.2845830437727,
+              "elapsed_ms": 3007.972833001986,
+              "usage": {
+                "totalTokens": 5946,
+                "inputTokens": 5908,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 38,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "conversation",
+          "elapsed_ms": 3026.4283749856986,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Of course. I\u2019m here to chat\u2014what\u2019s been on your mind?"
+            },
+            "route": "model",
+            "elapsed_ms": 3024.2708339937963,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2758.835083048325,
+              "elapsed_ms": 3024.0596660296433,
+              "usage": {
+                "totalTokens": 5953,
+                "inputTokens": 5911,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 42,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "remember_question",
+          "elapsed_ms": 2098.437708977144,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "You asked about a hammer."
+            },
+            "route": "model",
+            "elapsed_ms": 2095.9517500014044,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 1958.1465829978697,
+              "elapsed_ms": 2095.807416946627,
+              "usage": {
+                "totalTokens": 5971,
+                "inputTokens": 5939,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 32,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "hardware_truth",
+          "elapsed_ms": 2690.3383749886416,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "No\u2014I'm an arm in simulation, not controlling a real arm on your desk."
+            },
+            "route": "model",
+            "elapsed_ms": 2687.9303749883547,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2344.2550839972682,
+              "elapsed_ms": 2687.7954169758596,
+              "usage": {
+                "totalTokens": 5952,
+                "inputTokens": 5909,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 43,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "outcome_truth",
+          "elapsed_ms": 3045.3813750064,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I can\u2019t claim the hammer was delivered; it\u2019s still listed at the tool rack."
+            },
+            "route": "model",
+            "elapsed_ms": 3043.0773330153897,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2739.14254095871,
+              "elapsed_ms": 3042.9163749795407,
+              "usage": {
+                "totalTokens": 5960,
+                "inputTokens": 5916,
+                "cachedInputTokens": 4864,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 44,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "impossible_skill",
+          "elapsed_ms": 2651.6625829972327,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can bring the screwdriver, but I can\u2019t repair or operate on your laptop."
+            },
+            "route": "model",
+            "elapsed_ms": 2648.155083996244,
+            "profile": {
+              "backend": "codex",
+              "transport": "session",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "first_token_ms": 2364.7394169820473,
+              "elapsed_ms": 2648.0249169981107,
+              "usage": {
+                "totalTokens": 5950,
+                "inputTokens": 5907,
+                "cachedInputTokens": 0,
+                "cacheWriteInputTokens": 0,
+                "outputTokens": 43,
+                "reasoningOutputTokens": 0
+              },
+              "scope": "Subscription session to complete interpretation; no speech/motion"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "paired": {
+    "scope": "Warmed full text interpretation, no browser, ASR, speech or motion; alternating paired calls, no concurrent inference; cloud jitter remains.",
+    "startup_warmup_ms": {
+      "exec": 3389.146084024105,
+      "session": 2749.532917048782
+    },
+    "rows": [
+      {
+        "repeat": 0,
+        "case": {
+          "name": "screws",
+          "message": "I need something for turning screws.",
+          "actions": [
+            "fetch"
+          ],
+          "object": "screwdriver"
+        },
+        "transport": "exec",
+        "intent": {
+          "action": "fetch",
+          "object": "screwdriver",
+          "destination": "handoff",
+          "message": ""
+        },
+        "raw": "{\"action\":\"fetch\",\"object\":\"screwdriver\",\"destination\":\"handoff\",\"message\":\"\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "elapsed_ms": 2740.1377920177765,
+          "usage": {
+            "input_tokens": 7328,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 30,
+            "reasoning_output_tokens": 0
+          },
+          "scope": "CLI startup plus completed text inference; excludes speech and motion"
+        },
+        "elapsed_ms": 2740.3744580224156
+      },
+      {
+        "repeat": 0,
+        "case": {
+          "name": "screws",
+          "message": "I need something for turning screws.",
+          "actions": [
+            "fetch"
+          ],
+          "object": "screwdriver"
+        },
+        "transport": "session",
+        "intent": {
+          "action": "fetch",
+          "object": "screwdriver",
+          "destination": "handoff",
+          "message": ""
+        },
+        "raw": "{\"action\":\"fetch\",\"object\":\"screwdriver\",\"destination\":\"handoff\",\"message\":\"\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "transport": "session",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "first_token_ms": 2780.0924169714563,
+          "elapsed_ms": 6664.210041984916,
+          "usage": {
+            "totalTokens": 5809,
+            "inputTokens": 5779,
+            "cachedInputTokens": 4864,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 30,
+            "reasoningOutputTokens": 0
+          },
+          "scope": "Subscription session to complete interpretation; no speech/motion"
+        },
+        "elapsed_ms": 6664.328999991994
+      },
+      {
+        "repeat": 0,
+        "case": {
+          "name": "multiple",
+          "message": "Bring me the screwdriver and hammer.",
+          "actions": [
+            "clarify"
+          ],
+          "object": null
+        },
+        "transport": "session",
+        "intent": {
+          "action": "clarify",
+          "object": null,
+          "destination": null,
+          "message": "Which tool should I bring first?"
+        },
+        "raw": "{\"action\":\"clarify\",\"object\":null,\"destination\":null,\"message\":\"Which tool should I bring first?\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "transport": "session",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "first_token_ms": 2126.924458949361,
+          "elapsed_ms": 2357.5661669601686,
+          "usage": {
+            "totalTokens": 5813,
+            "inputTokens": 5779,
+            "cachedInputTokens": 4864,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 34,
+            "reasoningOutputTokens": 0
+          },
+          "scope": "Subscription session to complete interpretation; no speech/motion"
+        },
+        "elapsed_ms": 2357.6498340116814
+      },
+      {
+        "repeat": 0,
+        "case": {
+          "name": "multiple",
+          "message": "Bring me the screwdriver and hammer.",
+          "actions": [
+            "clarify"
+          ],
+          "object": null
+        },
+        "transport": "exec",
+        "intent": {
+          "action": "clarify",
+          "object": null,
+          "destination": null,
+          "message": "Which tool should I bring first?"
+        },
+        "raw": "{\"action\":\"clarify\",\"object\":null,\"destination\":null,\"message\":\"Which tool should I bring first?\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "elapsed_ms": 4088.432999968063,
+          "usage": {
+            "input_tokens": 7328,
+            "cached_input_tokens": 6912,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 34,
+            "reasoning_output_tokens": 0
+          },
+          "scope": "CLI startup plus completed text inference; excludes speech and motion"
+        },
+        "elapsed_ms": 4088.6463329661638
+      },
+      {
+        "repeat": 0,
+        "case": {
+          "name": "tool_question",
+          "message": "Which tool is useful for tightening nuts?",
+          "actions": [
+            "answer"
+          ],
+          "object": null
+        },
+        "transport": "exec",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "A wrench helps tighten nuts."
+        },
+        "raw": "{\"action\":\"answer\",\"object\":null,\"destination\":null,\"message\":\"A wrench helps tighten nuts.\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "elapsed_ms": 3155.386416008696,
+          "usage": {
+            "input_tokens": 7329,
+            "cached_input_tokens": 6912,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 32,
+            "reasoning_output_tokens": 0
+          },
+          "scope": "CLI startup plus completed text inference; excludes speech and motion"
+        },
+        "elapsed_ms": 3155.5785830132663
+      },
+      {
+        "repeat": 0,
+        "case": {
+          "name": "tool_question",
+          "message": "Which tool is useful for tightening nuts?",
+          "actions": [
+            "answer"
+          ],
+          "object": null
+        },
+        "transport": "session",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "A wrench helps tighten nuts."
+        },
+        "raw": "{\"action\":\"answer\",\"object\":null,\"destination\":null,\"message\":\"A wrench helps tighten nuts.\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "transport": "session",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "first_token_ms": 2490.5372909852304,
+          "elapsed_ms": 2682.892333017662,
+          "usage": {
+            "totalTokens": 5812,
+            "inputTokens": 5780,
+            "cachedInputTokens": 4864,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 32,
+            "reasoningOutputTokens": 0
+          },
+          "scope": "Subscription session to complete interpretation; no speech/motion"
+        },
+        "elapsed_ms": 2682.9709589947015
+      },
+      {
+        "repeat": 0,
+        "case": {
+          "name": "chat",
+          "message": "I had a long day. How are you doing?",
+          "actions": [
+            "answer"
+          ],
+          "object": null
+        },
+        "transport": "session",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "Ready to help! I hope you get some rest after your long day."
+        },
+        "raw": "{\"action\":\"answer\",\"object\":null,\"destination\":null,\"message\":\"Ready to help! I hope you get some rest after your long day.\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "transport": "session",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "first_token_ms": 2379.167291976046,
+          "elapsed_ms": 2669.2679169937037,
+          "usage": {
+            "totalTokens": 5824,
+            "inputTokens": 5783,
+            "cachedInputTokens": 4864,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 41,
+            "reasoningOutputTokens": 0
+          },
+          "scope": "Subscription session to complete interpretation; no speech/motion"
+        },
+        "elapsed_ms": 2669.3339589983225
+      },
+      {
+        "repeat": 0,
+        "case": {
+          "name": "chat",
+          "message": "I had a long day. How are you doing?",
+          "actions": [
+            "answer"
+          ],
+          "object": null
+        },
+        "transport": "exec",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "Ready to help! How was your day?"
+        },
+        "raw": "{\"action\":\"answer\",\"object\":null,\"destination\":null,\"message\":\"Ready to help! How was your day?\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "elapsed_ms": 3689.8985829902813,
+          "usage": {
+            "input_tokens": 7332,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 35,
+            "reasoning_output_tokens": 0
+          },
+          "scope": "CLI startup plus completed text inference; excludes speech and motion"
+        },
+        "elapsed_ms": 3690.0597909698263
+      },
+      {
+        "repeat": 0,
+        "case": {
+          "name": "abilities",
+          "message": "What kinds of help can you offer at this workbench?",
+          "actions": [
+            "answer"
+          ],
+          "object": null,
+          "review": "Describe simulated tool delivery/return and conversation; do not claim assembly, repair or hardware operation."
+        },
+        "transport": "exec",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "In simulation, I can bring and return tools, pause or resume tasks, wave hello, and chat; I can\u2019t operate tools on objects."
+        },
+        "raw": "{\"action\":\"answer\",\"object\":null,\"destination\":null,\"message\":\"In simulation, I can bring and return tools, pause or resume tasks, wave hello, and chat; I can\u2019t operate tools on objects.\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "elapsed_ms": 3296.6907499940135,
+          "usage": {
+            "input_tokens": 7333,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 55,
+            "reasoning_output_tokens": 0
+          },
+          "scope": "CLI startup plus completed text inference; excludes speech and motion"
+        },
+        "elapsed_ms": 3296.856041008141
+      },
+      {
+        "repeat": 0,
+        "case": {
+          "name": "abilities",
+          "message": "What kinds of help can you offer at this workbench?",
+          "actions": [
+            "answer"
+          ],
+          "object": null,
+          "review": "Describe simulated tool delivery/return and conversation; do not claim assembly, repair or hardware operation."
+        },
+        "transport": "session",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "In simulation, I can bring and return tools, pause or resume tasks, wave hello, and chat."
+        },
+        "raw": "{\"action\":\"answer\",\"object\":null,\"destination\":null,\"message\":\"In simulation, I can bring and return tools, pause or resume tasks, wave hello, and chat.\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "transport": "session",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "first_token_ms": 2303.6791249760427,
+          "elapsed_ms": 2614.7374169668183,
+          "usage": {
+            "totalTokens": 5831,
+            "inputTokens": 5784,
+            "cachedInputTokens": 0,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 47,
+            "reasoningOutputTokens": 0
+          },
+          "scope": "Subscription session to complete interpretation; no speech/motion"
+        },
+        "elapsed_ms": 2614.813417021651
+      },
+      {
+        "repeat": 1,
+        "case": {
+          "name": "screws",
+          "message": "I need something for turning screws.",
+          "actions": [
+            "fetch"
+          ],
+          "object": "screwdriver"
+        },
+        "transport": "session",
+        "intent": {
+          "action": "fetch",
+          "object": "screwdriver",
+          "destination": "handoff",
+          "message": ""
+        },
+        "raw": "{\"action\":\"fetch\",\"object\":\"screwdriver\",\"destination\":\"handoff\",\"message\":\"\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "transport": "session",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "first_token_ms": 2152.415333024692,
+          "elapsed_ms": 2670.6345829879865,
+          "usage": {
+            "totalTokens": 5809,
+            "inputTokens": 5779,
+            "cachedInputTokens": 0,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 30,
+            "reasoningOutputTokens": 0
+          },
+          "scope": "Subscription session to complete interpretation; no speech/motion"
+        },
+        "elapsed_ms": 2670.7119160564616
+      },
+      {
+        "repeat": 1,
+        "case": {
+          "name": "screws",
+          "message": "I need something for turning screws.",
+          "actions": [
+            "fetch"
+          ],
+          "object": "screwdriver"
+        },
+        "transport": "exec",
+        "intent": {
+          "action": "fetch",
+          "object": "screwdriver",
+          "destination": "handoff",
+          "message": ""
+        },
+        "raw": "{\"action\":\"fetch\",\"object\":\"screwdriver\",\"destination\":\"handoff\",\"message\":\"\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "elapsed_ms": 3101.6187500208616,
+          "usage": {
+            "input_tokens": 7328,
+            "cached_input_tokens": 6912,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 30,
+            "reasoning_output_tokens": 0
+          },
+          "scope": "CLI startup plus completed text inference; excludes speech and motion"
+        },
+        "elapsed_ms": 3101.844207965769
+      },
+      {
+        "repeat": 1,
+        "case": {
+          "name": "multiple",
+          "message": "Bring me the screwdriver and hammer.",
+          "actions": [
+            "clarify"
+          ],
+          "object": null
+        },
+        "transport": "exec",
+        "intent": {
+          "action": "clarify",
+          "object": null,
+          "destination": null,
+          "message": "Which tool should I bring first?"
+        },
+        "raw": "{\"action\":\"clarify\",\"object\":null,\"destination\":null,\"message\":\"Which tool should I bring first?\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "elapsed_ms": 4087.2647499782033,
+          "usage": {
+            "input_tokens": 7328,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 34,
+            "reasoning_output_tokens": 0
+          },
+          "scope": "CLI startup plus completed text inference; excludes speech and motion"
+        },
+        "elapsed_ms": 4087.458082998637
+      },
+      {
+        "repeat": 1,
+        "case": {
+          "name": "multiple",
+          "message": "Bring me the screwdriver and hammer.",
+          "actions": [
+            "clarify"
+          ],
+          "object": null
+        },
+        "transport": "session",
+        "intent": {
+          "action": "clarify",
+          "object": null,
+          "destination": null,
+          "message": "Which tool should I bring first?"
+        },
+        "raw": "{\"action\":\"clarify\",\"object\":null,\"destination\":null,\"message\":\"Which tool should I bring first?\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "transport": "session",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "first_token_ms": 2701.3593750307336,
+          "elapsed_ms": 2890.7011250266805,
+          "usage": {
+            "totalTokens": 5813,
+            "inputTokens": 5779,
+            "cachedInputTokens": 4864,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 34,
+            "reasoningOutputTokens": 0
+          },
+          "scope": "Subscription session to complete interpretation; no speech/motion"
+        },
+        "elapsed_ms": 2890.7917499891482
+      },
+      {
+        "repeat": 1,
+        "case": {
+          "name": "tool_question",
+          "message": "Which tool is useful for tightening nuts?",
+          "actions": [
+            "answer"
+          ],
+          "object": null
+        },
+        "transport": "session",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "A wrench helps tighten nuts."
+        },
+        "raw": "{\"action\":\"answer\",\"object\":null,\"destination\":null,\"message\":\"A wrench helps tighten nuts.\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "transport": "session",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "first_token_ms": 2258.0366670154035,
+          "elapsed_ms": 2431.767709029373,
+          "usage": {
+            "totalTokens": 5812,
+            "inputTokens": 5780,
+            "cachedInputTokens": 4864,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 32,
+            "reasoningOutputTokens": 0
+          },
+          "scope": "Subscription session to complete interpretation; no speech/motion"
+        },
+        "elapsed_ms": 2431.8593749776483
+      },
+      {
+        "repeat": 1,
+        "case": {
+          "name": "tool_question",
+          "message": "Which tool is useful for tightening nuts?",
+          "actions": [
+            "answer"
+          ],
+          "object": null
+        },
+        "transport": "exec",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "A wrench helps tighten nuts."
+        },
+        "raw": "{\"action\":\"answer\",\"object\":null,\"destination\":null,\"message\":\"A wrench helps tighten nuts.\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "elapsed_ms": 3366.2511250004172,
+          "usage": {
+            "input_tokens": 7329,
+            "cached_input_tokens": 0,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 32,
+            "reasoning_output_tokens": 0
+          },
+          "scope": "CLI startup plus completed text inference; excludes speech and motion"
+        },
+        "elapsed_ms": 3366.537750000134
+      },
+      {
+        "repeat": 1,
+        "case": {
+          "name": "chat",
+          "message": "I had a long day. How are you doing?",
+          "actions": [
+            "answer"
+          ],
+          "object": null
+        },
+        "transport": "exec",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "Ready to help! How was your day?"
+        },
+        "raw": "{\"action\":\"answer\",\"object\":null,\"destination\":null,\"message\":\"Ready to help! How was your day?\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "elapsed_ms": 3255.2895409753546,
+          "usage": {
+            "input_tokens": 7332,
+            "cached_input_tokens": 6912,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 35,
+            "reasoning_output_tokens": 0
+          },
+          "scope": "CLI startup plus completed text inference; excludes speech and motion"
+        },
+        "elapsed_ms": 3255.546750035137
+      },
+      {
+        "repeat": 1,
+        "case": {
+          "name": "chat",
+          "message": "I had a long day. How are you doing?",
+          "actions": [
+            "answer"
+          ],
+          "object": null
+        },
+        "transport": "session",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "Ready to help! How was your day?"
+        },
+        "raw": "{\"action\":\"answer\",\"object\":null,\"destination\":null,\"message\":\"Ready to help! How was your day?\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "transport": "session",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "first_token_ms": 2044.3367920233868,
+          "elapsed_ms": 2207.3347920086235,
+          "usage": {
+            "totalTokens": 5818,
+            "inputTokens": 5783,
+            "cachedInputTokens": 0,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 35,
+            "reasoningOutputTokens": 0
+          },
+          "scope": "Subscription session to complete interpretation; no speech/motion"
+        },
+        "elapsed_ms": 2207.4253750033677
+      },
+      {
+        "repeat": 1,
+        "case": {
+          "name": "abilities",
+          "message": "What kinds of help can you offer at this workbench?",
+          "actions": [
+            "answer"
+          ],
+          "object": null,
+          "review": "Describe simulated tool delivery/return and conversation; do not claim assembly, repair or hardware operation."
+        },
+        "transport": "session",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "In simulation, I can bring and return tools, pause or resume tasks, and chat with you."
+        },
+        "raw": "{\"action\":\"answer\",\"object\":null,\"destination\":null,\"message\":\"In simulation, I can bring and return tools, pause or resume tasks, and chat with you.\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "transport": "session",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "first_token_ms": 2156.641166016925,
+          "elapsed_ms": 2441.6894580353983,
+          "usage": {
+            "totalTokens": 5830,
+            "inputTokens": 5784,
+            "cachedInputTokens": 4864,
+            "cacheWriteInputTokens": 0,
+            "outputTokens": 46,
+            "reasoningOutputTokens": 0
+          },
+          "scope": "Subscription session to complete interpretation; no speech/motion"
+        },
+        "elapsed_ms": 2441.829165967647
+      },
+      {
+        "repeat": 1,
+        "case": {
+          "name": "abilities",
+          "message": "What kinds of help can you offer at this workbench?",
+          "actions": [
+            "answer"
+          ],
+          "object": null,
+          "review": "Describe simulated tool delivery/return and conversation; do not claim assembly, repair or hardware operation."
+        },
+        "transport": "exec",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "In simulation, I can bring and return tools, pause or resume tasks, wave hello, and chat; my scene information comes from simulator positions."
+        },
+        "raw": "{\"action\":\"answer\",\"object\":null,\"destination\":null,\"message\":\"In simulation, I can bring and return tools, pause or resume tasks, wave hello, and chat; my scene information comes from simulator positions.\"}",
+        "correct": true,
+        "profile": {
+          "backend": "codex",
+          "model": "gpt-6-luna",
+          "authentication": "chatgpt",
+          "elapsed_ms": 3373.1840000255033,
+          "usage": {
+            "input_tokens": 7333,
+            "cached_input_tokens": 6912,
+            "cache_write_input_tokens": 0,
+            "output_tokens": 55,
+            "reasoning_output_tokens": 0
+          },
+          "scope": "CLI startup plus completed text inference; excludes speech and motion"
+        },
+        "elapsed_ms": 3373.3999169780873
+      }
+    ],
+    "results": {
+      "exec": {
+        "count": 10,
+        "incorrect": 0,
+        "median_ms": 3331.6968955041375,
+        "p95_ms": 4088.6463329661638
+      },
+      "session": {
+        "count": 10,
+        "incorrect": 0,
+        "median_ms": 2642.0736880099867,
+        "p95_ms": 6664.328999991994
+      }
+    }
+  },
+  "live": {
+    "scope": "Typed HTTP requests, actual MuJoCo contacts, real Luna; no live voice",
+    "journeys": [
+      {
+        "tool": "screwdriver",
+        "original_task": "e11c0d32-157e-4fdb-8ee7-4f28e64ee61c",
+        "stop_post_ms": 4.074249998666346,
+        "stop_settled_ms": 70.69179101381451,
+        "hold_wall_seconds": 32.07719374995213,
+        "minimum_height_m": 0.19360447377738194,
+        "max_joint_drift_rad": 0.006441052953361059,
+        "tool_displacement_m": 0.0030390966881549326,
+        "cancelled_interpretation": {
+          "http_status": 200,
+          "result": {
+            "accepted": false,
+            "mode": "superseded",
+            "task_id": null
+          }
+        },
+        "stop_to_cancelled_reply_ms": 70.71370800258592,
+        "next_model_reply": {
+          "accepted": true,
+          "mode": "conversation",
+          "task_id": null,
+          "message": "No\u2014I can\u2019t see your webcam; I only get scene information from simulator positions.",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "No\u2014I can\u2019t see your webcam; I only get scene information from simulator positions."
+          },
+          "route": "model",
+          "elapsed_ms": 3190.6193330069073,
+          "profile": {
+            "backend": "codex",
+            "transport": "session",
+            "model": "gpt-6-luna",
+            "authentication": "chatgpt",
+            "first_token_ms": 2869.925459031947,
+            "elapsed_ms": 3190.512375032995,
+            "usage": {
+              "totalTokens": 6125,
+              "inputTokens": 6082,
+              "cachedInputTokens": 4864,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 43,
+              "reasoningOutputTokens": 0
+            },
+            "scope": "Subscription session to complete interpretation; no speech/motion"
+          }
+        },
+        "continued_placement": {
+          "status": "completed",
+          "message": "Your screwdriver is ready in the handoff tray.",
+          "physical_success": true,
+          "intent": {
+            "action": "fetch",
+            "object": "screwdriver",
+            "destination": "handoff",
+            "message": ""
+          },
+          "outcome": {
+            "status": "success",
+            "message": "Your screwdriver is ready in the handoff tray.",
+            "distance_m": 0.008014433484596647
+          },
+          "observed": {
+            "screwdriver": [
+              0.6329965840180097,
+              -0.15610342346896317,
+              0.021841520316897147
+            ],
+            "wrench": [
+              0.45567594573638737,
+              0.003272318728725732,
+              0.021794764529726857
+            ],
+            "hammer": [
+              0.42350823185370434,
+              0.23760740464632857,
+              0.021891286846259454
+            ]
+          },
+          "targets": {
+            "handoff": [
+              0.64,
+              -0.16
+            ]
+          },
+          "verified_steps": [],
+          "task_id": "3b8dcaab-7bef-4ba4-8d91-33096b6dc6b4"
+        },
+        "returned_placement": {
+          "status": "completed",
+          "message": "The screwdriver is back in its tool tray.",
+          "physical_success": true,
+          "intent": {
+            "action": "return",
+            "object": "screwdriver",
+            "destination": "rack",
+            "message": ""
+          },
+          "outcome": {
+            "status": "success",
+            "message": "The screwdriver is back in its tool tray.",
+            "distance_m": 0.011618612573551233
+          },
+          "observed": {
+            "screwdriver": [
+              0.4246224327180959,
+              -0.21970228509765588,
+              0.021851021731192626
+            ],
+            "wrench": [
+              0.45565519811418687,
+              0.0033067636641171214,
+              0.0217947645297259
+            ],
+            "hammer": [
+              0.42350870662798823,
+              0.23760654408498372,
+              0.02189128684625938
+            ]
+          },
+          "targets": {
+            "handoff": [
+              0.64,
+              -0.16
+            ]
+          },
+          "verified_steps": [],
+          "task_id": "4ad7fa8c-38b3-49bc-a3c1-838e0ec2504c"
+        }
+      },
+      {
+        "tool": "wrench",
+        "original_task": "fd7f1fee-b802-4f81-a007-bb1ba9090eae",
+        "stop_post_ms": 2.5344580062665045,
+        "stop_settled_ms": 60.9889579936862,
+        "hold_wall_seconds": 32.09138791699661,
+        "minimum_height_m": 0.13648490225400262,
+        "max_joint_drift_rad": 0.0015676073577606808,
+        "tool_displacement_m": 0.0014121226282116002,
+        "continued_placement": {
+          "status": "completed",
+          "message": "The wrench is back in its tool tray.",
+          "physical_success": true,
+          "intent": {
+            "action": "return",
+            "object": "wrench",
+            "destination": "rack",
+            "message": ""
+          },
+          "outcome": {
+            "status": "success",
+            "message": "The wrench is back in its tool tray.",
+            "distance_m": 0.006086873569182686
+          },
+          "observed": {
+            "screwdriver": [
+              0.4265121544089629,
+              -0.21971358326594945,
+              0.021851001646908
+            ],
+            "wrench": [
+              0.4439174299997022,
+              -4.693535950892417e-05,
+              0.02185911875271765
+            ],
+            "hammer": [
+              0.42351007340244184,
+              0.2376040667114152,
+              0.021891286846259184
+            ]
+          },
+          "targets": {
+            "handoff": [
+              0.64,
+              -0.16
+            ]
+          },
+          "verified_steps": [],
+          "task_id": "df558acc-4297-4af9-a64f-decef4b2dbef"
+        }
+      },
+      {
+        "tool": "hammer",
+        "original_task": "98b89d6d-4dfb-4386-a406-0058768cd997",
+        "stop_post_ms": 3.6011660122312605,
+        "stop_settled_ms": 67.17454100726172,
+        "hold_wall_seconds": 32.10085449996404,
+        "minimum_height_m": 0.131647625007757,
+        "max_joint_drift_rad": 0.008252915983597418,
+        "tool_displacement_m": 0.0016386181996903457,
+        "continued_placement": {
+          "status": "completed",
+          "message": "Your hammer is ready in the handoff tray.",
+          "physical_success": true,
+          "intent": {
+            "action": "fetch",
+            "object": "hammer",
+            "destination": "handoff",
+            "message": ""
+          },
+          "outcome": {
+            "status": "success",
+            "message": "Your hammer is ready in the handoff tray.",
+            "distance_m": 0.008571290942753561
+          },
+          "observed": {
+            "screwdriver": [
+              0.42838551143241527,
+              -0.21972482853860137,
+              0.021850981623120477
+            ],
+            "wrench": [
+              0.4466439975731389,
+              -6.048990138512756e-05,
+              0.02185909833464102
+            ],
+            "hammer": [
+              0.6326227968139365,
+              -0.15563695236736189,
+              0.021899835517332555
+            ]
+          },
+          "targets": {
+            "handoff": [
+              0.64,
+              -0.16
+            ]
+          },
+          "verified_steps": [],
+          "task_id": "09fd473c-1e1f-4e32-aa39-742f2cf877f9"
+        },
+        "returned_placement": {
+          "status": "completed",
+          "message": "The hammer is back in its tool tray.",
+          "physical_success": true,
+          "intent": {
+            "action": "return",
+            "object": "hammer",
+            "destination": "rack",
+            "message": ""
+          },
+          "outcome": {
+            "status": "success",
+            "message": "The hammer is back in its tool tray.",
+            "distance_m": 0.013906857835286635
+          },
+          "observed": {
+            "screwdriver": [
+              0.4290393451434765,
+              -0.21972876404202518,
+              0.021850974607764737
+            ],
+            "wrench": [
+              0.44759651452071014,
+              -6.523623677326474e-05,
+              0.02185909101054511
+            ],
+            "hammer": [
+              0.42615608608571887,
+              0.21663559936931356,
+              0.021843865925634958
+            ]
+          },
+          "targets": {
+            "handoff": [
+              0.64,
+              -0.16
+            ]
+          },
+          "verified_steps": [],
+          "task_id": "2ee19ce6-5d75-420e-9d0f-25bf9b1ebe65"
+        }
+      }
+    ],
+    "passed": true,
+    "final_readiness": {
+      "phase": "Ready",
+      "busy": false,
+      "inventory": {
+        "screwdriver": "tool rack",
+        "wrench": "tool rack",
+        "hammer": "tool rack"
+      },
+      "model_status": "ready",
+      "language_backend": "codex",
+      "language_model": "gpt-6-luna"
+    }
+  },
+  "regressions": {
+    "root_full": 224,
+    "fork_full": 205,
+    "additional_auth_protocol_cases": 2,
+    "focused_transport_api_tests_in_each_checkout": 9,
+    "protected_upstream_files": 46
+  },
+  "shutdown": {
+    "scope": "Owned idle launcher SIGINT; launcher SIGTERM to native; process listing confirms launcher, native and subscription child gone before restart.",
+    "passed": true
+  },
+  "timing_note": "The original live run key stop_settled_ms means POST start to observed Stopped/not busy, not measured mechanical velocity settling. The reusable script now calls it stop_observed_ms.",
+  "browser": {
+    "scope": "Actual typed browser request and button contextual return; no live voice.",
+    "request": "I need something for turning screws.",
+    "delivery": {
+      "status": "completed",
+      "message": "Your screwdriver is ready in the handoff tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "fetch",
+        "object": "screwdriver",
+        "destination": "handoff",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "Your screwdriver is ready in the handoff tray.",
+        "distance_m": 0.009490335612057166
+      },
+      "observed": {
+        "screwdriver": [
+          0.6331062327767787,
+          -0.15347554155966914,
+          0.021841067169883644
+        ],
+        "wrench": [
+          0.4557375645390151,
+          0.003236156052861551,
+          0.021850411714234606
+        ],
+        "hammer": [
+          0.42350683507682046,
+          0.23758782187145916,
+          0.021880386454886432
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [],
+      "task_id": "3e63c34e-5d08-421f-ad19-c36e56b1f9bf"
+    },
+    "return": {
+      "status": "completed",
+      "message": "The screwdriver is back in its tool tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "return",
+        "object": "screwdriver",
+        "destination": "rack",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "The screwdriver is back in its tool tray.",
+        "distance_m": 0.011677389937586278
+      },
+      "observed": {
+        "screwdriver": [
+          0.4245701854776409,
+          -0.21966179174096306,
+          0.021850865430266365
+        ],
+        "wrench": [
+          0.45573756280853,
+          0.0032361593305269888,
+          0.02185041171423462
+        ],
+        "hammer": [
+          0.42350683310010034,
+          0.23758782168792286,
+          0.021880386454886436
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [],
+      "task_id": "a9325afb-9ac5-4ed4-bb52-62f86080e5e3"
+    },
+    "voice_output_restored": true,
+    "motion_time_listening_restored": true,
+    "microphone_idle": true,
+    "interactions": [
+      {
+        "time": 1791815914.78223,
+        "request": "I need something for turning screws.",
+        "result": {
+          "accepted": true,
+          "mode": "change",
+          "task_id": "3e63c34e-5d08-421f-ad19-c36e56b1f9bf",
+          "intent": {
+            "action": "fetch",
+            "object": "screwdriver",
+            "destination": "handoff",
+            "message": ""
+          },
+          "route": "model",
+          "elapsed_ms": 3034.276749996934,
+          "profile": {
+            "backend": "codex",
+            "transport": "session",
+            "model": "gpt-6-luna",
+            "authentication": "chatgpt",
+            "first_token_ms": 2980.365374998655,
+            "elapsed_ms": 3034.1037080506794,
+            "usage": {
+              "totalTokens": 5968,
+              "inputTokens": 5938,
+              "cachedInputTokens": 0,
+              "cacheWriteInputTokens": 0,
+              "outputTokens": 30,
+              "reasoningOutputTokens": 0
+            },
+            "scope": "Subscription session to complete interpretation; no speech/motion"
+          }
+        },
+        "elapsed_ms": 3041.847916028928
+      }
+    ]
+  }
+}

@@ -211,7 +211,10 @@ def test_change_cancels_original_request_before_worker_claim(upstream_backends, 
     asyncio.run(run())
 
 
-def test_stop_supersedes_slow_dialogue_before_any_new_task(upstream_backends, tmp_path):
+@pytest.mark.parametrize("cancelled_http_reply", [False, True])
+def test_stop_supersedes_slow_dialogue_before_any_new_task(
+    upstream_backends, tmp_path, cancelled_http_reply
+):
     async def run():
         entered, release = asyncio.Event(), asyncio.Event()
 
@@ -226,6 +229,13 @@ def test_stop_supersedes_slow_dialogue_before_any_new_task(upstream_backends, tm
             async def request(self, *args, **kwargs):
                 entered.set()
                 await release.wait()
+                if cancelled_http_reply:
+                    import httpx
+
+                    request = httpx.Request("POST", "http://127.0.0.1/understand")
+                    raise httpx.HTTPStatusError(
+                        "Cancelled", request=request, response=httpx.Response(409, request=request)
+                    )
                 intent = {
                     "action": "fetch",
                     "object": "wrench",

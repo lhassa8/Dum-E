@@ -35,7 +35,18 @@ through Codex, as authorized by the user's explicit hosting request. Audio and
 project files are not included in the inference prompt. No idle microphone
 permission or listen scope was expanded.
 
-## Transport and limits
+## Current transport and follow-up
+
+October 12: the Codex backend now defaults to a persistent official app-server
+connection with a fresh ephemeral thread per utterance. Stop interrupts the
+active turn. A matched paired test measures a 20.7% median improvement, with a
+retained slower cloud outlier. The previously reported paused-tool slip is fixed
+and qualified separately. See [current hold/Luna audit](hold-luna-audit.md) and
+[recorded evidence](hold-luna-evidence.json). Main app 8766 now uses native 8765.
+The following sections preserve the original integration's measurements and
+failure; they describe the historical per-request CLI transport.
+
+## Original transport and limits
 
 Each model request runs the installed official CLI with an ephemeral session,
 a temporary empty workspace, read-only sandbox, isolated user configuration,
@@ -70,7 +81,7 @@ Luna handles conversation and intent selection. The robot's physical controller
 remains scripted MuJoCo manipulation; π0.5-LIBERO still requires a separate OpenPi
 server and a supported Linux/NVIDIA simulator.
 
-## Recorded result
+## Recorded result — initial integration
 
 - All 43 distinct requests pass their existing action/object judges (one trial
   per case). The complete factual-reply suite also meets its ten content criteria

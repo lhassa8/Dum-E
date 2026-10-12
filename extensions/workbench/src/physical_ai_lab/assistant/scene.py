@@ -76,6 +76,7 @@ class Workbench:
         self.model = mujoco.MjModel.from_xml_string(scene_xml() if xml is None else xml)
         self.data = mujoco.MjData(self.model)
         self.ik_data = mujoco.MjData(self.model)
+        self.hold_data = mujoco.MjData(self.model)
         self.tcp = self.model.site("tcp").id
         self.renderer = None
         self.reset(seed)
@@ -131,6 +132,23 @@ class Workbench:
             mujoco.mj_step(self.model, self.data)
         if not np.isfinite(self.data.qpos).all():
             raise FloatingPointError("Simulation became unstable")
+
+    def hold_joints(self):
+        """Hold the measured arm pose with static gravity feedforward.
+
+        A plain position servo sags if its target is the measured pose: it must
+        develop a position error before producing the gravity-balancing torque.
+        Adjust only arm servo targets; never set object poses, velocities or grip.
+        """
+        data = self.hold_data
+        data.qpos[:] = self.data.qpos
+        data.qvel[:] = 0
+        mujoco.mj_forward(self.model, data)
+        gravity = data.qfrc_bias[:7] - data.qfrc_passive[:7]
+        target = self.data.qpos[:7] + gravity / self.model.actuator_gainprm[:7, 0]
+        self.data.ctrl[:7] = np.clip(
+            target, self.model.actuator_ctrlrange[:7, 0], self.model.actuator_ctrlrange[:7, 1]
+        )
 
     def render(self):
         if self.renderer is None:

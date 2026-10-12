@@ -5,6 +5,7 @@ import io
 import json
 import os
 import queue
+import signal
 import socket
 import threading
 import time
@@ -246,23 +247,28 @@ class Application:
                 self.event("timing", job_id=job, stage=name, elapsed_ms=elapsed)
 
     def stop(self):
+        cancel = getattr(self.language, "cancel", None)
         with self.lock:
             # Browser and task bridge can acknowledge the same cancellation.
             # Repeated Stop must not restart stopping or invalidate a later reset.
-            if self.stop_event.is_set() or (self.phase == "Stopped" and not self.busy):
-                return
-            if self.tools and self.busy and self.paused_controller is None:
-                self.interrupted = {
-                    "request": self.current_request,
-                    "intent": self.last_intent,
-                    "phase": self.phase,
-                }
-            self.epoch += 1
-            self.stop_event.set()
-            self.commands.put(("stop", None))
-            self.busy = False
-            self.phase = "Stopping"
-            self.event("stop_requested")
+            if not (self.stop_event.is_set() or (self.phase == "Stopped" and not self.busy)):
+                if self.tools and self.busy and self.paused_controller is None:
+                    self.interrupted = {
+                        "request": self.current_request,
+                        "intent": self.last_intent,
+                        "phase": self.phase,
+                    }
+                self.epoch += 1
+                self.stop_event.set()
+                self.commands.put(("stop", None))
+                self.busy = False
+                self.phase = "Stopping"
+                self.event("stop_requested")
+        if cancel:
+            try:
+                cancel()
+            except (RuntimeError, OSError) as error:
+                self.event("language_cancel_failed", error=str(error))
 
     def language_worker(self):
         try:
@@ -311,6 +317,9 @@ class Application:
                         self.language_lock.release()
                 continue
             try:
+                with self.lock:
+                    if epoch != self.epoch:
+                        continue
                 self.timing_point("interpretation_started_ms", job)
                 if self.tools:
                     with self.lock:
@@ -502,7 +511,7 @@ class Application:
                     self.event("outcome", outcome=asdict(controller.outcome), job_id=self.job_id)
                     controller = None
                 else:
-                    bench.data.ctrl[:7] = bench.data.qpos[:7]
+                    bench.hold_joints()
                 with self.lock:
                     self.stop_event.clear()
                     self.busy = False
@@ -746,7 +755,11 @@ def main():
         uvicorn.Config(make_api(state), host="127.0.0.1", port=args.port, log_level="warning")
     )
     threading.Thread(target=server.run, daemon=True).start()
-    threading.Thread(target=state.language_worker, daemon=True).start()
+    language_thread = threading.Thread(target=state.language_worker, daemon=True)
+    language_thread.start()
+    # The launcher terminates owned simulators with SIGTERM. Let the native loop
+    # clean up its persistent subscription child instead of abandoning it.
+    signal.signal(signal.SIGTERM, lambda *_: state.closed.set())
     print(f"Workbench: http://127.0.0.1:{args.port}\nSession log: {logdir.resolve()}", flush=True)
     try:
         state.loop(bench)
@@ -755,6 +768,13 @@ def main():
     finally:
         state.closed.set()
         server.should_exit = True
+        cancel = getattr(state.language, "cancel", None)
+        if cancel:
+            try:
+                cancel()
+            except (RuntimeError, OSError) as error:
+                state.event("language_cancel_failed", error=str(error))
+        language_thread.join(timeout=5)
         bench.close()
 
 

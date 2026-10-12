@@ -5,6 +5,8 @@ import json
 import time
 from dataclasses import asdict
 
+import httpx
+
 from physical_ai_lab.assistant.tool_language import ToolIntent
 from physical_ai_lab.assistant.tool_routing import declined_tool, is_stop_request, known_intent
 
@@ -172,5 +174,9 @@ class InteractionCoordinator:
                         }
                 self.agent.log_interaction(text, result, (time.monotonic() - started) * 1000)
                 return result
+            except httpx.HTTPError:
+                if epoch != self.epoch:
+                    return {"accepted": False, "mode": "superseded", "task_id": None}
+                raise
             finally:
                 self.busy, self.request = False, None

@@ -29,7 +29,7 @@ class PickPlace:
 
     def stop(self):
         self.cancelled = True
-        self.bench.data.ctrl[:7] = self.bench.data.qpos[:7]
+        self.bench.hold_joints()
         self.outcome = Outcome(
             "interrupted", "Stopped. The task was interrupted; placement is not confirmed."
         )

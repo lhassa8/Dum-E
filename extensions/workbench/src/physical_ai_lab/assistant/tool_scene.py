@@ -105,6 +105,11 @@ class ToolWorkbench(Workbench):
         self.model.actuator_gainprm[7, 0] *= 2
         self.model.actuator_biasprm[7, 1] *= 2
         self.model.actuator_biasprm[7, 2] *= np.sqrt(2)
+        # Three friction-only solver sweeps suppress soft-contact creep during
+        # long holds. Geometry, friction coefficients and force limits stay fixed.
+        # This changes the contact model; it is not a real-gripper guarantee and
+        # inverse-dynamics studies must account for NoSlip's documented limits.
+        self.model.opt.noslip_iterations = 3
 
     def tool_support_height(self, name):
         """Body-center clearance for the currently tilted tool's lowest geometry.
