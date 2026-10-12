@@ -17,6 +17,17 @@ can be reused and what must be measured before choosing an arm. Our primitive
 61 g hammer and Panda layout do not establish capacity for real workbench tools.
 No hardware is selected or operated.
 
+The optional [LM Studio / LM Link trial](docs/lmstudio-audit.md) can use your loaded
+`qwen/qwen3.8-27b` conversation model. Set `WORKBENCH_LANGUAGE_BACKEND=lmstudio`
+before launching a new simulator. Existing native simulators cannot switch models
+in place. This is independent of the pretrained OpenPi arm-control integration;
+the qualified local MLX model remains the default.
+
+For [GPT-6 Luna with your ChatGPT subscription](docs/codex-luna-audit.md), use
+`WORKBENCH_LANGUAGE_BACKEND=codex uv run --locked dume-sim` with an existing
+ChatGPT-signed-in Codex CLI. General requests use subscription allowance; speech
+capture and physical checks stay local. No separate API key or billing is used.
+
 ## Run on an Apple Silicon Mac
 
 Python 3.12, uv and ffmpeg are required. This setup was tested on an M5 Mac with

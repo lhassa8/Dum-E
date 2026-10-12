@@ -1,6 +1,7 @@
 """Existing local model interprets tool requests and brief social conversation."""
 
 import json
+import os
 
 from physical_ai_lab.assistant.language import Intent, LocalLanguage
 from physical_ai_lab.assistant.tool_scene import TOOLS
@@ -113,3 +114,18 @@ class ToolIntent(Intent):
 class ToolLanguage(LocalLanguage):
     def __init__(self, model_path=None):
         super().__init__(model_path, system=TOOL_SYSTEM, parser=ToolIntent.parse)
+
+
+def make_tool_language(model_path=None):
+    backend = os.environ.get("WORKBENCH_LANGUAGE_BACKEND", "mlx")
+    if backend == "mlx":
+        return ToolLanguage(model_path)
+    if backend == "lmstudio":
+        from physical_ai_lab.assistant.lmstudio import LMStudioLanguage
+
+        return LMStudioLanguage(system=TOOL_SYSTEM, parser=ToolIntent.parse)
+    if backend == "codex":
+        from physical_ai_lab.assistant.codex_language import CodexLanguage
+
+        return CodexLanguage(system=TOOL_SYSTEM, parser=ToolIntent.parse)
+    raise ValueError("WORKBENCH_LANGUAGE_BACKEND must be mlx, lmstudio or codex")

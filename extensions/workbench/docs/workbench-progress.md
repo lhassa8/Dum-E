@@ -1,5 +1,29 @@
 # Workbench goal progress
 
+October 12, B9 — user-requested conversation hosting options:
+- User connected Qwen3.8-27B through LM Studio/LM Link and confirmed the RTX 5090
+  PC is preferred. Implemented opt-in HTTP inference; structured output resolves
+  three original JSON context failures. All 129 action/object checks pass, but
+  reply-quality simulation disclosure and latency prevent default promotion.
+- User then explicitly authorized ChatGPT subscription hosting with GPT-6 Luna.
+  Implemented official ChatGPT-signed-in Codex CLI inference, ephemeral read-only
+  requests, bounded schema, disabled agent capabilities and no API-key fallback.
+  General request text/context/simulator observations go to OpenAI; capture,
+  transcription and simulation stay local. No new purchase or microphone scope.
+- 43 distinct frozen cases pass once each; do not compare this sample's tail
+  directly with the prior three-repeat studies. A retained 30-second cloud timeout
+  prompted explicit failure/next-request recovery. 203 lab / 184 fork regressions
+  pass, protected upstream hashes intact. Main app 8766 now uses Luna/native8785.
+- Actual typed model request delivers screwdriver with 9.666 mm error and 204.935
+  mm lift. Pending real cloud reply is superseded by Stop, but the physical
+  stop-time retained-tool gate fails: screwdriver slips to table height. Existing
+  contextual return recovers with 5.211 mm rack error. No physics gate or controller
+  was changed to manufacture a pass. Evidence in codex-luna-audit.md and JSON.
+- Conversation-hosting request is implemented; full project goal remains incomplete.
+  CLI overhead/cloud jitter, stop-time slip and live voice remain open. LM Studio
+  and Luna inference do not expose a Windows shell or run the pretrained arm policy;
+  actual OpenPi/LIBERO manipulation still needs a supported workstation runtime.
+
 Goal active: docs/workbench-goal.md, adopted October 11, 2026.
 
 Required source: user's accepted goal in this conversation. Priorities are responsive

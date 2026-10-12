@@ -308,6 +308,21 @@ def ensure_simulator(port, logdir, tools=False):
                 f"The existing simulator uses {state.get('profile', 'blocks')} mode. "
                 "Stop it before switching scenes, or select --blocks to keep the block demo."
             )
+        requested_backend = os.environ.get("WORKBENCH_LANGUAGE_BACKEND", "mlx") if tools else "mlx"
+        if state.get("language_backend", "mlx") != requested_backend:
+            raise RuntimeError(
+                "The existing native simulator uses a different language backend. "
+                "Choose an unused --sim-port to start the requested backend."
+            )
+        if requested_backend == "lmstudio":
+            requested_model = os.environ.get("WORKBENCH_LMSTUDIO_MODEL", "qwen/qwen3.8-27b")
+            if state.get("language_model") != requested_model:
+                raise RuntimeError(
+                    "The existing native simulator uses a different LM Studio model. "
+                    "Choose an unused --sim-port to start the requested model."
+                )
+        if requested_backend == "codex" and state.get("language_model") != "gpt-6-luna":
+            raise RuntimeError("The existing native simulator is not running GPT-6 Luna.")
         print("Connected to existing local Workbench; it will remain running on exit.", flush=True)
         return None
     check_port(port)

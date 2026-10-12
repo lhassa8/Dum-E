@@ -1,0 +1,1903 @@
+{
+  "scope": "Actual subscription-signed-in Codex CLI and native simulator. Typed requests, no live microphone or spoken Stop qualification.",
+  "model": "gpt-6-luna",
+  "authentication": "forced ChatGPT sign-in; API key environment excluded",
+  "runs": {
+    "dialogue": {
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "2f4dd3530e5cc35a59e6716e0dfd96c16d773b989d956d01d87438086875695d",
+      "ready_wait_ms": 11.566833010874689,
+      "count": 15,
+      "incorrect": 0,
+      "median_ms": 3420.316333998926,
+      "p95_ms": 8822.275374957826,
+      "initial_job": null,
+      "final_job": null,
+      "rows": [
+        {
+          "repeat": 0,
+          "name": "screws",
+          "elapsed_ms": 3443.292624957394,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "screwdriver",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 3438.9232080429792,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3438.6904999846593,
+              "usage": {
+                "input_tokens": 7449,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 30,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "nuts",
+          "elapsed_ms": 3223.9638330065645,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 3220.557916967664,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3220.3774580266327,
+              "usage": {
+                "input_tokens": 7451,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 29,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "nails",
+          "elapsed_ms": 8822.275374957826,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 8818.630125024356,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 8818.416125024669,
+              "usage": {
+                "input_tokens": 7453,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 28,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "ambiguous",
+          "elapsed_ms": 2762.975416961126,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool would you like?"
+            },
+            "route": "model",
+            "elapsed_ms": 2759.412584011443,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 2759.225709014572,
+              "usage": {
+                "input_tokens": 7448,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 33,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "multiple",
+          "elapsed_ms": 3420.316333998926,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 3418.4643749613315,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3418.3207920286804,
+              "usage": {
+                "input_tokens": 7450,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 34,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "negative",
+          "elapsed_ms": 3206.810332951136,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Understood\u2014I won\u2019t fetch the hammer."
+            },
+            "route": "model",
+            "elapsed_ms": 3204.542124993168,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3204.411541984882,
+              "usage": {
+                "input_tokens": 7451,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 35,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "hypothetical",
+          "elapsed_ms": 3473.4189169830643,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I\u2019d bring the screwdriver to the handoff tray."
+            },
+            "route": "model",
+            "elapsed_ms": 3469.541417027358,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3469.3264170200564,
+              "usage": {
+                "input_tokens": 7456,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 37,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "tool_question",
+          "elapsed_ms": 4147.1683330019005,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench is useful for tightening nuts."
+            },
+            "route": "model",
+            "elapsed_ms": 4144.377916003577,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 4144.185375014786,
+              "usage": {
+                "input_tokens": 7451,
+                "cached_input_tokens": 3840,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 34,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "impossible",
+          "elapsed_ms": 3267.7150000235997,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can bring or return tools in simulation, but I can\u2019t assemble the shelf."
+            },
+            "route": "model",
+            "elapsed_ms": 3265.52937499946,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3265.3739170054905,
+              "usage": {
+                "input_tokens": 7452,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 43,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "joke",
+          "elapsed_ms": 3082.3533330112696,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Why did the robot go on vacation? It needed to recharge its batteries!"
+            },
+            "route": "model",
+            "elapsed_ms": 3079.53066698974,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3079.3331669992767,
+              "usage": {
+                "input_tokens": 7451,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 41,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "chat",
+          "elapsed_ms": 4213.939292007126,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Ready to help! I\u2019m sorry you had a long day\u2014how can I make things easier?"
+            },
+            "route": "model",
+            "elapsed_ms": 4211.2945829867385,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 4211.042375012767,
+              "usage": {
+                "input_tokens": 7454,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 46,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "capability",
+          "elapsed_ms": 3256.209041981492,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "No. I don\u2019t have physical sight; I get scene information from simulator positions, not a camera."
+            },
+            "route": "model",
+            "elapsed_ms": 3253.2435409957543,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3253.0278339982033,
+              "usage": {
+                "input_tokens": 7452,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 47,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "clarified_wrench",
+          "elapsed_ms": 3880.495458957739,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 3877.0104169961996,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3876.797707984224,
+              "usage": {
+                "input_tokens": 7478,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 29,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "clarified_hammer",
+          "elapsed_ms": 3615.215874975547,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 3612.674791016616,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3612.4737089849077,
+              "usage": {
+                "input_tokens": 7480,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 28,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "negated_stop",
+          "elapsed_ms": 2847.351416014135,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Sure\u2014I\u2019ll keep thinking about the question."
+            },
+            "route": "model",
+            "elapsed_ms": 2844.9132909881882,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 2844.716874998994,
+              "usage": {
+                "input_tokens": 7450,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 35,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        }
+      ]
+    },
+    "context": {
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "b0d7118ce4c9711126a555287ffa2b4c775bac619f1acf82b885095ac41951d8",
+      "ready_wait_ms": 2.407583990134299,
+      "count": 6,
+      "incorrect": 0,
+      "median_ms": 3300.013291009236,
+      "p95_ms": 6432.139625016134,
+      "initial_job": null,
+      "final_job": null,
+      "rows": [
+        {
+          "repeat": 0,
+          "name": "need_screws_after_chat",
+          "elapsed_ms": 3365.5979160103016,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "screwdriver",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 3363.3573750266805,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3363.233415991999,
+              "usage": {
+                "input_tokens": 7491,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 30,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "need_nuts_after_information",
+          "elapsed_ms": 3067.8089589928277,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 3065.357125014998,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3065.143582993187,
+              "usage": {
+                "input_tokens": 7483,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 29,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "need_nails_after_chat",
+          "elapsed_ms": 4595.494790992234,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "hammer",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 4592.541499994695,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 4592.3039999906905,
+              "usage": {
+                "input_tokens": 7489,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 28,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "question_screws_after_fetch",
+          "elapsed_ms": 3152.2750410367735,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A screwdriver is useful for turning screws."
+            },
+            "route": "model",
+            "elapsed_ms": 3148.6949590034783,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3148.3993330039084,
+              "usage": {
+                "input_tokens": 7485,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 34,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "question_nuts_after_fetch",
+          "elapsed_ms": 6432.139625016134,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench helps tighten nuts."
+            },
+            "route": "model",
+            "elapsed_ms": 6429.12237503333,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 6428.825374983717,
+              "usage": {
+                "input_tokens": 7484,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 32,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "hypothetical_after_fetch",
+          "elapsed_ms": 3234.4286660081707,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I\u2019d bring the hammer to the handoff tray if you asked for it."
+            },
+            "route": "model",
+            "elapsed_ms": 3231.8318330217153,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3231.625832966529,
+              "usage": {
+                "input_tokens": 7489,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 42,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        }
+      ]
+    },
+    "pairs": {
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "8b97a4bd1278576e281170ce82ab1dfa8cd3857807c969c2e3e0a1977a40541d",
+      "ready_wait_ms": 2.2248750319704413,
+      "count": 12,
+      "incorrect": 0,
+      "median_ms": 3420.262395986356,
+      "p95_ms": 4352.161667018663,
+      "initial_job": null,
+      "final_job": null,
+      "rows": [
+        {
+          "repeat": 0,
+          "name": "fresh_screwdriver_wrench",
+          "elapsed_ms": 4352.161667018663,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 4348.864707979374,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 4348.658584000077,
+              "usage": {
+                "input_tokens": 7451,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 34,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "fresh_screwdriver_hammer",
+          "elapsed_ms": 4212.54300000146,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 4209.673999983352,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 4209.45175003726,
+              "usage": {
+                "input_tokens": 7451,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 34,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "fresh_wrench_hammer",
+          "elapsed_ms": 3523.938291997183,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 3521.101958001964,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3520.8823330467567,
+              "usage": {
+                "input_tokens": 7451,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 34,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_capabilities_screwdriver_wrench",
+          "elapsed_ms": 3560.1336659747176,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 3557.1751659736037,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3556.9096250110306,
+              "usage": {
+                "input_tokens": 7516,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 34,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_capabilities_screwdriver_hammer",
+          "elapsed_ms": 3235.1567079895176,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 3232.391415978782,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3232.150083000306,
+              "usage": {
+                "input_tokens": 7515,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 34,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_capabilities_wrench_hammer",
+          "elapsed_ms": 2988.5493750334717,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 2984.656290966086,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 2984.1789579950273,
+              "usage": {
+                "input_tokens": 7516,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 34,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_fetch_and_decline_screwdriver_wrench",
+          "elapsed_ms": 3055.5232919869013,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 3052.1720420219935,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3051.872625015676,
+              "usage": {
+                "input_tokens": 7521,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 34,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_fetch_and_decline_screwdriver_hammer",
+          "elapsed_ms": 4337.559540988877,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 4334.297500026878,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 4333.915041992441,
+              "usage": {
+                "input_tokens": 7521,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 34,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "after_fetch_and_decline_wrench_hammer",
+          "elapsed_ms": 3316.5864999755286,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "clarify",
+              "object": null,
+              "destination": null,
+              "message": "Which tool should I bring first?"
+            },
+            "route": "model",
+            "elapsed_ms": 3313.8517909683287,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3313.580624992028,
+              "usage": {
+                "input_tokens": 7520,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 34,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "single_alternative",
+          "elapsed_ms": 3166.845250001643,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "fetch",
+              "object": "wrench",
+              "destination": "handoff",
+              "message": ""
+            },
+            "route": "model",
+            "elapsed_ms": 3163.008333009202,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3162.7368750050664,
+              "usage": {
+                "input_tokens": 7452,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 29,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "two_tool_information",
+          "elapsed_ms": 2853.975542006083,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A wrench tightens or loosens nuts and bolts; a hammer drives nails and strikes surfaces."
+            },
+            "route": "model",
+            "elapsed_ms": 2852.032875001896,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 2851.882832997944,
+              "usage": {
+                "input_tokens": 7454,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 45,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "two_tool_negative",
+          "elapsed_ms": 4187.353749992326,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Understood\u2014I won\u2019t bring either one."
+            },
+            "route": "model",
+            "elapsed_ms": 4181.490499991924,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 4181.06200004695,
+              "usage": {
+                "input_tokens": 7453,
+                "cached_input_tokens": 0,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 35,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        }
+      ]
+    },
+    "quality": {
+      "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+      "fixture_sha256": "823f8ca3c50f1244239326454052f7a60dd92b92adf91f1a058b63b352ad0e8f",
+      "ready_wait_ms": 9.452875005081296,
+      "count": 10,
+      "incorrect": 0,
+      "median_ms": 3863.5298119916115,
+      "p95_ms": 7806.9902079878375,
+      "initial_job": null,
+      "final_job": null,
+      "rows": [
+        {
+          "repeat": 0,
+          "name": "abilities",
+          "elapsed_ms": 3406.541667005513,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "In simulation, I can bring and return tools, pause or resume tasks, and chat. I can also wave or nod when asked."
+            },
+            "route": "model",
+            "elapsed_ms": 3403.2959589967504,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3403.0910830479115,
+              "usage": {
+                "input_tokens": 7455,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 53,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "camera_truth",
+          "elapsed_ms": 5001.617249974515,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "No\u2014I can\u2019t see your webcam; scene information comes from simulator positions."
+            },
+            "route": "model",
+            "elapsed_ms": 4999.448458023835,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 4999.289250001311,
+              "usage": {
+                "input_tokens": 7456,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 41,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "feelings_truth",
+          "elapsed_ms": 2958.081000018865,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I don\u2019t have feelings, but I\u2019m glad to help you in our simulation."
+            },
+            "route": "model",
+            "elapsed_ms": 2955.573541985359,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 2955.364208028186,
+              "usage": {
+                "input_tokens": 7453,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 43,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "screw_tool_information",
+          "elapsed_ms": 4409.048624977004,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "A screwdriver turns screws by engaging their heads; a wrench is for tightening nuts."
+            },
+            "route": "model",
+            "elapsed_ms": 4406.665125046857,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 4406.44962497754,
+              "usage": {
+                "input_tokens": 7455,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 42,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "spanner_information",
+          "elapsed_ms": 3815.3746660100296,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Yes. \u201cSpanner\u201d is another name for a wrench."
+            },
+            "route": "model",
+            "elapsed_ms": 3812.722458038479,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3812.4591250088997,
+              "usage": {
+                "input_tokens": 7456,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 39,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "conversation",
+          "elapsed_ms": 4058.3952920278534,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "Of course. Sounds like it\u2019s been a long day\u2014what would you like to talk about?"
+            },
+            "route": "model",
+            "elapsed_ms": 4055.673333001323,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 4055.4543749894947,
+              "usage": {
+                "input_tokens": 7457,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 46,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "remember_question",
+          "elapsed_ms": 3505.5248330463655,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "You asked what a hammer is useful for."
+            },
+            "route": "model",
+            "elapsed_ms": 3502.2327920305543,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3501.9887090311386,
+              "usage": {
+                "input_tokens": 7486,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 35,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "hardware_truth",
+          "elapsed_ms": 3348.1024589855224,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "No\u2014I'm an assistant for a simulated arm, not a real arm on your desk."
+            },
+            "route": "model",
+            "elapsed_ms": 3345.4915420152247,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3345.277625019662,
+              "usage": {
+                "input_tokens": 7455,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 44,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "outcome_truth",
+          "elapsed_ms": 7806.9902079878375,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "answer",
+              "object": null,
+              "destination": null,
+              "message": "I can\u2019t claim the hammer was delivered; it\u2019s currently at the tool rack."
+            },
+            "route": "model",
+            "elapsed_ms": 7804.526042018551,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 7804.30154199712,
+              "usage": {
+                "input_tokens": 7462,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 43,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        },
+        {
+          "repeat": 0,
+          "name": "impossible_skill",
+          "elapsed_ms": 3911.6849579731934,
+          "correct": true,
+          "http_status": 200,
+          "result": {
+            "intent": {
+              "action": "unsupported",
+              "object": null,
+              "destination": null,
+              "message": "I can pick up and hand you the screwdriver, but I can\u2019t repair your laptop."
+            },
+            "route": "model",
+            "elapsed_ms": 3909.2358329799026,
+            "profile": {
+              "backend": "codex",
+              "model": "gpt-6-luna",
+              "authentication": "chatgpt",
+              "elapsed_ms": 3909.052792005241,
+              "usage": {
+                "input_tokens": 7454,
+                "cached_input_tokens": 6912,
+                "cache_write_input_tokens": 0,
+                "output_tokens": 44,
+                "reasoning_output_tokens": 0
+              },
+              "scope": "CLI startup plus completed text inference; excludes speech and motion"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "aggregate": {
+    "count": 43,
+    "distinct_cases": 43,
+    "repeats": 1,
+    "incorrect": 0,
+    "median_ms": 3443.292624957394,
+    "p95_ms": 6432.139625016134,
+    "max_ms": 8822.275374957826
+  },
+  "quality_review": {
+    "reviewer": "lead development agent; not human validation",
+    "rows": [
+      {
+        "name": "abilities",
+        "message": "In simulation, I can bring and return tools, pause or resume tasks, and chat. I can also wave or nod when asked.",
+        "verdict": "pass"
+      },
+      {
+        "name": "camera_truth",
+        "message": "No\u2014I can\u2019t see your webcam; scene information comes from simulator positions.",
+        "verdict": "pass"
+      },
+      {
+        "name": "feelings_truth",
+        "message": "I don\u2019t have feelings, but I\u2019m glad to help you in our simulation.",
+        "verdict": "pass"
+      },
+      {
+        "name": "screw_tool_information",
+        "message": "A screwdriver turns screws by engaging their heads; a wrench is for tightening nuts.",
+        "verdict": "pass"
+      },
+      {
+        "name": "spanner_information",
+        "message": "Yes. \u201cSpanner\u201d is another name for a wrench.",
+        "verdict": "pass"
+      },
+      {
+        "name": "conversation",
+        "message": "Of course. Sounds like it\u2019s been a long day\u2014what would you like to talk about?",
+        "verdict": "pass"
+      },
+      {
+        "name": "remember_question",
+        "message": "You asked what a hammer is useful for.",
+        "verdict": "pass"
+      },
+      {
+        "name": "hardware_truth",
+        "message": "No\u2014I'm an assistant for a simulated arm, not a real arm on your desk.",
+        "verdict": "pass"
+      },
+      {
+        "name": "outcome_truth",
+        "message": "I can\u2019t claim the hammer was delivered; it\u2019s currently at the tool rack.",
+        "verdict": "pass"
+      },
+      {
+        "name": "impossible_skill",
+        "message": "I can pick up and hand you the screwdriver, but I can\u2019t repair your laptop.",
+        "verdict": "pass"
+      }
+    ]
+  },
+  "retained_initial_quality_failure": {
+    "rows": [
+      {
+        "repeat": 0,
+        "name": "abilities",
+        "elapsed_ms": 4240.587667038199,
+        "correct": true,
+        "http_status": 200,
+        "result": {
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "In simulation, I can bring and return tools, pause or resume tasks, and chat; I can\u2019t use tools to work on objects."
+          },
+          "route": "model",
+          "elapsed_ms": 4238.284500024747,
+          "profile": {
+            "backend": "codex",
+            "model": "gpt-6-luna",
+            "authentication": "chatgpt",
+            "elapsed_ms": 4238.120084046386,
+            "usage": {
+              "input_tokens": 7455,
+              "cached_input_tokens": 6912,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 54,
+              "reasoning_output_tokens": 0
+            },
+            "scope": "CLI startup plus completed text inference; excludes speech and motion"
+          }
+        }
+      },
+      {
+        "repeat": 0,
+        "name": "camera_truth",
+        "elapsed_ms": 3081.653416971676,
+        "correct": true,
+        "http_status": 200,
+        "result": {
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "No\u2014I can\u2019t interpret webcam images; I only get scene information from simulator positions."
+          },
+          "route": "model",
+          "elapsed_ms": 3078.9085419964977,
+          "profile": {
+            "backend": "codex",
+            "model": "gpt-6-luna",
+            "authentication": "chatgpt",
+            "elapsed_ms": 3078.63579102559,
+            "usage": {
+              "input_tokens": 7456,
+              "cached_input_tokens": 6912,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 43,
+              "reasoning_output_tokens": 0
+            },
+            "scope": "CLI startup plus completed text inference; excludes speech and motion"
+          }
+        }
+      },
+      {
+        "repeat": 0,
+        "name": "feelings_truth",
+        "elapsed_ms": 4154.350625001825,
+        "correct": true,
+        "http_status": 200,
+        "result": {
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "I don\u2019t have feelings, but I\u2019m ready to help in simulation and chat with you."
+          },
+          "route": "model",
+          "elapsed_ms": 4151.910250016954,
+          "profile": {
+            "backend": "codex",
+            "model": "gpt-6-luna",
+            "authentication": "chatgpt",
+            "elapsed_ms": 4151.714374951553,
+            "usage": {
+              "input_tokens": 7453,
+              "cached_input_tokens": 0,
+              "cache_write_input_tokens": 0,
+              "output_tokens": 45,
+              "reasoning_output_tokens": 0
+            },
+            "scope": "CLI startup plus completed text inference; excludes speech and motion"
+          }
+        }
+      },
+      {
+        "repeat": 0,
+        "name": "screw_tool_information",
+        "elapsed_ms": 30013.167834025808,
+        "correct": false,
+        "http_status": 500,
+        "result": {
+          "unparsed_response": "Internal Server Error"
+        }
+      }
+    ],
+    "note": "Fourth quality request timed out after 30 seconds; following reused HTTP connection reset and the quality batch stopped. API now reports explicit failure and supports the next request; simulator process stayed alive. Complete quality suite was then rerun without changing cases."
+  },
+  "regressions": {
+    "lab": 203,
+    "fork": 184,
+    "protected_upstream_files": 46
+  },
+  "physical": {
+    "delivery": {
+      "status": "completed",
+      "message": "Your screwdriver is ready in the handoff tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "fetch",
+        "object": "screwdriver",
+        "destination": "handoff",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "Your screwdriver is ready in the handoff tray.",
+        "distance_m": 0.009665820834699244
+      },
+      "observed": {
+        "screwdriver": [
+          0.6344637420610184,
+          -0.15207674685236114,
+          0.021844874683753766
+        ],
+        "wrench": [
+          0.45573759509274203,
+          0.003236156153860638,
+          0.02185041514120488
+        ],
+        "hammer": [
+          0.42350681093946985,
+          0.23758781995146822,
+          0.021880385438156204
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [],
+      "task_id": "be45fdcf-215f-4dad-9f10-a67a54ae0949"
+    },
+    "stop_smoke_test": "failed: cancellation and supersession assertions passed, but post-stop grip/height assertion failed. No full Stop success is claimed.",
+    "failed_stop_snapshot": {
+      "backend": "workbench",
+      "schema_version": 2,
+      "profile": "tools",
+      "messages": [
+        {
+          "role": "assistant",
+          "content": "Hello! I'm your workshop sidekick. Ask me for a screwdriver, wrench or hammer, or say hello and I'll wave."
+        },
+        {
+          "role": "user",
+          "content": "I need something for turning screws."
+        },
+        {
+          "role": "assistant",
+          "content": "I'll bring you the screwdriver."
+        },
+        {
+          "role": "assistant",
+          "content": "Your screwdriver is ready in the handoff tray."
+        },
+        {
+          "role": "user",
+          "content": "Bring me the screwdriver."
+        },
+        {
+          "role": "assistant",
+          "content": "I'll bring you the screwdriver."
+        },
+        {
+          "role": "assistant",
+          "content": "Stopped. This task was cancelled; placement is not confirmed. Say resume to continue, or put it back to return the tool."
+        }
+      ],
+      "phase": "Stopped",
+      "busy": false,
+      "model_status": "ready",
+      "model_error": null,
+      "language_backend": "codex",
+      "language_model": "gpt-6-luna",
+      "objects": {
+        "screwdriver": [
+          0.4146248049595071,
+          -0.22764890807455382,
+          0.021844874683753755
+        ],
+        "wrench": [
+          0.45573754529348937,
+          0.0032361561676137905,
+          0.021850415141204876
+        ],
+        "hammer": [
+          0.42350681564649684,
+          0.23758781991563424,
+          0.021880385438156225
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "robot_joints": [
+        -0.03561132674587997,
+        0.22040419812508605,
+        -0.42653655095450377,
+        -2.3948429782377034,
+        0.1480206456487973,
+        2.573634520193228,
+        -1.3816031673634284
+      ],
+      "gripper_command": 0.0,
+      "inventory": {
+        "screwdriver": "tool rack",
+        "wrench": "tool rack",
+        "hammer": "tool rack"
+      },
+      "job_id": "dfe1e4be",
+      "task": null,
+      "last_intent": {
+        "action": "fetch",
+        "object": "screwdriver",
+        "destination": "handoff",
+        "message": ""
+      },
+      "last_outcome": {
+        "status": "interrupted",
+        "message": "Stopped. Placement is not confirmed.",
+        "distance_m": null
+      },
+      "epoch": 2,
+      "responsiveness": {
+        "job_id": "dfe1e4be",
+        "route": "resolved",
+        "interpretation_ms": 0.072,
+        "decision_ms": 20.988,
+        "pickup_started_ms": 22.633
+      },
+      "verified_steps": [],
+      "recovery": {
+        "can_resume": true,
+        "tool": "screwdriver",
+        "interrupted": {
+          "request": "Bring me the screwdriver.",
+          "intent": {
+            "action": "fetch",
+            "object": "screwdriver",
+            "destination": "handoff",
+            "message": ""
+          },
+          "phase": "Lifting tool"
+        }
+      },
+      "tasks": [
+        {
+          "task_id": "4ff894f3-e92c-4e52-9a50-233e956477c4",
+          "instruction": "Bring me the screwdriver.",
+          "status": "cancelled",
+          "created_at": "2026-10-12T09:29:26.058725",
+          "started_at": "2026-10-12T09:29:26.094763",
+          "completed_at": "2026-10-12T09:29:32.271413",
+          "status_message": null,
+          "error_message": null,
+          "progress": 0.0,
+          "metadata": {
+            "robot_id": "dume_sim_panda",
+            "source": "dume_sim_browser",
+            "simulation": true,
+            "resolved_intent": {
+              "action": "fetch",
+              "object": "screwdriver",
+              "destination": "handoff",
+              "message": ""
+            },
+            "worker_id": "dume_sim_panda",
+            "claimed_at": "2026-10-12T09:29:26.094769",
+            "result": {
+              "status": "cancelled",
+              "message": "Stopped. This task was cancelled; placement is not confirmed. Say resume to continue, or put it back to return the tool.",
+              "physical_success": false,
+              "task_id": "4ff894f3-e92c-4e52-9a50-233e956477c4"
+            },
+            "last_update": "2026-10-12T09:29:32.271409"
+          }
+        },
+        {
+          "task_id": "be45fdcf-215f-4dad-9f10-a67a54ae0949",
+          "instruction": "I need something for turning screws.",
+          "status": "completed",
+          "created_at": "2026-10-12T09:27:54.749098",
+          "started_at": "2026-10-12T09:27:54.772623",
+          "completed_at": "2026-10-12T09:28:09.173702",
+          "status_message": null,
+          "error_message": null,
+          "progress": 0.0,
+          "metadata": {
+            "robot_id": "dume_sim_panda",
+            "source": "dume_sim_browser",
+            "simulation": true,
+            "resolved_intent": {
+              "action": "fetch",
+              "object": "screwdriver",
+              "destination": "handoff",
+              "message": ""
+            },
+            "worker_id": "dume_sim_panda",
+            "claimed_at": "2026-10-12T09:27:54.772627",
+            "result": {
+              "status": "completed",
+              "message": "Your screwdriver is ready in the handoff tray.",
+              "physical_success": true,
+              "intent": {
+                "action": "fetch",
+                "object": "screwdriver",
+                "destination": "handoff",
+                "message": ""
+              },
+              "outcome": {
+                "status": "success",
+                "message": "Your screwdriver is ready in the handoff tray.",
+                "distance_m": 0.009665820834699244
+              },
+              "observed": {
+                "screwdriver": [
+                  0.6344637420610184,
+                  -0.15207674685236114,
+                  0.021844874683753766
+                ],
+                "wrench": [
+                  0.45573759509274203,
+                  0.003236156153860638,
+                  0.02185041514120488
+                ],
+                "hammer": [
+                  0.42350681093946985,
+                  0.23758781995146822,
+                  0.021880385438156204
+                ]
+              },
+              "targets": {
+                "handoff": [
+                  0.64,
+                  -0.16
+                ]
+              },
+              "verified_steps": [],
+              "task_id": "be45fdcf-215f-4dad-9f10-a67a54ae0949"
+            },
+            "last_update": "2026-10-12T09:28:09.173701"
+          }
+        }
+      ],
+      "active_task": null,
+      "last_result": {
+        "status": "cancelled",
+        "message": "Stopped. This task was cancelled; placement is not confirmed. Say resume to continue, or put it back to return the tool.",
+        "physical_success": false,
+        "task_id": "4ff894f3-e92c-4e52-9a50-233e956477c4"
+      },
+      "upstream_revision": "f09a96827ea60e4b18a55fa67e2acb97800dc46b",
+      "mcp_status": "running",
+      "speech": {
+        "last_text": null,
+        "speaking": false
+      },
+      "speech_input": {
+        "status": "ready",
+        "error": null,
+        "busy": false,
+        "model": "mlx-community/whisper-small.en-mlx",
+        "revision": "52a88bf6e98b114a210c21bb83e22d6e1505cb73",
+        "local": true,
+        "preparation_seconds": 2.622,
+        "warmup_seconds": 2.555
+      },
+      "interaction": {
+        "busy": false,
+        "request": null,
+        "clarification": null
+      }
+    },
+    "tool_height_after_stop_m": 0.021844874683753755,
+    "post_stop_gripper_command": 0.0,
+    "recovery": {
+      "status": "completed",
+      "message": "The screwdriver is back in its tool tray.",
+      "physical_success": true,
+      "intent": {
+        "action": "return",
+        "object": "screwdriver",
+        "destination": "rack",
+        "message": ""
+      },
+      "outcome": {
+        "status": "success",
+        "message": "The screwdriver is back in its tool tray.",
+        "distance_m": 0.005211488909113601
+      },
+      "observed": {
+        "screwdriver": [
+          0.4254908864372397,
+          -0.22738704924175976,
+          0.02184487468375376
+        ],
+        "wrench": [
+          0.45573754534769506,
+          0.003236156167611066,
+          0.0218504151412049
+        ],
+        "hammer": [
+          0.42350681408544616,
+          0.23758781991558264,
+          0.021880385438156215
+        ]
+      },
+      "targets": {
+        "handoff": [
+          0.64,
+          -0.16
+        ]
+      },
+      "verified_steps": [],
+      "task_id": "f50ee9bc-4fa0-4b2b-af23-498a2db690fc"
+    }
+  },
+  "remaining": "CLI/runtime overhead, intermittent cloud timeout, live voice and acoustics, stop-time tool slip, actual pretrained arm policy and hardware are unresolved.",
+  "source_sha256": {
+    "src/physical_ai_lab/assistant/codex_language.py": "8ebba4dd071d6396a20c83e4829bf12dda76f2a7f36af69a3268352ba94b6af8",
+    "src/physical_ai_lab/assistant/lmstudio.py": "b70a142e56946cd4e88ed78686e703bb6cf7d1659e2769d898d3b60f744745f6"
+  }
+}

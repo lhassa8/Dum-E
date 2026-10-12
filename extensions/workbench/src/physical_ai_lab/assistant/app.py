@@ -68,6 +68,9 @@ class Application:
         self.log_path = log_path
         self.events = []
         self.tools = tools
+        self.language_backend = (
+            os.environ.get("WORKBENCH_LANGUAGE_BACKEND", "mlx") if tools else "mlx"
+        )
         self.joint_positions = []
         self.gripper_command = 255
         self.scene_targets = TARGETS
@@ -115,6 +118,10 @@ class Application:
                 "busy": self.busy,
                 "model_status": self.model_status,
                 "model_error": self.model_error,
+                "language_backend": self.language_backend,
+                "language_model": str(getattr(self.language, "path", "unknown"))
+                if self.language
+                else None,
                 "objects": self.observations,
                 "targets": self.scene_targets,
                 "robot_joints": self.joint_positions,
@@ -202,18 +209,21 @@ class Application:
             if self.model_status != "ready":
                 raise ValueError("The language model is not ready.")
             with self.language_lock:
-                intent, _ = self.language.interpret(
-                    text,
-                    history,
-                    observations={
-                        "positions_m": snapshot["objects"],
-                        "locations": snapshot["inventory"],
-                        "recent_tool": snapshot["recovery"]["tool"],
-                        "interrupted_task": snapshot["recovery"]["interrupted"],
-                        "active_task": snapshot["task"],
-                        "phase": snapshot["phase"],
-                    },
-                )
+                try:
+                    intent, _ = self.language.interpret(
+                        text,
+                        history,
+                        observations={
+                            "positions_m": snapshot["objects"],
+                            "locations": snapshot["inventory"],
+                            "recent_tool": snapshot["recovery"]["tool"],
+                            "interrupted_task": snapshot["recovery"]["interrupted"],
+                            "active_task": snapshot["task"],
+                            "phase": snapshot["phase"],
+                        },
+                    )
+                except RuntimeError as error:
+                    raise ValueError(str(error)) from error
                 profile = dict(getattr(self.language, "last_profile", {}))
             route = "model"
         elapsed = (time.monotonic() - started) * 1000
@@ -258,9 +268,9 @@ class Application:
         try:
             started = time.perf_counter()
             if self.tools:
-                from physical_ai_lab.assistant.tool_language import ToolLanguage
+                from physical_ai_lab.assistant.tool_language import make_tool_language
 
-                self.language = ToolLanguage(self.model_path)
+                self.language = make_tool_language(self.model_path)
             else:
                 self.language = LocalLanguage(self.model_path)
             with self.lock:
@@ -346,6 +356,9 @@ class Application:
                     keeper.close()
                 except Exception as error:
                     self.event("residency_cleanup_failed", error=str(error))
+        close = getattr(self.language, "close", None)
+        if close is not None:
+            close()
 
     def inventory(self, positions=None):
         if not self.tools:
