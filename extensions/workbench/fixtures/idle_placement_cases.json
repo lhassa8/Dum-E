@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "tools": ["screwdriver", "wrench", "hammer"],
+  "seeds": [42, 51, 52],
+  "hold_seconds": 32,
+  "idle_seconds": 1800,
+  "minimum_held_height_m": 0.13,
+  "maximum_hold_joint_drift_rad": 0.02,
+  "maximum_idle_displacement_m": 0.004,
+  "minimum_lift_m": 0.08,
+  "maximum_placement_error_m": 0.035,
+  "maximum_resting_height_m": 0.04,
+  "maximum_resting_speed_m_s": 0.03,
+  "maximum_other_tool_displacement_m": 0.004,
+  "expected_success_fraction": 0.95
+}

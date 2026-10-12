@@ -156,6 +156,7 @@ def test_launcher_does_not_silently_reuse_the_wrong_backend_or_model(monkeypatch
         "profile": "tools",
         "language_backend": "mlx",
         "language_model": "local-mlx-model",
+        "physics_profile": "tool_contacts_v2",
     }
     monkeypatch.setattr(
         "physical_ai_lab.dume.app.httpx.get",
@@ -286,6 +287,7 @@ def test_explicit_local_model_choice_is_not_silently_ignored_by_reuse(monkeypatc
     state = {
         "backend": "workbench", "last_outcome": None, "busy": False, "profile": "tools",
         "language_backend": "mlx", "language_model": str(tmp_path / "old-model"),
+        "physics_profile": "tool_contacts_v2",
     }
     monkeypatch.setattr(
         "physical_ai_lab.dume.app.httpx.get",

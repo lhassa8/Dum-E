@@ -31,6 +31,10 @@ switch models in place, and reuse requires matching provider, model and endpoint
 This is independent of the pretrained OpenPi arm-control integration; the local
 MLX backend remains the portable default.
 
+The [tool contact fix](docs/idle-contact-audit.md) preserves Stop holds and keeps
+returned tools stable through 30 simulated minutes, followed by physical re-pickup.
+The launcher rejects older native contact profiles; restart the simulator to apply it.
+
 For [GPT-6 Luna with your ChatGPT subscription](docs/codex-luna-audit.md), use
 `WORKBENCH_LANGUAGE_BACKEND=codex uv run --locked dume-sim` with an existing
 ChatGPT-signed-in Codex CLI. General requests use subscription allowance; speech

@@ -3,6 +3,7 @@
 import asyncio
 import hashlib
 import json
+import signal
 import uuid
 from multiprocessing.managers import SharedMemoryManager
 from pathlib import Path
@@ -18,6 +19,24 @@ from physical_ai_lab.dume.upstream import VENDOR  # noqa: E402
 from shared import TaskStatus  # noqa: E402
 from shared.message_broker import SharedMemoryMessageBroker  # noqa: E402
 from shared.task_manager import SharedMemoryTaskManager  # noqa: E402
+
+
+def test_launcher_termination_unwinds_cleanup_and_restores_signal_handler(monkeypatch):
+    import physical_ai_lab.dume.app as launcher
+
+    previous = signal.getsignal(signal.SIGTERM)
+    cleaned = []
+
+    def owned_runtime():
+        try:
+            signal.getsignal(signal.SIGTERM)(signal.SIGTERM, None)
+        finally:
+            cleaned.append(True)
+
+    monkeypatch.setattr(launcher, "_main", owned_runtime)
+    launcher.main()
+    assert cleaned == [True]
+    assert signal.getsignal(signal.SIGTERM) == previous
 
 
 @pytest.fixture

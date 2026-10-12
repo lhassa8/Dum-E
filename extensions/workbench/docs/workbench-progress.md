@@ -1,5 +1,40 @@
 # Workbench goal progress
 
+October 12, B12 — stable returned tools without weakening Stop holds:
+- Previous goal turn was progress: Bonsai/configurable backends published at
+  lab4892e9e / fork52c4b4f. Kept the user's selected model and Mac speech setup.
+- Reproduced old contact creep: all9 frozen tool/seed trajectories fail4mm
+  displacement over1800 simulated seconds after physical return (31.12–71.68mm).
+  NoSlip tolerance tightening did not change drift. Global elliptic contacts
+  failed retained seed51/hammer Stop height; rejected without weakening the gate.
+- Fixed explicit sliding-only tool/table contacts while keeping gripper contacts6,
+  NoSlip3, geometry/masses, original force caps, controller and finger coupling.
+  Actual contact inspection verifies dimensions/friction/solver parameters.
+  No object weld, pose/velocity freeze, engine sleep or phase-based physics switch.
+- All9 candidate trajectories pass unchanged32s Stop holds, delivery/return,
+ 1800s idle and real re-pickup. Peak drift below0.001mm;27 placements6.98–14.46mm.
+  This is deterministic simulation evidence, not a real-world precision claim.
+  Fixed protocol/hash and independent numeric review retained. Recorder failure
+  rejected; explicit scalar conversion, atomic checkpoints and short real pilot
+  precede complete rerun. Production stepping unchanged (no speed benefit found).
+- Full lab238/fork219 tests pass, including original nine drop/hold and six
+  continuation regressions. Added actual contact/release/idle/re-pickup contracts.
+  After a small launcher SIGTERM cleanup correction,43 focused tests pass each.
+  Real isolated shutdown releases UI/native/MCP ports in0.821s with exit0.
+- Launcher rejects stale/unknown contact profiles. Owned main restarted with
+  Bonsai/tool_contacts_v2, exec87296; old Ready snapshot saved before replacement.
+  All three32-wall-second Stop holds + physical continuation/return pass.
+  Pending model reply superseded1.142s, next model request works; typed Stop
+  observed6.35–59.86ms. No new voice-boundary/settling/tail-latency claim.
+- Saved synthetic speech passes request change/Stop/resume/contextual return,
+  withdrawal,general Bonsai dialogue and clarification across completion. Browser
+  independently Ready,tools on rack,Voice/listen ON,mic idle; screenshot retained.
+- Historical camera/carry/release learned weights need requalification under
+  changed contacts. No reserved camera test opened. Full goal active: public
+  camera-informed operation, actual pretrained arm runtime, acoustic/live human
+  demonstration remain; no bespoke controller sweep substitutes for model reuse.
+- See idle-contact-audit.md, synthetic evidence bundle and measured comparison.
+
 October 12, B11 — user-selected Bonsai and replaceable conversation models:
 - Previous goal turn was progress: published B10 grip/latency fixes at lab
   ae62140 / fork6213fe2. User loaded Bonsai on the preferred 5090 device and

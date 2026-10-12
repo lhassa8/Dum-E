@@ -343,6 +343,14 @@ def ensure_simulator(port, logdir, tools=False):
                 )
         if requested_backend == "codex" and state.get("language_model") != "gpt-6-luna":
             raise RuntimeError("The existing native simulator is not running GPT-6 Luna.")
+        if tools:
+            from physical_ai_lab.assistant.tool_scene import TOOL_PHYSICS_PROFILE
+
+            if state.get("physics_profile") != TOOL_PHYSICS_PROFILE:
+                raise RuntimeError(
+                    "The existing native simulator uses older or unverified tool contacts. "
+                    "Restart it, or choose an unused --sim-port to apply the current physics."
+                )
         print("Connected to existing local Workbench; it will remain running on exit.", flush=True)
         return None
     check_port(port)
@@ -502,11 +510,20 @@ def _main():
             sim.wait(timeout=10)
 
 
+def terminate_launcher(signum, frame):
+    # Uvicorn re-raises SIGTERM after shutdown. Translate it to Python unwinding
+    # so owned native/MCP children are cleaned up by _main's finally blocks.
+    raise KeyboardInterrupt
+
+
 def main():
+    previous = signal.signal(signal.SIGTERM, terminate_launcher)
     try:
         _main()
     except KeyboardInterrupt:
         pass
+    finally:
+        signal.signal(signal.SIGTERM, previous)
 
 
 if __name__ == "__main__":

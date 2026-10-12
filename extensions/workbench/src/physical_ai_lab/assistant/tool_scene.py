@@ -10,6 +10,7 @@ from physical_ai_lab.assistant.scene import Workbench, scene_xml
 TOOLS = {"screwdriver": (0.43, -0.23), "wrench": (0.45, 0.0), "hammer": (0.43, 0.23)}
 HANDOFF = {"handoff": (0.64, -0.16)}
 LABELS = {"screwdriver": "Screwdriver", "wrench": "Wrench", "hammer": "Hammer"}
+TOOL_PHYSICS_PROFILE = "tool_contacts_v2"
 
 
 def tool_scene_xml():
@@ -93,9 +94,42 @@ def tool_scene_xml():
 
 
 class ToolWorkbench(Workbench):
-    def __init__(self, seed=42, xml=None):
+    def __init__(self, seed=42, xml=None, friction_cone="pyramidal", table_contact_dim=3):
+        if friction_cone not in {"elliptic", "pyramidal"}:
+            raise ValueError("Unsupported tool friction cone")
+        scene = ET.fromstring(tool_scene_xml() if xml is None else xml)
+        # Research comparisons use fixed contact settings from initialization,
+        # never a task-phase-dependent physics switch.
+        scene.find("option").set("cone", friction_cone)
+        if table_contact_dim is not None:
+            if table_contact_dim not in {3, 6}:
+                raise ValueError("Unsupported tabletop contact dimensions")
+            contact = scene.find("contact")
+            if contact is None:
+                contact = ET.SubElement(scene, "contact")
+            for name in TOOLS:
+                body = scene.find(f".//body[@name='{name}']")
+                for index, geom in enumerate(body.findall("geom")):
+                    geom_name = geom.get("name") or f"{name}_part_{index}"
+                    geom.set("name", geom_name)
+                    ET.SubElement(
+                        contact,
+                        "pair",
+                        geom1="workbench",
+                        geom2=geom_name,
+                        condim=str(table_contact_dim),
+                        friction="1.5 1.5 0.04 0.01 0.01",
+                    )
+            # Default table contacts retain normal/sliding friction. Grip contacts keep
+            # torsional/rolling resistance. Applying all six dimensions to the
+            # flat table with NoSlip caused 31–72mm creep in the frozen idle test.
         super().__init__(
-            seed, xml=tool_scene_xml() if xml is None else xml, objects=TOOLS, targets=HANDOFF
+            seed, xml=ET.tostring(scene, encoding="unicode"), objects=TOOLS, targets=HANDOFF
+        )
+        self.physics_profile = (
+            TOOL_PHYSICS_PROFILE
+            if friction_cone == "pyramidal" and table_contact_dim == 3
+            else None
         )
         # The vendor's positional gripper servo produces only ~2.3 N in these
         # handles. Double its stiffness (and scale damping by sqrt(2)) to keep

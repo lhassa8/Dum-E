@@ -69,6 +69,7 @@ class Application:
         self.log_path = log_path
         self.events = []
         self.tools = tools
+        self.physics_profile = None
         self.language_backend = (
             os.environ.get("WORKBENCH_LANGUAGE_BACKEND", "mlx") if tools else "mlx"
         )
@@ -114,6 +115,7 @@ class Application:
                 "backend": "workbench",
                 "schema_version": 2,
                 "profile": "tools" if self.tools else "blocks",
+                "physics_profile": self.physics_profile,
                 "messages": list(self.messages),
                 "phase": self.phase,
                 "busy": self.busy,
@@ -761,6 +763,7 @@ def main():
         from physical_ai_lab.assistant.tool_scene import ToolWorkbench
 
         bench = ToolWorkbench()
+        state.physics_profile = bench.physics_profile
     else:
         bench = Workbench()
     if args.test_gripper_fault:
