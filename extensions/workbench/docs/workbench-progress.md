@@ -743,3 +743,54 @@ D2d publication checks: fresh native-access175lab/156forktests passed;
 Ruff/format93lab/69forkfilespassed;46pinnedupstreamhashesintact. Restricted
 CoreGraphics/IPC run failedenvironmentaccess, correctednative-accessrun passed
 without changing/skipping tests. Final source/fixture/asset parity verified.
+
+D2e active contract — held-pose measurement:
+- Previous turn is progress: fork1c1f739/root98b4477 committed and verified.
+- Hypothesis1: rigid grasp error grows during redirected/reoriented carry and
+  descent; existing RGB-D may observe enough handle geometry to update heldpose.
+  Judge synchronized saved RGB-D only, independent physics labels afterward;
+  reject partial/ambiguous/noisy fits. No truepose runtime fallback.
+- Diagnostic002 reproduces exact36.4239399mm failure. Rigid error15.632mm
+  beforedescent/.232rad,33.564mm nearrelease while gap~43.49mm remainsclosed.
+  Diagnostic001 incorrectly labeled transition frames/comparedunsolvedlayout
+  ratherthansettledinitialposition; excluded from camera accuracy/effect claims.
+- Action boundary: opt-in held observation fit with declared geometry + robot
+  proximity gating, separate from protected tabletopdetector; freshcapture,
+  independentaccuracy/coverage and full18physicsval before integration.
+  Attemptbudget2, allthresholds/frozenfixtures preserved. Goal remainsactive.
+- Held-face hypothesis1 complete-face fit: all12 airborne views (front+side)
+  withheld, despite independently labeledvisiblehandle331–1101pixels. Hypothesis2
+  RGB-D robustplane patchesnearTCP alsoall12withheld. No loweringgeometry/fit
+  gates, no actorintegration; missing full-face observability remainsunresolved.
+- Replan: changed-recipe action-conditioned outcomes instead of anotherimagefit.
+  Recoverypilot validation016 nine±20mmbranches exactlymatchnormal/repeatedzero
+  fullintegrationstate(0error). +20mmX yields~17–18mmfutureerror versus36.424mm
+  zeroaction. This is measuredcounterfactualevidence, not a chosenliveoffset.
+- Collect samefrozen72train/18val with finalD2drecovery recipe. Test24excluded;
+  outcome-labelv2 strengthensfutureaddedneighborlabel tomaxevery32msreleaseframe.
+  DefaultC3collectorrecipe/final-displacementlabels preserved. No trainingonval,
+  no oldweight/guard changes. Physical snapshot reset remains collector-only.
+
+D2e execution — held geometry and missing training exposure:
+- Bothopticalhypotheses withheld12/12airborneframes ofoneknownscene; allthree
+  syntheticcompletefaces fitwithin1.5mm, clipped/invalid/farrefuse. No actor
+  measurementfeedback. Missing heldobservability unresolved; no thirdimagefit.
+- Recoverydataset1314physicaloutcomes/146states:1044train/116states/70of72scenes,
+  270validation/30states/all18. Allnormal/repeatedzero integrationstatesexact.
+  Strengthened futurelabelmax32msrelease displacement, version2; no testsopened.
+- FirstfixedCPUfit3.330s withsame76features/3x9413params/seeds300epochs and
+  training-onlypreviousheadingdropout. NeuralfutureRMSE6.568mmp9511.109mm vs
+  rigid14.001/constant9.277/linear22.688RMSE. All270covered;9batchinference
+  median.075/p95.084ms. Failsunchanged10mmp95gate;selectedkindnone.
+- Criticaldataevidence:116trainingstates contain0deliberateturns whilevalidation
+  has3. Newmodel'srecipeversionstays0 and cannotauthorize reorientedrelease.
+  Addedexplicitrecipeguards; oldv2weights unchanged and remainrestricted.
+- Publishedreproducibledataset803c79fc..., rejectedv3model9ef61218..., labeled
+  measurements/figures. No fulllearnedpolicytrial becauseofflinegatefails and
+  relevanttrainingcoverageabsent. Wholevalidationsuccessgainnotclaimed.
+- Frozennexttraining-onlyturnprotocol beforecollection; implementation/collection
+  stillpending. Needbalancedturnexposureacrossall3tools, keepval/testunchanged,
+  combineepisode-groupednewtrainwithoriginaldata. One remainingfitbefore replan.
+- Fresh180lab/161forktests pass;98lab/74forkRuff/formatpass;46upstreamhashesintact.
+  PublicA4Ready,VoiceON,micidle; no UIactions,permissions,physics/forcechanges.
+  Fullgoalactive, all-phasecameraresume/publicintegration/hardware/live remainopen.

@@ -38,6 +38,19 @@ assert not set(episodes[train]) & set(episodes[validation])
 config, criteria = fixture["training"], fixture["criteria"]
 dropout_hash = None
 raw_train_rows = int(train.sum())
+recipe = manifest.get("controller_recipe", "C3_legacy")
+reoriented_train_legs = sum(
+    leg.get("deliberately_reoriented", False)
+    for record in manifest["records"]
+    if record["case"]["split"] == "train"
+    for leg in record["legs"]
+    if leg.get("rows", 0) > 0
+)
+recipe_version = int(
+    recipe == "D2d_verified_camera_recovery"
+    and manifest.get("outcome_label_version") == 2
+    and reoriented_train_legs > 0
+)
 if args.sensor_dropout:
     dropout = json.loads(args.sensor_dropout.read_text())
     assert dropout["base_fixture_sha256"] == manifest["fixture_sha256"]
@@ -62,6 +75,7 @@ weights = {
     "mean": mean,
     "scale": scale,
     "feature_version": np.array(FEATURE_VERSION),
+    "controller_recipe_version": np.array(recipe_version),
     "actions_xy_m": np.array(fixture["actions_xy_m"]),
     "max_feature": np.array(criteria["guard_max_normalized_feature"]),
     "max_xy_std_m": np.array(criteria["guard_max_ensemble_xy_std_m"]),
@@ -100,6 +114,10 @@ metadata = {
     "model_sha256": hashlib.sha256((args.output / "model.npz").read_bytes()).hexdigest(),
     "config": config,
     "feature_version": FEATURE_VERSION,
+    "controller_recipe": recipe,
+    "controller_recipe_version": recipe_version,
+    "outcome_label_version": manifest.get("outcome_label_version", 1),
+    "reoriented_training_legs": reoriented_train_legs,
     "features": FEATURE_COUNT,
     "train_rows": int(train.sum()),
     "original_train_rows": raw_train_rows,

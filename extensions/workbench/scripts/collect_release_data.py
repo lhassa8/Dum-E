@@ -2,6 +2,7 @@
 
 import argparse
 import hashlib
+import inspect
 import json
 from pathlib import Path
 
@@ -19,6 +20,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument("output", type=Path)
 parser.add_argument("--fixture", type=Path, default=Path("fixtures/release_model_cases.json"))
 parser.add_argument("--limit", type=int)
+parser.add_argument("--case", help="One non-test diagnostic case; never a training dataset")
+parser.add_argument("--recovery-profile", action="store_true")
 args = parser.parse_args()
 args.output.mkdir(parents=True, exist_ok=False)
 fixture = json.loads(args.fixture.read_text())
@@ -27,21 +30,30 @@ zero = int(np.flatnonzero(np.linalg.norm(actions, axis=1) == 0)[0])
 spec = mujoco.mjtState.mjSTATE_INTEGRATION
 xs, ys, episodes, splits, legs, action_ids, records = [], [], [], [], [], [], []
 cases = [c for c in fixture["cases"] if c["split"] != "test"]
+if args.case:
+    cases = [c for c in cases if c["id"] == args.case]
+    if len(cases) != 1:
+        raise ValueError("Choose exactly one known non-test case")
 if args.limit is not None:
     cases = cases[: args.limit]
+profile = {"verify_motion": True, "safe_handoff": True} if args.recovery_profile else {}
+
+
+def camera_actor(bench, sensor, tool, target):
+    return CameraDelivery(
+        SimRobot(bench, recover_ik=args.recovery_profile), sensor, tool, target, **profile
+    )
+
+
 for case in cases:
     b = ToolWorkbench(case["seed"], xml=camera_scene_xml(case))
     b.model.vis.headlight.diffuse[:] *= case["light"]
     sensor = CameraSensor(b)
     record = {"case": case, "legs": []}
-    first = CameraDelivery(SimRobot(b), sensor, case["tool"], HANDOFF["handoff"])
+    first = camera_actor(b, sensor, case["tool"], HANDOFF["handoff"])
     try:
         for leg in range(2):
-            actor = (
-                first
-                if leg == 0
-                else CameraDelivery(SimRobot(b), sensor, case["tool"], first.rack_xy)
-            )
+            actor = first if leg == 0 else camera_actor(b, sensor, case["tool"], first.rack_xy)
             paused = False
             for _ in range(3000):
                 if not actor.advance():
@@ -87,7 +99,7 @@ for case in cases:
                 # Exact branch replay is a collector tool, never a deployed model input.
                 mujoco.mj_setState(b.model, b.data, state, spec)
                 mujoco.mj_forward(b.model, b.data)
-                branch = CameraDelivery(SimRobot(b), sensor, case["tool"], actor.target)
+                branch = camera_actor(b, sensor, case["tool"], actor.target)
                 for name in [
                     "orientation",
                     "offset_local",
@@ -97,15 +109,30 @@ for case in cases:
                     "direction_yaw",
                     "initial_scene_estimates",
                     "rack_xy",
+                    "last_motion_check",
+                    "planned_neighbors",
+                    "reoriented_carry",
                 ]:
                     setattr(branch, name, getattr(actor, name))
+                if hasattr(actor, "scene_prediction_uncertainty"):
+                    branch.scene_prediction_uncertainty = actor.scene_prediction_uncertainty
                 branch.carrying = True
                 proposed = point + np.r_[actions[index], 0]
                 branch.frames = branch.finish_release(proposed)
+                maximum_disturbance = 0.0
                 try:
                     for _ in range(3000):
                         if not branch.advance():
                             break
+                        if args.recovery_profile:
+                            maximum_disturbance = max(
+                                maximum_disturbance,
+                                max(
+                                    np.linalg.norm(b.observe()[n] - p)
+                                    for n, p in before.items()
+                                    if n != case["tool"]
+                                ),
+                            )
                     else:
                         raise RuntimeError("Release exceeded fixed frame limit")
                 except ValueError as error:
@@ -121,6 +148,8 @@ for case in cases:
                     for n, p in before.items()
                     if n != case["tool"]
                 )
+                if args.recovery_profile:
+                    disturbance = max(disturbance, maximum_disturbance)
                 outcome = np.r_[actual[:2] - actor.target, actual[2], speed, disturbance]
                 final_state = np.empty_like(state)
                 mujoco.mj_getState(b.model, b.data, final_state, spec)
@@ -157,6 +186,7 @@ for case in cases:
                     "normal_status": normal_status,
                     "repeat_max_state_error": repeat_error,
                     "normal_continuation_max_state_error": normal_error,
+                    "deliberately_reoriented": bool(actor.reoriented_carry),
                 }
             )
             print(
@@ -185,6 +215,15 @@ manifest = {
     "rows": len(xs),
     "records": records,
     "scope": "Future physical labels and full-state branching only in collector; tests excluded",
-    "limited_pilot": args.limit,
+    "limited_pilot": 1 if args.case else args.limit,
+    "selected_diagnostic_case": args.case,
+    "controller_recipe": "D2d_verified_camera_recovery" if args.recovery_profile else "C3_legacy",
+    "outcome_label_version": 2 if args.recovery_profile else 1,
+    "disturbance_label": "Maximum at every32ms release motion/hold frame"
+    if args.recovery_profile
+    else "Final displacement only",
+    "controller_source_sha256": hashlib.sha256(
+        Path(inspect.getfile(CameraDelivery)).read_bytes()
+    ).hexdigest(),
 }
 (args.output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")

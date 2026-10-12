@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "base_fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+  "scope": "Training-only supported handoff orientation curriculum; validation and test scenes untouched",
+  "split": "train",
+  "preferred_body_yaws_rad": [
+    0.0,
+    1.5707963267948966,
+    -1.5707963267948966,
+    3.141592653589793
+  ],
+  "selection": "Cycle by frozen training scene order; same requested orientation for both legs",
+  "guards": "Existing camera freshness, ambiguity, catalog clearance, IK, force caps and physical outcome checks; rejected trajectories retained",
+  "model_fit_budget_remaining": 1
+}

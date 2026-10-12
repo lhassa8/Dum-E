@@ -86,6 +86,10 @@ class ReleaseModel:
         ):
             raise ValueError("Release actions violate the experimental 20mm bound")
         self.kind = kind
+        self.recipe_version = int(w.get("controller_recipe_version", np.array(0)))
+        if self.recipe_version not in {0, 1}:
+            raise ValueError("Unsupported release controller recipe")
+        self.supports_reoriented = self.recipe_version == 1
 
     def predict(self, features):
         w = self.weights
@@ -120,6 +124,10 @@ class ReleaseModel:
         return output, std, valid
 
     def choose(self, actor, point):
+        if self.recipe_version == 1 and not getattr(actor, "safe_handoff", False):
+            raise ReleaseRefusal(
+                "This release model requires the verified camera-recovery recipe", "changed_recipe"
+            )
         began = perf_counter()
         actions = self.weights["actions_xy_m"]
         features = np.array([release_features(actor, point, a) for a in actions])

@@ -1,0 +1,36 @@
+{
+  "fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+  "dataset_sha256": "803c79fc42e295b19fd0c7dd1e2f0110f03e03b7c67249aca52a4cd6521ba8a2",
+  "model_sha256": "9ef61218afe9639ac61fea342402d3a5ec554fec733e93178e7edd55e00040ed",
+  "config": {
+    "seeds": [
+      819731,
+      819732,
+      819733
+    ],
+    "hidden_width": 64,
+    "epochs": 300,
+    "batch_size": 128,
+    "learning_rate": 0.003,
+    "target": "final XY residual from desired destination minus proposed XY offset; final height and unrelated-tool disturbance, millimeters",
+    "split_unit": "scene ID; all action branches and both legs stay in same split"
+  },
+  "feature_version": 1,
+  "controller_recipe": "D2d_verified_camera_recovery",
+  "controller_recipe_version": 0,
+  "outcome_label_version": 2,
+  "reoriented_training_legs": 0,
+  "features": 76,
+  "train_rows": 2088,
+  "original_train_rows": 1044,
+  "sensor_dropout_sha256": "d3145ee342f9ea6a36fb6eadd57017f66d3fd40eb3bcd291055b81c30fd68b01",
+  "validation_rows": 270,
+  "train_episodes": 70,
+  "validation_episodes": 18,
+  "training_s": 3.330276541004423,
+  "torch_version": "2.14.1",
+  "device": "cpu",
+  "parameter_count_per_member": 9413,
+  "linear_ridge_penalty": 0.01,
+  "scope": "Future release outcome, not current state estimation"
+}

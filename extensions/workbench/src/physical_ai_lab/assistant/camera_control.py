@@ -407,7 +407,9 @@ class CameraDelivery:
             from physical_ai_lab.assistant.release_model import ReleaseRefusal
 
             try:
-                if self.reoriented_carry:
+                if self.reoriented_carry and not getattr(
+                    self.release_model, "supports_reoriented", False
+                ):
                     raise ReleaseRefusal(
                         "Release model was not trained on deliberate carry reorientation",
                         "changed_recipe",

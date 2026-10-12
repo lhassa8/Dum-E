@@ -103,7 +103,9 @@ def components(mask):
             yield np.asarray(island)
 
 
-def _locate_tools(frame, shadow_recovery=False, names=None, tilted_face=False):
+def _locate_tools(
+    frame, shadow_recovery=False, names=None, tilted_face=False, height_limit=0.12, region=None
+):
     """Find complete 44x56mm top faces by appearance and measured depth.
 
     Supports tabletop tools with roughly horizontal primitive handles. Refuses
@@ -118,8 +120,10 @@ def _locate_tools(frame, shadow_recovery=False, names=None, tilted_face=False):
         & (cloud[..., 0] < 0.82)
         & (np.abs(cloud[..., 1]) < 0.40)
         & (cloud[..., 2] > 0.008)
-        & (cloud[..., 2] < 0.12)
+        & (cloud[..., 2] < height_limit)
     )
+    if region is not None:
+        valid &= region
     rgb = frame.rgb.astype(float) / 255
     total = rgb.sum(axis=-1)
     normalized = rgb / np.maximum(total[..., None], 1e-9)
@@ -276,3 +280,35 @@ def locate_tools(frame):
             recovered["appearance_recovery"] = "measured_tilted_face"
             predictions[name] = recovered
     return predictions
+
+
+def locate_held_tool(frame, name, tcp_m):
+    """Experimental complete-face fit near a measured TCP, without object state.
+
+    Supports upward-facing known handles only. Jaw occlusion can remove required
+    edges; such views must remain missing/weak, never filled by robot inference.
+    This does not validate a grasp or establish general six-dimensional tracking.
+    """
+    if name not in TOOLS:
+        raise ValueError("Unknown held tool")
+    tcp = np.asarray(tcp_m, float)
+    if tcp.shape != (3,) or not np.isfinite(tcp).all():
+        raise ValueError("Invalid measured TCP")
+    v, u = np.indices(frame.depth_m.shape)
+    cloud = frame.camera.unproject(u, v, frame.depth_m)
+    region = (np.linalg.norm(cloud - tcp, axis=-1) < 0.16) & (cloud[..., 2] > 0.05)
+    primary = _locate_tools(frame, names={name}, height_limit=0.65, region=region)[name]
+    if primary["status"] == "ambiguous":
+        return primary
+    if primary["status"] == "observed" and primary["fit_score"] >= 0.8:
+        return primary
+    recovery = _locate_tools(
+        frame,
+        shadow_recovery=name == "wrench",
+        names={name},
+        tilted_face=True,
+        height_limit=0.65,
+        region=region,
+    )[name]
+    recovery["provenance"] = "Measured RGB-D face near robot TCP; no object-state fallback"
+    return recovery

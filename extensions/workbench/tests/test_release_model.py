@@ -148,3 +148,22 @@ def test_supported_but_unsafe_future_is_distinct_from_missing_model_support(tmp_
     with pytest.raises(ReleaseRefusal) as error:
         ReleaseModel(path).choose(actor(), [0.64, -0.16, 0.04])
     assert error.value.reason == "unsafe_future"
+
+
+def test_recovery_recipe_is_explicit_and_legacy_models_stay_restricted(tmp_path):
+    path = tmp_path / "model.npz"
+    checkpoint(path)
+    assert not ReleaseModel(path).supports_reoriented
+    with np.load(path, allow_pickle=False) as data:
+        weights = {k: data[k].copy() for k in data.files}
+    weights["controller_recipe_version"] = np.array(1)
+    np.savez(path, **weights)
+    model = ReleaseModel(path)
+    assert model.supports_reoriented
+    a = actor()
+    with pytest.raises(ReleaseRefusal) as error:
+        model.choose(a, [0.64, -0.16, 0.04])
+    assert error.value.reason == "changed_recipe"
+    a.safe_handoff = True
+    point, _ = model.choose(a, [0.64, -0.16, 0.04])
+    np.testing.assert_allclose(point, [0.62, -0.16, 0.04])
