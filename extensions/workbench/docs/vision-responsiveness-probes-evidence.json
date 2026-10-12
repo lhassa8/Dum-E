@@ -1,0 +1,90 @@
+{
+  "scope": "Read-only synthetic optical pilot measurements; no app integration, robot commands, model downloads or actual camera/microphone access.",
+  "criteria": {
+    "visible_tool_set_accuracy_min": 0.95,
+    "absent_tool_false_positives_max": 0,
+    "visible_center_error_max_pixels": 40,
+    "complete_response_target_ms": 2000,
+    "motion_localization_qualified": false
+  },
+  "fixture_sha256": "c4bb468544af439f379b6e3c4ecd6186c907c3e4272ab2c2696890f3976c61ac",
+  "paired_remote": {
+    "model": "workbench-vision-gemma",
+    "views_per_request": 2,
+    "rows": [
+      {
+        "case": "layout-00",
+        "passed": true,
+        "view": 0,
+        "center_error_pixels": {
+          "screwdriver": 1.3184839779079438,
+          "wrench": 2.68402682549937,
+          "hammer": 4.029143829649159
+        },
+        "presence_correct": true,
+        "false_positives": 0,
+        "elapsed_ms": 2426.439707982354,
+        "timing_target_met": false
+      },
+      {
+        "case": "empty",
+        "passed": true,
+        "view": 0,
+        "center_error_pixels": {},
+        "presence_correct": true,
+        "false_positives": 0,
+        "elapsed_ms": 1468.6799999908544,
+        "timing_target_met": true
+      }
+    ],
+    "verdict": "Reject:all-tools pilot2426ms exceeds2000ms; validation not run."
+  },
+  "smaller_mac": {
+    "model": "google/gemma-4-12b",
+    "instance": "workbench-vision-gemma12-mac",
+    "gpu_offload_requested": "max",
+    "context_length": 4096,
+    "parallel": 1,
+    "estimated_memory_gib": 7.88,
+    "reported_weight_load_seconds": 2.83,
+    "rows": [
+      {
+        "case": "layout-00",
+        "passed": true,
+        "view": "front",
+        "center_error_pixels": {
+          "screwdriver": 13.785934861299758,
+          "wrench": 19.833809518093126,
+          "hammer": 11.762057643116705
+        },
+        "presence_correct": true,
+        "false_positives": 0,
+        "total_vision_ms": 5232.24525002297,
+        "timing_target_met": false
+      },
+      {
+        "case": "empty",
+        "passed": true,
+        "view": "front",
+        "center_error_pixels": {},
+        "presence_correct": true,
+        "false_positives": 0,
+        "total_vision_ms": 5737.424792023376,
+        "timing_target_met": false
+      }
+    ],
+    "verdict": "Reject:5232ms all-tools and5737ms empty; validation not run; temporary instance unloaded."
+  },
+  "capability_audit": {
+    "registered_development_projects": "Mac only; no workstation project exposed",
+    "command_runner": "currentMac; no workstation endpoint/auth/SSH route supplied",
+    "lm_link": "existing preferred workstation online, working text/vision instances loaded",
+    "codex_remote_cli": "Installed CLI exposes remote TUI connection, requiring an existing app-server endpoint; none provided. No server registration/pairing/security configuration was started."
+  },
+  "retained_configuration": {
+    "language_model": "prism-ml/bonsai-27b",
+    "vision_model": "workbench-vision-gemma"
+  },
+  "raw_evidence": "Local ignored runs/vision-pair-001 and runs/vision-gemma12-maxgpu-pilot-001",
+  "next_action": "Obtain workstationLinux readiness and an authorized execution route for supported pretrained-policy benchmark. No more model/view tuning in this slice."
+}

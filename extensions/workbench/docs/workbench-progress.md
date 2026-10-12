@@ -1292,3 +1292,26 @@ B15 — camera-motion requalification and shared hold, October 12:
 - Next major control path remains actual pretrained OpenPi/LIBERO in supported
   workstation runtime; WSL/Ubuntu information still pending. No pretrained policy
   inference/rollout, public camera motion or full-goal completion claimed.
+
+
+B16 — bounded camera-response alternatives and access audit, October 12:
+- Previous goal turn: progress; shared camera hold and honest22/24 reserved
+  rejection published at lab56a3d8c/fork27872bb. Revalidated clean source and
+  online preferred workstation. Registered development projects still Mac-only;
+  no supplied PC shell/policy endpoint. Existing Ubuntu/WSL question pending.
+- Tested one request containing two synthetic views with strict single-view
+  output. Frozen2pilots accurate2/2, zero absent false positives; all-tools2426ms
+  misses unchanged2000ms target (empty1469ms). No app integration/validation run.
+- Bounded second hypothesis: already-cached MacGemma12 with explicitmaxGPU,
+  4096context/single slot. Memory87%free, estimate7.88GiB, load2.83s. Same2pilots
+  accurate but5232ms/all-tools and5737ms/empty total fail target. Temporary alias
+  unloaded; no download or preferred-device/main-instance change.
+- Existing remoteBonsai/Gemma retained. No application/physics/control/prompt
+  change, no new real mic/camera or policy execution. No full regression repeat
+  for evidence-only work; prior269/250 result covers unchanged application.
+- Official remote CLI docs and installed help inspected: existing app-server
+  endpoint needed; none supplied. No server/pairing/security change started.
+- Negative findings close the2attempt latency slice and change the next action
+  to obtaining real workstation/Linux readiness and execution access. Do not
+  claim a policy job is running, verified waiting, camera promotion or completion.
+  Full goal remains active; no further speculative model/view/IK tuning this slice.
