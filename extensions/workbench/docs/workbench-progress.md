@@ -1231,3 +1231,32 @@ B8 — critical-path access audit, October 12:
 - Existing live-room/human demonstration, camera/manipulation failures and
   precise mechanical settling duration remain incomplete. Full objective,
   physical gates and authorization boundaries are preserved.
+
+
+B14 — faster Bonsai load configuration, October 12:
+- Previous goal turn: progress; fresh 15-case evidence revealed current median
+  2.061 s rather than assuming the older 0.510 s measurement still applied.
+  Current source, runtime and linked-device placement were revalidated.
+- Baseline median HTTP/native overhead ~3 ms; model inference dominated. Reloaded
+  only Bonsai on the existing linked workstation with explicit max GPU offload,
+  one prediction slot and the unchanged 8192-token context/API identifier.
+  Vision model remained loaded; no code, prompts, physics or dependencies changed.
+- Same frozen 15-case sample: 15/15 correct before and after, median2.061→.686 s,
+  samplep95/max2.891→.788 s. Both load settings changed together; sequential
+  before/after samples do not isolate their individual effects or host contention.
+- All four frozen dialogue suites ×3:129/129 decisions, median662ms/p95793ms,
+  max901ms. Lead review30 factual replies passes existing criteria; repetitive
+  feelings wording remains. Three12s idle replies815/839/1055ms, all correct.
+  These are text timings, not live speech/audible/long-idle proof.
+- Actual saved synthesized speech→Whisper→Bonsai→Dum-E→MuJoCo retrieval/return
+  passes:145ms recognition,572ms native decision,208.4mm lift,9.69mm handoff,
+  12.70mm return. Camera still identifies3tools via2views in2.617s, above2s target.
+  Existing20 LM Studio/cache regressions pass; no fresh Stop/hold claim this turn.
+- Reproduction/rollback documented. Explicit load has no TTL; remains resident
+  until unloaded or device/app shutdown. Future default reload may restore slow
+  settings; server configuration is not silently rewritten by the assistant.
+- Real browser spanner question answers correctly without a job. Final8766 app
+  Ready, all tools rack, Voice/listenON, micidle. Reusable matched timing plot,
+  retained evidence and documentation added to authorized fork export.
+- Full goal active: actual pretrained manipulation, camera-derived motion,
+  room/acoustic/audible evidence and convincing human demonstration incomplete.

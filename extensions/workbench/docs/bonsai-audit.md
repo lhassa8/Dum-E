@@ -1,5 +1,28 @@
 # Bonsai conversation backend — October 12, 2026
 
+## Current-session recheck before load tuning
+
+The running workbench still selects `prism-ml/bonsai-27b` at the user's existing
+LM Studio endpoint. LM Studio's loaded-model inventory places this instance on
+the linked workstation. A fresh read-only pass of the same 15 dialogue cases
+records 15/15 correct action/object decisions, a 2.061-second median and a
+2.891-second sample p95/maximum. The simulator stays Ready with its job unchanged;
+this check does not move the arm. All 20 focused LM Studio/cache tests pass.
+Raw replies and timings are retained in
+`runs/bonsai-current-recheck-20261012/summary.json`.
+
+This current measurement is slower than the earlier study below. The cause has
+not been isolated, and the earlier 0.510-second comparison should not be treated
+as a guarantee of present response time. These clocks exclude live speech capture,
+speech recognition, audible reply onset and physical motion. The selected vision
+model remains a separate component; no model reload or device preference change
+was made for this recheck.
+
+The subsequent [load-configuration experiment](bonsai-load-tuning-audit.md)
+reduces this same 15-case median to 0.686 seconds with explicit GPU offload and
+one prediction slot. That configuration is now retained in the running session;
+the slower baseline above remains part of the record.
+
 Bonsai is selected in the running workbench through LM Studio/LM Link. The
 matched text comparison measures a 0.510-second median complete response,
 against 2.407 seconds for GPT-6 Luna. This improves conversation and general

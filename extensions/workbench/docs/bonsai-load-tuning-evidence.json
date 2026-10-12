@@ -1,0 +1,1843 @@
+{
+  "scope": "Synthetic text, saved synthesized speech, actual local inference and simulator physics. No live human microphone/room/audible-onset proof.",
+  "change": {
+    "model": "prism-ml/bonsai-27b",
+    "context_length": 8192,
+    "gpu_offload_requested": "max",
+    "parallel_before": 4,
+    "parallel_after": 1,
+    "load_seconds_reported": 4.27,
+    "placement": "existing linked workstation; no GPU driver/kernel/utilization telemetry",
+    "vision_model": "workbench-vision-gemma",
+    "automatic_unload": "No TTL specified for this explicit load; stays resident until unloaded or application/device shutdown."
+  },
+  "matched_before": {
+    "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+    "fixture_sha256": "2f4dd3530e5cc35a59e6716e0dfd96c16d773b989d956d01d87438086875695d",
+    "ready_wait_ms": 1.7172499792650342,
+    "count": 15,
+    "incorrect": 0,
+    "median_ms": 2060.6497499975376,
+    "p95_ms": 2890.7037079916336,
+    "rows": [
+      {
+        "repeat": 0,
+        "name": "screws",
+        "elapsed_ms": 1786.2179579678923,
+        "correct": true,
+        "action": "fetch",
+        "object": "screwdriver",
+        "first_token_ms": 1045.5817499896511,
+        "model_response_ms": 1783.2822499913163,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "nuts",
+        "elapsed_ms": 1564.5902919932269,
+        "correct": true,
+        "action": "fetch",
+        "object": "wrench",
+        "first_token_ms": 863.1103750085458,
+        "model_response_ms": 1561.6167090483941,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "nails",
+        "elapsed_ms": 1691.529416013509,
+        "correct": true,
+        "action": "fetch",
+        "object": "hammer",
+        "first_token_ms": 1027.9244999983348,
+        "model_response_ms": 1688.0452089826576,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "ambiguous",
+        "elapsed_ms": 1764.5743330358528,
+        "correct": true,
+        "action": "clarify",
+        "object": null,
+        "first_token_ms": 876.4218750293367,
+        "model_response_ms": 1761.2609580392018,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "multiple",
+        "elapsed_ms": 2353.5543330363,
+        "correct": true,
+        "action": "clarify",
+        "object": null,
+        "first_token_ms": 841.3490000530146,
+        "model_response_ms": 2350.4195830319077,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "negative",
+        "elapsed_ms": 2402.46654197108,
+        "correct": true,
+        "action": "unsupported",
+        "object": null,
+        "first_token_ms": 922.5341660203412,
+        "model_response_ms": 2399.0425000083633,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "hypothetical",
+        "elapsed_ms": 2890.7037079916336,
+        "correct": true,
+        "action": "answer",
+        "object": null,
+        "first_token_ms": 1050.4579999833368,
+        "model_response_ms": 2887.38429202931,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "tool_question",
+        "elapsed_ms": 2347.7815000223927,
+        "correct": true,
+        "action": "answer",
+        "object": null,
+        "first_token_ms": 917.067667003721,
+        "model_response_ms": 2345.1181249693036,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "impossible",
+        "elapsed_ms": 2060.6497499975376,
+        "correct": true,
+        "action": "unsupported",
+        "object": null,
+        "first_token_ms": 892.5943750073202,
+        "model_response_ms": 2057.1525420527905,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "joke",
+        "elapsed_ms": 2599.0009590168484,
+        "correct": true,
+        "action": "answer",
+        "object": null,
+        "first_token_ms": 846.759625012055,
+        "model_response_ms": 2595.7979999948293,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "chat",
+        "elapsed_ms": 2628.2194160157815,
+        "correct": true,
+        "action": "answer",
+        "object": null,
+        "first_token_ms": 940.7706250203773,
+        "model_response_ms": 2625.173333042767,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "capability",
+        "elapsed_ms": 2675.2386249718256,
+        "correct": true,
+        "action": "answer",
+        "object": null,
+        "first_token_ms": 883.0736249801703,
+        "model_response_ms": 2672.5020830053836,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "clarified_wrench",
+        "elapsed_ms": 1680.4605000070296,
+        "correct": true,
+        "action": "fetch",
+        "object": "wrench",
+        "first_token_ms": 991.6495840298012,
+        "model_response_ms": 1678.4639590186998,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "clarified_hammer",
+        "elapsed_ms": 1548.490666958969,
+        "correct": true,
+        "action": "fetch",
+        "object": "hammer",
+        "first_token_ms": 899.1623750189319,
+        "model_response_ms": 1545.669250015635,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "negated_stop",
+        "elapsed_ms": 2016.53266599169,
+        "correct": true,
+        "action": "answer",
+        "object": null,
+        "first_token_ms": 871.4915410382673,
+        "model_response_ms": 2012.5472500221804,
+        "returned_model": "prism-ml/bonsai-27b"
+      }
+    ],
+    "job_unchanged": true
+  },
+  "matched_after": {
+    "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+    "fixture_sha256": "2f4dd3530e5cc35a59e6716e0dfd96c16d773b989d956d01d87438086875695d",
+    "ready_wait_ms": 1.7640420119278133,
+    "count": 15,
+    "incorrect": 0,
+    "median_ms": 685.6816250365227,
+    "p95_ms": 788.235625019297,
+    "rows": [
+      {
+        "repeat": 0,
+        "name": "screws",
+        "elapsed_ms": 772.761291009374,
+        "correct": true,
+        "action": "fetch",
+        "object": "screwdriver",
+        "first_token_ms": 586.1925840144977,
+        "model_response_ms": 771.0147919715382,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "nuts",
+        "elapsed_ms": 534.9462080048397,
+        "correct": true,
+        "action": "fetch",
+        "object": "wrench",
+        "first_token_ms": 377.07495799986646,
+        "model_response_ms": 532.4094999814406,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "nails",
+        "elapsed_ms": 538.1114999763668,
+        "correct": true,
+        "action": "fetch",
+        "object": "hammer",
+        "first_token_ms": 382.2906670393422,
+        "model_response_ms": 535.4583750013262,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "ambiguous",
+        "elapsed_ms": 570.4089170321822,
+        "correct": true,
+        "action": "clarify",
+        "object": null,
+        "first_token_ms": 363.7817909475416,
+        "model_response_ms": 568.3456249535084,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "multiple",
+        "elapsed_ms": 685.6816250365227,
+        "correct": true,
+        "action": "clarify",
+        "object": null,
+        "first_token_ms": 345.8434169879183,
+        "model_response_ms": 683.2291249884292,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "negative",
+        "elapsed_ms": 696.1370829958469,
+        "correct": true,
+        "action": "unsupported",
+        "object": null,
+        "first_token_ms": 371.45145796239376,
+        "model_response_ms": 693.6682909727097,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "hypothetical",
+        "elapsed_ms": 788.235625019297,
+        "correct": true,
+        "action": "answer",
+        "object": null,
+        "first_token_ms": 375.4284580354579,
+        "model_response_ms": 785.8069580397569,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "tool_question",
+        "elapsed_ms": 698.9304169546813,
+        "correct": true,
+        "action": "answer",
+        "object": null,
+        "first_token_ms": 374.2167499731295,
+        "model_response_ms": 696.7031669919379,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "impossible",
+        "elapsed_ms": 630.7836670312099,
+        "correct": true,
+        "action": "unsupported",
+        "object": null,
+        "first_token_ms": 357.05499997129664,
+        "model_response_ms": 628.1624999828637,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "joke",
+        "elapsed_ms": 762.4627499608323,
+        "correct": true,
+        "action": "answer",
+        "object": null,
+        "first_token_ms": 359.25575002329424,
+        "model_response_ms": 758.9180830400437,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "chat",
+        "elapsed_ms": 708.0006250180304,
+        "correct": true,
+        "action": "answer",
+        "object": null,
+        "first_token_ms": 351.55904199928045,
+        "model_response_ms": 705.213500012178,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "capability",
+        "elapsed_ms": 763.827916001901,
+        "correct": true,
+        "action": "answer",
+        "object": null,
+        "first_token_ms": 355.92654201900586,
+        "model_response_ms": 761.2918330123648,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "clarified_wrench",
+        "elapsed_ms": 525.5844579660334,
+        "correct": true,
+        "action": "fetch",
+        "object": "wrench",
+        "first_token_ms": 360.56141601875424,
+        "model_response_ms": 521.1654580198228,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "clarified_hammer",
+        "elapsed_ms": 532.9253330128267,
+        "correct": true,
+        "action": "fetch",
+        "object": "hammer",
+        "first_token_ms": 368.2447500177659,
+        "model_response_ms": 529.2284589959309,
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "repeat": 0,
+        "name": "negated_stop",
+        "elapsed_ms": 637.6408750074916,
+        "correct": true,
+        "action": "answer",
+        "object": null,
+        "first_token_ms": 373.37200000183657,
+        "model_response_ms": 635.0410000304691,
+        "returned_model": "prism-ml/bonsai-27b"
+      }
+    ],
+    "job_unchanged": true
+  },
+  "qualification": {
+    "count": 129,
+    "incorrect": 0,
+    "median_ms": 662.4217079952359,
+    "p95_ms": 792.8816669736989,
+    "maximum_ms": 901.0061249719001,
+    "studies": {
+      "dialogue": {
+        "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+        "fixture_sha256": "2f4dd3530e5cc35a59e6716e0dfd96c16d773b989d956d01d87438086875695d",
+        "ready_wait_ms": 2.1183330100029707,
+        "count": 45,
+        "incorrect": 0,
+        "median_ms": 627.0245000487193,
+        "p95_ms": 750.59854099527,
+        "job_unchanged": true,
+        "cases": [
+          {
+            "repeat": 0,
+            "name": "screws",
+            "elapsed_ms": 521.2801669840701,
+            "correct": true,
+            "action": "fetch",
+            "object": "screwdriver",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "nuts",
+            "elapsed_ms": 516.986291971989,
+            "correct": true,
+            "action": "fetch",
+            "object": "wrench",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "nails",
+            "elapsed_ms": 493.25745896203443,
+            "correct": true,
+            "action": "fetch",
+            "object": "hammer",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "ambiguous",
+            "elapsed_ms": 552.1469159866683,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "multiple",
+            "elapsed_ms": 691.103832970839,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "negative",
+            "elapsed_ms": 656.8454999942333,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "hypothetical",
+            "elapsed_ms": 743.9236670034006,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "tool_question",
+            "elapsed_ms": 649.099541013129,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "impossible",
+            "elapsed_ms": 600.2435829723254,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "joke",
+            "elapsed_ms": 728.5073749953881,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "chat",
+            "elapsed_ms": 721.5326669975184,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "capability",
+            "elapsed_ms": 739.8067920003086,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "clarified_wrench",
+            "elapsed_ms": 504.5185839990154,
+            "correct": true,
+            "action": "fetch",
+            "object": "wrench",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "clarified_hammer",
+            "elapsed_ms": 499.7950419783592,
+            "correct": true,
+            "action": "fetch",
+            "object": "hammer",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "negated_stop",
+            "elapsed_ms": 601.3975830283016,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "screws",
+            "elapsed_ms": 515.4170840396546,
+            "correct": true,
+            "action": "fetch",
+            "object": "screwdriver",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "nuts",
+            "elapsed_ms": 499.3850000319071,
+            "correct": true,
+            "action": "fetch",
+            "object": "wrench",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "nails",
+            "elapsed_ms": 494.25124999834225,
+            "correct": true,
+            "action": "fetch",
+            "object": "hammer",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "ambiguous",
+            "elapsed_ms": 543.7562500010245,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "multiple",
+            "elapsed_ms": 670.4142080270685,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "negative",
+            "elapsed_ms": 674.4162079994567,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "hypothetical",
+            "elapsed_ms": 730.821167002432,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "tool_question",
+            "elapsed_ms": 667.3669579904526,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "impossible",
+            "elapsed_ms": 618.7557079829276,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "joke",
+            "elapsed_ms": 727.1199589595199,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "chat",
+            "elapsed_ms": 722.2921249922365,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "capability",
+            "elapsed_ms": 792.8816669736989,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "clarified_wrench",
+            "elapsed_ms": 523.4878329792991,
+            "correct": true,
+            "action": "fetch",
+            "object": "wrench",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "clarified_hammer",
+            "elapsed_ms": 503.1936249579303,
+            "correct": true,
+            "action": "fetch",
+            "object": "hammer",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "negated_stop",
+            "elapsed_ms": 627.0245000487193,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "screws",
+            "elapsed_ms": 537.9783749813214,
+            "correct": true,
+            "action": "fetch",
+            "object": "screwdriver",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "nuts",
+            "elapsed_ms": 527.0292910281569,
+            "correct": true,
+            "action": "fetch",
+            "object": "wrench",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "nails",
+            "elapsed_ms": 506.2692920328118,
+            "correct": true,
+            "action": "fetch",
+            "object": "hammer",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "ambiguous",
+            "elapsed_ms": 551.5820409636945,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "multiple",
+            "elapsed_ms": 706.4615830313414,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "negative",
+            "elapsed_ms": 692.5631660269573,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "hypothetical",
+            "elapsed_ms": 778.6716659902595,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "tool_question",
+            "elapsed_ms": 663.9388329931535,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "impossible",
+            "elapsed_ms": 629.1692089871503,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "joke",
+            "elapsed_ms": 732.4039589730091,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "chat",
+            "elapsed_ms": 714.4390000030398,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "capability",
+            "elapsed_ms": 750.59854099527,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "clarified_wrench",
+            "elapsed_ms": 514.2423340003006,
+            "correct": true,
+            "action": "fetch",
+            "object": "wrench",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "clarified_hammer",
+            "elapsed_ms": 523.263874987606,
+            "correct": true,
+            "action": "fetch",
+            "object": "hammer",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "negated_stop",
+            "elapsed_ms": 600.0929159927182,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          }
+        ]
+      },
+      "context": {
+        "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+        "fixture_sha256": "b0d7118ce4c9711126a555287ffa2b4c775bac619f1acf82b885095ac41951d8",
+        "ready_wait_ms": 1.719375024549663,
+        "count": 18,
+        "incorrect": 0,
+        "median_ms": 571.5535205090418,
+        "p95_ms": 729.3815839802846,
+        "job_unchanged": true,
+        "cases": [
+          {
+            "repeat": 0,
+            "name": "need_screws_after_chat",
+            "elapsed_ms": 568.4607910225168,
+            "correct": true,
+            "action": "fetch",
+            "object": "screwdriver",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "need_nuts_after_information",
+            "elapsed_ms": 559.7907080082223,
+            "correct": true,
+            "action": "fetch",
+            "object": "wrench",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "need_nails_after_chat",
+            "elapsed_ms": 514.3352919840254,
+            "correct": true,
+            "action": "fetch",
+            "object": "hammer",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "question_screws_after_fetch",
+            "elapsed_ms": 590.291291999165,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "question_nuts_after_fetch",
+            "elapsed_ms": 574.6462499955669,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "hypothetical_after_fetch",
+            "elapsed_ms": 676.3447499834001,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "need_screws_after_chat",
+            "elapsed_ms": 545.0547499931417,
+            "correct": true,
+            "action": "fetch",
+            "object": "screwdriver",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "need_nuts_after_information",
+            "elapsed_ms": 520.0338750146329,
+            "correct": true,
+            "action": "fetch",
+            "object": "wrench",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "need_nails_after_chat",
+            "elapsed_ms": 527.5865420117043,
+            "correct": true,
+            "action": "fetch",
+            "object": "hammer",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "question_screws_after_fetch",
+            "elapsed_ms": 729.3815839802846,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "question_nuts_after_fetch",
+            "elapsed_ms": 686.9972090353258,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "hypothetical_after_fetch",
+            "elapsed_ms": 668.2674170006067,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "need_screws_after_chat",
+            "elapsed_ms": 533.7812500074506,
+            "correct": true,
+            "action": "fetch",
+            "object": "screwdriver",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "need_nuts_after_information",
+            "elapsed_ms": 538.6251250165515,
+            "correct": true,
+            "action": "fetch",
+            "object": "wrench",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "need_nails_after_chat",
+            "elapsed_ms": 514.1610419959761,
+            "correct": true,
+            "action": "fetch",
+            "object": "hammer",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "question_screws_after_fetch",
+            "elapsed_ms": 694.757916033268,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "question_nuts_after_fetch",
+            "elapsed_ms": 701.2993749813177,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "hypothetical_after_fetch",
+            "elapsed_ms": 662.4217079952359,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          }
+        ]
+      },
+      "pairs": {
+        "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+        "fixture_sha256": "8b97a4bd1278576e281170ce82ab1dfa8cd3857807c969c2e3e0a1977a40541d",
+        "ready_wait_ms": 1.7463329713791609,
+        "count": 36,
+        "incorrect": 0,
+        "median_ms": 586.9229579984676,
+        "p95_ms": 723.0944170150906,
+        "job_unchanged": true,
+        "cases": [
+          {
+            "repeat": 0,
+            "name": "fresh_screwdriver_wrench",
+            "elapsed_ms": 698.9061249769293,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "fresh_screwdriver_hammer",
+            "elapsed_ms": 710.255749989301,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "fresh_wrench_hammer",
+            "elapsed_ms": 580.9785830206238,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "after_capabilities_screwdriver_wrench",
+            "elapsed_ms": 717.9311249637976,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "after_capabilities_screwdriver_hammer",
+            "elapsed_ms": 604.7866659937426,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "after_capabilities_wrench_hammer",
+            "elapsed_ms": 704.9245410016738,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "after_fetch_and_decline_screwdriver_wrench",
+            "elapsed_ms": 579.4589159777388,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "after_fetch_and_decline_screwdriver_hammer",
+            "elapsed_ms": 573.2624160009436,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "after_fetch_and_decline_wrench_hammer",
+            "elapsed_ms": 601.7237500054762,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "single_alternative",
+            "elapsed_ms": 508.93908395664766,
+            "correct": true,
+            "action": "fetch",
+            "object": "wrench",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "two_tool_information",
+            "elapsed_ms": 723.0944170150906,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "two_tool_negative",
+            "elapsed_ms": 582.7355840010568,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "fresh_screwdriver_wrench",
+            "elapsed_ms": 681.0205419897102,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "fresh_screwdriver_hammer",
+            "elapsed_ms": 670.226916030515,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "fresh_wrench_hammer",
+            "elapsed_ms": 536.9482500245795,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "after_capabilities_screwdriver_wrench",
+            "elapsed_ms": 695.1685000094585,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "after_capabilities_screwdriver_hammer",
+            "elapsed_ms": 682.1247080224566,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "after_capabilities_wrench_hammer",
+            "elapsed_ms": 704.4930839911103,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "after_fetch_and_decline_screwdriver_wrench",
+            "elapsed_ms": 564.2959160031751,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "after_fetch_and_decline_screwdriver_hammer",
+            "elapsed_ms": 562.8600409836508,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "after_fetch_and_decline_wrench_hammer",
+            "elapsed_ms": 557.804667041637,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "single_alternative",
+            "elapsed_ms": 487.28754196781665,
+            "correct": true,
+            "action": "fetch",
+            "object": "wrench",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "two_tool_information",
+            "elapsed_ms": 703.2220829860307,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "two_tool_negative",
+            "elapsed_ms": 554.7362910001539,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "fresh_screwdriver_wrench",
+            "elapsed_ms": 540.0184169993736,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "fresh_screwdriver_hammer",
+            "elapsed_ms": 669.2874169675633,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "fresh_wrench_hammer",
+            "elapsed_ms": 556.3042500289157,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "after_capabilities_screwdriver_wrench",
+            "elapsed_ms": 699.9672910314985,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "after_capabilities_screwdriver_hammer",
+            "elapsed_ms": 696.313500055112,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "after_capabilities_wrench_hammer",
+            "elapsed_ms": 555.0841669901274,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "after_fetch_and_decline_screwdriver_wrench",
+            "elapsed_ms": 569.8487079935148,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "after_fetch_and_decline_screwdriver_hammer",
+            "elapsed_ms": 586.6690829861909,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "after_fetch_and_decline_wrench_hammer",
+            "elapsed_ms": 587.1768330107443,
+            "correct": true,
+            "action": "clarify",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "single_alternative",
+            "elapsed_ms": 518.5306670027785,
+            "correct": true,
+            "action": "fetch",
+            "object": "wrench",
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "two_tool_information",
+            "elapsed_ms": 741.7847499600612,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "two_tool_negative",
+            "elapsed_ms": 581.8470839876682,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          }
+        ]
+      },
+      "quality": {
+        "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion.",
+        "fixture_sha256": "823f8ca3c50f1244239326454052f7a60dd92b92adf91f1a058b63b352ad0e8f",
+        "ready_wait_ms": 1.6957499901764095,
+        "count": 30,
+        "incorrect": 0,
+        "median_ms": 745.342249982059,
+        "p95_ms": 893.4834170504473,
+        "job_unchanged": true,
+        "cases": [
+          {
+            "repeat": 0,
+            "name": "abilities",
+            "elapsed_ms": 845.6629589782096,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "camera_truth",
+            "elapsed_ms": 761.6421250277199,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "feelings_truth",
+            "elapsed_ms": 901.0061249719001,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "screw_tool_information",
+            "elapsed_ms": 765.4101660009474,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "spanner_information",
+            "elapsed_ms": 715.9672910347581,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "conversation",
+            "elapsed_ms": 718.2786249904893,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "remember_question",
+            "elapsed_ms": 552.4294579518028,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "hardware_truth",
+            "elapsed_ms": 779.6630410011858,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "outcome_truth",
+            "elapsed_ms": 720.3018749714829,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 0,
+            "name": "impossible_skill",
+            "elapsed_ms": 640.3471250087023,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "abilities",
+            "elapsed_ms": 826.6660000081174,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "camera_truth",
+            "elapsed_ms": 769.5760000497103,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "feelings_truth",
+            "elapsed_ms": 893.4834170504473,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "screw_tool_information",
+            "elapsed_ms": 752.8842500178143,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "spanner_information",
+            "elapsed_ms": 708.3698330097832,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "conversation",
+            "elapsed_ms": 717.2926249913871,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "remember_question",
+            "elapsed_ms": 542.2357079805806,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "hardware_truth",
+            "elapsed_ms": 768.2586250011809,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "outcome_truth",
+            "elapsed_ms": 723.3690830180421,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 1,
+            "name": "impossible_skill",
+            "elapsed_ms": 618.2013329816982,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "abilities",
+            "elapsed_ms": 811.9288749876432,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "camera_truth",
+            "elapsed_ms": 745.3122919541784,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "feelings_truth",
+            "elapsed_ms": 887.5731669832021,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "screw_tool_information",
+            "elapsed_ms": 747.3088330007158,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "spanner_information",
+            "elapsed_ms": 714.6105419960804,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "conversation",
+            "elapsed_ms": 714.5019170129672,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "remember_question",
+            "elapsed_ms": 539.778083038982,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "hardware_truth",
+            "elapsed_ms": 780.1161669776775,
+            "correct": true,
+            "action": "answer",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "outcome_truth",
+            "elapsed_ms": 745.3722080099396,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          },
+          {
+            "repeat": 2,
+            "name": "impossible_skill",
+            "elapsed_ms": 630.6217500241473,
+            "correct": true,
+            "action": "unsupported",
+            "object": null,
+            "returned_model": "prism-ml/bonsai-27b"
+          }
+        ]
+      }
+    },
+    "quality_review": "Lead review of all 30 factual replies against existing fixture requirements: pass. Feelings replies still repeat capabilities unnecessarily.",
+    "reviewed_replies": [
+      {
+        "repeat": 0,
+        "case": "abilities",
+        "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+      },
+      {
+        "repeat": 0,
+        "case": "camera_truth",
+        "message": "I cannot see your webcam. My scene information comes from simulator positions only."
+      },
+      {
+        "repeat": 0,
+        "case": "feelings_truth",
+        "message": "No, I don't have feelings. In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+      },
+      {
+        "repeat": 0,
+        "case": "screw_tool_information",
+        "message": "A screwdriver is designed to grip the screw head and apply torque for turning."
+      },
+      {
+        "repeat": 0,
+        "case": "spanner_information",
+        "message": "Yes, a spanner is another name for a wrench."
+      },
+      {
+        "repeat": 0,
+        "case": "conversation",
+        "message": "Of course! I'm here to listen and help you unwind."
+      },
+      {
+        "repeat": 0,
+        "case": "remember_question",
+        "message": "You asked about the hammer."
+      },
+      {
+        "repeat": 0,
+        "case": "hardware_truth",
+        "message": "No, I am a simulated arm in this environment. My scene information comes from simulator positions."
+      },
+      {
+        "repeat": 0,
+        "case": "outcome_truth",
+        "message": "I cannot deliver tools without a request; please ask for one."
+      },
+      {
+        "repeat": 0,
+        "case": "impossible_skill",
+        "message": "I can bring you a screwdriver, but I cannot perform repairs on your laptop."
+      },
+      {
+        "repeat": 1,
+        "case": "abilities",
+        "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+      },
+      {
+        "repeat": 1,
+        "case": "camera_truth",
+        "message": "I cannot see your webcam. My scene information comes from simulator positions only."
+      },
+      {
+        "repeat": 1,
+        "case": "feelings_truth",
+        "message": "No, I don't have feelings. In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+      },
+      {
+        "repeat": 1,
+        "case": "screw_tool_information",
+        "message": "A screwdriver is designed to grip the screw head and apply torque for turning."
+      },
+      {
+        "repeat": 1,
+        "case": "spanner_information",
+        "message": "Yes, a spanner is another name for a wrench."
+      },
+      {
+        "repeat": 1,
+        "case": "conversation",
+        "message": "Of course! I'm here to listen and help you unwind."
+      },
+      {
+        "repeat": 1,
+        "case": "remember_question",
+        "message": "You asked about the hammer."
+      },
+      {
+        "repeat": 1,
+        "case": "hardware_truth",
+        "message": "No, I am a simulated arm in this environment. My scene information comes from simulator positions."
+      },
+      {
+        "repeat": 1,
+        "case": "outcome_truth",
+        "message": "I cannot deliver tools without a request; please specify which tool you need."
+      },
+      {
+        "repeat": 1,
+        "case": "impossible_skill",
+        "message": "I can bring you a screwdriver, but I cannot perform repairs on your laptop."
+      },
+      {
+        "repeat": 2,
+        "case": "abilities",
+        "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+      },
+      {
+        "repeat": 2,
+        "case": "camera_truth",
+        "message": "I cannot see your webcam. My scene information comes from simulator positions only."
+      },
+      {
+        "repeat": 2,
+        "case": "feelings_truth",
+        "message": "No, I don't have feelings. In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+      },
+      {
+        "repeat": 2,
+        "case": "screw_tool_information",
+        "message": "A screwdriver is designed to grip the screw head and apply torque for turning."
+      },
+      {
+        "repeat": 2,
+        "case": "spanner_information",
+        "message": "Yes, a spanner is another name for a wrench."
+      },
+      {
+        "repeat": 2,
+        "case": "conversation",
+        "message": "Of course! I'm here to listen and help you unwind."
+      },
+      {
+        "repeat": 2,
+        "case": "remember_question",
+        "message": "You asked about the hammer."
+      },
+      {
+        "repeat": 2,
+        "case": "hardware_truth",
+        "message": "No, I am a simulated arm in this environment. My scene information comes from simulator positions."
+      },
+      {
+        "repeat": 2,
+        "case": "outcome_truth",
+        "message": "I cannot deliver tools without a request; please specify which tool you need."
+      },
+      {
+        "repeat": 2,
+        "case": "impossible_skill",
+        "message": "I can bring you a screwdriver, but I cannot perform repairs on your laptop."
+      }
+    ]
+  },
+  "camera": {
+    "elapsed_ms": 2622.1056670183316,
+    "route": "camera",
+    "message": "In this simulator snapshot, I can make out the screwdriver near the left, the wrench near the middle, the hammer near the middle.",
+    "tools": {
+      "screwdriver": {
+        "visible": true,
+        "center": [
+          0.294,
+          0.603
+        ]
+      },
+      "wrench": {
+        "visible": true,
+        "center": [
+          0.517,
+          0.538
+        ]
+      },
+      "hammer": {
+        "visible": true,
+        "center": [
+          0.643,
+          0.376
+        ]
+      }
+    },
+    "model": "workbench-vision-gemma",
+    "view": "side",
+    "view_call_ms": [
+      1247.9399999720044,
+      1368.7110830214806
+    ],
+    "frame_sha256": "131bdb0d03ffd72845446580d1e4e0fa46d07a078af753a9c7b35f68b5580044",
+    "source": "RGB only, catalog prior; conversational pixel estimates, not motion targets"
+  },
+  "voice_delivery": {
+    "source": "native Mac synthesized speech, not user's microphone",
+    "requested_speech": "I need something for turning screws.",
+    "recognition_ms": 145.41716600069776,
+    "model": "prism-ml/bonsai-27b",
+    "actual_position_m": [
+      0.6322352222891632,
+      -0.15420821467870763,
+      0.02165691164028082
+    ],
+    "target_m": [
+      0.64,
+      -0.16
+    ],
+    "observed_lift_m": 0.2084441106131407,
+    "distance_m": 0.009686926762737826,
+    "silence_status": 422,
+    "native_responsiveness": {
+      "route": "model",
+      "interpretation_started_ms": 0.082,
+      "interpretation_ms": 554.08,
+      "decision_ms": 572.092,
+      "pickup_started_ms": 2634.371,
+      "task_finished_ms": 17805.727
+    },
+    "return": {
+      "status": "success",
+      "distance_m": 0.012704740035940125
+    }
+  },
+  "idle": {
+    "scope": "Controlled idle to read-only native text response; excludes audio, audible onset and motion; other read-only requests and machine activity are not isolated",
+    "payload": {
+      "message": "What kinds of help can you offer at this workbench?",
+      "history": []
+    },
+    "rows": [
+      {
+        "trial": 0,
+        "idle_before_request_s": 12.005026541999541,
+        "elapsed_ms": 815.3713750070892,
+        "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working.",
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "trial": 1,
+        "idle_before_request_s": 12.005062749958597,
+        "elapsed_ms": 838.5006249882281,
+        "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working.",
+        "returned_model": "prism-ml/bonsai-27b"
+      },
+      {
+        "trial": 2,
+        "idle_before_request_s": 12.002280834014527,
+        "elapsed_ms": 1054.6525419922546,
+        "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working.",
+        "returned_model": "prism-ml/bonsai-27b"
+      }
+    ],
+    "count": 3,
+    "job_unchanged": true,
+    "median_ms": 838.5006249882281,
+    "p95_ms": 1054.6525419922546,
+    "p95_note": "Nearest-rank empirical percentile on the stated small sample count"
+  },
+  "regression": "20 existing LM Studio/cache tests passed; no application code, prompts, physics, dependencies or command parser changed.",
+  "matched_reduction_percent": 66.72497958290379,
+  "evidence_handling": "Curated synthetic measurements and reviewed factual replies only. Raw provider results, runtime traces, generated audio and machine inventory stay in ignored local runs."
+}

@@ -30,6 +30,9 @@ selects its address. Environment variables remain supported. The earlier
 switch models in place, and reuse requires matching provider, model and endpoint.
 This is independent of the pretrained OpenPi arm-control integration; the local
 MLX backend remains the portable default.
+The [load-settings experiment](docs/bonsai-load-tuning-audit.md) reduces matched
+Bonsai text latency from 2.061 s to 0.686 s median with explicit GPU offload and
+one prediction slot, while keeping model selection interchangeable.
 
 The [tool contact fix](docs/idle-contact-audit.md) preserves Stop holds and keeps
 returned tools stable through 30 simulated minutes, followed by physical re-pickup.
