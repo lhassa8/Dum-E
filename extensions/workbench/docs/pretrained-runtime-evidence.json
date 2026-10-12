@@ -1,0 +1,28 @@
+{
+  "scope": "Host/runtime preflight; no installs, model weights or robot motion",
+  "system": "Darwin",
+  "machine": "arm64",
+  "python": "3.12.13",
+  "supported_linux_host": false,
+  "runtime_probe": {
+    "status": "withheld",
+    "reason": "The supported LIBERO/OpenPi baseline requires Linux. No CUDA probe on this host."
+  },
+  "model_ready": false,
+  "model_identity_verified": false,
+  "closed_loop_demonstrated": false,
+  "openpi_source": {
+    "commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "matches_pinned_commit": true,
+    "framework_versions": {
+      "jax": "0.5.3",
+      "jax-cuda12-plugin": "0.5.3",
+      "jaxlib": "0.5.3",
+      "torch": "2.7.1"
+    },
+    "torch_linux_x86_cuda_runtime": [
+      "12.6.77"
+    ],
+    "blackwell_caution": "Inspect CUDA build and run a GPU kernel before model setup. The pinned Torch CUDA 12.6 build does not establish RTX 5090 support; JAX compatibility also remains unverified."
+  }
+}

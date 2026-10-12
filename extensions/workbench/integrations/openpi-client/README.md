@@ -5,7 +5,7 @@ First establish that the published policy works in that environment; then connec
 Dum-E's voice and interruption layer and adapt the workbench. This client is the
 Mac side of that experiment. It is not a new manipulation model.
 
-**Current status:** the official SDK and wire protocol work locally. Nine tests
+**Current status:** the official SDK and wire protocol work locally. Eleven tests
 pass, including Stop during a pending request, invalid action rejection and a
 stalled SDK worker. No pretrained weights are loaded, no LIBERO rollout has run,
 and the current workbench app still uses its existing scripted controller.
@@ -90,6 +90,42 @@ and Blackwell compatibility have not been verified from this Mac chat.
 GPU/driver information and existing WSL distributions. It has not run on the
 workstation. It installs nothing and changes no permissions.
 
+The maintained LeRobot LIBERO integration explicitly requires Linux. No Docker,
+Podman, Colima or Lima executable is available on this Mac. The baseline will run
+both LIBERO and the policy on the workstation; the Mac retains the assistant UI
+and voice layer. We are not porting an unsupported legacy benchmark to macOS.
+
+The pinned OpenPi x86 Linux lock includes Torch 2.7.1 with CUDA runtime 12.6.77.
+PyTorch's documented Blackwell support uses CUDA 12.8 builds. JAX is pinned at
+0.5.3; its actual GPU compatibility also needs verification. A matching version
+number or visible GPU alone is insufficient evidence that inference will work.
+Do not blindly install the default GPU lock on the RTX 5090 or change the pin
+without recording and testing the compatibility change.
+
+`scripts/workstation_preflight.py` uses Python 3.11+ standard-library code. First,
+run the Windows inventory above. In an existing Linux/WSL environment, inventory
+the host without installing any dependencies:
+
+```sh
+python scripts/workstation_preflight.py --output runs/linux-inventory-new.json
+```
+
+After a compatible inference environment exists, use its Python to run a bounded
+32×32 bfloat16 matrix multiplication on the selected GPU backend:
+
+```sh
+# In the actual policy environment; no installs happen in this command:
+python scripts/workstation_preflight.py --engine jax \
+  --openpi-checkout /absolute/path/openpi --output runs/jax-runtime-new.json
+# Or choose --engine torch for a PyTorch policy environment.
+```
+
+The probe times out after 30 seconds, refuses CPU fallback and preserves previous
+reports. On non-Linux hosts it exits with failure before importing either GPU
+framework. A passed kernel is runtime evidence only: model identity, checkpoint
+loading, full inference and robot task success still need separate checks. The
+Linux/GPU branches have not executed on the workstation yet.
+
 The upstream LIBERO Docker example requests privileged execution, host networking
 and X11 access. Do not adopt those settings automatically. Prefer a headless
 simulator and a policy server restricted to an authorized private connection.
@@ -109,3 +145,7 @@ No CUDA software belongs in this Mac environment.
 Sources: [OpenPi](https://github.com/Physical-Intelligence/openpi),
 [LIBERO example](https://github.com/Physical-Intelligence/openpi/blob/215abfb217dbac7d5f1273282331b9b1866c0479/examples/libero/README.md),
 [remote inference](https://github.com/Physical-Intelligence/openpi/blob/215abfb217dbac7d5f1273282331b9b1866c0479/docs/remote_inference.md).
+
+Compatibility sources: [LeRobot LIBERO](https://huggingface.co/docs/lerobot/libero),
+[PyTorch 2.7 Blackwell support](https://pytorch.org/blog/pytorch-2-7/),
+[JAX changelog](https://docs.jax.dev/en/latest/changelog.html).

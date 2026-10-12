@@ -891,3 +891,21 @@ R0 connection checkpoint — not pretrained robot behavior:
   app observed Ready, voice/listen-on, allthree tools onrack; default unchanged.
 - See integrations/openpi-client/README.md and docs/pretrained-integration-audit.md.
   GPU access detail remains pending; continue with verified workstation once known.
+
+R1 runtime preparation — supported Linux baseline, October 11:
+- Previous goal turn is progress: actual official SDK/server tests and benchmark,
+  isolated environment and authorized publication at6e001e0. Current repositories
+  began clean. No pretrained inference or LIBERO rollout is claimed.
+- Maintained LeRobot LIBERO guide requiresLinux. This Mac has no Docker/Podman/
+  Colima/Lima command. Inspect exactOpenPi-pinned LIBERO f78abd68ee283de9f9be3c8f7e2a9ad60246e95c;
+  do not install its oldCUDA trainingrecipe or inventaMacport. Simulator+policy
+  baseline will run onLinux; Mac retainsvoice/UI.
+- ActualOpenPi lock hasTorch2.7.1 withx86LinuxCUDA12.6.77, whileofficialBlackwell
+  support usesCUDA12.8 builds. JAX0.5.3compatibility likewiseunverified. Do not
+  blindly installthedefaultlock on5090 or claimGPUcompatibilityfromversions alone.
+- Addedstandard-library host/runtimepreflight: noinstalls; optional30sGPUbf16
+  kernel inexistingLinuxpolicyenv; CPUfallbackrejected; modelReadyalwaysfalse.
+  ActualMac explicitJAXrequest exits1withheld beforeGPUimports; sourceaudit exact.
+- Elevenisolatedtests pass, includingnonLinuxguard andnoinventoryreadinessclaim.
+  ActualGPU/Linuxbranches unexecuted; workstationaccessquestionstillpending.
+  See docs/pretrained-runtime-audit.md. No app/controller/microphone changes.
