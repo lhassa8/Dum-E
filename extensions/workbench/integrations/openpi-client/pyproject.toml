@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dume-pretrained-client"
+version = "0.1.0"
+description = "Bounded OpenPi policy connection for the Dum-E workbench"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "openpi-client @ git+https://github.com/Physical-Intelligence/openpi.git@215abfb217dbac7d5f1273282331b9b1866c0479#subdirectory=packages/openpi-client",
+  "websockets>=15,<16",
+  "typing-extensions>=4.12,<5",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "ruff>=0.12,<1"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dume_pretrained"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+extend-exclude = ["fixtures/upstream_websocket_policy_server.py"]
+line-length = 100
+target-version = "py312"
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[project.scripts]
+dume-policy-probe = "dume_pretrained.probe:main"

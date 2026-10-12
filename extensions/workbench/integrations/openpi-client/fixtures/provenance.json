@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/Physical-Intelligence/openpi",
+  "commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+  "source": "src/openpi/serving/websocket_policy_server.py",
+  "sha256": "1370d345e6c3c5b8f15573050e485e60a5b423d1df33e24b237805e6b442b026",
+  "purpose": "Unmodified upstream protocol server for transport tests; no model weights loaded"
+}

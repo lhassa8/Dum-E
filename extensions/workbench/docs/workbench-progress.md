@@ -794,3 +794,100 @@ D2e execution — held geometry and missing training exposure:
 - Fresh180lab/161forktests pass;98lab/74forkRuff/formatpass;46upstreamhashesintact.
   PublicA4Ready,VoiceON,micidle; no UIactions,permissions,physics/forcechanges.
   Fullgoalactive, all-phasecameraresume/publicintegration/hardware/live remainopen.
+
+D2f active contract — training-only turn curriculum:
+- Previous turn is progress: forkd100048/root4d4482e published and clean.
+- Hypothesis: adding supported deliberate turns to training will cover changed
+  held-geometry release states without using validation/test labels for fitting.
+  Predicted: nonzero turn exposure for eachtool; fixedval270actions improve
+  p95≤10mm withfullcoverage; then whole18journeys pass95% withallphysicsgates.
+- Implement frozen yaw-cycleprotocol; training-only collector requests an exact
+  supportedorientation after existing camera/geometry/IK gates. Unsupported
+  requests refuse and remainrecorded. Defaultminimum-turnplanner is unchanged.
+- Pilot oneknowntraincase for exactnormal/repeatedzero fullstate replay, then
+  collectall72training scenes. Combine withpublished recoverydataset; validation
+  arrays must be bitwise unchanged and train/test provenance checked before fit.
+- Same76features/3fixedseeds/300epochs/headingdropout/guard8/.008std/20mmactions.
+  One remainingfit before replan; no further blind fit ifcriterionfails. Requires
+  actualturntrainingexposureinall3tools before recipe1authorization; tagalone
+  isn't qualification. No publicapp changes andall24testlayouts remainunopened.
+
+User steering — October 11, reuse existing robotics models and software:
+- User challenges whether we are reinventing the wheel. Agreed: custom motion
+  control has become too much of the critical path for the interactive assistant.
+  Redirect active work toward existing pretrained policies and maintained motion
+  libraries; preserve the full goal, honest physics judges and prior experiments.
+- D2f local prototypes remain uncommitted/opt-in and are not exported or enabled
+  in the public app. Two direct-turn training pilots yield0rows duegriploss.
+  Staged fixed-waypoint turn refused joint-step bound; adaptive subdivision
+  preserves0.04rad/0.8mm/0.008rad limits and improves mathematical continuation.
+  Two native ±.25rad FK tests pass without realqpos/ctrlmutation. Full staged
+  physicalvalidation17/18 stillfails95%; validation016 dropsheldwrench during
+  transit afterturn. No new model fit, no fullcurriculumcollection, no promotion.
+- Additional diagnostic refutes the suspected IK cause of validation016's
+  orientation choice: exact intended inherited pose is supported by bothcurrent
+  andhome scratch seeds (position.221/.189mm). Camera-derived planar clearance
+  is3.866mm below required7mm; geometry margin, not missingIKseed, causes turn.
+  Preserve clearance/physicalbounds; do not weaken them or patch a singlecase.
+- Current primary sources checked: upstreamDum-E already integrates GR00TN1.7
+  and offers SO101 fruit-picking checkpoint; this is not proven screwdriver skill.
+  https://github.com/aaronsu11/Dum-E
+  https://github.com/NVIDIA/Isaac-GR00T
+- OpenPi provides pretrained pi0.5-LIBERO for existing Panda simulation and
+  pi0.5-DROID for Franka tabletop operations; upstream explicitly warns that
+  checkpoints may not transfer to another robot/setup. Tested platformUbuntu22.04,
+  NVIDIAGPU inference >8GB. https://github.com/Physical-Intelligence/openpi
+- SmolVLA is a pretrained450M foundation policy for LeRobot; official guide
+  recommends task-specific fine-tuning and~50 demonstrations. Do not promise
+  ready-made screwdriver behavior. https://huggingface.co/docs/lerobot/smolvla
+- Established motion libraries include MoveIt2 and Drake; Drake publishes macOS
+  Python wheels. Evaluate reuse/compatibility rather than more bespokeIK tuning.
+  https://moveit.picknik.ai/ https://drake.mit.edu/pip.html
+- Next R0: reproduce a pretrained policy in its existing supported simulator,
+  establish baseline behavior/latency, then connect retained Dum-E voice/Stop
+  layer and adapt ourworkbench. pi0.5-LIBERO is a concrete matched-Panda candidate;
+  Linux/NVIDIA policy process belongs on existing5090 workstation when available,
+  Mac remains voice/UI/simulation client wherever practical. Inspect workstation
+  access/capabilities before any setup; no CUDA on Mac or new permissions/services.
+  No more D2f sweeps or new custom dynamics fits as the primary critical path.
+- Wholegoal stillactive: interactiveassistant+camera+recovery+usefullearning+
+  hardwareplan+humanliveproof remain required. Reusing policies changes method,
+  not completion criteria. Preserve all previous data/fixtures/failed evidence.
+
+R0 active — official pretrained policy integration, October 11:
+- Previous turn is progress: user-directed reuse pivot grounded in upstream docs,
+  custom experiments preserved. This chat currently exposes only local projects
+  and no remote shell; no ~/.ssh directory/config exists. Workstation access is
+  unknown, not verified offline. Asked once for SSH/policy-server access; continue
+  useful Mac-side work meanwhile. No remote task or new permissions created.
+- Preserved10D2f prototype files + patch + hashes inresearch/turn-prototypes-20261011;
+  restored published main implementation and kept all rawruns/ledger. No deletion
+  of experiment evidence or default public workflow change.
+- PinnedOpenPi commit215abfb217dbac7d5f1273282331b9b1866c0479. Use its official
+  lightweightclient; no weights, GPU frameworks, submodules, or CUDA onMac.
+- Compatibility: officialclient needsNumPy<2, lab needsNumPy>=2. Separate locked
+  environment underintegrations/openpi-client avoids changing root/forkenv.
+  StandardLIBERO camera/state/action adapter follows upstream example. Seven
+  actioncolumns areOSCposecontroller inputs, NOT ourPanda's7jointpositions.
+- Process-isolatedSDK connection avoids its unboundedretry/receive waits leaking
+  into control. Generation gate flushes queued/late actions onStop/taskchange,
+  boundedconnection/inferencefailure; remoteGPU computation itself is not cancelled.
+  No nativeworkbench action mapping, simulatedpolicy or inferredmodel identity.
+- Judge realofficialwire againstunmodifiedupstreamserver + explicitlysynthetic
+  transportfixture. Tests prove connection/units/cancellation/errorhandling only;
+  do not claim pretrainedpolicy inference, robot retrieval or closed-loop success.
+- Next: inspect5090/driver/WSL availability viaread-onlypreflight, validatepinned
+  runtimeBlackwell compatibility, reproducepi05-LIBERO benchmark, then connect
+  voice/Stopandrenderer viaactualLIBEROadapter. Fullgoal andphysicscriteria unchanged.
+
+R0 connection checkpoint — not pretrained robot behavior:
+- Nine isolated tests pass against the pinned actual upstream SDK/server protocol.
+  Invalid replies invalidate existing queued actions; a stalled SDK cannot block
+  the observation deadline. Failed inference does not erase an observed handshake.
+- 20 synthetic warm RPCs median/p95 0.637/0.802ms. Five Stop/local-request exits
+  during300ms synthetic inference median/p95 21.375/21.872ms. Reconnect+next delayed
+  reply median/p95 600.189/605.153ms; remote computation can continue.
+- No weights loaded, no LIBERO rollouts, no policy-driven motion. Actual public
+  app observed Ready, voice/listen-on, allthree tools onrack; default unchanged.
+- See integrations/openpi-client/README.md and docs/pretrained-integration-audit.md.
+  GPU access detail remains pending; continue with verified workstation once known.

@@ -1,0 +1,64 @@
+{
+  "scope": "Official OpenPi SDK/server wire protocol with synthetic policy; no robot motion",
+  "upstream_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+  "python": "3.12.13",
+  "numpy": "1.26.4",
+  "server_metadata": {
+    "implementation": "synthetic_transport_fixture",
+    "model_weights_loaded": false
+  },
+  "model_weights_loaded": false,
+  "pretrained_policy_latency_measured": false,
+  "physical_stop_measured": false,
+  "initial_connection_ms": 97.4642499932088,
+  "warm_round_trip": {
+    "samples": 20,
+    "median_ms": 0.6370629998855293,
+    "p95_ms": 0.8020565350307157,
+    "maximum_ms": 1.4768330147489905
+  },
+  "stop_and_local_request_exit": {
+    "samples": 5,
+    "median_ms": 21.375291980803013,
+    "p95_ms": 21.872283366974443,
+    "maximum_ms": 21.95237495470792
+  },
+  "reconnect_and_next_reply_with_300ms_synthetic_delay": {
+    "samples": 5,
+    "median_ms": 600.1888750470243,
+    "p95_ms": 605.1529336022213,
+    "maximum_ms": 605.9506669989787
+  },
+  "queued_actions_flushed": true,
+  "old_task_actions_accepted_after_stop": 0,
+  "warm_round_trip_ms": [
+    1.4768330147489905,
+    0.7665419834665954,
+    0.6966670043766499,
+    0.6843750015832484,
+    0.6817500106990337,
+    0.6244590040296316,
+    0.6563330534845591,
+    0.6404999876394868,
+    0.6376670207828283,
+    0.6094579584896564,
+    0.6212079897522926,
+    0.6209580460563302,
+    0.6389999762177467,
+    0.6642499938607216,
+    0.6158340256661177,
+    0.6285000126808882,
+    0.5949169863015413,
+    0.6364589789882302,
+    0.5997080006636679,
+    0.5876669893041253
+  ],
+  "stop_and_local_request_exit_ms": [
+    21.95237495470792,
+    21.192791988141835,
+    21.375291980803013,
+    21.551917016040534,
+    21.331958996597677
+  ],
+  "remote_computation_may_continue": true
+}

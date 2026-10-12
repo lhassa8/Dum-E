@@ -7,6 +7,11 @@ Dum-E task manager, message broker and MCP server run directly from this checkou
 Upstream files are unchanged; this extension replaces the concrete hardware agent
 with a simulation implementation of the same interface.
 
+The next manipulation experiment reuses OpenPi's pretrained π0.5-LIBERO policy in
+its supported simulator. The separate [OpenPi client](integrations/openpi-client/README.md)
+is pinned and tested for communication/interruption. It has not loaded model
+weights or driven a robot; the public app below still uses its existing controller.
+
 ## Run on an Apple Silicon Mac
 
 Python 3.12, uv and ffmpeg are required. This setup was tested on an M5 Mac with
