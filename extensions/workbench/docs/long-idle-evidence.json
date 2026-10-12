@@ -1,0 +1,178 @@
+{
+  "scope": "Read-only current native understanding after natural idle; no audio, speech output or motion",
+  "idle_duration_s": null,
+  "controlled_cold_start": false,
+  "job_unchanged": true,
+  "rows": [
+    {
+      "index": 0,
+      "elapsed_ms": 27386.307666020002,
+      "http_status": 200,
+      "result": {
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+        },
+        "route": "model",
+        "elapsed_ms": 27382.72687495919,
+        "profile": {
+          "first_token_ms": 26659.817290958017,
+          "prompt_tokens": 293,
+          "full_prompt_tokens": 1434,
+          "cached_prefix_tokens": 1141,
+          "prefix_cache_bytes": 90603520,
+          "prefix_prepare_ms": 2885.1985409855843,
+          "prompt_ms": 26657.09362499183,
+          "generation_tokens": 40,
+          "generation_ms": 707.2513329912908,
+          "peak_memory_gb": 20.653998064,
+          "elapsed_ms": 27371.241124987137,
+          "finish_reason": "stop"
+        }
+      },
+      "global_vm_counter_deltas": {
+        "decompressions_delta": 1215519,
+        "pageins_delta": 704,
+        "swapins_delta": 485575,
+        "swapouts_delta": 248097
+      }
+    },
+    {
+      "index": 1,
+      "elapsed_ms": 1113.1577910273336,
+      "http_status": 200,
+      "result": {
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+        },
+        "route": "model",
+        "elapsed_ms": 1110.9827499603853,
+        "profile": {
+          "first_token_ms": 393.60383397433907,
+          "prompt_tokens": 294,
+          "full_prompt_tokens": 1435,
+          "cached_prefix_tokens": 1141,
+          "prefix_cache_bytes": 90603520,
+          "prefix_prepare_ms": 2885.1985409855843,
+          "prompt_ms": 392.61083299061283,
+          "generation_tokens": 40,
+          "generation_ms": 709.3017080333084,
+          "peak_memory_gb": 20.653998064,
+          "elapsed_ms": 1107.133875018917,
+          "finish_reason": "stop"
+        }
+      },
+      "global_vm_counter_deltas": {
+        "decompressions_delta": 4375,
+        "pageins_delta": 33,
+        "swapins_delta": 159,
+        "swapouts_delta": 0
+      }
+    },
+    {
+      "index": 2,
+      "elapsed_ms": 1115.1971670333296,
+      "http_status": 200,
+      "result": {
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+        },
+        "route": "model",
+        "elapsed_ms": 1113.62795898458,
+        "profile": {
+          "first_token_ms": 395.0184999848716,
+          "prompt_tokens": 293,
+          "full_prompt_tokens": 1434,
+          "cached_prefix_tokens": 1141,
+          "prefix_cache_bytes": 90603520,
+          "prefix_prepare_ms": 2885.1985409855843,
+          "prompt_ms": 394.3240420194343,
+          "generation_tokens": 40,
+          "generation_ms": 712.564832996577,
+          "peak_memory_gb": 20.653998064,
+          "elapsed_ms": 1111.9023750070482,
+          "finish_reason": "stop"
+        }
+      },
+      "global_vm_counter_deltas": {
+        "decompressions_delta": 364,
+        "pageins_delta": 7,
+        "swapins_delta": 28,
+        "swapouts_delta": 0
+      }
+    }
+  ],
+  "swap_used_mib_before_probe": 8324.56,
+  "paging_causality_proven": false,
+  "candidate_metadata": {
+    "repo": "mlx-community/Qwen3.5-9B-MLX-4bit",
+    "revision": "938d8919941c6e7efd3c7150eff7fe9d12afa631",
+    "gated": false,
+    "library_name": "mlx",
+    "files": [
+      {
+        "name": ".gitattributes",
+        "size": 1570
+      },
+      {
+        "name": "README.md",
+        "size": 1954
+      },
+      {
+        "name": "chat_template.jinja",
+        "size": 7756
+      },
+      {
+        "name": "config.json",
+        "size": 3331
+      },
+      {
+        "name": "model-00001-of-00002.safetensors",
+        "size": 5349771222
+      },
+      {
+        "name": "model-00002-of-00002.safetensors",
+        "size": 600449850
+      },
+      {
+        "name": "model.safetensors.index.json",
+        "size": 123592
+      },
+      {
+        "name": "preprocessor_config.json",
+        "size": 390
+      },
+      {
+        "name": "processor_config.json",
+        "size": 1300
+      },
+      {
+        "name": "tokenizer.json",
+        "size": 19989343
+      },
+      {
+        "name": "tokenizer_config.json",
+        "size": 1139
+      },
+      {
+        "name": "video_preprocessor_config.json",
+        "size": 385
+      },
+      {
+        "name": "vocab.json",
+        "size": 6722759
+      }
+    ],
+    "weight_bytes": 5950221072,
+    "scope": "Candidate metadata only; model not loaded or accepted"
+  },
+  "candidate_loaded": false
+}

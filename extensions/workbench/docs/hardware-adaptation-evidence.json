@@ -1,0 +1,100 @@
+{
+  "scope": "Current simulated tool/geometry inventory; no hardware or simulation motion",
+  "root_commit": "090e20fd0dacdd10cc9995ae55ff59cc6757004c",
+  "mujoco": "3.15.0",
+  "tools": [
+    {
+      "tool": "screwdriver",
+      "mass_g": 76.00000000000001,
+      "catalog_axis_aligned_size_mm": [
+        44.0,
+        202.0,
+        44.0
+      ],
+      "compiled_geometry_matches_catalog": true,
+      "center_of_mass_from_body_origin_mm": [
+        0.0,
+        1.8026315789473688,
+        0.0
+      ],
+      "handle_box_size_mm": [
+        44,
+        56,
+        44
+      ],
+      "rack_xy_m": [
+        0.43,
+        -0.23
+      ],
+      "rack_xy_distance_from_base_origin_m": 0.48764741360946434
+    },
+    {
+      "tool": "wrench",
+      "mass_g": 89.00000000000003,
+      "catalog_axis_aligned_size_mm": [
+        64.0,
+        182.00000000000003,
+        44.0
+      ],
+      "compiled_geometry_matches_catalog": true,
+      "center_of_mass_from_body_origin_mm": [
+        -2.2181070962489957e-17,
+        19.550561797752806,
+        0.0
+      ],
+      "handle_box_size_mm": [
+        44,
+        56,
+        44
+      ],
+      "rack_xy_m": [
+        0.45,
+        0.0
+      ],
+      "rack_xy_distance_from_base_origin_m": 0.45
+    },
+    {
+      "tool": "hammer",
+      "mass_g": 61.0,
+      "catalog_axis_aligned_size_mm": [
+        90.0,
+        191.0,
+        44.0
+      ],
+      "compiled_geometry_matches_catalog": true,
+      "center_of_mass_from_body_origin_mm": [
+        0.0,
+        10.491803278688526,
+        0.0
+      ],
+      "handle_box_size_mm": [
+        44,
+        56,
+        44
+      ],
+      "rack_xy_m": [
+        0.43,
+        0.23
+      ],
+      "rack_xy_distance_from_base_origin_m": 0.48764741360946434
+    }
+  ],
+  "handoff_xy_m": [
+    0.64,
+    -0.16
+  ],
+  "handoff_xy_distance_from_base_origin_m": 0.6596969000988258,
+  "handoff_mat_size_mm": [
+    170,
+    250
+  ],
+  "source_hashes": {
+    "src/physical_ai_lab/assistant/tool_scene.py": "81415966b111c5d632ee9cd8eddf11ada8af0884fb11d986cd7fe05ba98f63e9",
+    "src/physical_ai_lab/assistant/tool_geometry.py": "ebb9b514c2ae1112f4603699aa4cadd3be05fd4bdf36477cc3941dfcbf4766b7",
+    "src/physical_ai_lab/assistant/camera_robot.py": "93d56c9f86be35a08f5eb40eddc4fdf51cad2773875b34797956a1cba22abbdf",
+    "src/physical_ai_lab/assistant/perception_scene.py": "f9488fd8fbdd4cfec82018372177d42c011753171e60e4fd7d9fc6d01ce4d23c",
+    "scripts/inspect_hardware_requirements.py": "456ee478343c1129fc98d5650e2b32dcddaf44a0f0d273fd9cf3436b580a0314"
+  },
+  "real_tool_measurements": false,
+  "hardware_ready": false
+}

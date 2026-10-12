@@ -12,6 +12,11 @@ its supported simulator. The separate [OpenPi client](integrations/openpi-client
 is pinned and tested for communication/interruption. It has not loaded model
 weights or driven a robot; the public app below still uses its existing controller.
 
+The [hardware adaptation plan](docs/hardware-adaptation-plan.md) documents what
+can be reused and what must be measured before choosing an arm. Our primitive
+61 g hammer and Panda layout do not establish capacity for real workbench tools.
+No hardware is selected or operated.
+
 ## Run on an Apple Silicon Mac
 
 Python 3.12, uv and ffmpeg are required. This setup was tested on an M5 Mac with

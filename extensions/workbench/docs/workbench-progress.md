@@ -909,3 +909,35 @@ R1 runtime preparation — supported Linux baseline, October 11:
 - Elevenisolatedtests pass, includingnonLinuxguard andnoinventoryreadinessclaim.
   ActualGPU/Linuxbranches unexecuted; workstationaccessquestionstillpending.
   See docs/pretrained-runtime-audit.md. No app/controller/microphone changes.
+
+F preparation — hardware adaptation plan, October 11:
+- Previous goal turn is progress: read-only runtime preflight implemented/tested
+  and published at 4e47de8 with source/runtime evidence. Repositories began clean.
+- Compiled current MuJoCo scene without rendering, stepping or hardware IO.
+  Simulated masses: screwdriver 76 g, wrench 89 g, hammer 61 g. Catalog dimensions
+  independently match compiled collision bounds; root/fork inventories agree.
+  Handoff center is 0.660 m from base origin in XY. These authored facts cannot
+  establish real-tool capacity or suitability of the layout for a compact arm.
+- Prepared concrete plan for tool/layout measurements, reused LeRobot SO-101
+  driver, explicit action units/embodiment, camera/time/gap calibration, staged
+  offline/real evaluation and verified outcomes/Stop. No hardware operations.
+  Generic adapter and real readiness remain unimplemented/unverified.
+- Existing SO-101 connect calibrates/applies a gain preset; fixed reset/release
+  poses are not read-only commissioning or validated tool skills. Future authorized
+  integration must review these side effects rather than blindly call helpers.
+- RTX access is missing for the third consecutive goal turn: refreshed projects
+  show only local Mac execution projects; no SSH configuration directory or remote
+  shell capability. One connection question remains pending. No GPU model job is
+  running. This blocks the pretrained policy slice; the whole goal can be blocked
+  only if no other meaningful work remains available.
+- Re-probed the known long-idle local dialogue bottleneck: read-only understanding
+  takes 27.386 s, then 1.113/1.115 s. First token 26.660 s, then 0.394/0.395 s;
+  generation ~0.71 s each. Same job, no audio/speech/motion. Natural idle length
+  is unknown; this is not a controlled cold-start distribution. Global swap usage
+  before probing is 8324.56 MiB; paging causality is unproven.
+- Concrete Mac-side progress remains possible: test the existing 9B MLX checkpoint
+  against unchanged quality fixtures, sampler/prompt and promotion gates. Public
+  metadata verified at 938d8919941c6e7efd3c7150eff7fe9d12afa631, weights 5.95 GB;
+  anonymous data-only download started in exec session 46246 and observed live.
+  Candidate not loaded or accepted; original default remains enabled. Keep the
+  whole goal active for this responsiveness work. RTX access question is pending.
