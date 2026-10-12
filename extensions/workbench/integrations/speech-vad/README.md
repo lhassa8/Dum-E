@@ -16,3 +16,9 @@ model and, separately, AudioWorklet/MediaRecorder; optional Whisper checks forwa
 only to the existing local transcription endpoint. They never issue robot commands.
 Noisy fixtures and raw recordings remain local. Detailed evidence and limitations:
 `docs/speech-detector-audit.md`.
+
+The additional `/physical` judge uses six retained Stop clips during actual
+simulated tool carrying and model generation. Its listed simulator API routes
+are enabled only with `--physical-checks`. See
+`docs/physical-voice-stop-audit.md`; an independent Python verifier reads the
+native event log and preserves the published corpus/gates.

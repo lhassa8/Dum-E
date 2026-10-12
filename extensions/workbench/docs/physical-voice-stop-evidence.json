@@ -1,0 +1,1763 @@
+{
+  "native_judge": {
+    "scope": "Six retained Stop clips through browser stream, actual local models and simulated physics; no microphone or speakers",
+    "protocol_sha256": "cd330c59d168e8d183f99b20287bc15ae5387567c2a2695a5d19ee92f6435c82",
+    "browser_report_sha256": "88644bb1b9956a97606827ede1386eabf268ea9b75e2e3e954dd45b83f368f5d",
+    "native_log": "/Users/user/Documents/Robot/Dum-E/extensions/workbench/runs/silero-default-ready-001/physics/events.jsonl",
+    "native_model_ready_event": {
+      "time": 1791780571.2433631,
+      "kind": "model_ready",
+      "model": "/Users/user/.cache/huggingface/hub/models--mlx-community--Qwen3.6-35B-A3B-4bit/snapshots/38740b847e4cb78f352aba30aa41c76e08e6eb46",
+      "preparation_ms": 10351.766208012123,
+      "prefix_prepare_ms": 2169.5117080234922,
+      "startup_warmup_ms": 1108.280167041812,
+      "cached_prefix_tokens": 1141,
+      "residency": {
+        "experimental": true,
+        "enabled": true,
+        "limit_bytes": 19867826444,
+        "interval_s": 1.0,
+        "refresh_count": 0,
+        "last_refresh_ms": 0.0
+      },
+      "residency_error": null
+    },
+    "passed": true,
+    "failures": [],
+    "rows": [
+      {
+        "id": "stop-gain1-clean",
+        "passed": true,
+        "failures": [],
+        "end_to_native_stop_ms": 597.4612236022949,
+        "verified_pending_generation": true,
+        "joint_motion_rad": 0.6433435459882182,
+        "settled_joint_drift_rad": 0.0045630930765745426,
+        "unrelated_tool_displacement_m": {
+          "hammer": 6.639337969101753e-10,
+          "wrench": 6.138138330947106e-10
+        },
+        "native_stop_event": {
+          "time": 1791781475.2775612,
+          "kind": "stop_requested"
+        },
+        "native_understanding_event": {
+          "time": 1791781475.478039,
+          "kind": "understanding",
+          "request": "Explain your limitations.",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "I am a simulated arm with no physical sight or feelings, but I can bring tools, pause tasks, and chat."
+          },
+          "route": "model",
+          "elapsed_ms": 1269.2026250297204,
+          "active_job": "17fa7c13",
+          "profile": {
+            "first_token_ms": 449.4258750346489,
+            "prompt_tokens": 362,
+            "full_prompt_tokens": 1503,
+            "cached_prefix_tokens": 1141,
+            "prefix_cache_bytes": 90603520,
+            "prefix_prepare_ms": 2169.5117080234922,
+            "prompt_ms": 448.5312500037253,
+            "generation_tokens": 41,
+            "generation_ms": 807.4390840483829,
+            "peak_memory_gb": 20.653998064,
+            "elapsed_ms": 1262.7191669889726,
+            "finish_reason": "stop",
+            "residency": {
+              "experimental": true,
+              "enabled": true,
+              "limit_bytes": 19867826444,
+              "interval_s": 1.0,
+              "refresh_count": 815,
+              "last_refresh_ms": 0.6561659974977374
+            }
+          }
+        }
+      },
+      {
+        "id": "stop-gain1-white",
+        "passed": true,
+        "failures": [],
+        "end_to_native_stop_ms": 721.6300964355469,
+        "verified_pending_generation": true,
+        "joint_motion_rad": 0.6446428708802028,
+        "settled_joint_drift_rad": 0.009253280167048183,
+        "unrelated_tool_displacement_m": {
+          "hammer": 6.44196640477205e-10,
+          "wrench": 6.152913734071825e-10
+        },
+        "native_stop_event": {
+          "time": 1791781485.53373,
+          "kind": "stop_requested"
+        },
+        "native_understanding_event": {
+          "time": 1791781485.679469,
+          "kind": "understanding",
+          "request": "Explain your limitations.",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "I am a simulated arm with no physical sight or feelings; I bring and return tools, pause, resume, and chat."
+          },
+          "route": "model",
+          "elapsed_ms": 1322.2991669899784,
+          "active_job": "83155fd2",
+          "profile": {
+            "first_token_ms": 492.97974997898564,
+            "prompt_tokens": 419,
+            "full_prompt_tokens": 1560,
+            "cached_prefix_tokens": 1141,
+            "prefix_cache_bytes": 90603520,
+            "prefix_prepare_ms": 2169.5117080234922,
+            "prompt_ms": 492.2907500294969,
+            "generation_tokens": 42,
+            "generation_ms": 822.8560410207137,
+            "peak_memory_gb": 20.653998064,
+            "elapsed_ms": 1319.7332079871558,
+            "finish_reason": "stop",
+            "residency": {
+              "experimental": true,
+              "enabled": true,
+              "limit_bytes": 19867826444,
+              "interval_s": 1.0,
+              "refresh_count": 824,
+              "last_refresh_ms": 0.6744160200469196
+            }
+          }
+        }
+      },
+      {
+        "id": "stop-gain1-hum",
+        "passed": true,
+        "failures": [],
+        "end_to_native_stop_ms": 592.2539234161377,
+        "verified_pending_generation": true,
+        "joint_motion_rad": 0.6459869454995437,
+        "settled_joint_drift_rad": 0.006729328920896616,
+        "unrelated_tool_displacement_m": {
+          "hammer": 6.305050370706513e-10,
+          "wrench": 6.028119114988875e-10
+        },
+        "native_stop_event": {
+          "time": 1791781495.638054,
+          "kind": "stop_requested"
+        },
+        "native_understanding_event": {
+          "time": 1791781496.130563,
+          "kind": "understanding",
+          "request": "Explain your limitations.",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working. Scene info comes from simulator positions; I have no camera or feelings."
+          },
+          "route": "model",
+          "elapsed_ms": 1556.040374969598,
+          "active_job": "d506f435",
+          "profile": {
+            "first_token_ms": 499.39629196887836,
+            "prompt_tokens": 441,
+            "full_prompt_tokens": 1582,
+            "cached_prefix_tokens": 1141,
+            "prefix_cache_bytes": 90603520,
+            "prefix_prepare_ms": 2169.5117080234922,
+            "prompt_ms": 498.73829196440056,
+            "generation_tokens": 54,
+            "generation_ms": 1050.7320000324398,
+            "peak_memory_gb": 20.653998064,
+            "elapsed_ms": 1554.0803339681588,
+            "finish_reason": "stop",
+            "residency": {
+              "experimental": true,
+              "enabled": true,
+              "limit_bytes": 19867826444,
+              "interval_s": 1.0,
+              "refresh_count": 832,
+              "last_refresh_ms": 197.9747919831425
+            }
+          }
+        }
+      },
+      {
+        "id": "stop-gain0.2-clean",
+        "passed": true,
+        "failures": [],
+        "end_to_native_stop_ms": 588.1249904632568,
+        "verified_pending_generation": true,
+        "joint_motion_rad": 0.6497846895410269,
+        "settled_joint_drift_rad": 0.005016505933921056,
+        "unrelated_tool_displacement_m": {
+          "hammer": 6.097520266494418e-10,
+          "wrench": 5.8366056432411e-10
+        },
+        "native_stop_event": {
+          "time": 1791781505.7146251,
+          "kind": "stop_requested"
+        },
+        "native_understanding_event": {
+          "time": 1791781506.019835,
+          "kind": "understanding",
+          "request": "Explain your limitations.",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "I am a simulated arm with no physical sight or feelings; I rely on simulator positions for scene data and cannot interpret camera images."
+          },
+          "route": "model",
+          "elapsed_ms": 1344.7196659981273,
+          "active_job": "266eb31c",
+          "profile": {
+            "first_token_ms": 501.3297910336405,
+            "prompt_tokens": 443,
+            "full_prompt_tokens": 1584,
+            "cached_prefix_tokens": 1141,
+            "prefix_cache_bytes": 90603520,
+            "prefix_prepare_ms": 2169.5117080234922,
+            "prompt_ms": 500.6174580194056,
+            "generation_tokens": 43,
+            "generation_ms": 837.4855419970118,
+            "peak_memory_gb": 20.653998064,
+            "elapsed_ms": 1342.7341660135426,
+            "finish_reason": "stop",
+            "residency": {
+              "experimental": true,
+              "enabled": true,
+              "limit_bytes": 19867826444,
+              "interval_s": 1.0,
+              "refresh_count": 840,
+              "last_refresh_ms": 213.672999991104
+            }
+          }
+        }
+      },
+      {
+        "id": "stop-gain0.2-white",
+        "passed": true,
+        "failures": [],
+        "end_to_native_stop_ms": 722.6102352142334,
+        "verified_pending_generation": true,
+        "joint_motion_rad": 0.6446428708802028,
+        "settled_joint_drift_rad": 0.006682382798761322,
+        "unrelated_tool_displacement_m": {
+          "hammer": 6.44196640477205e-10,
+          "wrench": 6.152913734071825e-10
+        },
+        "native_stop_event": {
+          "time": 1791781515.93591,
+          "kind": "stop_requested"
+        },
+        "native_understanding_event": {
+          "time": 1791781516.322211,
+          "kind": "understanding",
+          "request": "Explain your limitations.",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working. Scene info comes from simulator positions; I have no camera or feelings."
+          },
+          "route": "model",
+          "elapsed_ms": 1556.3712499570101,
+          "active_job": "2bbaa7f2",
+          "profile": {
+            "first_token_ms": 502.0046249846928,
+            "prompt_tokens": 440,
+            "full_prompt_tokens": 1581,
+            "cached_prefix_tokens": 1141,
+            "prefix_cache_bytes": 90603520,
+            "prefix_prepare_ms": 2169.5117080234922,
+            "prompt_ms": 500.9538329904899,
+            "generation_tokens": 54,
+            "generation_ms": 1047.2005410119891,
+            "peak_memory_gb": 20.653998064,
+            "elapsed_ms": 1553.3540420001373,
+            "finish_reason": "stop",
+            "residency": {
+              "experimental": true,
+              "enabled": true,
+              "limit_bytes": 19867826444,
+              "interval_s": 1.0,
+              "refresh_count": 848,
+              "last_refresh_ms": 1.3882500352337956
+            }
+          }
+        }
+      },
+      {
+        "id": "stop-gain0.2-hum",
+        "passed": true,
+        "failures": [],
+        "end_to_native_stop_ms": 628.6520957946777,
+        "verified_pending_generation": true,
+        "joint_motion_rad": 0.6437982233515789,
+        "settled_joint_drift_rad": 0.006425173353191926,
+        "unrelated_tool_displacement_m": {
+          "hammer": 6.72797761947964e-10,
+          "wrench": 6.357273041326608e-10
+        },
+        "native_stop_event": {
+          "time": 1791781526.777452,
+          "kind": "stop_requested"
+        },
+        "native_understanding_event": {
+          "time": 1791781526.985496,
+          "kind": "understanding",
+          "request": "Explain your limitations.",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "In simulation, I can bring and return tools, pause and resume tasks, wave hello, and chat while working."
+          },
+          "route": "model",
+          "elapsed_ms": 1320.0323329656385,
+          "active_job": "9001684a",
+          "profile": {
+            "first_token_ms": 519.4740000297315,
+            "prompt_tokens": 441,
+            "full_prompt_tokens": 1582,
+            "cached_prefix_tokens": 1141,
+            "prefix_cache_bytes": 90603520,
+            "prefix_prepare_ms": 2169.5117080234922,
+            "prompt_ms": 518.9273330033757,
+            "generation_tokens": 40,
+            "generation_ms": 793.9502089866437,
+            "peak_memory_gb": 20.653998064,
+            "elapsed_ms": 1317.5758750294335,
+            "finish_reason": "stop",
+            "residency": {
+              "experimental": true,
+              "enabled": true,
+              "limit_bytes": 19867826444,
+              "interval_s": 1.0,
+              "refresh_count": 855,
+              "last_refresh_ms": 2703.431500005536
+            }
+          }
+        }
+      }
+    ],
+    "timing_ms": {
+      "count": 6,
+      "median": 613.0566596984863,
+      "p95": 722.3652005195618,
+      "max": 722.6102352142334
+    },
+    "limitations": "Six saved synthetic utterance variants; no live mic, speakers, hardware, general acoustic reliability or policy-based manipulation proof. Browser source-start epoch and native wall time share the Mac clock; audio scheduling/reference quantization remains in the timing boundary."
+  },
+  "browser_trials": [
+    {
+      "id": "stop-gain1-clean",
+      "task_id": "22d0aefb-ea94-4cda-867d-8731d5721eed",
+      "passed": true,
+      "recognized": [
+        {
+          "text": "Explain your limitations.",
+          "audio_seconds": 1.92,
+          "decoder_padding_seconds": 0,
+          "recognition_seconds": 0.264,
+          "audio_decode_seconds": 0.071,
+          "model_recognition_seconds": 0.192,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        },
+        {
+          "text": "Stop.",
+          "audio_seconds": 0.84,
+          "decoder_padding_seconds": 0.35,
+          "recognition_seconds": 0.16,
+          "audio_decode_seconds": 0.031,
+          "model_recognition_seconds": 0.13,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        }
+      ],
+      "errors": [],
+      "captures": [
+        {
+          "file": "question.f32",
+          "started_epoch_s": 1791781471.9425998,
+          "tracks_ended": true
+        },
+        {
+          "file": "stop-gain1-clean.f32",
+          "started_epoch_s": 1791781474.2401,
+          "tracks_ended": true
+        }
+      ],
+      "reference_last_voiced_epoch_s": 1791781474.6801,
+      "stop_post_epoch_s": 1791781475.2752,
+      "stop_done_epoch_s": 1791781475.2797997,
+      "end_to_stop_post_ms": 595.099925994873,
+      "question_started_epoch_s": 1791781474.202,
+      "question_resolved_epoch_s": 1791781475.481,
+      "question_result": {
+        "accepted": false,
+        "mode": "superseded",
+        "task_id": null
+      },
+      "pending_reply": true,
+      "pre_stop_joint_motion_rad": 0.6433435459882182,
+      "settled_joint_drift_rad": 0.0045630930765745426,
+      "tracks_ended": true,
+      "task_status": "cancelled",
+      "remaining_work": [],
+      "stopped_phase": "Stopped",
+      "first_held": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Lifting tool",
+        "busy": true,
+        "robot_joints": [
+          -0.04665299986463306,
+          0.23274271591264287,
+          -0.4140765209122225,
+          -2.389504478873053,
+          0.161792816952559,
+          2.5914711079615045,
+          -1.391215897319647
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.44586813164862205,
+            -0.23946077232017818,
+            0.13036940216555967
+          ],
+          "wrench": [
+            0.45573756692741374,
+            0.003236156168939258,
+            0.021850415141204886
+          ],
+          "hammer": [
+            0.42350683725868454,
+            0.23758781991030647,
+            0.021880385438158786
+          ]
+        },
+        "job_id": "17fa7c13"
+      },
+      "before_stop": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Placing tool",
+        "busy": true,
+        "robot_joints": [
+          0.13575086818105922,
+          0.5104624944127982,
+          -0.4314820783094836,
+          -1.7461609328848346,
+          0.2445829338211344,
+          2.172757877427404,
+          -1.179768388471694
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6346934874100499,
+            -0.1746610963450511,
+            0.19342401911072193
+          ],
+          "wrench": [
+            0.4557375674260095,
+            0.0032361561689390303,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.423506836718946,
+            0.2375878199103165,
+            0.02188038543815619
+          ]
+        },
+        "job_id": "17fa7c13"
+      },
+      "after_stop": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Stopped",
+        "busy": false,
+        "robot_joints": [
+          0.13519235900638557,
+          0.5202573297508716,
+          -0.4289293858715613,
+          -1.7495834375150812,
+          0.24682169950435037,
+          2.1771223821478207,
+          -1.1808438203690284
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.633174955866883,
+            -0.17371433679400564,
+            0.1857345120585072
+          ],
+          "wrench": [
+            0.4557375674448748,
+            0.0032361561689390303,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.4235068366992777,
+            0.2375878199103165,
+            0.02188038543815619
+          ]
+        },
+        "job_id": "17fa7c13"
+      },
+      "after_settling": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Stopped",
+        "busy": false,
+        "robot_joints": [
+          0.13513639452180093,
+          0.5248204228274461,
+          -0.42814363274146156,
+          -1.7525606893728867,
+          0.24676153696238862,
+          2.1766140216846166,
+          -1.180835807259466
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6313020329620377,
+            -0.1732250680208696,
+            0.18077155148761812
+          ],
+          "wrench": [
+            0.4557375675412276,
+            0.0032361561689390303,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.42350683659475075,
+            0.2375878199103165,
+            0.02188038543815619
+          ]
+        },
+        "job_id": "17fa7c13"
+      }
+    },
+    {
+      "id": "stop-gain1-white",
+      "task_id": "db9799be-8c62-44de-9683-9a2ba496ea05",
+      "passed": true,
+      "recognized": [
+        {
+          "text": "Explain your limitations.",
+          "audio_seconds": 1.92,
+          "decoder_padding_seconds": 0,
+          "recognition_seconds": 0.142,
+          "audio_decode_seconds": 0.036,
+          "model_recognition_seconds": 0.106,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        },
+        {
+          "text": "Stop.",
+          "audio_seconds": 0.96,
+          "decoder_padding_seconds": 0.35,
+          "recognition_seconds": 0.162,
+          "audio_decode_seconds": 0.034,
+          "model_recognition_seconds": 0.128,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        }
+      ],
+      "errors": [],
+      "captures": [
+        {
+          "file": "question.f32",
+          "started_epoch_s": 1791781482.2838998,
+          "tracks_ended": true
+        },
+        {
+          "file": "stop-gain1-white.f32",
+          "started_epoch_s": 1791781484.3720999,
+          "tracks_ended": true
+        }
+      ],
+      "reference_last_voiced_epoch_s": 1791781484.8121,
+      "stop_post_epoch_s": 1791781485.5319,
+      "stop_done_epoch_s": 1791781485.5357997,
+      "end_to_stop_post_ms": 719.7999954223633,
+      "question_started_epoch_s": 1791781484.351,
+      "question_resolved_epoch_s": 1791781485.682,
+      "question_result": {
+        "accepted": false,
+        "mode": "superseded",
+        "task_id": null
+      },
+      "pending_reply": true,
+      "pre_stop_joint_motion_rad": 0.6446428708802028,
+      "settled_joint_drift_rad": 0.009253280167048183,
+      "tracks_ended": true,
+      "task_status": "cancelled",
+      "remaining_work": [],
+      "stopped_phase": "Stopped",
+      "first_held": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Lifting tool",
+        "busy": true,
+        "robot_joints": [
+          -0.03562525703935019,
+          0.21390302851800685,
+          -0.4271884196700624,
+          -2.3899097910138187,
+          0.14820237069545247,
+          2.5747710032197353,
+          -1.3815987355420452
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.44589028122400476,
+            -0.239745801973562,
+            0.13790952584243846
+          ],
+          "wrench": [
+            0.45573756702781654,
+            0.003236156163273012,
+            0.021850415141205053
+          ],
+          "hammer": [
+            0.42350683816696677,
+            0.23758781993013114,
+            0.021880385438156222
+          ]
+        },
+        "job_id": "83155fd2"
+      },
+      "before_stop": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Placing tool",
+        "busy": true,
+        "robot_joints": [
+          0.1366905199412917,
+          0.5023039654081712,
+          -0.43402297123337596,
+          -1.745266920133616,
+          0.24086306091002402,
+          2.165107392096551,
+          -1.1781382955402222
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6343819176882969,
+            -0.17557390926086056,
+            0.19873052144045736
+          ],
+          "wrench": [
+            0.45573756652119435,
+            0.003236156163272543,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.42350683869399725,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "83155fd2"
+      },
+      "after_stop": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Stopped",
+        "busy": false,
+        "robot_joints": [
+          0.1366905199412917,
+          0.5023039654081712,
+          -0.43402297123337596,
+          -1.745266920133616,
+          0.24086306091002402,
+          2.165107392096551,
+          -1.1781382955402222
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6343819176882969,
+            -0.17557390926086056,
+            0.19873052144045736
+          ],
+          "wrench": [
+            0.45573756652119435,
+            0.003236156163272543,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.42350683869399725,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "83155fd2"
+      },
+      "after_settling": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Stopped",
+        "busy": false,
+        "robot_joints": [
+          0.13669160373570347,
+          0.5115572455752194,
+          -0.4323268780308893,
+          -1.7513192447459474,
+          0.24059449915572076,
+          2.1639633304166805,
+          -1.1781384517676727
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6305955016319166,
+            -0.17460601229015105,
+            0.18922626521291136
+          ],
+          "wrench": [
+            0.45573756641252516,
+            0.003236156163272543,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.4235068388111634,
+            0.2375878199301325,
+            0.021880385438156225
+          ]
+        },
+        "job_id": "83155fd2"
+      }
+    },
+    {
+      "id": "stop-gain1-hum",
+      "task_id": "90112a94-2c68-4f17-925e-08de0e3b1195",
+      "passed": true,
+      "recognized": [
+        {
+          "text": "Explain your limitations.",
+          "audio_seconds": 1.92,
+          "decoder_padding_seconds": 0,
+          "recognition_seconds": 0.137,
+          "audio_decode_seconds": 0.031,
+          "model_recognition_seconds": 0.106,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        },
+        {
+          "text": "Stop.",
+          "audio_seconds": 0.84,
+          "decoder_padding_seconds": 0.35,
+          "recognition_seconds": 0.16,
+          "audio_decode_seconds": 0.035,
+          "model_recognition_seconds": 0.125,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        }
+      ],
+      "errors": [],
+      "captures": [
+        {
+          "file": "question.f32",
+          "started_epoch_s": 1791781492.4789,
+          "tracks_ended": true
+        },
+        {
+          "file": "stop-gain1-hum.f32",
+          "started_epoch_s": 1791781494.6058,
+          "tracks_ended": true
+        }
+      ],
+      "reference_last_voiced_epoch_s": 1791781495.0458,
+      "stop_post_epoch_s": 1791781495.6353998,
+      "stop_done_epoch_s": 1791781495.6409,
+      "end_to_stop_post_ms": 589.5998477935791,
+      "question_started_epoch_s": 1791781494.5697,
+      "question_resolved_epoch_s": 1791781496.1325,
+      "question_result": {
+        "accepted": false,
+        "mode": "superseded",
+        "task_id": null
+      },
+      "pending_reply": true,
+      "pre_stop_joint_motion_rad": 0.6459869454995437,
+      "settled_joint_drift_rad": 0.006729328920896616,
+      "tracks_ended": true,
+      "task_status": "cancelled",
+      "remaining_work": [],
+      "stopped_phase": "Stopped",
+      "first_held": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Lifting tool",
+        "busy": true,
+        "robot_joints": [
+          -0.03562525703935019,
+          0.21390302851800685,
+          -0.4271884196700624,
+          -2.3899097910138187,
+          0.14820237069545247,
+          2.5747710032197353,
+          -1.3815987355420452
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.44589028122400476,
+            -0.239745801973562,
+            0.13790952584243846
+          ],
+          "wrench": [
+            0.45573756702781654,
+            0.003236156163273012,
+            0.021850415141205053
+          ],
+          "hammer": [
+            0.42350683816696677,
+            0.23758781993013114,
+            0.021880385438156222
+          ]
+        },
+        "job_id": "d506f435"
+      },
+      "before_stop": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Placing tool",
+        "busy": true,
+        "robot_joints": [
+          0.1372442649390974,
+          0.4962975666757142,
+          -0.4357404255137874,
+          -1.743922845514275,
+          0.23871705570523635,
+          2.1608083336449817,
+          -1.1771818193426427
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6346102587775155,
+            -0.1761129077807833,
+            0.20289360351968225
+          ],
+          "wrench": [
+            0.4557375665340362,
+            0.003236156163272543,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.4235068386805576,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "d506f435"
+      },
+      "after_stop": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Stopped",
+        "busy": false,
+        "robot_joints": [
+          0.13725185441677987,
+          0.4987968787047976,
+          -0.4352805234559197,
+          -1.7455500642879878,
+          0.23865155952400086,
+          2.160521494008329,
+          -1.1771844474269244
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.633484249138411,
+            -0.175846622236478,
+            0.20052373087209702
+          ],
+          "wrench": [
+            0.4557375665276542,
+            0.003236156163272543,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.42350683868725975,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "d506f435"
+      },
+      "after_settling": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Stopped",
+        "busy": false,
+        "robot_joints": [
+          0.1372453183539726,
+          0.5055262076256942,
+          -0.43405655760866474,
+          -1.7499938608626782,
+          0.23844713188333502,
+          2.159662302847741,
+          -1.1771819504018681
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6308567873025654,
+            -0.17505639987174362,
+            0.19346174589047838
+          ],
+          "wrench": [
+            0.4557375664250046,
+            0.003236156163272543,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.4235068387974718,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "d506f435"
+      }
+    },
+    {
+      "id": "stop-gain0.2-clean",
+      "task_id": "00a78bd7-125d-4f88-8f51-748de2167acf",
+      "passed": true,
+      "recognized": [
+        {
+          "text": "Explain your limitations.",
+          "audio_seconds": 1.92,
+          "decoder_padding_seconds": 0,
+          "recognition_seconds": 0.139,
+          "audio_decode_seconds": 0.033,
+          "model_recognition_seconds": 0.106,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        },
+        {
+          "text": "Stop.",
+          "audio_seconds": 0.84,
+          "decoder_padding_seconds": 0.35,
+          "recognition_seconds": 0.157,
+          "audio_decode_seconds": 0.033,
+          "model_recognition_seconds": 0.124,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        }
+      ],
+      "errors": [],
+      "captures": [
+        {
+          "file": "question.f32",
+          "started_epoch_s": 1791781502.6028998,
+          "tracks_ended": true
+        },
+        {
+          "file": "stop-gain0.2-clean.f32",
+          "started_epoch_s": 1791781504.6865,
+          "tracks_ended": true
+        }
+      ],
+      "reference_last_voiced_epoch_s": 1791781505.1265001,
+      "stop_post_epoch_s": 1791781505.7117,
+      "stop_done_epoch_s": 1791781505.7168999,
+      "end_to_stop_post_ms": 585.1998329162598,
+      "question_started_epoch_s": 1791781504.6699,
+      "question_resolved_epoch_s": 1791781506.022,
+      "question_result": {
+        "accepted": false,
+        "mode": "superseded",
+        "task_id": null
+      },
+      "pending_reply": true,
+      "pre_stop_joint_motion_rad": 0.6497846895410269,
+      "settled_joint_drift_rad": 0.005016505933921056,
+      "tracks_ended": true,
+      "task_status": "cancelled",
+      "remaining_work": [],
+      "stopped_phase": "Stopped",
+      "first_held": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Lifting tool",
+        "busy": true,
+        "robot_joints": [
+          -0.03562525703935019,
+          0.21390302851800685,
+          -0.4271884196700624,
+          -2.3899097910138187,
+          0.14820237069545247,
+          2.5747710032197353,
+          -1.3815987355420452
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.44589028122400476,
+            -0.239745801973562,
+            0.13790952584243846
+          ],
+          "wrench": [
+            0.45573756702781654,
+            0.003236156163273012,
+            0.021850415141205053
+          ],
+          "hammer": [
+            0.42350683816696677,
+            0.23758781993013114,
+            0.021880385438156222
+          ]
+        },
+        "job_id": "266eb31c"
+      },
+      "before_stop": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Moving to handoff tray",
+        "busy": true,
+        "robot_joints": [
+          0.13749870757373664,
+          0.4889156303610012,
+          -0.4373121749800691,
+          -1.7401251014727919,
+          0.2379572308980358,
+          2.1596054280239185,
+          -1.176779423463112
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.636425835382232,
+            -0.17680993909147943,
+            0.2092921426513311
+          ],
+          "wrench": [
+            0.4557375665532684,
+            0.003236156163272543,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.4235068386596791,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "266eb31c"
+      },
+      "after_stop": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Stopped",
+        "busy": false,
+        "robot_joints": [
+          0.13748031191516236,
+          0.49310354115971655,
+          -0.43658096035475896,
+          -1.7429000365665515,
+          0.2378349944887615,
+          2.1590906876302816,
+          -1.1767792809878577
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6348692770167166,
+            -0.17640695100868112,
+            0.20526957999369924
+          ],
+          "wrench": [
+            0.4557375665404086,
+            0.003236156163272543,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.42350683867374184,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "266eb31c"
+      },
+      "after_settling": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Stopped",
+        "busy": false,
+        "robot_joints": [
+          0.13749968671278825,
+          0.4981200470936376,
+          -0.43564554226304475,
+          -1.7462256725756509,
+          0.23768517436024655,
+          2.158450563045579,
+          -1.176779512978277
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6328750793384877,
+            -0.17577499297454785,
+            0.19981770639427104
+          ],
+          "wrench": [
+            0.455737566444156,
+            0.003236156163272543,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.4235068387767188,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "266eb31c"
+      }
+    },
+    {
+      "id": "stop-gain0.2-white",
+      "task_id": "e43a0d7b-2812-49a8-8d1f-824a736f20cb",
+      "passed": true,
+      "recognized": [
+        {
+          "text": "Explain your limitations.",
+          "audio_seconds": 1.92,
+          "decoder_padding_seconds": 0,
+          "recognition_seconds": 0.141,
+          "audio_decode_seconds": 0.034,
+          "model_recognition_seconds": 0.107,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        },
+        {
+          "text": "Stop.",
+          "audio_seconds": 0.96,
+          "decoder_padding_seconds": 0.35,
+          "recognition_seconds": 0.161,
+          "audio_decode_seconds": 0.032,
+          "model_recognition_seconds": 0.129,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        }
+      ],
+      "errors": [],
+      "captures": [
+        {
+          "file": "question.f32",
+          "started_epoch_s": 1791781512.6957998,
+          "tracks_ended": true
+        },
+        {
+          "file": "stop-gain0.2-white.f32",
+          "started_epoch_s": 1791781514.7732997,
+          "tracks_ended": true
+        }
+      ],
+      "reference_last_voiced_epoch_s": 1791781515.2132998,
+      "stop_post_epoch_s": 1791781515.9338999,
+      "stop_done_epoch_s": 1791781515.9385,
+      "end_to_stop_post_ms": 720.6001281738281,
+      "question_started_epoch_s": 1791781514.7602,
+      "question_resolved_epoch_s": 1791781516.3262,
+      "question_result": {
+        "accepted": false,
+        "mode": "superseded",
+        "task_id": null
+      },
+      "pending_reply": true,
+      "pre_stop_joint_motion_rad": 0.6446428708802028,
+      "settled_joint_drift_rad": 0.006682382798761322,
+      "tracks_ended": true,
+      "task_status": "cancelled",
+      "remaining_work": [],
+      "stopped_phase": "Stopped",
+      "first_held": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Lifting tool",
+        "busy": true,
+        "robot_joints": [
+          -0.03562525703935019,
+          0.21390302851800685,
+          -0.4271884196700624,
+          -2.3899097910138187,
+          0.14820237069545247,
+          2.5747710032197353,
+          -1.3815987355420452
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.44589028122400476,
+            -0.239745801973562,
+            0.13790952584243846
+          ],
+          "wrench": [
+            0.45573756702781654,
+            0.003236156163273012,
+            0.021850415141205053
+          ],
+          "hammer": [
+            0.42350683816696677,
+            0.23758781993013114,
+            0.021880385438156222
+          ]
+        },
+        "job_id": "2bbaa7f2"
+      },
+      "before_stop": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Placing tool",
+        "busy": true,
+        "robot_joints": [
+          0.1366905199412917,
+          0.5023039654081712,
+          -0.43402297123337596,
+          -1.745266920133616,
+          0.24086306091002402,
+          2.165107392096551,
+          -1.1781382955402222
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6343819176882969,
+            -0.17557390926086056,
+            0.19873052144045736
+          ],
+          "wrench": [
+            0.45573756652119435,
+            0.003236156163272543,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.42350683869399725,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "2bbaa7f2"
+      },
+      "after_stop": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Stopped",
+        "busy": false,
+        "robot_joints": [
+          0.1367142960842483,
+          0.5048748627764581,
+          -0.4335294094646958,
+          -1.7469067726270324,
+          0.24080517027062973,
+          2.1647141374963916,
+          -1.1781441948516698
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6333234198507364,
+            -0.17535817187247696,
+            0.19622722860287817
+          ],
+          "wrench": [
+            0.45573756651479114,
+            0.003236156163272543,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.423506838700752,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "2bbaa7f2"
+      },
+      "after_settling": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Stopped",
+        "busy": false,
+        "robot_joints": [
+          0.13669160373570347,
+          0.5115572455752194,
+          -0.4323268780308893,
+          -1.7513192447459474,
+          0.24059449915572076,
+          2.1639633304166805,
+          -1.1781384517676727
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6305955016319166,
+            -0.17460601229015105,
+            0.18922626521291136
+          ],
+          "wrench": [
+            0.45573756641252516,
+            0.003236156163272543,
+            0.02185041514120492
+          ],
+          "hammer": [
+            0.4235068388111634,
+            0.2375878199301325,
+            0.021880385438156225
+          ]
+        },
+        "job_id": "2bbaa7f2"
+      }
+    },
+    {
+      "id": "stop-gain0.2-hum",
+      "task_id": "86f7b1b3-010c-4aa0-857c-82c9d8d8125f",
+      "passed": true,
+      "recognized": [
+        {
+          "text": "Explain your limitations.",
+          "audio_seconds": 1.92,
+          "decoder_padding_seconds": 0,
+          "recognition_seconds": 0.289,
+          "audio_decode_seconds": 0.033,
+          "model_recognition_seconds": 0.256,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        },
+        {
+          "text": "Stop.",
+          "audio_seconds": 0.9,
+          "decoder_padding_seconds": 0.35,
+          "recognition_seconds": 0.167,
+          "audio_decode_seconds": 0.029,
+          "model_recognition_seconds": 0.138,
+          "model": "mlx-community/whisper-small.en-mlx",
+          "local": true,
+          "voice_mode": "interrupt",
+          "likely_echo": false
+        }
+      ],
+      "errors": [],
+      "captures": [
+        {
+          "file": "question.f32",
+          "started_epoch_s": 1791781523.4427998,
+          "tracks_ended": true
+        },
+        {
+          "file": "stop-gain0.2-hum.f32",
+          "started_epoch_s": 1791781525.7087998,
+          "tracks_ended": true
+        }
+      ],
+      "reference_last_voiced_epoch_s": 1791781526.1488,
+      "stop_post_epoch_s": 1791781526.7755,
+      "stop_done_epoch_s": 1791781526.7798998,
+      "end_to_stop_post_ms": 626.7001628875732,
+      "question_started_epoch_s": 1791781525.6606,
+      "question_resolved_epoch_s": 1791781526.9882998,
+      "question_result": {
+        "accepted": false,
+        "mode": "superseded",
+        "task_id": null
+      },
+      "pending_reply": true,
+      "pre_stop_joint_motion_rad": 0.6437982233515789,
+      "settled_joint_drift_rad": 0.006425173353191926,
+      "tracks_ended": true,
+      "task_status": "cancelled",
+      "remaining_work": [],
+      "stopped_phase": "Stopped",
+      "first_held": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Lifting tool",
+        "busy": true,
+        "robot_joints": [
+          -0.013852939650561374,
+          0.17669699897771987,
+          -0.4530903666581656,
+          -2.3907120353798836,
+          0.1214560862328297,
+          2.5417866284075927,
+          -1.3620934050784372
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.44532525784892363,
+            -0.24028682895026718,
+            0.15249403928314112
+          ],
+          "wrench": [
+            0.4557375670286291,
+            0.0032361561632728714,
+            0.021850415141205365
+          ],
+          "hammer": [
+            0.4235068381594298,
+            0.23758781993013134,
+            0.02188038543815626
+          ]
+        },
+        "job_id": "9001684a"
+      },
+      "before_stop": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Placing tool",
+        "busy": true,
+        "robot_joints": [
+          0.13442236472088998,
+          0.5212144269688036,
+          -0.4280143296919525,
+          -1.7469138120283048,
+          0.24984612363967437,
+          2.1837060626416696,
+          -1.1820634318684125
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6352741270950156,
+            -0.17344273732567272,
+            0.18675142249490265
+          ],
+          "wrench": [
+            0.4557375664959158,
+            0.0032361561632725435,
+            0.021850415141204914
+          ],
+          "hammer": [
+            0.4235068387215204,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "9001684a"
+      },
+      "after_stop": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Stopped",
+        "busy": false,
+        "robot_joints": [
+          0.1344931755814415,
+          0.5241176541535643,
+          -0.42740020037820153,
+          -1.7487040915205694,
+          0.2496931834195101,
+          2.1832764254791166,
+          -1.1820763800581393
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6343276028566451,
+            -0.17328477304930373,
+            0.18408964705437367
+          ],
+          "wrench": [
+            0.4557375664894861,
+            0.0032361561632725435,
+            0.021850415141204914
+          ],
+          "hammer": [
+            0.42350683872865025,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "9001684a"
+      },
+      "after_settling": {
+        "backend": "workbench",
+        "profile": "tools",
+        "phase": "Stopped",
+        "busy": false,
+        "robot_joints": [
+          0.13442394481869083,
+          0.5305428275067562,
+          -0.42628437781745826,
+          -1.7529102827193077,
+          0.24958043147154133,
+          2.1825633730936023,
+          -1.182063640683412
+        ],
+        "gripper_command": 0,
+        "objects": {
+          "screwdriver": [
+            0.6317698539627296,
+            -0.1726290579097155,
+            0.1774321107474862
+          ],
+          "wrench": [
+            0.4557375663929018,
+            0.0032361561632725435,
+            0.021850415141204914
+          ],
+          "hammer": [
+            0.42350683883222756,
+            0.2375878199301325,
+            0.02188038543815622
+          ]
+        },
+        "job_id": "9001684a"
+      }
+    }
+  ],
+  "manifest": {
+    "protocol": {
+      "version": 1,
+      "scope": "Six retained Stop clips through browser stream, actual local models and simulated physics; no microphone or speakers",
+      "stop_cases": [
+        "stop-gain1-clean",
+        "stop-gain1-white",
+        "stop-gain1-hum",
+        "stop-gain0.2-clean",
+        "stop-gain0.2-white",
+        "stop-gain0.2-hum"
+      ],
+      "question_source": "runs/residency-pending-stop-001/question.wav",
+      "stop_capture_start": "After the recognized question is dispatched during actual Lifting tool phase with elevated screwdriver",
+      "timing_reference": "Last 40ms clean-source frame RMS>=.008, retained from original endpoint manifest; browser source-start epoch mapped to native stop_requested timestamp",
+      "criteria": {
+        "maximum_end_to_native_stop_ms": 1000,
+        "maximum_settled_joint_drift_rad": 0.02,
+        "settling_observation_ms": 600,
+        "minimum_pre_stop_joint_motion_rad": 0.001,
+        "minimum_tool_height_m": 0.13,
+        "all_tasks_cancelled": true,
+        "no_remaining_queued_work": true,
+        "retain_gripper_command": true,
+        "all_captured_tracks_ended": true,
+        "minimum_verified_pending_reply_interruptions": 1,
+        "pending_replies_must_be_superseded": true
+      }
+    },
+    "protocol_sha256": "cd330c59d168e8d183f99b20287bc15ae5387567c2a2695a5d19ee92f6435c82",
+    "endpoint_protocol_sha256": "babe8ffd33c4e625c8d8a2aa3f91996f4aec573fe4ccbc5ecd9078d6e241c102",
+    "question": {
+      "file": "question.f32",
+      "source": "runs/residency-pending-stop-001/question.wav",
+      "source_sha256": "4b2f0b515d740e3095e59b96bc02c404387b9db0b0cf5e2d3576609ff7f500ef",
+      "pcm_sha256": "f73c745149b47badaee649157616648aeab5e8d83d7660b2950af0d069128457"
+    },
+    "cases": [
+      {
+        "id": "stop-gain1-clean",
+        "source": "runs/residency-pending-stop-001/stop.wav",
+        "source_sha256": "c363936ebac6bb5e740b6834d9e774b86fc3f3cb4ee43dad7fafd0dbaab36c3a",
+        "speech_gain": 1,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 350,
+        "expected_speech": true,
+        "file": "stop-gain1-clean.f32",
+        "last_clean_voiced_ms": 440.0,
+        "pcm_sha256": "afd42046aa537e8d0180b67fc424599f86f950550623309708ba5e32ca30be01",
+        "sample_count": 192000
+      },
+      {
+        "id": "stop-gain1-white",
+        "source": "runs/residency-pending-stop-001/stop.wav",
+        "source_sha256": "c363936ebac6bb5e740b6834d9e774b86fc3f3cb4ee43dad7fafd0dbaab36c3a",
+        "speech_gain": 1,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 350,
+        "expected_speech": true,
+        "file": "stop-gain1-white.f32",
+        "last_clean_voiced_ms": 440.0,
+        "pcm_sha256": "575bbe5bffcd04811eb1495e3fdedf8ceaab24b1d1d7b22086ac088c88e8847e",
+        "sample_count": 192000
+      },
+      {
+        "id": "stop-gain1-hum",
+        "source": "runs/residency-pending-stop-001/stop.wav",
+        "source_sha256": "c363936ebac6bb5e740b6834d9e774b86fc3f3cb4ee43dad7fafd0dbaab36c3a",
+        "speech_gain": 1,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 350,
+        "expected_speech": true,
+        "file": "stop-gain1-hum.f32",
+        "last_clean_voiced_ms": 440.0,
+        "pcm_sha256": "e4e62c482669a987e8892cec0f175232d9781e75898313e9033153abfb440359",
+        "sample_count": 192000
+      },
+      {
+        "id": "stop-gain0.2-clean",
+        "source": "runs/residency-pending-stop-001/stop.wav",
+        "source_sha256": "c363936ebac6bb5e740b6834d9e774b86fc3f3cb4ee43dad7fafd0dbaab36c3a",
+        "speech_gain": 0.2,
+        "background": "clean",
+        "noise_rms": 0,
+        "pause_ms": 350,
+        "expected_speech": true,
+        "file": "stop-gain0.2-clean.f32",
+        "last_clean_voiced_ms": 440.0,
+        "pcm_sha256": "3f30b462d10958d25cb238ea848a82a02c2000536bd5d9a506cdc6c03cd63bd8",
+        "sample_count": 192000
+      },
+      {
+        "id": "stop-gain0.2-white",
+        "source": "runs/residency-pending-stop-001/stop.wav",
+        "source_sha256": "c363936ebac6bb5e740b6834d9e774b86fc3f3cb4ee43dad7fafd0dbaab36c3a",
+        "speech_gain": 0.2,
+        "background": "white",
+        "noise_rms": 0.012,
+        "pause_ms": 350,
+        "expected_speech": true,
+        "file": "stop-gain0.2-white.f32",
+        "last_clean_voiced_ms": 440.0,
+        "pcm_sha256": "03f9fa414e3833b140612b493cd3401c1d7c60f63f4804bcb62c68a740229411",
+        "sample_count": 192000
+      },
+      {
+        "id": "stop-gain0.2-hum",
+        "source": "runs/residency-pending-stop-001/stop.wav",
+        "source_sha256": "c363936ebac6bb5e740b6834d9e774b86fc3f3cb4ee43dad7fafd0dbaab36c3a",
+        "speech_gain": 0.2,
+        "background": "hum",
+        "noise_rms": 0.012,
+        "pause_ms": 350,
+        "expected_speech": true,
+        "file": "stop-gain0.2-hum.f32",
+        "last_clean_voiced_ms": 440.0,
+        "pcm_sha256": "47e7b07ecbbdad1ce948eb79553e8191b995a241377d25c2617a04124f9da5a4",
+        "sample_count": 192000
+      }
+    ]
+  },
+  "altered_evidence_checks": [
+    {
+      "case": "unaltered real run passes",
+      "expected_pass": true,
+      "actual_pass": true
+    },
+    {
+      "case": "missing trial rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "duplicate trial rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "false timing reference rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "frozen protocol mismatch rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "embedded gate alteration rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "retained voiced boundary alteration rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "no physical motion rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "opened gripper rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "dropped tool rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "stale dialogue accepted rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "negated Stop transcript rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "unrelated tool displacement rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "unsettled arm rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    },
+    {
+      "case": "late native Stop rejected",
+      "expected_pass": false,
+      "actual_pass": false
+    }
+  ],
+  "public_runtime": {
+    "exec_session": 46066,
+    "log_directory": "Dum-E/extensions/workbench/runs/silero-default-ready-001",
+    "observed": "Ready; Speak enabled; tools on rack; Voice/listen ON; microphone idle"
+  },
+  "application_source_changed": false,
+  "python_dependency_or_lock_changes": false,
+  "checks": {
+    "retained_run_judge_checks": 15,
+    "fork_judge_on_actual_corpus": "passed",
+    "ruff": "passed",
+    "protected_upstream_files": 46,
+    "application_regressions_from_unchanged_source": {
+      "lab": 187,
+      "fork": 168
+    }
+  }
+}

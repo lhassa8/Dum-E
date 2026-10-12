@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "scope": "Six retained Stop clips through browser stream, actual local models and simulated physics; no microphone or speakers",
+  "stop_cases": ["stop-gain1-clean", "stop-gain1-white", "stop-gain1-hum", "stop-gain0.2-clean", "stop-gain0.2-white", "stop-gain0.2-hum"],
+  "question_source": "runs/residency-pending-stop-001/question.wav",
+  "stop_capture_start": "After the recognized question is dispatched during actual Lifting tool phase with elevated screwdriver",
+  "timing_reference": "Last 40ms clean-source frame RMS>=.008, retained from original endpoint manifest; browser source-start epoch mapped to native stop_requested timestamp",
+  "criteria": {
+    "maximum_end_to_native_stop_ms": 1000,
+    "maximum_settled_joint_drift_rad": 0.02,
+    "settling_observation_ms": 600,
+    "minimum_pre_stop_joint_motion_rad": 0.001,
+    "minimum_tool_height_m": 0.13,
+    "all_tasks_cancelled": true,
+    "no_remaining_queued_work": true,
+    "retain_gripper_command": true,
+    "all_captured_tracks_ended": true,
+    "minimum_verified_pending_reply_interruptions": 1,
+    "pending_replies_must_be_superseded": true
+  }
+}

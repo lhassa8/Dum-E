@@ -1008,3 +1008,29 @@ B6 — reuse pretrained speech detection, October 12:
 - docs/speech-detector-audit.md + evidence retain exact scopes and failures.
   Real acoustics, natural pauses, physical/VLA work and human demo remain.
   Full goal active; this speech milestone is not completion.
+
+
+B7 — recorded browser speech to native physical Stop, October 12:
+- Previous goal turn: progress; Silero shipped/published at fork7c9c774 /
+  lab8271aaa. Revalidated live exec46066 and clean current worktrees.
+- Mac-only project inventory; no exposed workstation shell or policy server.
+  OpenPi-supported model demo still awaits the existing unanswered access detail.
+  No custom manipulation or dynamics sweep used as a substitute.
+- Froze six retained Stop variants plus an actual saved question before execution.
+  ProtocolSHA cd330c59d168e8d183f99b20287bc15ae5387567c2a2695a5d19ee92f6435c82.
+  Actual browser MediaRecorder/AudioWorklet + Silero + Whisper + conversation
+  model + unchanged task bus + MuJoCo; no mic/speakers/hardware/mocked model.
+- Browser6/6; independent native event/physical judge6/6, all six interrupted
+  actual ongoing token generation and superseded the late reply. Native Stop
+  median613ms / samplep95722ms / max723ms from retained voiced boundary.
+  Gripper retained, elevated tool, cancelled tasks, no queued work, tracks ended,
+  unrelated tool center displacement <4mm. Residual joint drift .004563–.009253
+  rad over600ms after Stopped flag; <.02gate. Settling duration still unmeasured.
+- Independent judge reconstructs frozen timing, validates exact model/native
+  event identities;15 retained-run alterations confirm meaningful rejection.
+  Published source/locks unchanged; only verification tools/docs/protocol added.
+  No need to repeat the prior187/168 application regressions for test-only edits.
+- Simulator exec46066 remains Ready; Voice/listen restored ON, mic idle, tools
+  reset; cancelled test tasks retained. Close temporary judge tab/server afterward.
+  Full goal active; trained arm control, camera journey failures, acoustics, audible
+  responsiveness and human live demonstration remain incomplete.
