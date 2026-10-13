@@ -10,6 +10,31 @@ from physical_ai_lab.assistant.tool_language import ToolIntent
 from physical_ai_lab.assistant.tool_scene import HANDOFF, TOOLS, ToolWorkbench
 
 
+@pytest.mark.parametrize("phase", ["Releasing", "Withdrawing gripper", "Checking placement"])
+def test_resume_after_release_finishes_without_another_pickup(phase):
+    bench = ToolWorkbench()
+    try:
+        delivery = ToolDelivery(bench, "screwdriver")
+        while delivery.phase != phase:
+            assert delivery.advance()
+        delivery.pause()
+        for _ in range(50):
+            bench.tick()
+        delivery.resume()
+        phases = []
+        while delivery.advance():
+            phases.append(delivery.phase)
+        assert delivery.outcome.status == "success"
+        assert delivery.max_height - delivery.initial_height > 0.08
+        assert delivery.outcome.distance_m < 0.035
+        assert not set(phases) & {
+            "Approaching tool", "Lowering gripper", "Grasping", "Lifting tool"
+        }
+        assert bench.data.qpos[7] > 0.035
+    finally:
+        bench.close()
+
+
 @pytest.mark.parametrize("seed", [42, 51, 52])
 @pytest.mark.parametrize("name", list(TOOLS))
 def test_physical_tool_delivery_and_return(name, seed):

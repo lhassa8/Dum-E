@@ -1867,3 +1867,34 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   microphone activation,external messages or data uploads. Candidate remains
   experimental pendingplanning-timecancel/resume and fullspokenmeasurement.
   Sourceasyncpatch remains incomplete. Full assistant goal active.
+
+### B34 — Human voice failure and continuation/cancellation repair (PC, 2026-10-13)
+
+- Human reports late Stop and a second screwdriver pickup on Proceed. Matching
+  live logs are main8876/dume-2f3fadf5, not the earlier camera8886 automation.
+  Stop clip7.44s, ASR261ms, native interruption about72ms after request;
+  final-word timing missing. Do not infer endpoint delay from clip duration or
+  claim a passing live demonstration. Proceed was model-classified as fetch.
+- Current-state continuation bypasses model classification and pending dialogue
+  clarification; completed/working/idle states do not launch a pickup. Native
+  continuation also overrides an incorrectly supplied resolved fetch. Baseline
+  post-release resume completes withdrawal and the original judge without
+  reacquiring the tool. Original lift history and placement limits preserved.
+- Camera async repair waits for abandoned pure workers before new snapshot
+  timestamps, discards old result/errors, and validates phase/grasp state before
+  replacing generators. Original recovery/correction budgets preserved. Legacy
+  real-worker cancellation23/23 with32s holds; Mink quiet21/21 nominal, two
+  known loss phases never entered (actual success, recovery attempts0). Whole
+  Mink protocol21/23 remains incomplete; earlier20/23 stale refusal retained.
+- Add capture/detector diagnostics and server transcript timestamps without
+  recording audio, automatic mic access, or altering speech thresholds. Explicit
+  alternative launcher ports preserve existing demonstrations. See
+  voice-state-repair-pc.md. Spoken Stop responsiveness and full goal remain open.
+- New separate camera instance8986/dume-f6e36b53 is live, explicit CPU/int8 ASR,
+  recording off by default; original three services preserved. Typed actual bus
+  Stop-during-carry/Proceed/delivery/completed-Proceed/no-new-task/contextReturn
+  passes1/1. Observedlift212.84mm, rackerror6.84mm. Rawcontinuation-live-001 and
+  renderedframe retained. This does not establish speech latency.
+- Full suite329passed204.04s,24dependency/multiprocessingwarnings; bothJSvoice
+  contracts pass; Ruff clean and46upstream bytes verified unchanged. Source
+  repairs now reviewable; full live acoustic demonstration still outstanding.

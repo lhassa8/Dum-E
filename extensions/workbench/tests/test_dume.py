@@ -86,6 +86,43 @@ class ControllerProbe:
         self.stopped = True
 
 
+@pytest.mark.parametrize("scenario", ["completed", "paused", "working", "idle"])
+def test_proceed_uses_current_state_without_reclassifying_old_fetch(
+    upstream_backends, tmp_path, scenario
+):
+    class ContinuationProbe(ControllerProbe):
+        async def state(self):
+            value = await super().state()
+            value.update(
+                busy=scenario == "working",
+                recovery={"tool": "screwdriver", "can_resume": scenario == "paused"},
+                last_outcome={"status": "success", "message": "Your screwdriver is ready."}
+                if scenario == "completed" else None,
+            )
+            return value
+
+        async def request(self, *args, **kwargs):
+            raise AssertionError("Proceed must never ask the model to repeat a pickup")
+
+    async def run():
+        tasks, broker = upstream_backends
+        controller = ContinuationProbe()
+        agent = SimulationAgent(controller, tasks, broker, tmp_path / "events.jsonl", tools=True)
+        # Pending conversational clarification must not change continuation semantics.
+        agent.interaction.clarification = {"request": "Bring a tool", "question": "Which one?"}
+        result = await agent.interaction.interact("Proceed.")
+        if scenario == "paused":
+            task = await tasks.get_task(result["task_id"])
+            assert task.metadata["resolved_intent"]["action"] == "resume"
+        else:
+            assert result["mode"] == "conversation" and result["task_id"] is None
+            assert len(await tasks.list_tasks()) == 0
+            if scenario == "completed":
+                assert result["message"] == "Your screwdriver is ready."
+
+    asyncio.run(run())
+
+
 def test_pinned_sources_unmodified():
     manifest = json.loads((Path(__file__).parents[1] / "upstream-source.json").read_text())
     assert manifest["revision"] == "f09a96827ea60e4b18a55fa67e2acb97800dc46b"

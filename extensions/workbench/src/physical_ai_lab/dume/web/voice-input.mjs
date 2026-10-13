@@ -1,4 +1,4 @@
-// Local pause detection and bounded motion-only listening. ASR remains on the Mac.
+// Local pause detection and user-controlled recording; ASR runs on this workstation.
 export function isStopRequest(text) {
   const words=text.toLowerCase().replace(/[^a-z\s]/g,' ').replace(/\s+/g,' ').trim();
   return /^(?:(?:please|dum e|dume|dummy|can you|could you) )?(?:stop|halt|cancel)(?: (?:moving|the arm|everything))?(?: (?:please|now))?$/.test(words);
@@ -123,6 +123,8 @@ export class MicrophoneInput {
       recorder.onerror=()=>{if(generation===this.generation){this.abort();this.onError('Recording failed. Please try again.');}};
       recorder.onstop=()=>this.recognize(new Blob(chunks,{type:recorder.mimeType||'audio/webm'}),generation,kind);
       this.detector=new PauseDetector({pauseMs:kind==='interrupt'?350:900});
+      this.captureStartedMs=performance.now();
+      this.captureMetrics=null;
       recorder.start();this.mode='recording';
       this.monitorRequest=new AbortController();
       this.timer=setTimeout(()=>{
@@ -156,6 +158,8 @@ export class MicrophoneInput {
   }
   finish() {
     if(this.mode!=='recording')return;
+    this.captureMetrics={capture_ms:performance.now()-this.captureStartedMs,
+      endpoint_pause_ms:this.detector.pauseMs,...this.detector.processingMetrics};
     this.mode='transcribing';this.note.textContent='Recognizing your words locally…';
     this.paint();this.recorder.stop();this.release();
   }
@@ -171,7 +175,8 @@ export class MicrophoneInput {
     try {
       this.abortRequest=new AbortController();
       const response=await this.fetchAudio('/transcribe',{
-        method:'POST',headers:{'Content-Type':blob.type,'X-Dume-Voice-Mode':kind},body:blob,
+        method:'POST',headers:{'Content-Type':blob.type,'X-Dume-Voice-Mode':kind,
+          'X-Dume-Capture-Metrics':JSON.stringify(this.captureMetrics||{})},body:blob,
         signal:this.abortRequest.signal,
       });
       const result=await response.json();

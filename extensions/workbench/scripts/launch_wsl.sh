@@ -24,5 +24,14 @@ args=(--port 8876 --sim-port 8875 --mcp-port 8801 --language-backend lmstudio --
 if [[ ${4:-baseline} == camera ]]; then
   args=(--port 8886 --sim-port 8885 --mcp-port 8802 --camera-tools --language-backend lmstudio --model "${1:-prism-ml/bonsai-27b}" --lmstudio-url "http://$host:1234")
 fi
+if [[ -n ${5:-} || -n ${6:-} || -n ${7:-} ]]; then
+  for port in "${5:-}" "${6:-}" "${7:-}"; do
+    if [[ ! $port =~ ^[0-9]+$ ]] || (( port < 1024 || port > 65535 )); then
+      echo 'Pass three explicit ports between 1024 and 65535.'
+      exit 1
+    fi
+  done
+  args[1]=$5; args[3]=$6; args[5]=$7
+fi
 if [[ -n ${2:-} && ${2:-} != none ]]; then args+=(--vision-model "$2" --vision-coordinates grid1000_yx); fi
 exec .venv-linux/bin/dume-sim "${args[@]}"

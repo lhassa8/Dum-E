@@ -26,6 +26,7 @@ const signal=new AbortController(),gate=new PauseDetector();
 const stop=await monitor.monitor({},gate,()=>callbacks++,signal.signal);
 const processing=engine.processFrame('delay');await Promise.resolve();
 engine.processFrame('discard');signal.abort();stop();
+assert.equal(gate.processingMetrics.max_pending_frames,2);
 const nextGate=new PauseDetector();let nextStarted=false;
 const next=monitor.monitor({},nextGate,()=>callbacks++).then(cleanup=>{nextStarted=true;return cleanup;});
 await Promise.resolve();assert.equal(nextStarted,false);

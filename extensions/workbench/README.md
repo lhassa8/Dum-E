@@ -5,6 +5,10 @@ The Mac instructions and measurements below are historical. The PC launcher is
 `powershell.exe -NoProfile -File .\extensions\workbench\scripts\launch_windows.ps1`
 from the repository root; open http://127.0.0.1:8876. Microphone listening starts off.
 
+The latest human test exposed late spoken Stop and a repeated pickup on
+"Proceed." The [state and cancellation repair](docs/voice-state-repair-pc.md)
+records the failures, corrected continuation behavior, and remaining voice gates.
+
 The optional [PC camera interface](docs/live-camera-interface-pc.md) uses
 `-CameraTools` and separate ports at http://127.0.0.1:8886. It has measured typed
 pickup, return, conversation, Stop/resume and tool-change journeys; camera-mode

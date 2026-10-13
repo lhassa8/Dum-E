@@ -19,14 +19,17 @@ class MotionCancelled(Exception):
 
 
 class GuardedRobot(SimRobot):
-    def __init__(self, bench, cancelled, planning=None):
+    def __init__(self, bench, cancelled, planning=None, prepare=None):
         super().__init__(bench, recover_ik=True, refine_cartesian=True)
         self.cancelled = cancelled
         self.planning = planning
+        self.prepare = prepare
 
     def cartesian_path(self, start, point, rotation, ticks, interpolate_rotation=False):
         if self.planning is None:
             return super().cartesian_path(start, point, rotation, ticks, interpolate_rotation)
+        if self.prepare:
+            self.prepare()
         reading = self.read()
         # Independent kinematic data prevents an abandoned worker from racing
         # a subsequent recovery plan. Only robot readings leave the owner.
@@ -54,7 +57,8 @@ class CameraTasks:
     def __init__(self, bench, epoch=lambda: 0, stopping=lambda: False):
         self.bench = bench
         self.epoch, self.stopping = epoch, stopping
-        self.sensor = CameraSensor(bench)
+        self.pending_computation = None
+        self.sensor = CameraSensor(bench, before_capture=self.wait_pending)
         self.racks = {}
         self.delivered = None
         self.active = None
@@ -113,10 +117,28 @@ class CameraTasks:
         return self.compute(lambda: locate_tools(frame))
 
     def compute(self, work):
+        self.wait_pending()
         expected = self.active.expected_epoch if self.active else self.epoch()
         if self.stopping() or self.epoch() != expected:
             raise MotionCancelled()
         future = self.pool.submit(work)
+        self.pending_computation = future
+        self._wait_computation(future, expected)
+        try:
+            return future.result()
+        finally:
+            self.pending_computation = None
+
+    def wait_pending(self):
+        if self.pending_computation is None:
+            return
+        expected = self.active.expected_epoch if self.active else self.epoch()
+        # Discard abandoned values/exceptions. Continue physics before taking
+        # any new camera or robot snapshot; never relabel the old result fresh.
+        self._wait_computation(self.pending_computation, expected)
+        self.pending_computation = None
+
+    def _wait_computation(self, future, expected):
         self.bench.hold_joints()
         while not future.done():
             started = time.monotonic()
@@ -131,7 +153,6 @@ class CameraTasks:
             time.sleep(max(0, 0.032 - (time.monotonic() - started)))
         if self.stopping() or self.epoch() != expected:
             raise MotionCancelled()
-        return future.result()
 
     def _check_perception_hold(self, before):
         actor = self.active.actor
@@ -158,7 +179,9 @@ class CameraPerformance:
         self.hub, self.object = hub, tool
         self.destination = "rack" if returning else "handoff"
         self.expected_epoch = hub.epoch()
-        self.robot = GuardedRobot(hub.bench, self.cancelled, planning=hub.compute)
+        self.robot = GuardedRobot(
+            hub.bench, self.cancelled, planning=hub.compute, prepare=hub.wait_pending
+        )
         self.actor = CameraDelivery(
             self.robot,
             hub.sensor,
@@ -227,15 +250,10 @@ class CameraPerformance:
 
     def resume(self):
         self.expected_epoch = self.hub.epoch()
-        if self.cancelled_generation and self.actor.carrying:
-            self.robot.hold()
-            self.outcome = Outcome(
-                "failed",
-                "Stopped during camera processing. Choose a new destination for a fresh plan.",
-            )
-            return
-        self.actor.resume()
+        self.actor.resume(generation_cancelled=self.cancelled_generation)
         self.outcome = self.actor.outcome
+        if self.outcome is None:
+            self.cancelled_generation = False
 
     def _redirect(self, returning):
         self.expected_epoch = self.hub.epoch()
@@ -251,9 +269,31 @@ class CameraPerformance:
             self.actor.frames.close()
             self.actor.frames = self.actor._redirect()
             self.cancelled_generation = False
+        elif (
+            self.actor.outcome
+            and self.actor.outcome.status == "interrupted"
+            and not self.actor.carrying
+            and not self.robot.read().closing_command
+            and self.robot.read().gap_m >= 0.075
+            and self.actor.paused_phase
+            in {
+                "Releasing",
+                "Withdrawing gripper",
+                "Awaiting independent placement check",
+                "Checking released tool with camera",
+            }
+        ):
+            self.actor.frames.close()
+            self.actor.target = np.asarray(target).copy()
+            self.actor.outcome = None
+            self.actor.frames = self.actor._rescan_recovery(False)
+            self.actor.revision += 1
+            self.cancelled_generation = False
         elif self.actor.outcome and self.actor.outcome.status == "interrupted":
             self.actor.target = np.asarray(target).copy()
-            self.actor.resume()
+            self.actor.resume(generation_cancelled=self.cancelled_generation)
+            if self.actor.outcome is None:
+                self.cancelled_generation = False
         elif not self.actor.carrying and self.robot.read().gap_m >= 0.075:
             # Fresh command after an already completed first leg, not an episode reset.
             self.actor.frames.close()

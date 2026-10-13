@@ -47,6 +47,31 @@ class InteractionCoordinator:
                 working = state["busy"] or any(
                     t["status"] in {"pending", "running"} for t in records
                 )
+                continuation, _ = known_intent(text, state.get("recovery", {}).get("tool"))
+                if continuation and continuation.action == "resume":
+                    # Continuation cannot authorize a fresh pickup, even when a
+                    # clarification or old conversation mentions that pickup.
+                    if not working and state.get("recovery", {}).get("can_resume"):
+                        return {
+                            "accepted": True,
+                            "mode": "task",
+                            "task_id": await self.agent.submit(text, asdict(continuation)),
+                        }
+                    outcome = state.get("last_outcome") or {}
+                    message = (
+                        "I'm already working on the current task."
+                        if working
+                        else outcome.get("message", "The previous task is complete.")
+                        if outcome.get("status") == "success"
+                        else "There isn't a stopped task to resume. Tell me what you'd like next."
+                    )
+                    self.reply(text, message)
+                    result = {
+                        "accepted": True, "mode": "conversation", "task_id": None,
+                        "message": message, "route": "state",
+                    }
+                    self.agent.log_interaction(text, result, (time.monotonic() - started) * 1000)
+                    return result
                 decline = declined_tool(text)
                 completed_fetch = state.get("last_intent") or {}
                 withdraw_delivered = (

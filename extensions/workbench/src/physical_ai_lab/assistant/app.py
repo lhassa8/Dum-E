@@ -191,8 +191,11 @@ class Application:
             if self.tools:
                 from physical_ai_lab.assistant.tool_routing import known_intent
 
+                continuation, _ = known_intent(text, self.last_tool)
                 intent, route = (
-                    (resolved, "resolved") if resolved else known_intent(text, self.last_tool)
+                    (continuation, "context")
+                    if continuation and continuation.action == "resume"
+                    else (resolved, "resolved") if resolved else known_intent(text, self.last_tool)
                 )
                 if intent and intent.action == "resume":
                     if self.interrupted and self.interrupted["intent"] is None:

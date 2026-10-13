@@ -59,8 +59,9 @@ def camera_scene_xml(case, alternate_view=False):
 class CameraSensor:
     """Rendered sensor port; only pixels, calibration and capture time leave it."""
 
-    def __init__(self, bench, width=640, height=480):
+    def __init__(self, bench, width=640, height=480, before_capture=None):
         self.bench = bench
+        self.before_capture = before_capture
         self.renderer = mujoco.Renderer(self.bench.model, height=height, width=width)
         self.width, self.height = width, height
         self.camera_id = self.bench.model.camera("workbench_camera").id
@@ -94,10 +95,14 @@ class CameraSensor:
         return RGBDFrame(rgb, depth, calibration)
 
     def capture_alternate_timed(self):
+        if self.before_capture:
+            self.before_capture()
         captured_s = float(self.bench.data.time)
         return CameraSample(self.capture_view("workbench_camera_side"), captured_s)
 
     def capture_timed(self):
+        if self.before_capture:
+            self.before_capture()
         captured_s = float(self.bench.data.time)
         return CameraSample(self.capture(), captured_s)
 

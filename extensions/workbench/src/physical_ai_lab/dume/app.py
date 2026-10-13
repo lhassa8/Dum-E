@@ -231,6 +231,7 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
 
     @api.post("/transcribe")
     async def transcribe(request: Request):
+        received_at = time.time()
         snapshot = await state()
         voice_mode = request.headers.get("x-dume-voice-mode", "request")
         if voice_mode not in {"request", "interrupt"}:
@@ -258,6 +259,20 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
         # Only recognized text/metrics are logged. Audio bytes are never saved.
         result["voice_mode"] = voice_mode
         result["likely_echo"] = speech.is_echo(result["text"])
+        result["received_at_s"] = received_at
+        result["completed_at_s"] = time.time()
+        # Client timings are diagnostic measurements, never control authority.
+        try:
+            metrics = json.loads(request.headers.get("x-dume-capture-metrics", "{}")[:1024])
+            result["capture_metrics"] = {
+                key: value for key, value in metrics.items()
+                if key in {
+                    "capture_ms", "endpoint_pause_ms", "max_pending_frames", "max_inference_ms"
+                }
+                and isinstance(value, (int, float)) and 0 <= value <= 60000
+            }
+        except (ValueError, TypeError, AttributeError):
+            result["capture_metrics"] = {}
         with (agent.log_path.parent / "transcripts.jsonl").open("a") as file:
             file.write(json.dumps(result) + "\n")
         # Transcription alone cannot move the arm. The browser submits through /chat.

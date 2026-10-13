@@ -14,6 +14,7 @@ class ToolDelivery(PickPlace):
         targets = {**HANDOFF, "rack": TOOLS[tool]}
         super().__init__(bench, tool, "rack" if returning else "handoff", targets)
         self.carrying = False
+        self.finishing_release = False
 
     def pause(self):
         # Retain the generator, grip and waypoint progress; Stop never opens fingers.
@@ -23,9 +24,18 @@ class ToolDelivery(PickPlace):
     def resume(self):
         # The arm settles during speech/ASR. Old interpolation frames can jerk from
         # a stale joint target, so rebuild the remaining path from measured state.
-        self._replan()
+        if self.phase in {"Releasing", "Withdrawing gripper", "Checking placement"}:
+            # Finish withdrawal and the original placement judge. A released
+            # tool must not be picked up again just because completion was paused.
+            self.finishing_release = True
+            self.cancelled = False
+            self.outcome = None
+            self.frames = self._run()
+        else:
+            self._replan()
 
     def _replan(self):
+        self.finishing_release = False
         xyz = self.bench.observe()[self.object]
         tcp = self.bench.data.site_xpos[self.bench.tcp]
         self.carrying = self.bench.data.ctrl[7] < 128 and np.linalg.norm(xyz - tcp) < 0.065
@@ -40,6 +50,12 @@ class ToolDelivery(PickPlace):
         return self
 
     def plan(self):
+        if self.finishing_release:
+            target = np.array([*self.targets[self.destination], 0.026])
+            yield Step("Releasing", 255, ticks=28)
+            yield Step("Withdrawing gripper", 255, target + [0, 0, 0.20])
+            yield Step("Checking placement", 255, ticks=30)
+            return
         if self.carrying:
             yield from self._carry_plan()
             return

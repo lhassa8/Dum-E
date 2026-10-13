@@ -315,6 +315,7 @@ class CameraDelivery:
                     in {
                         "Moving to target",
                         "Placing tool",
+                        "Reobserving workspace with held tool",
                     }
                 )
                 if (
@@ -514,9 +515,21 @@ class CameraDelivery:
             self.grip_recovery_attempts += 1
             self.robot.hold()
             yield from self._wait(100, 0, "Holding after unstable grip")
+            yield from self._finish_grip_recovery()
+        except (ValueError, FloatingPointError) as error:
+            self.robot.hold()
+            self.outcome = Outcome("failed", str(error))
+
+    def _finish_grip_recovery(self):
+        """Continue the existing owned attempt; fresh table evidence precedes opening."""
+        try:
+            if not (self.recover_grip and self.grip_recovery_attempts == 1 and self.carrying):
+                raise ValueError("Lost-tool observation has no owned recovery attempt")
             reading = self.robot.read()
             if not (
-                np.isfinite(reading.gap_m) and reading.closing_command and reading.gap_m < 0.015
+                np.isfinite(reading.gap_m)
+                and reading.closing_command
+                and 0 <= reading.gap_m < 0.015
             ):
                 raise ValueError("Possible held handle remains; automatic opening refused")
             self.phase = "Observing supported tool after grip loss"
@@ -657,6 +670,10 @@ class CameraDelivery:
         # Release is intentional. A rigid-grasp estimate cannot prove placement.
         self.carrying = False
         yield from self._wait(28, 255, "Releasing")
+        yield from self._finish_open_release()
+
+    def _finish_open_release(self):
+        """Withdraw and freshly verify an intentionally released tool."""
         yield from self._motion(np.array([*self.target, 0.24]), "Withdrawing gripper", 255)
         yield from self._wait(30, 255, "Awaiting independent placement check")
         if self.verify_release:
@@ -701,9 +718,9 @@ class CameraDelivery:
         self.robot.hold()
         self.outcome = Outcome("interrupted", "Stopped; retaining the gripper command.")
 
-    def resume(self):
+    def resume(self, generation_cancelled=False):
         if self.phase_recovery:
-            self._resume_phase()
+            self._resume_phase(generation_cancelled)
             return
         if not self.carrying or not self._grip_present():
             self.outcome = Outcome(
@@ -713,7 +730,7 @@ class CameraDelivery:
         self.revision += 1
         self.outcome = None
 
-    def _resume_phase(self):
+    def _resume_phase(self, generation_cancelled=False):
         """Bounded recovery using robot readings; object placement stays unverified."""
         try:
             if self.outcome is None or self.outcome.status != "interrupted":
@@ -722,9 +739,14 @@ class CameraDelivery:
             if phase is None:
                 raise ValueError("No active interrupted phase is available")
             reading = self.robot.read()
+            if not np.isfinite(reading.gap_m) or not np.isfinite(reading.tcp_m).all():
+                raise ValueError("Interrupted robot reading is invalid")
             open_hand = not reading.closing_command and reading.gap_m >= 0.075
             route = "continue held motion"
-            if (
+            if generation_cancelled and phase == "Observing supported tool after grip loss":
+                self._check_empty_loss_hold(reading)
+                route = "reobserve existing lost-tool attempt"
+            elif (
                 self.recover_grip
                 and self.grip_recovery_attempts == 1
                 and phase
@@ -757,6 +779,28 @@ class CameraDelivery:
             elif self.carrying:
                 if not self._grip_present():
                     raise ValueError("Resume needs a supported held handle; rescan required.")
+                if generation_cancelled:
+                    if phase not in {
+                        "Lifting tool",
+                        "Lifting for return",
+                        "Checking clear space for release",
+                        "Moving to target",
+                        "Choosing release action",
+                        "Placing tool",
+                        "Reobserving workspace with held tool",
+                    }:
+                        raise ValueError("Cancelled held phase has no supported fresh plan")
+                    if (
+                        np.shape(self.offset_local) != (3,)
+                        or np.shape(self.body_rotation_local) != (3, 3)
+                        or not np.isfinite(self.offset_local).all()
+                        or not np.isfinite(self.body_rotation_local).all()
+                        or self.grasp_reading is None
+                        or np.shape(self.grasp_reading.tcp_m) != (3,)
+                        or not np.isfinite(self.grasp_reading.tcp_m).all()
+                    ):
+                        raise ValueError("Cancelled carry has no supported grasp transform")
+                    route = "fresh held continuation"
             elif phase in {
                 "Observing tool",
                 "Surveying workbench with an empty hand",
@@ -775,20 +819,102 @@ class CameraDelivery:
                 "Releasing",
                 "Withdrawing gripper",
                 "Awaiting independent placement check",
-            }:
+            } or (generation_cancelled and phase == "Checking released tool with camera"):
                 if phase != "Releasing" and not open_hand:
                     raise ValueError("Release continuation requires a confirmed open hand")
                 route = "continue intentional release"
             else:
                 raise ValueError("Interrupted phase has no supported recovery route")
-            if "rescan" in route:
+            if generation_cancelled:
+                self.frames.close()
+                if route == "fresh held continuation":
+                    self.frames = self._continue_cancelled_held()
+                elif route == "reobserve existing lost-tool attempt":
+                    self.frames = self._finish_grip_recovery()
+                elif route == "continue bounded grip recovery":
+                    self.frames = self._continue_cancelled_grip_recovery(phase)
+                elif route == "continue intentional release":
+                    self.frames = self._continue_cancelled_release(phase)
+                else:
+                    self.frames = self._rescan_recovery(phase == "Grasping")
+            elif "rescan" in route:
                 self.frames.close()
                 self.frames = self._rescan_recovery(phase == "Grasping")
-            self.evidence.append({"kind": "phase_recovery", "phase": phase, "route": route})
+            self.evidence.append(
+                {
+                    "kind": "phase_recovery",
+                    "phase": phase,
+                    "route": route,
+                    "generation_cancelled": generation_cancelled,
+                }
+            )
             self.revision += 1
             self.outcome = None
             self.paused_phase = None
         except ValueError as error:
+            self.robot.hold()
+            self.outcome = Outcome("failed", str(error))
+
+    def _continue_cancelled_held(self):
+        try:
+            reading = self.robot.read()
+            self.orientation = reading.rotation.copy()
+            self.reoriented_carry = False
+            self.planned_neighbors = None
+            point = reading.tcp_m.copy()
+            point[2] = max(point[2], 0.24)
+            yield from self._motion(point, "Lifting tool", 0)
+            try:
+                yield from self._carry()
+                return
+            except ValueError as error:
+                if self.phase != "Checking clear space for release" or not str(error).startswith(
+                    "No recent observed state for neighboring "
+                ):
+                    raise
+                self._check_carry_grip(self.robot.read())
+            # A past robot waypoint is not a claim about a tool's current pose.
+            # One new observation waypoint is permitted only after missing
+            # recent neighbor evidence, before any new transport/release.
+            survey = self.grasp_reading.tcp_m.copy()
+            survey[2] = point[2]
+            yield from self._motion(survey, "Reobserving workspace with held tool", 0)
+            self.evidence.append(
+                {
+                    "kind": "cancelled_carry_observation_waypoint",
+                    "robot_point_m": survey.tolist(),
+                    "provenance": "Previously measured robot grasp waypoint; no object-state input",
+                }
+            )
+            yield from self._carry()
+        except UnstableGrip:
+            yield from self._recover_lost_grip()
+        except (ValueError, FloatingPointError) as error:
+            self.robot.hold()
+            self.outcome = Outcome("failed", str(error))
+
+    def _continue_cancelled_grip_recovery(self, phase):
+        try:
+            if phase == "Holding after unstable grip":
+                yield from self._wait(100, 0, phase)
+                yield from self._finish_grip_recovery()
+            else:
+                if phase == "Opening confirmed empty hand":
+                    yield from self._wait(28, 255, phase)
+                yield from self._rescan_recovery(False)
+        except (ValueError, FloatingPointError) as error:
+            self.robot.hold()
+            self.outcome = Outcome("failed", str(error))
+
+    def _continue_cancelled_release(self, phase):
+        try:
+            if phase == "Releasing":
+                yield from self._wait(28, 255, phase)
+            if not self.robot.read().closing_command and self.robot.read().gap_m >= 0.075:
+                yield from self._finish_open_release()
+            else:
+                raise ValueError("Cancelled release did not confirm an open hand")
+        except (ValueError, FloatingPointError) as error:
             self.robot.hold()
             self.outcome = Outcome("failed", str(error))
 

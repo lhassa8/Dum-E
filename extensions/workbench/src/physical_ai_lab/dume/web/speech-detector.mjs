@@ -23,9 +23,19 @@ export function createSpeechMonitor({getVAD=()=>globalThis.vad,
       // Serialize recurrent inference and reject frames from a cancelled capture.
       value.processFrame=frame=>{
         const capture=active;
+        if(capture){
+          capture.queued++;
+          capture.detector.processingMetrics.max_pending_frames=Math.max(
+            capture.detector.processingMetrics.max_pending_frames,capture.queued);
+        }
         framesDone=framesDone.then(async()=>{
-          if(!capture||active!==capture||capture.signal?.aborted)return;
-          await value.frameProcessor.process(frame,value.handleFrameProcessorEvent);
+          try {
+            if(!capture||active!==capture||capture.signal?.aborted)return;
+            const started=performance.now();
+            await value.frameProcessor.process(frame,value.handleFrameProcessorEvent);
+            capture.detector.processingMetrics.max_inference_ms=Math.max(
+              capture.detector.processingMetrics.max_inference_ms,performance.now()-started);
+          } finally {if(capture)capture.queued--;}
         }).catch(error=>{if(active===capture)capture.onFailure(error);});
         return framesDone;
       };
@@ -39,7 +49,8 @@ export function createSpeechMonitor({getVAD=()=>globalThis.vad,
     if(active)throw Error('A speech capture is already active');
     if(!Audio)throw Error('Audio capture is unavailable in this browser');
     if(loaded.initializationState==='uninitialized')loaded.options.audioContext=new Audio();
-    const capture={stream,detector,onPause,signal,onFailure,frames:0};active=capture;
+    detector.processingMetrics={max_pending_frames:0,max_inference_ms:0};
+    const capture={stream,detector,onPause,signal,onFailure,frames:0,queued:0};active=capture;
     let stopped=false;
     const stop=()=>{
       if(stopped)return;stopped=true;

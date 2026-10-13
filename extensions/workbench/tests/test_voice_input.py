@@ -174,6 +174,17 @@ def test_transcription_never_submits_task(tmp_path):
             )
             assert response.status_code == 200
             assert response.json()["text"] == "Bring me the screwdriver."
+            assert response.json()["completed_at_s"] >= response.json()["received_at_s"]
+            measured = await client.post(
+                "/transcribe", content=b"voice", headers={
+                    "content-type": "audio/webm",
+                    "x-dume-capture-metrics":
+                        '{"capture_ms":7440,"max_pending_frames":8,"unknown":123}',
+                },
+            )
+            assert measured.json()["capture_metrics"] == {
+                "capture_ms": 7440, "max_pending_frames": 8,
+            }
             assert await agent.task_records() == []
             invalid = await client.post(
                 "/transcribe", content=b"invalid", headers={"content-type": "audio/webm"}

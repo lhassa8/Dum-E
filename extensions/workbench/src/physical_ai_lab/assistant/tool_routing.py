@@ -113,6 +113,10 @@ def known_intent(text, recent_tool=None):
         "resume the task",
         "continue the task",
         "keep going",
+        "proceed",
+        "proceed please",
+        "please proceed",
+        "go ahead",
     }:
         return ToolIntent("resume", None, None, ""), "context"
     if words in {
