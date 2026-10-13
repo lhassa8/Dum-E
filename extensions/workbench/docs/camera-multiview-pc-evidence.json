@@ -1,0 +1,261 @@
+{
+  "date": "2026-10-12",
+  "baseline": "03981be",
+  "scope": "Known-primitive RGB-D, offline simulated camera actor; no public camera motion or human speech measurement",
+  "promoted": false,
+  "physics_profile": "tool_contacts_v2",
+  "candidate": "One opt-in alternate target view after primary observation refusal; gates unchanged",
+  "freeze": {
+    "source_sha256": {
+      "src/physical_ai_lab/assistant/camera_control.py": "97fe5cb700277d46253fc053592ce1ba3bd6eca848310ef5fa3ec0faa496862c",
+      "src/physical_ai_lab/assistant/camera_robot.py": "8462f419bfe85eaea36d31563d55cd5756e6f6639fd18eb2b1dcfc864a3d7814",
+      "src/physical_ai_lab/assistant/perception.py": "c0ad627b244ae032b2c6abf98c87bc19ae5d0a657746d8b18e839ca689718408",
+      "src/physical_ai_lab/assistant/perception_scene.py": "f9488fd8fbdd4cfec82018372177d42c011753171e60e4fd7d9fc6d01ce4d23c",
+      "src/physical_ai_lab/assistant/handoff_planning.py": "9ae8462ab5426ef9d54c463ff8940ff413b11b7645cf14e3d233a6e9337ff64c",
+      "src/physical_ai_lab/assistant/tool_scene.py": "8203ae26f9af020fa0037fb93ea96540256feddcdd538794040a6ccf10d3dad3",
+      "src/physical_ai_lab/assistant/tool_geometry.py": "ebb9b514c2ae1112f4603699aa4cadd3be05fd4bdf36477cc3941dfcbf4766b7",
+      "src/physical_ai_lab/assistant/scene.py": "80fcafad82ea4376ad298e078c63e8df889bc0c15ffabacaf3bfa799f5a0185f",
+      "scripts/verify_camera_delivery.py": "5e876503d17f19b047f18cd21868c3b366f24d92d7b2d3824a3029664d246754",
+      "scripts/generate_camera_reserved.py": "858ca73d87000f1b8dc7df57e5a0836d48e1994a3656d5441b558175b31f72d8",
+      "fixtures/camera_multiview_protocol.json": "12e5e030cc1a32d3a0a36bfacf76759438206c83fc74f10348e55def6e8a5e96",
+      "upstream-source.json": "b91de65566fb2da48264d5a19cea1e513748a0208700d7ea4f9b31722864fd32",
+      "uv.lock": "84abb32165bf8f819e3b3f5993aa85c40d035f925d571312912ddc99e2e902c0"
+    },
+    "runtime": {
+      "python": "3.12.3",
+      "numpy": "2.5.4",
+      "mujoco": "3.15.0"
+    },
+    "hash_encoding": "LF text; upstream binaries separately verified"
+  },
+  "protocol": {
+    "version": 1,
+    "scope": "Prospective known-primitive RGB-D simulated camera journeys; not live speech or hardware",
+    "seed": 2026101301,
+    "case_count": 54,
+    "tools": [
+      "screwdriver",
+      "wrench",
+      "hammer"
+    ],
+    "journeys": [
+      "deliver",
+      "resume",
+      "redirect"
+    ],
+    "x_range_m": [
+      0.405,
+      0.475
+    ],
+    "y_lanes_m": [
+      -0.22,
+      0,
+      0.22
+    ],
+    "y_jitter_range_m": [
+      -0.02,
+      0.02
+    ],
+    "yaw_range_rad": [
+      -3.141592653589793,
+      3.141592653589793
+    ],
+    "light_range": [
+      0.8,
+      1.2
+    ],
+    "distribution_provenance": "Rounded bounds/three lane structure from existing training cohort only; no reserved-case coordinates used",
+    "criterion_fixture": "release_model_cases.json",
+    "criterion_fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+    "profile": {
+      "recover_ik": true,
+      "verify_motion": true,
+      "release_fallback": true,
+      "linear_lifts": true,
+      "center_grasp": true,
+      "safe_handoff": true,
+      "alternate_view": true,
+      "return_after_delivery": true
+    },
+    "evaluation_rules": "Freeze actor, perception, optics, physics and judge before generating cases; all cases counted; no post-result tuning or sample replacement",
+    "hold_scope": "Existing 0.608 simulation-second short hold criterion; separate 32-second six-case hold qualification remains required"
+  },
+  "baseline_validation": {
+    "fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+    "split": "validation",
+    "cases": 18,
+    "physical_successes": 18,
+    "all_criteria_successes": 18,
+    "fresh_camera_return_count": 12,
+    "passed": true,
+    "carry_model_sha256": null,
+    "carry_policy": "rigid",
+    "release_model_sha256": null,
+    "release_kind": null,
+    "recover_ik": true,
+    "verify_motion": true,
+    "release_fallback": true,
+    "linear_lifts": true,
+    "center_grasp": true,
+    "safe_handoff": true,
+    "disturbance_judge": "Maximum across motion/hold frames, not just final position"
+  },
+  "candidate_validation": {
+    "fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+    "split": "validation",
+    "cases": 18,
+    "physical_successes": 18,
+    "all_criteria_successes": 18,
+    "fresh_camera_return_count": 12,
+    "passed": true,
+    "carry_model_sha256": null,
+    "carry_policy": "rigid",
+    "release_model_sha256": null,
+    "release_kind": null,
+    "recover_ik": true,
+    "verify_motion": true,
+    "release_fallback": true,
+    "linear_lifts": true,
+    "center_grasp": true,
+    "safe_handoff": true,
+    "alternate_view": true,
+    "disturbance_judge": "Maximum across motion/hold frames, not just final position",
+    "release_judge": "Actor finished release/withdrawal and independently measured open gripper; resting placement still required"
+  },
+  "baseline_long_hold": {
+    "scope": "Offline simulated long-held camera motion; not wall-clock or live speech Stop",
+    "hold_profile": "shared",
+    "protocol_sha256": "3f4512cf94bb85b7d7226d1cbe8d3ab602680890a7fc8acdf7e6d30b09a3084f",
+    "cases": 6,
+    "passes": 6,
+    "passed": true
+  },
+  "prospective": {
+    "fixture_sha256": "76b98a4134055633edf0c0d02dff157af790cd8f193a61492f64897aed603b6e",
+    "split": "heldout",
+    "cases": 54,
+    "physical_successes": 53,
+    "all_criteria_successes": 51,
+    "fresh_camera_return_count": 36,
+    "passed": false,
+    "carry_model_sha256": null,
+    "carry_policy": "rigid",
+    "release_model_sha256": null,
+    "release_kind": null,
+    "recover_ik": true,
+    "verify_motion": true,
+    "release_fallback": true,
+    "linear_lifts": true,
+    "center_grasp": true,
+    "safe_handoff": true,
+    "alternate_view": true,
+    "return_after_delivery": true,
+    "accepted_alternate_views": 0,
+    "disturbance_judge": "Maximum across motion/hold frames, not just final position",
+    "release_judge": "Actor finished release/withdrawal and independently measured open gripper; resting placement still required"
+  },
+  "audit": {
+    "sample_size": 54,
+    "full_journey_passes": 51,
+    "fraction": 0.9444444444444444,
+    "observed_gate": 0.95,
+    "qualified": false,
+    "wilson_95_interval": [
+      0.8489278568183386,
+      0.9809267315453091
+    ],
+    "all_stored_verdicts_reconstructed": true,
+    "source_results_sha256": "1025967975750ed41bcb5d7fdba3b9de4f5927c703059cbb1355d9e036a526b9",
+    "criteria": {
+      "lift_m": 0.08,
+      "position_error_m": 0.035,
+      "resting_height_m": 0.04,
+      "speed_m_s": 0.03,
+      "untouched_disturbance_m": 0.004,
+      "hold_joint_drift_rad": 0.03,
+      "expected_success_fraction": 0.95,
+      "validation_position_p95_m": 0.01,
+      "inference_p95_ms": 10,
+      "guard_max_normalized_feature": 8,
+      "guard_max_ensemble_xy_std_m": 0.008
+    }
+  },
+  "failures": [
+    {
+      "id": "pc-reserved-000",
+      "tool": "screwdriver",
+      "journey": "deliver",
+      "passed": false,
+      "first_leg_passed": true,
+      "return_passed": false,
+      "holding_passed": true,
+      "actor_status": "released_unverified",
+      "actor_message": "Released the tool; placement needs checking.",
+      "distance_m": 0.015909227948085764,
+      "height_m": 0.021656911640334387,
+      "speed_m_s": 1.2667657796815213e-11,
+      "max_lift_m": 0.2046340968698206,
+      "disturbance_m": 2.6021848907335192e-09,
+      "return_outcome": {
+        "status": "failed",
+        "message": "Neighboring wrench is ambiguous; no placement planned",
+        "distance_m": null
+      }
+    },
+    {
+      "id": "pc-reserved-027",
+      "tool": "screwdriver",
+      "journey": "deliver",
+      "passed": false,
+      "first_leg_passed": true,
+      "return_passed": false,
+      "holding_passed": true,
+      "actor_status": "released_unverified",
+      "actor_message": "Released the tool; placement needs checking.",
+      "distance_m": 0.008531550133060072,
+      "height_m": 0.021656911640366112,
+      "speed_m_s": 1.244190089412217e-12,
+      "max_lift_m": 0.21121186705931141,
+      "disturbance_m": 2.602746996628298e-09,
+      "return_outcome": {
+        "status": "failed",
+        "message": "Neighboring wrench is ambiguous; no placement planned",
+        "distance_m": null
+      }
+    },
+    {
+      "id": "pc-reserved-052",
+      "tool": "wrench",
+      "journey": "redirect",
+      "passed": false,
+      "first_leg_passed": false,
+      "return_passed": true,
+      "holding_passed": true,
+      "actor_status": "failed",
+      "actor_message": "Gripper no longer indicates a held handle; holding position",
+      "distance_m": 0.03142756336283113,
+      "height_m": 0.255779148927542,
+      "speed_m_s": 0.9784681890444389,
+      "max_lift_m": 0.2821114329959466,
+      "disturbance_m": 2.6019073947917737e-09,
+      "return_outcome": null
+    }
+  ],
+  "regressions": {
+    "extension_tests": 254,
+    "new_optical_tests": 3,
+    "protected_upstream_hashes": 46
+  },
+  "limitations": [
+    "51/54 full journeys fails unchanged 95% observed gate; no promotion",
+    "No selected alternate target view occurred in prospective cohort, so no coverage benefit established",
+    "Two returns refused ambiguous neighboring wrench; one wrench redirect lost grip indication",
+    "Old 24 reserved cases and new 54 cases are now evaluated evidence, not unseen future tests",
+    "Short 0.608 simulation-second pauses and separate 32-simulation-second six-case holds are distinct",
+    "Approach/grasp/withdrawal recovery and task-layer camera integration remain incomplete",
+    "Simulated known geometry/colors, inferred held pose and 32ms center sampling do not prove general recognition, tool-tip/rotation safety or hardware readiness",
+    "Human microphone check requested, no response yet; recording never activated by agent"
+  ],
+  "next_hypothesis": "A complete scene observation is needed for placement: retry neighbor ambiguity with one fresh calibrated view, require original freshness/fit/clearance gates, freeze and use a new prospective cohort; retain grip-loss failure without changing physics or lowering grip gate",
+  "local_raw": "runs/pc-camera-reserved-001; runs/pc-camera-validation-*; runs/pc-camera-hold-001"
+}

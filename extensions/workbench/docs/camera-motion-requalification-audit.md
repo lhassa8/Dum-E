@@ -1,5 +1,12 @@
 # Camera motion requalification — October 12, 2026
 
+**Historical audit before PC migration.** Its 22/24 result remains rejected and
+those layouts remain evaluated evidence. Current local Windows/WSL execution,
+actual pretrained policy and the subsequent prospective camera cohort are in
+[windows-migration.md](windows-migration.md), [libero-live-pc.md](libero-live-pc.md)
+and [camera-multiview-pc.md](camera-multiview-pc.md). Runtime-access statements
+below describe that earlier stage.
+
 The experimental camera adapter now reuses the working assistant's verified
 gravity-compensated hold. All six long-hold/continuation cases pass, and the
 existing optional camera profile passes all 18 validation journeys under the

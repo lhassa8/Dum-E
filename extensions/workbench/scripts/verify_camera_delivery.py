@@ -30,6 +30,7 @@ parser.add_argument("--release-fallback", action="store_true")
 parser.add_argument("--linear-lifts", action="store_true")
 parser.add_argument("--center-grasp", action="store_true")
 parser.add_argument("--safe-handoff", action="store_true")
+parser.add_argument("--alternate-view", action="store_true")
 parser.add_argument(
     "--release-kind", choices=["ensemble", "linear", "constant"], default="ensemble"
 )
@@ -44,7 +45,7 @@ release_model = (
 for case in fixture["cases"]:
     if case["split"] != args.split:
         continue
-    b = ToolWorkbench(case["seed"], xml=camera_scene_xml(case))
+    b = ToolWorkbench(case["seed"], xml=camera_scene_xml(case, alternate_view=args.alternate_view))
     b.model.vis.headlight.diffuse[:] *= case.get("light", 1)
     sensor = CameraSensor(b)
     start_truth = b.observe()
@@ -63,6 +64,7 @@ for case in fixture["cases"]:
         linear_lifts=args.linear_lifts,
         center_grasp=args.center_grasp,
         safe_handoff=args.safe_handoff,
+        alternate_view=args.alternate_view,
     )
     images = args.output / case["id"]
     images.mkdir()
@@ -118,13 +120,21 @@ for case in fixture["cases"]:
         distance = float(np.linalg.norm(final[:2] - target))
         lifted = max_height - initial[2] >= 0.08
         placed = distance < 0.035 and final[2] < 0.04 and speed < 0.03
+        gripper_open = bool(b.data.qpos[7:9].sum() > 0.07)
+        released = controller.outcome.status == "released_unverified" and gripper_open
         disturbance = max(
             float(np.linalg.norm(b.observe()[n] - xyz))
             for n, xyz in start_truth.items()
             if n != case["tool"]
         )
         return_result = None
-        if args.return_after_delivery and case["journey"] != "redirect" and lifted and placed:
+        if (
+            args.return_after_delivery
+            and case["journey"] != "redirect"
+            and lifted
+            and placed
+            and released
+        ):
             returned = CameraDelivery(
                 SimRobot(b, recover_ik=args.recover_ik),
                 sensor,
@@ -138,6 +148,7 @@ for case in fixture["cases"]:
                 linear_lifts=args.linear_lifts,
                 center_grasp=args.center_grasp,
                 safe_handoff=args.safe_handoff,
+                alternate_view=args.alternate_view,
             )
             return_initial = b.observe()[case["tool"]].copy()
             return_max = float(return_initial[2])
@@ -156,6 +167,7 @@ for case in fixture["cases"]:
                 "observations": returned.evidence,
                 "ik_events": returned.robot.ik_events,
                 "lifted": bool(return_max - return_initial[2] >= 0.08),
+                "gripper_open": bool(b.data.qpos[7:9].sum() > 0.07),
                 "placed": bool(
                     return_distance < 0.035 and actual_return[2] < 0.04 and return_speed < 0.03
                 ),
@@ -178,9 +190,18 @@ for case in fixture["cases"]:
         passed = bool(
             lifted
             and placed
+            and released
             and disturbance < 0.004
             and (hold is None or (hold["grip_retained"] and hold["joint_drift_rad"] < 0.03))
-            and (return_result is None or (return_result["lifted"] and return_result["placed"]))
+            and (
+                return_result is None
+                or (
+                    return_result["lifted"]
+                    and return_result["placed"]
+                    and return_result["gripper_open"]
+                    and return_result["actor_outcome"]["status"] == "released_unverified"
+                )
+            )
         )
         row = {
             "case": case,
@@ -188,6 +209,8 @@ for case in fixture["cases"]:
             "physics": {
                 "lifted": bool(lifted),
                 "placed": bool(placed),
+                "gripper_open": gripper_open,
+                "actor_released": bool(released),
                 "distance_m": distance,
                 "max_lift_m": float(max_height - initial[2]),
                 "final_height_m": float(final[2]),
@@ -245,7 +268,19 @@ summary = {
     "linear_lifts": args.linear_lifts,
     "center_grasp": args.center_grasp,
     "safe_handoff": args.safe_handoff,
+    "alternate_view": args.alternate_view,
+    "return_after_delivery": args.return_after_delivery,
+    "accepted_alternate_views": sum(
+        e.get("view") == "alternate" and e.get("accepted", False)
+        for row in rows
+        for e in row["observations"]
+        + ([] if row["return"] is None else row["return"]["observations"])
+    ),
     "disturbance_judge": "Maximum across motion/hold frames, not just final position",
+    "release_judge": (
+        "Actor finished release/withdrawal and independently measured open gripper; "
+        "resting placement still required"
+    ),
 }
 (args.output / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 print(json.dumps(summary), flush=True)

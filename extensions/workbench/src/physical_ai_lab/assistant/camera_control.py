@@ -130,6 +130,7 @@ class CameraDelivery:
         linear_lifts=False,
         center_grasp=False,
         safe_handoff=False,
+        alternate_view=False,
     ):
         self.robot, self.camera, self.object = robot, camera, tool
         self.target = np.asarray(destination_xy, dtype=float).copy()
@@ -159,29 +160,50 @@ class CameraDelivery:
         self.linear_lifts = linear_lifts
         self.center_grasp = center_grasp
         self.safe_handoff = safe_handoff
+        self.alternate_view = alternate_view
         self.reoriented_carry = False
         self.planned_neighbors = None
         self.scene_history = {}
         self.frames = self._run()
 
     def _observe(self):
+        began = perf_counter()
+        try:
+            try:
+                return self._observe_view(self.camera.capture_timed, "primary")
+            except ValueError as primary_error:
+                capture = getattr(self.camera, "capture_alternate_timed", None)
+                if not self.alternate_view or capture is None:
+                    raise
+                self.evidence.append(
+                    {
+                        "kind": "bounded_view_retry",
+                        "phase": self.phase,
+                        "primary_refusal": str(primary_error),
+                    }
+                )
+                try:
+                    return self._observe_view(capture, "alternate")
+                except KeyError as error:
+                    raise ValueError(
+                        "Alternate calibrated view is unavailable; no motion planned"
+                    ) from error
+        finally:
+            if self.evidence:
+                self.evidence[-1]["observation_total_ms"] = (perf_counter() - began) * 1000
+
+    def _observe_view(self, capture, view):
         start = perf_counter()
-        sample = self.camera.capture_timed()
+        sample = capture()
         captured_s = sample.captured_s
         predictions = locate_tools(sample.frame)
         now_s = self.robot.read().time_s
-        for name, observed in predictions.items():
-            try:
-                cached = validate_observation(name, observed, captured_s, now_s)
-            except ValueError:
-                continue
-            self.scene_history[name] = cached
         prediction = predictions[self.object]
-        if self.initial_scene_estimates is None:
-            self.initial_scene_estimates = predictions
         self.evidence.append(
             {
                 "kind": "camera",
+                "view": view,
+                "accepted": False,
                 "phase": self.phase,
                 "captured_s": captured_s,
                 "latency_ms": (perf_counter() - start) * 1000,
@@ -191,6 +213,15 @@ class CameraDelivery:
         observation = validate_observation(
             self.object, prediction, captured_s, self.robot.read().time_s
         )
+        self.evidence[-1]["accepted"] = True
+        for name, observed in predictions.items():
+            try:
+                cached = validate_observation(name, observed, captured_s, now_s)
+            except ValueError:
+                continue
+            self.scene_history[name] = cached
+        if self.initial_scene_estimates is None:
+            self.initial_scene_estimates = predictions
         self.observation = observation
         return observation
 

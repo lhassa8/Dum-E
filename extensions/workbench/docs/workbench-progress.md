@@ -1410,3 +1410,34 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   camera/adaptation work (previous22/24 still rejected), and user-controlled live
   microphone verification. Goal remains active. Details: libero-live-pc.md and
   libero-live-pc-evidence.json.
+
+## B19 — prospective PC camera cohort rejects target-only coverage (2026-10-12)
+
+- Baseline03981be, local WSL Python3.12.3/MuJoCo3.15.0/NumPy2.5.4. Canonical
+  frozen fixture hash verified after restoring only proven CRLF conversion.
+  Existing camera profile18/18 validation and6/6 long-held continuations reproduce
+  on PC; hammer held-height margin remains only .089mm above130mm.
+- Bounded hypothesis: one calibrated side-view retry after target observation
+  refusal, opt-in only. Same .8 fit/freshness/volume gate; no nominal pose fallback,
+  controller/physics/force/model change. Real rendered recovery with tool truth
+  denied passes; two invalid views or absent calibration refuse without physics
+  advance. Existing gravity hold remains active on failure.
+- Complete-journey judge now also requires finished release/withdrawal and
+  measured open fingers. Placement35mm/lift80mm/rest/disturbance gates unchanged.
+  Candidate18/18 validation. Sources/judge/runtime/recipe frozen before sampling.
+- Prospective training-distribution recipe seed2026101301 generated54 cases,
+  six per tool/journey pair, no filtering/resampling. FixtureSHA76b98a4134055633
+  edf0c0d02dff157af790cd8f193a61492f64897aed603b6e. Full51/54 (94.44%) **FAIL**
+  against unchanged95% gate; first-leg physical53/54 is not substituted. All54
+  verdicts independently reconstructed; Wilson95% interval84.89–98.09%.
+- Alternate target views selected0: no coverage gain established. Two screwdriver
+  returns stop at ambiguous neighboring wrench (000/027); wrench redirect052
+  loses grip indication,255.78mm high/.978m/s despite31.43mm XY error. Failures
+  retained. New54 and old24 are now evaluated evidence, not future unseen tests.
+- Full254 tests pass;46/46 protected source hashes; changed-file lint/format pass.
+  Public camera motion remains unpromoted. Raw rendered data/logs stay local.
+- Next strategy: complete-scene optical recovery under unchanged neighbor/fit/
+  clearance gates, then a new frozen prospective cohort. Preserve separate grip
+  failure; no physics or IK sweep. All-phase recovery/task-layer integration and
+  user-controlled live mic verification remain required. Goal active.
+  Details: camera-multiview-pc.md and camera-multiview-pc-evidence.json.

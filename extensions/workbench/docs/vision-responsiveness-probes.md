@@ -1,5 +1,11 @@
 # Camera response alternatives rejected — October 12, 2026
 
+**Historical probes before PC migration.** Mac/remote model and runtime-access
+statements below describe that earlier stage. The assistant now runs locally on
+Windows/WSL; actual pretrained-policy evidence is in
+[libero-live-pc.md](libero-live-pc.md). These pilots remain rejected, and the
+current PC camera answer has not met the complete two-second latency target.
+
 Two bounded pilots failed the existing two-second complete vision-response
 target. The working remote Gemma camera-answer path and Bonsai conversation
 configuration are retained. Neither candidate was integrated or evaluated on
