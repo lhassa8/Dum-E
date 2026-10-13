@@ -101,7 +101,7 @@ class RecognitionProbe:
     def snapshot(self):
         return {"status": "ready"}
 
-    async def transcribe(self, data):
+    async def transcribe(self, data, interrupt=False):
         if data == b"invalid":
             raise ValueError("Invalid recording")
         return {"text": "Bring me the screwdriver."}

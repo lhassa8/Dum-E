@@ -246,6 +246,8 @@ class Application:
                         if captured is None or time.monotonic() - captured > 0.75:
                             raise ValueError("The simulated camera frame isn't fresh; try again.")
                         try:
+                            self.event("camera_inference_started", request=text,
+                                       active_job=snapshot["job_id"], epoch=epoch)
                             observation = self.vision.observe(jpeg)
                             view, calls = "front", [observation["elapsed_ms"]]
                             names = (
@@ -270,6 +272,9 @@ class Application:
                             raise ValueError(
                                 "I couldn't reliably inspect that simulator snapshot."
                             ) from error
+                        finally:
+                            self.event("camera_inference_finished", request=text,
+                                       active_job=snapshot["job_id"], epoch=epoch)
                         profile = {
                             **observation,
                             "captured_monotonic_s": captured,
@@ -309,6 +314,8 @@ class Application:
             if self.model_status != "ready":
                 raise ValueError("The language model is not ready.")
             with self.language_lock:
+                self.event("language_inference_started", request=text,
+                           active_job=snapshot["job_id"], epoch=snapshot["epoch"])
                 try:
                     intent, _ = self.language.interpret(
                         text,
@@ -324,6 +331,9 @@ class Application:
                     )
                 except RuntimeError as error:
                     raise ValueError(str(error)) from error
+                finally:
+                    self.event("language_inference_finished", request=text,
+                               active_job=snapshot["job_id"], epoch=snapshot["epoch"])
                 profile = dict(getattr(self.language, "last_profile", {}))
             route = "model"
         elapsed = (time.monotonic() - started) * 1000
@@ -351,6 +361,7 @@ class Application:
             # Browser and task bridge can acknowledge the same cancellation.
             # Repeated Stop must not restart stopping or invalidate a later reset.
             if not (self.stop_event.is_set() or (self.phase == "Stopped" and not self.busy)):
+                previous_phase = self.phase
                 if self.tools and self.busy and self.paused_controller is None:
                     self.interrupted = {
                         "request": self.current_request,
@@ -362,7 +373,8 @@ class Application:
                 self.commands.put(("stop", None))
                 self.busy = False
                 self.phase = "Stopping"
-                self.event("stop_requested")
+                self.event("stop_requested", phase=previous_phase, job_id=self.job_id,
+                           task=self.task)
         if cancel:
             try:
                 cancel()

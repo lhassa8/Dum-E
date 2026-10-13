@@ -11,6 +11,11 @@ records the failures, corrected continuation behavior, and remaining voice gates
 The [PC speech investigation](docs/pc-speech-edge-preprocessing.md) reproduces
 missed noisy late Stops and evaluates an experimental maintained-VAD input path;
 it remains disabled in public assistants pending physical interruption checks.
+The [full voice interruption qualification](docs/pc-voice-interruption-qualification.md)
+adds an explicit CPU Stop path while other speech remains on CUDA. Six complete
+saved-voice journeys pass physical/state checks; one conservative timing bound
+is 12 ms beyond the target, leaving full timing qualification unproven. The
+experimental demo is at http://127.0.0.1:8996 with listening off by default.
 
 The optional [PC camera interface](docs/live-camera-interface-pc.md) uses
 `-CameraTools` and separate ports at http://127.0.0.1:8886. It has measured typed

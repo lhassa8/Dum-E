@@ -26,7 +26,38 @@ async function waitState(predicate,limit=60000){
  while(performance.now()<deadline){const value=await request('/api/state');if(predicate(value))return value;await sleep(40);}
  throw Error('Simulator state wait timed out');
 }
+async function nativeSnapshot(){
+ const state=await request('/api/native-state');
+ return Object.fromEntries(['backend','profile','physics_profile','busy','phase','job_id','epoch',
+   'objects','robot_joints','gripper_command','last_outcome','last_intent','task','recovery']
+   .map(key=>[key,state[key]]));
+}
 const verify=(condition,message)=>{if(!condition)throw Error(message);};
+async function speakSaved(clip,monitor){
+ const pcm=new Float32Array(await(await fetch('/clips/'+clip.file)).arrayBuffer());
+ const context=new AudioContext({sampleRate:16000}),destination=context.createMediaStreamDestination();
+ const buffer=context.createBuffer(1,pcm.length,16000);buffer.copyToChannel(pcm,0);
+ const source=context.createBufferSource();source.buffer=buffer;source.connect(destination);
+ const element=()=>({textContent:'',hidden:false,disabled:false,setAttribute(){}});
+ let done=false,error=null,recognized=null,result=null;
+ const mic=new MicrophoneInput({button:element(),cancel:element(),note:element(),heard:element(),
+  mediaDevices:{getUserMedia:async()=>destination.stream},
+  monitor:async(stream,detector,onPause,signal,onFailure)=>{
+   const cleanup=await monitor.monitor(stream,detector,onPause,signal,onFailure);
+   await context.resume();source.start(context.currentTime);return cleanup;
+  },fetchAudio:async(route,options)=>{
+   const response=await fetch(route,options);if(response.ok)recognized=await response.clone().json();return response;
+  },stopSpeech:async()=>{},onStop:()=>{throw Error('Unexpected Stop during continuation');},
+  onText:async text=>{result=await post('/interact',{message:text,source:'voice'});done=true;},
+  onError:message=>{if(message)error=message;}});
+ try{
+  mic.setReady(true);await mic.start('request');
+  const deadline=performance.now()+20000;
+  while(!done&&!error&&performance.now()<deadline)await sleep(25);
+  verify(done&&!error,'Saved continuation failed: '+error);
+  return {recognized,result};
+ }finally{mic.close();source.stop();await context.close();}
+}
 document.querySelector('#judge').onclick=async()=>{
  try{
   const judged=await request('/clips/physical-stop-judged.json');document.querySelector('#rows').replaceChildren();
@@ -37,9 +68,9 @@ document.querySelector('#judge').onclick=async()=>{
     const td=document.createElement('td');td.textContent=value;tr.append(td);
    }document.querySelector('#rows').append(tr);
   }
-  document.querySelector('thead tr th:nth-child(3)').textContent='End to native Stop';
+  document.querySelector('thead tr th:nth-child(3)').textContent='End to native Stop (upper bound)';
   document.querySelector('thead tr th:nth-child(2)').textContent='Native checks';
-  status.textContent=judged.passed?`Independent native/physical verification passed ${judged.rows.length}/${judged.rows.length}. Median ${judged.timing_ms.median.toFixed(0)} ms; sample p95 ${judged.timing_ms.p95.toFixed(0)} ms.`:
+  status.textContent=judged.passed?`Independent native/physical verification passed ${judged.rows.length}/${judged.rows.length}. Upper-bound median ${judged.timing_ms.median.toFixed(0)} ms; sample p95 ${judged.timing_ms.p95.toFixed(0)} ms.`:
     'Native verification failed: '+judged.failures.join('; ');
  }catch(error){document.querySelector('#error').textContent='Native verification unavailable: '+error.message;}
 };
@@ -55,12 +86,15 @@ button.onclick=async()=>{
    status.textContent='Starting '+item.id+'…';
    await waitState(s=>s.model_status==='ready'&&s.speech_input.status==='ready'&&!s.busy&&!s.interaction?.busy);
    await post('/reset');await waitState(s=>s.phase==='Ready'&&s.last_intent===null);
-   const task=(await post('/interact',{message:'Bring me the screwdriver.'})).task_id;
+   const initialRequest=manifest.fetch?await speakSaved(manifest.fetch,monitor):null;
+   const task=initialRequest?initialRequest.result.task_id:
+     (await post('/interact',{message:'Bring me the screwdriver.'})).task_id;
+   verify(task,'Natural request did not create a task');
    await waitState(s=>s.phase==='Lifting tool'&&s.objects.screwdriver[2]>criteria.minimum_tool_height_m);
-   const firstHeld=await request('/api/native-state');
+   const firstHeld=await nativeSnapshot();
    const clips=[manifest.question,item],captures=[],recognized=[],errors=[];
    let cursor=0,stopPosted=null,stopDone=null,beforeStop=null,questionStarted=null,questionResolved=null;
-   let questionResult=null,dialogue=null,stops=0;
+   let questionResult=null,dialogue=null,stops=0,sampledNative=firstHeld,sampledAt=epoch(),beforeSampleAge=null;
    const element=()=>({textContent:'',hidden:false,disabled:false,setAttribute(){}});
    mic=new MicrophoneInput({button:element(),cancel:element(),note:element(),heard:element(),
     mediaDevices:{getUserMedia:async()=>{
@@ -89,7 +123,10 @@ button.onclick=async()=>{
      return dialogue;
     },
     onStop:async()=>{
-     beforeStop=await request('/api/native-state');verify(beforeStop.busy,'Stop was not during active native motion');
+     // The product's Stop path does not wait for an observer RPC. Use a recent
+     // independent sample; native event phase separately proves active work.
+     beforeStop=sampledNative;beforeSampleAge=epoch()-sampledAt;
+     verify(beforeSampleAge<=.25&&beforeStop.busy,'No recent active native Stop sample');
      stopPosted=epoch();stops++;await post('/stop');stopDone=epoch();
     },
     onError:message=>{if(message)errors.push(message);},
@@ -98,13 +135,15 @@ button.onclick=async()=>{
    mic.setReady(true);mic.setWorking(true);
    const deadline=performance.now()+20000;
    while(performance.now()<deadline&&!stopDone&&!errors.length){
-    const state=await request('/api/state');mic.setReady(state.speech_input.status==='ready'&&!state.speech_input.busy);
+    const sampleStarted=epoch();
+    const [state,native]=await Promise.all([request('/api/state'),nativeSnapshot()]);
+    sampledNative=native;sampledAt=sampleStarted;mic.setReady(state.speech_input.status==='ready'&&!state.speech_input.busy);
     mic.setWorking(state.busy);await sleep(40);
    }
    verify(stops===1&&stopDone&&errors.length===0,'Spoken Stop failed: '+JSON.stringify(errors));
    const stopped=await waitState(s=>!s.busy&&s.phase==='Stopped');mic.setWorking(false);mic.close();mic=null;
-   const physical=await request('/api/native-state');
-   await sleep(criteria.settling_observation_ms);const laterPhysical=await request('/api/native-state'),later=await request('/api/state');
+   const physical=await nativeSnapshot();
+   await sleep(criteria.settling_observation_ms);const laterPhysical=await nativeSnapshot(),later=await request('/api/state');
    await dialogue;
    const drift=Math.max(...physical.robot_joints.map((q,i)=>Math.abs(q-laterPhysical.robot_joints[i])));
    const motion=Math.max(...firstHeld.robot_joints.map((q,i)=>Math.abs(q-beforeStop.robot_joints[i])));
@@ -112,8 +151,8 @@ button.onclick=async()=>{
    const tracksEnded=captures.every(c=>c.stream.getTracks().every(track=>track.readyState==='ended'));
    const stopCapture=captures[1];verify(stopCapture?.clip.id===item.id,'Stop source identity mismatch');
    const reference=stopCapture.started_epoch_s+item.last_clean_voiced_ms/1000;
-   const row={id:item.id,task_id:task,passed:false,recognized,errors,captures:captures.map(c=>({file:c.clip.file,started_epoch_s:c.started_epoch_s,tracks_ended:c.stream.getTracks().every(t=>t.readyState==='ended')})),
-    reference_last_voiced_epoch_s:reference,stop_post_epoch_s:stopPosted,stop_done_epoch_s:stopDone,end_to_stop_post_ms:(stopPosted-reference)*1000,
+   const row={id:item.id,task_id:task,passed:false,initial_request:initialRequest,recognized,errors,captures:captures.map(c=>({file:c.clip.file,started_epoch_s:c.started_epoch_s,tracks_ended:c.stream.getTracks().every(t=>t.readyState==='ended')})),
+    reference_last_voiced_epoch_s:reference,stop_post_epoch_s:stopPosted,stop_done_epoch_s:stopDone,end_to_stop_post_ms:(stopPosted-reference)*1000,before_stop_sample_age_s:beforeSampleAge,
     question_started_epoch_s:questionStarted,question_resolved_epoch_s:questionResolved,question_result:questionResult,pending_reply:pending,
     pre_stop_joint_motion_rad:motion,settled_joint_drift_rad:drift,tracks_ended:tracksEnded,
     first_held:firstHeld,before_stop:beforeStop,after_stop:physical,after_settling:laterPhysical,
@@ -126,7 +165,25 @@ button.onclick=async()=>{
    verify(physical.objects.screwdriver[2]>criteria.minimum_tool_height_m&&laterPhysical.objects.screwdriver[2]>criteria.minimum_tool_height_m,'Elevated tool dropped');
    verify(tracksEnded,'Capture track remained live');
    verify(!pending||(questionResult?.mode==='superseded'&&questionResult?.accepted===false),'Pending dialogue was not superseded');
+   if(manifest.resume&&manifest.return){
+    row.resume=await speakSaved(manifest.resume,monitor);
+    verify(row.resume.result.mode==='task','Proceed did not select paused work');
+    await waitState(s=>!s.busy&&s.last_outcome?.status==='success');
+    row.delivered=await nativeSnapshot();
+    verify(row.delivered.last_outcome.distance_m<criteria.maximum_placement_distance_m,'Delivery placement failed');
+    const completedJob=row.delivered.job_id;
+    row.completed_resume=await speakSaved(manifest.resume,monitor);
+    await sleep(500);row.after_completed_resume=await nativeSnapshot();
+    verify(row.completed_resume.result.mode==='conversation'&&!row.completed_resume.result.task_id&&
+      row.after_completed_resume.job_id===completedJob&&!row.after_completed_resume.busy,'Completed Proceed launched another pickup');
+    row.return=await speakSaved(manifest.return,monitor);
+    await waitState(s=>!s.busy&&s.last_outcome?.status==='success'&&s.last_intent?.action==='return');
+    row.returned=await nativeSnapshot();
+    verify(row.returned.last_outcome.distance_m<criteria.maximum_placement_distance_m,'Return placement failed');
+   }
    row.passed=true;
+   await save({kind:'physical-stop',protocol_sha256:manifest.protocol_sha256,
+     rows,count:rows.length,in_progress:true});
    const tr=document.createElement('tr');for(const value of [item.id,'Pass',row.end_to_stop_post_ms.toFixed(0)+' ms',drift.toFixed(6)+' rad',pending?'Yes':'No']){const td=document.createElement('td');td.textContent=value;tr.append(td);}document.querySelector('#rows').append(tr);
   }
   const report={kind:'physical-stop',scope:manifest.protocol.scope,protocol_sha256:manifest.protocol_sha256,endpoint_protocol_sha256:manifest.endpoint_protocol_sha256,

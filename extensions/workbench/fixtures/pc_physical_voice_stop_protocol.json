@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "scope": "Six full saved PC journeys: natural voice fetch, camera question, Stop, Proceed, completion-aware Proceed and return through browser capture, CUDA speech-edge ASR, local models, task bus and native camera physics; no microphone or speakers",
+  "endpoint_directory": "runs/pc-voice-endpoint-001",
+  "endpoint_protocol_sha256": "f033e027286d6dae691fbe04338f66c0d2670bc5022f67148c7839cca678c50f",
+  "stop_cases": ["stop-onset0-gain1-clean", "stop-onset0-gain1-white", "stop-onset0-gain1-hum", "stop-onset0-gain0.2-clean", "stop-onset0-gain0.2-white", "stop-onset0-gain0.2-hum"],
+  "source_text": {"fetch": "Could you bring me something for turning screws, please?", "question": "What do you see?", "resume": "Proceed.", "return": "Put it back."},
+  "timing_reference": "Browser source-start plus last clean 40 ms frame RMS >= 0.008; native stop_requested matched by unique job is bounded between browser Stop POST and its acknowledgment. Require the conservative upper bound <=1000 ms; do not compare unsynchronized browser/WSL wall clocks.",
+  "recognizer_profile": {"general_device": "cuda", "stop_device": "cpu", "stop_model": "Systran/faster-whisper-tiny.en", "stop_revision": "0d3d19a32d3338f10357c0889762bd8d64bbdeba", "device_fallback": false},
+  "criteria": {
+    "maximum_end_to_native_stop_ms": 1000,
+    "maximum_settled_joint_drift_rad": 0.02,
+    "settling_observation_ms": 600,
+    "minimum_pre_stop_joint_motion_rad": 0.001,
+    "minimum_tool_height_m": 0.13,
+    "all_tasks_cancelled": true,
+    "no_remaining_queued_work": true,
+    "retain_gripper_command": true,
+    "all_captured_tracks_ended": true,
+    "minimum_verified_pending_reply_interruptions": 1,
+    "pending_replies_must_be_superseded": true,
+    "maximum_held_tool_translation_m": 0.01,
+    "maximum_unrelated_displacement_m": 0.004,
+    "maximum_placement_distance_m": 0.035,
+    "minimum_lift_m": 0.08
+  }
+}

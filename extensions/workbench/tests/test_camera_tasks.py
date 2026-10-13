@@ -39,7 +39,7 @@ def test_camera_adapter_complete_journey_without_actor_truth(hub, tool, monkeypa
         for _ in range(2000):
             if not controller.advance():
                 break
-        assert controller.outcome.status == "success"
+        assert controller.outcome.status == "success", controller.outcome
         assert controller.max_height - controller.initial_height >= 0.08
         assert controller.disturbance < 0.004
         assert controller.outcome.distance_m < 0.035

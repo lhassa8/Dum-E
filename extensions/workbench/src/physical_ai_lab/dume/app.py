@@ -12,6 +12,7 @@ import sys
 import time
 import uuid
 from contextlib import asynccontextmanager
+from multiprocessing import get_context
 from multiprocessing.managers import SharedMemoryManager
 from pathlib import Path
 from typing import Literal
@@ -249,7 +250,9 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
                 raise HTTPException(413, "Recording is too large. Keep it under 15 seconds.")
             chunks.append(chunk)
         try:
-            result = await speech_input.transcribe(b"".join(chunks))
+            result = await speech_input.transcribe(
+                b"".join(chunks), interrupt=voice_mode == "interrupt"
+            )
         except ValueError as error:
             raise HTTPException(422, str(error)) from error
         except RuntimeError as error:
@@ -515,7 +518,9 @@ def _main():
     )
     mcp = None
     try:
-        manager = SharedMemoryManager()
+        # WSL's default fork can inherit native decoder/model threads. Use the
+        # same clean process start as Windows instead of forking their state.
+        manager = SharedMemoryManager(ctx=get_context("spawn"))
         manager.start(initializer=_ignore_interrupt)
         with manager:
             namespace = "sim_" + uuid.uuid4().hex[:10]

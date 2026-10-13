@@ -5,6 +5,7 @@ import hashlib
 import json
 import signal
 import uuid
+from multiprocessing import get_context
 from multiprocessing.managers import SharedMemoryManager
 from pathlib import Path
 
@@ -41,7 +42,7 @@ def test_launcher_termination_unwinds_cleanup_and_restores_signal_handler(monkey
 
 @pytest.fixture
 def upstream_backends():
-    with SharedMemoryManager() as manager:
+    with SharedMemoryManager(ctx=get_context("spawn")) as manager:
         namespace = "probe_" + uuid.uuid4().hex[:8]
         task_buffer = manager.ShareableList([" " * 8192] * 8)
         broker_buffer = manager.ShareableList([" " * 8192] * 16)

@@ -1929,3 +1929,38 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   acoustics. Next gate: actual moving-arm interruption using this speech path,
   pending-model cancellation, continuation, fullspeechack and human validation.
   No mic activation/realhardware/external messaging/rawdata upload. Goal active.
+
+### B36 — Full natural voice interruption with explicit CPU Stop isolation (PC)
+
+- Previous turn is progress:684c9b6 publishes edge preprocessing, retained24/27
+  miss baseline and prospective26/26 CUDA callbacks; physical timing not claimed.
+- First physical run has12native placements but browser report exceeds100KB;
+  visibleStopPOST4/6above1s, rawDOM/frame/native events retained. RevisedGPU-only
+  fullvoice run005 verifies6pendingcamera interruptions but only5fulljourneys;
+  connectionfailure interrupts last resume. Conservativeupper Stop1144.05/1244.10
+  ms med/p95,5/6above1s. Browser/WSL clocks diverge; matchnativeJobIDs and bound
+  cancellation between POST/ack inbrowserclock. Same1000ms criterion, separatehold.
+- InstalledPyAV19.0.1 nativeboundeddecoder preservesoriginalgates. SavedWAV
+  warm24 med/p95 drops184.10/208.85 to5.83/11.64ms, maxsampledifference<1e-5;
+  firstimport272.70ms happens before readiness. Realmono/stereo and badinput
+  tests pass. OldFFmpeg7 misdetects periodic48kstereo asMP3; declaredPCMreference
+  retains numericagreementgate. Actorphysics/uncertainty limits unchanged.
+- Explicit opt-in CPU tiny.en positiveStop path, general speech stillCUDA small.en.
+  Officialimmutable0d3d19a3,78,091,917bytes publisherhash verified. ActualCPU INT8
+  53retained semanticcases correct,0falseStops;20positive med/p95171.15/199.03ms
+  withoutbrowser/motion. No training,hotword orconfidence relaxation. NonStop/
+  negation keepsprimarymodel; missingaux readiness cannot silentlyswitchdevices.
+- Fullregression exposesforkchildsegfault and1cameraHammer failure withoutreason;
+  do not infercamera cause. Explicitspawn manager startup added inruntime/tests.
+  Focused28pass; full343pass256.07s,1dependencywarning,no fork warnings.
+- FinalCPU run007 completes6/6 fullvoice journeys: naturalfetch,actualcamera
+  question,Stop,Proceed,completedProceed/no repick,return. Allphysical/state
+  checks pass;4native-verifiedpendingmodel replies superseded.12placements,
+  minlift201.53mm,maxerror9.56mm,maxjointdrift0.000940rad,heldtranslation0.865mm.
+  Capturetracks ended; source/PCM posthash checks pass. Original35mm/80mm/4mm,
+  0.02rad/600ms/elevated/retainedgrip/noqueue/pendingcriteria intact.
+- Conservative Stopupperbounds931.90/1012.40ms med/p95 n6;5/6within1000ms.
+  Sixthactualnative onset bounded925.60–1012.40ms:deadlineunproven. Overalltiming
+  gate fails; notpromoted. Need precisecancellation versusqueueack measurement,
+  fullacoustic/ack/echo/humanvalidation andbroadercontention. Experimental8996
+  ready, originals preserved, no mic activation/hardware/rawupload. Goal active.

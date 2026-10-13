@@ -5,6 +5,7 @@ import http.client
 import http.server
 import json
 import threading
+import time
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -51,6 +52,16 @@ def main():
     }
 
     class Handler(http.server.SimpleHTTPRequestHandler):
+        protocol_version = "HTTP/1.1"
+        def log_message(self, format, *values):
+            # High-frequency state sampling must not fill the PTY and delay
+            # serving requests. Preserve errors locally instead of flooding it.
+            if format.startswith("code ") or (
+                len(values) > 1 and str(values[1]) not in {"200", "304"}
+            ):
+                with (args.clips / "probe-errors.log").open("a") as file:
+                    file.write(f"{time.time()} {format % values}\n")
+
         def forward(self, method, port, route, body=None, headers=None):
             connection = http.client.HTTPConnection("127.0.0.1", port, timeout=60)
             try:
@@ -59,6 +70,16 @@ def main():
                 data = response.read()
                 self.send_response(response.status)
                 self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+            except (OSError, http.client.HTTPException) as error:
+                with (args.clips / "probe-errors.log").open("a") as file:
+                    file.write(f"{time.time()} {method} {port}{route}: {error!r}\n")
+                data = json.dumps({"detail": "Qualification proxy request failed."}).encode()
+                self.send_response(502)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(data)))
                 self.end_headers()
                 self.wfile.write(data)
             finally:
@@ -113,10 +134,12 @@ def main():
                         status = 200
                     except ValueError as error:
                         decoded, status = {"detail": str(error)}, 422
+                    data = json.dumps(decoded).encode()
                     self.send_response(status)
                     self.send_header("Content-Type", "application/json")
+                    self.send_header("Content-Length", str(len(data)))
                     self.end_headers()
-                    self.wfile.write(json.dumps(decoded).encode())
+                    self.wfile.write(data)
                     return
                 connection = http.client.HTTPConnection("127.0.0.1", args.browser_port, timeout=30)
                 try:
@@ -128,10 +151,12 @@ def main():
                         try:
                             audio, preprocessing = prepare_speech(audio)
                         except ValueError as error:
+                            data = json.dumps({"detail": str(error)}).encode()
                             self.send_response(422)
                             self.send_header("Content-Type", "application/json")
+                            self.send_header("Content-Length", str(len(data)))
                             self.end_headers()
-                            self.wfile.write(json.dumps({"detail": str(error)}).encode())
+                            self.wfile.write(data)
                             return
                     connection.request(
                         "POST",
@@ -153,6 +178,7 @@ def main():
                         data = json.dumps(decoded).encode()
                     self.send_response(response.status)
                     self.send_header("Content-Type", "application/json")
+                    self.send_header("Content-Length", str(len(data)))
                     self.end_headers()
                     self.wfile.write(data)
                 finally:
@@ -162,7 +188,7 @@ def main():
                 self.send_error(404)
                 return
             size = int(self.headers.get("Content-Length", "0"))
-            if not 0 < size < 100_000:
+            if not 0 < size < 2_000_000:
                 self.send_error(413)
                 return
             data = json.loads(self.rfile.read(size))
@@ -173,9 +199,13 @@ def main():
             }.get(data.get("kind"), "silero-browser.json")
             (args.clips / name).write_text(json.dumps(data, indent=2) + "\n")
             self.send_response(200)
+            self.send_header("Content-Length", "0")
             self.end_headers()
 
-    server = http.server.ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
+    class ProbeServer(http.server.ThreadingHTTPServer):
+        request_queue_size = 128
+
+    server = ProbeServer(("127.0.0.1", args.port), Handler)
     print(f"Saved-audio judge: http://127.0.0.1:{args.port}", flush=True)
     try:
         server.serve_forever()

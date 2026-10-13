@@ -8,6 +8,16 @@ fi
 host=$(ip -4 route show default | cut -d ' ' -f3 | head -1)
 export MUJOCO_GL=egl
 export DUME_ASR_DEVICE=${3:-${DUME_ASR_DEVICE:-cuda}}
+export DUME_ASR_EDGE_TRIM=${8:-${DUME_ASR_EDGE_TRIM:-0}}
+export DUME_ASR_CPU_STOP=${9:-${DUME_ASR_CPU_STOP:-0}}
+if [[ $DUME_ASR_CPU_STOP != 0 && $DUME_ASR_CPU_STOP != 1 ]]; then
+  echo 'CPU Stop recognizer must be explicitly 0 or 1.'
+  exit 1
+fi
+if [[ $DUME_ASR_EDGE_TRIM != 0 && $DUME_ASR_EDGE_TRIM != 1 ]]; then
+  echo 'Speech edge preprocessing must be explicitly 0 or 1.'
+  exit 1
+fi
 if [[ $DUME_ASR_DEVICE == cuda ]]; then
   export DUME_ASR_COMPUTE_TYPE=${DUME_ASR_COMPUTE_TYPE:-float16}
   libraries="$PWD/.venv-linux/lib/python3.12/site-packages/nvidia"

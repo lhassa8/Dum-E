@@ -1,0 +1,24 @@
+{
+  "scope": "Actual saved-audio browser capture through local recognizers/models, Dum-E task bus, native camera arm Stop, continuation and return; no microphone or speaker qualification",
+  "profile": {"general_asr": "Systran/faster-whisper-small.en", "general_device": "cuda", "stop_asr": "Systran/faster-whisper-tiny.en", "stop_revision": "0d3d19a32d3338f10357c0889762bd8d64bbdeba", "stop_device": "cpu", "stop_compute_type": "int8", "explicit_opt_in": true, "device_fallback": false},
+  "decode": {"runtime": "PyAV 19.0.1", "warm_count": 24, "process_median_ms": 184.10135799786076, "process_p95_ms": 208.84919300442562, "native_median_ms": 5.828216999361757, "native_p95_ms": 11.638578995189164, "first_native_ms": 272.69656000135, "sample_agreement_maximum": 0.00001, "original_speech_gates_changed": false},
+  "cpu_stop_retained_semantic_cases": {"count": 53, "failures": 0, "false_stops": 0, "positive_count": 20, "positive_processing_median_ms": 171.1483515027794, "positive_processing_p95_ms": 199.03309700021055, "includes_browser": false},
+  "earlier_gpu_only_full_voice": {"directory": "runs/pc-physical-voice-stop-005", "native_stop_count": 6, "verified_pending_inference_count": 6, "conservative_upper_median_ms": 1144.0500020980835, "conservative_upper_p95_ms": 1244.0998554229736, "timing_bound_failures": 5, "last_journey_interrupted_by_connection_failure": true, "passed": false},
+  "final_cpu_stop_full_voice": {
+    "directory": "runs/pc-physical-voice-stop-007", "native_directory": "runs/dume-894b5fc8",
+    "protocol_sha256": "89a63463df5a017238686832ab3a32500b4cf62e0ad640e499fce63a00542226",
+    "journeys": 6, "physical_and_state_passes": 6, "verified_pending_camera_inference_interruptions": 4,
+    "native_placements": 12, "min_lift_m": 0.2015261710100042, "max_placement_error_m": 0.009563508776374009,
+    "max_settled_joint_drift_rad": 0.0009401563811355373, "max_held_tool_translation_m": 0.0008650882098289264,
+    "max_before_stop_sample_age_s": 0.13960027694702148, "all_capture_tracks_ended": true,
+    "all_completed_proceed_requests_caused_no_pickup": true, "all_contextual_returns_completed": true,
+    "timing_kind": "Conservative browser-clock upper bounds at acknowledgment, native Stop matched by unique job; no subtraction of unsynchronized browser/WSL wall clocks",
+    "timing_count": 6, "timing_upper_median_ms": 931.900143623352, "timing_upper_p95_ms": 1012.3999118804932,
+    "within_1000_ms_upper_bound": 5,
+    "uncertain_case": {"id": "stop-onset0-gain0.2-white", "lower_ms": 925.6002902984619, "upper_ms": 1012.3999118804932},
+    "overall_timing_qualification": "failed; one actual deadline unproven", "promotion": "experimental only",
+    "frozen_source_and_pcm_postrun_checks": "passed"
+  },
+  "checks": {"full_python_tests": 343, "full_seconds": 256.07, "warnings": 1, "fork_warnings": 0, "manager_context": "spawn", "js_capture_contract": "passed", "js_vad_contract": "passed", "upstream_files_unchanged": 46},
+  "remaining": ["precise native cancellation versus acknowledgment and queue cleanup measurement", "broader contention qualification", "full acoustic timing and acknowledgment", "echo validation", "convincing human-controlled microphone demonstration", "full sustained assistant objective"]
+}

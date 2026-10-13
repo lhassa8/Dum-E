@@ -55,6 +55,18 @@ def model_path():
 def decode_audio(data):
     if not data or len(data) > MAX_AUDIO_BYTES:
         raise ValueError("Record a short request, up to 15 seconds.")
+    if sys.platform != "darwin":
+        from physical_ai_lab.dume.audio_decode import decode_bounded_pcm
+
+        audio = decode_bounded_pcm(data, maximum_samples=(MAX_SECONDS + 1) * 16000)
+        return validate_decoded_audio(audio)
+    return decode_audio_process(data)
+
+
+def decode_audio_process(data):
+    """Retained process decoder for Mac compatibility and matched PC comparison."""
+    if not data or len(data) > MAX_AUDIO_BYTES:
+        raise ValueError("Record a short request, up to 15 seconds.")
     try:
         result = subprocess.run(
             [
@@ -82,6 +94,10 @@ def decode_audio(data):
     except (subprocess.SubprocessError, OSError) as error:
         raise ValueError("Could not read the recording. Please record again.") from error
     audio = np.frombuffer(result.stdout, dtype=np.float32).copy()
+    return validate_decoded_audio(audio)
+
+
+def validate_decoded_audio(audio):
     if not 0.35 * 16000 <= len(audio) <= MAX_SECONDS * 16000:
         raise ValueError("Record a request between one and 15 seconds long.")
     if not np.isfinite(audio).all() or float(np.sqrt(np.mean(audio**2))) < 0.003:
@@ -108,13 +124,21 @@ def trim_speech_edges(audio):
 
 
 class SpeechInput:
-    def __init__(self, edge_trim=False):
+    def __init__(self, edge_trim=None, cpu_stop=None):
         self.status = "loading"
         self.error = None
         self.busy = False
         self.path = None
         self.model = None
-        self.edge_trim = edge_trim
+        setting = os.environ.get("DUME_ASR_EDGE_TRIM", "0")
+        if edge_trim is None and setting not in {"0", "1"}:
+            raise ValueError("DUME_ASR_EDGE_TRIM must be 0 or 1.")
+        self.edge_trim = setting == "1" if edge_trim is None else edge_trim
+        stop_setting = os.environ.get("DUME_ASR_CPU_STOP", "0")
+        if cpu_stop is None and stop_setting not in {"0", "1"}:
+            raise ValueError("DUME_ASR_CPU_STOP must be 0 or 1.")
+        self.cpu_stop = stop_setting == "1" if cpu_stop is None else cpu_stop
+        self.stop_recognizer = None
         self.device = os.environ.get("DUME_ASR_DEVICE", "cpu")
         self.compute_type = os.environ.get(
             "DUME_ASR_COMPUTE_TYPE", "float16" if self.device == "cuda" else "int8"
@@ -130,6 +154,7 @@ class SpeechInput:
             "error": self.error,
             "busy": self.busy,
             "edge_preprocessing": "silero_v6_outer_bounds" if self.edge_trim else "none",
+            "cpu_stop_fast_path": self.cpu_stop,
             "model": model_identity()[0],
             "revision": model_identity()[1],
             "backend": "mlx" if sys.platform == "darwin" else "faster-whisper",
@@ -143,7 +168,8 @@ class SpeechInput:
     def _prepare(self):
         started = time.monotonic()
         try:
-            ffmpeg_path()
+            if sys.platform == "darwin":
+                ffmpeg_path()
             self.path = model_path()
             # Silence skips spoken-word decoding. Exercise the actual path with
             # a bundled synthetic phrase, on the same executor as user requests.
@@ -151,6 +177,14 @@ class SpeechInput:
             warmup_started = time.monotonic()
             fixture = Path(__file__).with_name("fixtures") / "recognition-warmup.wav"
             self._recognize(fixture.read_bytes())
+            if self.cpu_stop:
+                from physical_ai_lab.dume.interrupt_asr import CpuStopRecognizer
+
+                self.stop_recognizer = CpuStopRecognizer()
+                sample = decode_audio(fixture.read_bytes())
+                if self.edge_trim:
+                    sample, _ = trim_speech_edges(sample)
+                self.stop_recognizer.inspect(sample)
             self.warmup_seconds = round(time.monotonic() - warmup_started, 3)
             self.preparation_seconds = round(time.monotonic() - started, 3)
             self.status = "ready"
@@ -161,7 +195,7 @@ class SpeechInput:
     async def prepare(self):
         await asyncio.get_running_loop().run_in_executor(self.executor, self._prepare)
 
-    def _recognize(self, data):
+    def _recognize(self, data, stop_probe=False):
         started = time.monotonic()
         audio = decode_audio(data)
         decoded = time.monotonic()
@@ -178,6 +212,26 @@ class SpeechInput:
         if decoder_padding:
             audio = np.pad(audio, (0, int(decoder_padding * 16000)))
         prepared = time.monotonic()
+        stop_result = None
+        if stop_probe and self.cpu_stop:
+            from physical_ai_lab.assistant.tool_routing import is_stop_request
+
+            if self.stop_recognizer is None:
+                raise RuntimeError("Configured CPU Stop recognizer is not ready.")
+            stop_result = self.stop_recognizer.inspect(audio)
+            if stop_result["positive_stop"] and is_stop_request(stop_result["text"]):
+                return {
+                    "text": stop_result["text"], "audio_seconds": captured_samples / 16000,
+                    "decoder_padding_seconds": decoder_padding,
+                    "recognition_seconds": round(time.monotonic() - started, 3),
+                    "audio_decode_seconds": round(decoded - started, 3),
+                    "speech_preprocessing_seconds": round(prepared - decoded, 3),
+                    "speech_edge_preprocessing": edge_metadata,
+                    "model_recognition_seconds": round(time.monotonic() - prepared, 3),
+                    "model": stop_result["model"], "revision": stop_result["revision"],
+                    "device": "cpu", "compute_type": "int8", "local": True,
+                    "cpu_stop_fast_path": True, "device_fallback": False,
+                }
         if sys.platform == "darwin":
             import mlx_whisper
 
@@ -240,18 +294,23 @@ class SpeechInput:
             "speech_edge_preprocessing": edge_metadata,
             "model_recognition_seconds": round(time.monotonic() - prepared, 3),
             "model": model_identity()[0],
+            "revision": model_identity()[1],
             "device": "metal" if sys.platform == "darwin" else self.device,
+            "cpu_stop_probe": stop_result,
             "local": True,
         }
 
-    async def transcribe(self, data):
+    async def transcribe(self, data, interrupt=False):
         with self.lock:
             if self.status != "ready":
                 raise RuntimeError(self.error or "Voice input is still loading.")
             if self.busy:
                 raise RuntimeError("Another recording is being transcribed.")
             self.busy = True
-        future = asyncio.get_running_loop().run_in_executor(self.executor, self._recognize, data)
+        arguments = (data, True) if interrupt and self.cpu_stop else (data,)
+        future = asyncio.get_running_loop().run_in_executor(
+            self.executor, self._recognize, *arguments
+        )
         # An aborted HTTP client must not permit concurrent model calls.
         future.add_done_callback(lambda _: setattr(self, "busy", False))
         return await asyncio.shield(future)
