@@ -132,6 +132,7 @@ class CameraDelivery:
         safe_handoff=False,
         alternate_view=False,
         preferred_body_yaw=None,
+        phase_recovery=False,
     ):
         self.robot, self.camera, self.object = robot, camera, tool
         self.target = np.asarray(destination_xy, dtype=float).copy()
@@ -162,6 +163,8 @@ class CameraDelivery:
         self.center_grasp = center_grasp
         self.safe_handoff = safe_handoff
         self.alternate_view = alternate_view
+        self.phase_recovery = phase_recovery
+        self.paused_phase = None
         self.preferred_body_yaw = preferred_body_yaw
         self.reoriented_carry = False
         self.planned_neighbors = None
@@ -243,7 +246,11 @@ class CameraDelivery:
                 start = reading.joints
                 ticks = max(40, int(np.max(np.abs(end - start)) / 0.025))
                 path = None
-                if self.linear_lifts and phase in {"Lifting tool", "Lifting for return"}:
+                if self.linear_lifts and phase in {
+                    "Lifting tool",
+                    "Lifting for return",
+                    "Retracting empty hand for rescan",
+                }:
                     path = self.robot.cartesian_path(
                         reading.tcp_m, np.asarray(point), self.orientation, ticks
                     )
@@ -541,10 +548,22 @@ class CameraDelivery:
         )
 
     def pause(self):
+        if (
+            self.phase_recovery
+            and self.outcome is not None
+            and self.outcome.status != "interrupted"
+        ):
+            self.robot.hold()
+            return
+        if self.outcome is None:
+            self.paused_phase = self.phase
         self.robot.hold()
         self.outcome = Outcome("interrupted", "Stopped; retaining the gripper command.")
 
     def resume(self):
+        if self.phase_recovery:
+            self._resume_phase()
+            return
         if not self.carrying or not self._grip_present():
             self.outcome = Outcome(
                 "failed", "Resume needs a supported held handle; rescan required."
@@ -552,6 +571,74 @@ class CameraDelivery:
             return
         self.revision += 1
         self.outcome = None
+
+    def _resume_phase(self):
+        """Bounded recovery using robot readings; object placement stays unverified."""
+        try:
+            if self.outcome is None or self.outcome.status != "interrupted":
+                raise ValueError("Phase recovery requires an interrupted task")
+            phase = self.paused_phase
+            if phase is None:
+                raise ValueError("No active interrupted phase is available")
+            reading = self.robot.read()
+            open_hand = not reading.closing_command and reading.gap_m >= 0.075
+            route = "continue held motion"
+            if self.carrying:
+                if not self._grip_present():
+                    raise ValueError("Resume needs a supported held handle; rescan required.")
+            elif phase in {
+                "Observing tool",
+                "Surveying workbench with an empty hand",
+                "Approaching tool",
+                "Reobserving before grasp",
+                "Lowering gripper",
+            }:
+                if not open_hand:
+                    raise ValueError("Rescan recovery requires a confirmed open hand")
+                route = "retract and rescan"
+            elif phase == "Grasping":
+                if not 0.015 < reading.tcp_m[2] < 0.065:
+                    raise ValueError("Interrupted grasp is outside supported tabletop recovery")
+                route = "open at tabletop, retract and rescan"
+            elif phase in {
+                "Releasing",
+                "Withdrawing gripper",
+                "Awaiting independent placement check",
+            }:
+                if phase != "Releasing" and not open_hand:
+                    raise ValueError("Release continuation requires a confirmed open hand")
+                route = "continue intentional release"
+            else:
+                raise ValueError("Interrupted phase has no supported recovery route")
+            if "rescan" in route:
+                self.frames.close()
+                self.frames = self._rescan_recovery(phase == "Grasping")
+            self.evidence.append({"kind": "phase_recovery", "phase": phase, "route": route})
+            self.revision += 1
+            self.outcome = None
+            self.paused_phase = None
+        except ValueError as error:
+            self.robot.hold()
+            self.outcome = Outcome("failed", str(error))
+
+    def _rescan_recovery(self, release_supported_grasp):
+        try:
+            if release_supported_grasp:
+                yield from self._wait(28, 255, "Releasing supported grasp for rescan")
+            reading = self.robot.read()
+            if reading.closing_command or reading.gap_m < 0.075:
+                raise ValueError("Hand did not open; rescan recovery withheld")
+            self.orientation = reading.rotation.copy()
+            point = reading.tcp_m.copy()
+            point[2] = max(point[2], 0.24)
+            yield from self._motion(point, "Retracting empty hand for rescan", 255)
+            self.initial_scene_estimates = None
+            self.scene_history = {}
+            self.planned_neighbors = None
+            yield from self._run()
+        except (ValueError, FloatingPointError) as error:
+            self.robot.hold()
+            self.outcome = Outcome("failed", str(error))
 
     def return_to_rack(self):
         if not self.carrying or not self._grip_present() or self.rack_xy is None:

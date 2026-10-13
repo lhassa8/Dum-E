@@ -1,0 +1,176 @@
+{
+  "scope": "Offline simulation all-phase recovery on three known validation layouts; not held-out promotion or live speech",
+  "baseline": {
+    "scope": "Offline simulation all-phase recovery on three known validation layouts; not held-out promotion or live speech",
+    "protocol_sha256": "d0943fcce0799fe061b3874fcd18186573e0566c3c532b8fcb14c32e612c298e",
+    "phase_recovery": false,
+    "cases": 27,
+    "passes": 9,
+    "passed": false
+  },
+  "final": {
+    "scope": "Offline simulation all-phase recovery on three known validation layouts; not held-out promotion or live speech",
+    "protocol_sha256": "d0943fcce0799fe061b3874fcd18186573e0566c3c532b8fcb14c32e612c298e",
+    "phase_recovery": true,
+    "cases": 27,
+    "passes": 25,
+    "passed": false
+  },
+  "final_run": "runs/pc-camera-phase-recovery-final-001",
+  "first_run": "runs/pc-camera-phase-recovery-001",
+  "baseline_run": "runs/pc-camera-phase-baseline-001",
+  "source_hashes_lf": {
+    "src/physical_ai_lab/assistant/camera_control.py": "1ea42b4eef5930c95533962167107ed800d45a000f9e93eedc57535fea82792a",
+    "scripts/verify_camera_phase_recovery.py": "8904c4c859f101e3c865e0a462d384116208efd0c886c39ed7c589ffc9b43407",
+    "scripts/diagnose_phase_retraction.py": "a080b1522d0e6cc06e95d43047d625eca0dc61eb243690d814c193b75c692ca9",
+    "tests/test_camera_phase_recovery.py": "a014c0ad677b8cfc255cb159fcf4fed660f072aa6aabd84790904286e3035412",
+    "fixtures/camera_phase_recovery_protocol.json": "d0943fcce0799fe061b3874fcd18186573e0566c3c532b8fcb14c32e612c298e"
+  },
+  "per_phase": [
+    {
+      "phase": "Approaching tool",
+      "cases": 3,
+      "passes": 3
+    },
+    {
+      "phase": "Awaiting independent placement check",
+      "cases": 3,
+      "passes": 3
+    },
+    {
+      "phase": "Grasping",
+      "cases": 3,
+      "passes": 2
+    },
+    {
+      "phase": "Lifting tool",
+      "cases": 3,
+      "passes": 3
+    },
+    {
+      "phase": "Lowering gripper",
+      "cases": 3,
+      "passes": 2
+    },
+    {
+      "phase": "Moving to target",
+      "cases": 3,
+      "passes": 3
+    },
+    {
+      "phase": "Placing tool",
+      "cases": 3,
+      "passes": 3
+    },
+    {
+      "phase": "Releasing",
+      "cases": 3,
+      "passes": 3
+    },
+    {
+      "phase": "Withdrawing gripper",
+      "cases": 3,
+      "passes": 3
+    }
+  ],
+  "failed_journeys": [
+    {
+      "case": "validation-002",
+      "tool": "hammer",
+      "phase": "Lowering gripper",
+      "actor_status": "failed",
+      "actor_message": "Cartesian lift would change robot IK branch; holding"
+    },
+    {
+      "case": "validation-002",
+      "tool": "hammer",
+      "phase": "Grasping",
+      "actor_status": "failed",
+      "actor_message": "Cartesian lift would change robot IK branch; holding"
+    }
+  ],
+  "long_hold": {
+    "passed": true,
+    "passes": 6,
+    "cases": 6,
+    "run": "runs/pc-camera-phase-longhold-001",
+    "protocol_sha256": "3f4512cf94bb85b7d7226d1cbe8d3ab602680890a7fc8acdf7e6d30b09a3084f",
+    "minimum_held_height_m": 0.13008946541728542
+  },
+  "diagnosis": [
+    {
+      "case": "validation-002",
+      "phase": "Lowering gripper",
+      "scope": "post-hoc diagnosis, not qualification",
+      "motion_phase": "Lifting tool",
+      "start_m": [
+        0.4553984830666379,
+        0.01693298001910241,
+        0.023487376558847473
+      ],
+      "target_m": [
+        0.4553984830666379,
+        0.01693298001910241,
+        0.22348737655884748
+      ],
+      "ticks": 44,
+      "rejected_waypoint": 28,
+      "delta_max_rad": 0.08435050612133627,
+      "joint_index": 4,
+      "waypoint_m": [
+        0.4553984830666379,
+        0.01693298001910241,
+        0.16338219248672126
+      ],
+      "endpoint_position_error_m": 0.0005407438899046907,
+      "endpoint_angle_error_rad": 5.997347339929905E-05,
+      "threshold_rad": 0.075,
+      "diagnostic_state_unchanged": true,
+      "actor_message": "Cartesian lift would change robot IK branch; holding"
+    },
+    {
+      "case": "validation-002",
+      "phase": "Grasping",
+      "scope": "post-hoc diagnosis, not qualification",
+      "motion_phase": "Lifting tool",
+      "start_m": [
+        0.45533137677701013,
+        0.01673052418468043,
+        0.02327436609220182
+      ],
+      "target_m": [
+        0.45533137677701013,
+        0.01673052418468043,
+        0.22327436609220183
+      ],
+      "ticks": 43,
+      "rejected_waypoint": 27,
+      "delta_max_rad": 0.07506593232546392,
+      "joint_index": 4,
+      "waypoint_m": [
+        0.45533137677701013,
+        0.01673052418468043,
+        0.16080942589825664
+      ],
+      "endpoint_position_error_m": 0.0004602466540073895,
+      "endpoint_angle_error_rad": 5.541601810474622E-05,
+      "threshold_rad": 0.075,
+      "diagnostic_state_unchanged": true,
+      "actor_message": "Cartesian lift would change robot IK branch; holding"
+    }
+  ],
+  "verification": {
+    "fit_budget_remaining": 0,
+    "changed_file_ruff": "passed",
+    "warnings": 20,
+    "elapsed_seconds": 134.85,
+    "regression_passed": 273,
+    "protected_upstream_files": 46
+  },
+  "promotion": {
+    "goal_complete": false,
+    "public_camera_promoted": false,
+    "default_flag": false,
+    "human_demo_complete": false
+  }
+}

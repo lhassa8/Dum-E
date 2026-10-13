@@ -1503,3 +1503,28 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   remains unpromoted. Next strategy: closed-loop grasp-state/motion evidence and
   all-phase recovery; no more optical/outcome-fit sweeps. Full goal active.
   Evidence/details: release-curriculum-pc.md/release-curriculum-pc-evidence.json.
+
+## B22 — phase-specific interruption recovery, still experimental (2026-10-12)
+- Previous bounded outcome fit rejected; fit budget remains zero. Changed
+  strategy to task recovery using existing camera and robot ports.
+- Frozen three-known-layout/nine-phase/32-simulation-second protocol baseline
+  9/27 full journeys. Optional `phase_recovery=True` rescans before pickup,
+  opens interrupted tabletop grasps before rescanning, and continues planned
+  release/withdrawal. Held motion retains its original supported-grip gate.
+  Default remains off; no public camera promotion, pose writes or physics changes.
+- First evaluated recovery 25/27; hammer lowering/grasping interruptions fail.
+  After two similar failures investigated, rather than widened guards/retried
+  an optimizer. Empty-hand retraction succeeds; fresh pickup lifting hits the
+  original 0.075-rad waypoint limit: fifth-joint deltas .0843505/.0750659 rad.
+  Post-hoc robot-only diagnostic leaves qpos/qvel/controls exactly unchanged.
+  A guard refusal does not establish a mathematical IK branch jump.
+- Same physical lift80mm/placement35mm/open-hand/release/withdrawal/resting and
+  unrelated-tool judges retained. Actor denied object-truth methods. Existing
+  six long-hold/continuation cases pass6/6, minimum hammer height130.089mm still
+  narrow. Review closes terminal-task resurrection via Stop; regression guard
+  tests added. Final reviewed-source replay reproduces25/27; all273 regression
+  tests pass,46 protected upstream hashes unchanged. Evidence JSON records hashes.
+- No live mic or hardware actions. Human demo and complete latency remain
+  outstanding. Next: continuity-aware motion planning with swept clearance
+  and complete pickup/release evaluation, not more held-pose/network fits.
+  Details/evidence: camera-phase-recovery-pc.md/camera-phase-recovery-pc-evidence.json.
