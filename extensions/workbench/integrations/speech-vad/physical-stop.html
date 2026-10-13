@@ -94,7 +94,7 @@ button.onclick=async()=>{
    const firstHeld=await nativeSnapshot();
    const clips=[manifest.question,item],captures=[],recognized=[],errors=[];
    let cursor=0,stopPosted=null,stopDone=null,beforeStop=null,questionStarted=null,questionResolved=null;
-   let questionResult=null,dialogue=null,stops=0,sampledNative=firstHeld,sampledAt=epoch(),beforeSampleAge=null;
+   let questionResult=null,dialogue=null,stops=0,stopResponse=null,sampledNative=firstHeld,sampledAt=epoch(),beforeSampleAge=null;
    const element=()=>({textContent:'',hidden:false,disabled:false,setAttribute(){}});
    mic=new MicrophoneInput({button:element(),cancel:element(),note:element(),heard:element(),
     mediaDevices:{getUserMedia:async()=>{
@@ -127,7 +127,7 @@ button.onclick=async()=>{
      // independent sample; native event phase separately proves active work.
      beforeStop=sampledNative;beforeSampleAge=epoch()-sampledAt;
      verify(beforeSampleAge<=.25&&beforeStop.busy,'No recent active native Stop sample');
-     stopPosted=epoch();stops++;await post('/stop');stopDone=epoch();
+     stopPosted=epoch();stops++;stopResponse=await post('/stop');stopDone=epoch();
     },
     onError:message=>{if(message)errors.push(message);},
    });
@@ -152,7 +152,7 @@ button.onclick=async()=>{
    const stopCapture=captures[1];verify(stopCapture?.clip.id===item.id,'Stop source identity mismatch');
    const reference=stopCapture.started_epoch_s+item.last_clean_voiced_ms/1000;
    const row={id:item.id,task_id:task,passed:false,initial_request:initialRequest,recognized,errors,captures:captures.map(c=>({file:c.clip.file,started_epoch_s:c.started_epoch_s,tracks_ended:c.stream.getTracks().every(t=>t.readyState==='ended')})),
-    reference_last_voiced_epoch_s:reference,stop_post_epoch_s:stopPosted,stop_done_epoch_s:stopDone,end_to_stop_post_ms:(stopPosted-reference)*1000,before_stop_sample_age_s:beforeSampleAge,
+    reference_last_voiced_epoch_s:reference,stop_post_epoch_s:stopPosted,stop_done_epoch_s:stopDone,end_to_stop_post_ms:(stopPosted-reference)*1000,before_stop_sample_age_s:beforeSampleAge,stop_response:stopResponse,
     question_started_epoch_s:questionStarted,question_resolved_epoch_s:questionResolved,question_result:questionResult,pending_reply:pending,
     pre_stop_joint_motion_rad:motion,settled_joint_drift_rad:drift,tracks_ended:tracksEnded,
     first_held:firstHeld,before_stop:beforeStop,after_stop:physical,after_settling:laterPhysical,

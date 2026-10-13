@@ -1,5 +1,15 @@
 # Speech interruption under camera-model load — PC, 2026-10-13
 
+Correction after inspecting the retained camera logs: run007 contains two camera
+timeouts and four different-model identity rejections. Its six physical/state
+journeys remain verified, but it does not establish the intended Gemma workload.
+Run008 subsequently stopped after two full journeys when another camera identity
+failure surfaced as a409 dialogue error, even though spoken Stop reached native
+cancellation. The selected Gemma instance was absent from the loaded inventory.
+It was explicitly reloaded and its identity checked by a real camera response
+before run009. Camera workload errors now fail the independent qualification;
+superseding an unsuccessful worker cannot establish valid vision contention.
+
 GPU speech recognition can miss the one-second Stop objective while the camera
 model is active. The complete saved-voice run retained five timing failures out
 of six; an independent check found upper-bound median 1144.05 ms and p95
@@ -84,7 +94,8 @@ one existing dependency warning and no fork warnings.
 
 The CPU-path run completed all six full natural-voice journeys and passed
 every physical/state check. Four Stops interrupted native-verified camera
-inference; pending replies were superseded. All six resumed, delivered, refused
+worker requests; pending replies were superseded. Those requests failed and
+do not establish execution of the selected vision model. All six resumed, delivered, refused
 a new pickup on completion-aware Proceed, and returned correctly. Twelve native
 placements passed; minimum observed lift was 201.53 mm and maximum placement
 error 9.56 mm. Maximum settled joint drift was 0.000940 rad, held translation

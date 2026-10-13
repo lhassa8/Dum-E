@@ -3,6 +3,7 @@
 import asyncio
 import json
 import time
+import uuid
 from dataclasses import asdict
 from datetime import datetime
 
@@ -289,12 +290,29 @@ class SimulationAgent(IRobotAgent):
 
     async def cancel(self, invalidate_interaction=True):
         # Physical stop first, then cancel both the active request and queued tasks.
+        started_ns = time.perf_counter_ns()
         if invalidate_interaction:
             self.interaction.invalidate()
         await self.controller.stop()
+        native_ack_ns = time.perf_counter_ns()
+        cancelled = []
         for task in await self.tasks.list_tasks():
             if task.status in {TaskStatus.PENDING, TaskStatus.RUNNING}:
                 await self.tasks.cancel_task(task.task_id)
+                cancelled.append(task.task_id)
+        cleanup_end_ns = time.perf_counter_ns()
+        timing = {
+            "cancellation_id": uuid.uuid4().hex,
+            "started_ns": started_ns, "native_ack_ns": native_ack_ns,
+            "cleanup_end_ns": cleanup_end_ns,
+            "after_native_ack_ms": (cleanup_end_ns - native_ack_ns) / 1_000_000,
+            "native_ack_wait_ms": (native_ack_ns - started_ns) / 1_000_000,
+            "cancelled_task_ids": cancelled,
+            "scope": "Frontend monotonic intervals; cleanup follows native acknowledgment",
+        }
+        with (self.log_path.parent / "cancellation-timing.jsonl").open("a") as file:
+            file.write(json.dumps(timing) + "\n")
+        return timing
 
     def stopped_message(self):
         return (

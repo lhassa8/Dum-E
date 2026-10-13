@@ -1964,3 +1964,31 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   gate fails; notpromoted. Need precisecancellation versusqueueack measurement,
   fullacoustic/ack/echo/humanvalidation andbroadercontention. Experimental8996
   ready, originals preserved, no mic activation/hardware/rawupload. Goal active.
+
+### B37 — Verified camera workload and conservative cancellation intervals (PC)
+
+- Previous turn progressed state/physical voice checks and CPUStop isolation,
+  but run007 did not prove the intended Gemma workload: subsequent log inspection
+  found2timeouts and4different-model identity refusals. Physical/state results
+  remain valid; withdraw intended-camera-contention qualification. No hiding errors.
+- NativeStop still precedes task cleanup. Add logged monotonic start/ack/cleanup
+  intervals and uniqueID; endpoint returns identical record. Judge verifies local
+  record/duration/order and subtracts only post-ack cleanup,roundeddown wholems.
+  Same1000ms target, no browser/WSL wall-clock subtraction; holdcriteria unchanged.
+- Full344tests pass229.31s,1dependencywarning; new ordering/logging contract passes.
+  Run008fails after2journeys because camera identityfailure becomes409 beforeStop
+  supersedes it. ActualStop transcript/nativecancellation present; failedrun retained.
+- Loadedinventory had onlyBonsai; selectedGemma absent,causeunknown. Explicitlyreload
+  localGemma4 31B Q4_K_M,maxoffload,4096context,1slot,3600sTTL; realcameraresponse
+  verifiesexactalias. Preserve observedBonsai8192context/4slots. No model fallback.
+- Freeze same6sources/PCM/code/protectedcriteria again,protocolb3bd58dd. Judge now
+  rejectsfailedcamera workloads eveniflatersuperseded; stricterevidence, no actorchange.
+  Retry009passes6/6 fulljourneys +6validpendingcamera interruptions,12placements;
+  no completedProceed repick. Minlift201.33mm,maxerror9.24mm,maxjointdrift0.001438rad,
+  heldtranslation0.520mm,maxobserverage135ms. Posthash/criteria checks pass.
+- Stopupper861.00/979.70ms med/samplep95 n6,all<=1000. Cleanupfloor0/0/2/1/1/1ms;
+  uncorrected861.50/980.70also pass. No causal speedup claim from this rerun.
+  Seven retainedrecord mutationchecks,Ruff,browsercontracts,46upstream bytes pass.
+- Experimental8996Ready, originaldemospreserved. Next: human-controlled fastStop/
+  stateawareProceed demonstration, acoustic/ack/echo measurement, broadcontention.
+  No micactivation, hardware, rawupload or externalmessages. Sustainedgoal active.

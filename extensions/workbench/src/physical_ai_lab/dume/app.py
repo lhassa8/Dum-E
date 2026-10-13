@@ -206,10 +206,10 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
     async def stop():
         speech.stop()
         try:
-            await agent.cancel()
+            cancellation = await agent.cancel()
         except httpx.HTTPError as error:
             raise HTTPException(503, "Could not contact the simulator to stop it.") from error
-        return {"stopping": True}
+        return {"stopping": True, "cancellation": cancellation}
 
     @api.post("/interact")
     async def interact(request: InteractionRequest):

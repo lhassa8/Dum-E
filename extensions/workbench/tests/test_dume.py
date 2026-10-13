@@ -131,6 +131,35 @@ def test_pinned_sources_unmodified():
         assert hashlib.sha256((VENDOR / name).read_bytes()).hexdigest() == digest, name
 
 
+def test_cancel_signals_native_before_queue_cleanup_and_logs_same_intervals(
+    upstream_backends, tmp_path
+):
+    async def run():
+        tasks, broker = upstream_backends
+        controller = ControllerProbe()
+        agent = SimulationAgent(controller, tasks, broker, tmp_path / "events.jsonl", tools=True)
+        pending = await tasks.create_task("Bring the screwdriver")
+        running = await tasks.create_task("Return the wrench")
+        await tasks.update_task(running, TaskStatus.RUNNING)
+        original_cancel = tasks.cancel_task
+
+        async def cancel_after_native(task_id):
+            assert controller.stopped, "Queue cleanup preceded physical cancellation"
+            await asyncio.sleep(0.015)
+            await original_cancel(task_id)
+
+        tasks.cancel_task = cancel_after_native
+        result = await agent.cancel()
+        assert set(result["cancelled_task_ids"]) == {pending, running}
+        assert result["started_ns"] <= result["native_ack_ns"] <= result["cleanup_end_ns"]
+        assert result["after_native_ack_ms"] >= 30
+        assert all(task.status == TaskStatus.CANCELLED for task in await tasks.list_tasks())
+        logged = json.loads((tmp_path / "cancellation-timing.jsonl").read_text())
+        assert logged == result
+
+    asyncio.run(run())
+
+
 @pytest.mark.parametrize(
     "outcome,action,expected,physical",
     [

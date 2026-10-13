@@ -38,6 +38,7 @@ manifest = {
             "src/physical_ai_lab/dume/audio_decode.py",
             "src/physical_ai_lab/dume/interrupt_asr.py",
             "src/physical_ai_lab/dume/app.py",
+            "src/physical_ai_lab/dume/bridge.py",
             "src/physical_ai_lab/dume/web/voice-input.mjs",
             "src/physical_ai_lab/dume/web/speech-detector.mjs",
             "src/physical_ai_lab/assistant/app.py",

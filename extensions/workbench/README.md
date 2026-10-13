@@ -13,8 +13,10 @@ missed noisy late Stops and evaluates an experimental maintained-VAD input path;
 it remains disabled in public assistants pending physical interruption checks.
 The [full voice interruption qualification](docs/pc-voice-interruption-qualification.md)
 adds an explicit CPU Stop path while other speech remains on CUDA. Six complete
-saved-voice journeys pass physical/state checks; one conservative timing bound
-is 12 ms beyond the target, leaving full timing qualification unproven. The
+saved-voice journeys pass physical/state checks. The [verified-model retry](docs/cancellation-stage-timing-pc.md)
+also passes all six one-second Stop bounds:861ms median,980ms samplep95/max.
+Earlier timing and camera-workload failures remain recorded; live acoustic
+timing, audible acknowledgment and echo remain unqualified. The
 experimental demo is at http://127.0.0.1:8996 with listening off by default.
 
 The optional [PC camera interface](docs/live-camera-interface-pc.md) uses

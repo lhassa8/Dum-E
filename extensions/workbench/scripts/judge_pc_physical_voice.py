@@ -34,11 +34,29 @@ for item in [*manifest["cases"], manifest["fetch"], manifest["question"],
     ), item["id"]
 report = json.loads((args.folder / "physical-stop-browser.json").read_text())
 events = [json.loads(line) for line in args.events.read_text().splitlines() if line.strip()]
+cancellation_log = args.events.parent.parent / "cancellation-timing.jsonl"
+cancellations = [json.loads(line) for line in cancellation_log.read_text().splitlines()
+                 if line.strip()] if cancellation_log.exists() else []
 criteria = protocol["criteria"]
 rows, global_failures, timings = [], [], []
 pending_count = 0
 for row in report.get("rows", []):
     failures = []
+    camera_starts = [event for event in events if event["kind"] == "camera_inference_started"
+                     and event.get("active_job") == row["before_stop"]["job_id"]]
+    camera_errors = []
+    for start in camera_starts:
+        finish = next((event for event in events
+                       if event["kind"] == "camera_inference_finished"
+                       and event.get("active_job") == start["active_job"]
+                       and event["time"] >= start["time"]), None)
+        if finish:
+            camera_errors.extend(event for event in events
+                                 if event["kind"] == "camera_failed"
+                                 and start["time"] <= event["time"] <= finish["time"]
+                                 and "Camera request was superseded" not in event.get("error", ""))
+    if camera_errors:
+        failures.append("Camera-model workload failed; intended vision contention unverified")
     case = next(case for case in manifest["cases"] if case["id"] == row["id"])
     assert [capture["file"] for capture in row["captures"]] == [
         manifest["question"]["file"], case["file"]
@@ -57,6 +75,21 @@ for row in report.get("rows", []):
         # the same browser clock; require its conservative upper bound <=1 s.
         lower_ms = (row["stop_post_epoch_s"] - reference) * 1000
         native_ms = (row["stop_done_epoch_s"] - reference) * 1000
+        cleanup = (row.get("stop_response") or {}).get("cancellation")
+        cleanup_floor_ms = 0
+        if cleanup:
+            matches = [entry for entry in cancellations
+                       if entry["cancellation_id"] == cleanup["cancellation_id"]]
+            assert len(matches) == 1 and matches[0] == cleanup, "Unverified cancellation telemetry"
+            assert cleanup["started_ns"] <= cleanup["native_ack_ns"] <= cleanup["cleanup_end_ns"]
+            elapsed = (cleanup["cleanup_end_ns"] - cleanup["native_ack_ns"]) / 1_000_000
+            assert abs(elapsed - cleanup["after_native_ack_ms"]) < 1e-9
+            assert elapsed <= (row["stop_done_epoch_s"] - row["stop_post_epoch_s"]) * 1000
+            # This entire interval occurs after confirmed cancellation. Round
+            # it down, so subtraction preserves a conservative onset bound.
+            cleanup_floor_ms = math.floor(elapsed)
+            native_ms -= cleanup_floor_ms
+            assert native_ms >= lower_ms
         timings.append(native_ms)
         if not 0 <= native_ms <= criteria["maximum_end_to_native_stop_ms"]:
             failures.append("Conservative Stop upper bound exceeds 1000 ms; deadline unproven")
@@ -145,6 +178,8 @@ for row in report.get("rows", []):
                  "end_to_native_stop_ms": native_ms, "verified_pending_generation": pending,
                  "native_stop_timing_kind": "conservative upper bound at RPC acknowledgment",
                  "native_stop_lower_bound_ms": lower_ms if len(stops) == 1 else None,
+                 "post_native_ack_cleanup_floor_ms": cleanup_floor_ms if len(stops) == 1 else None,
+                 "camera_model_errors": camera_errors,
                  "settled_joint_drift_rad": drift, "held_tool_translation_m": held_motion,
                  "joint_motion_rad": motion, "lift_m": lifts})
 if report.get("failed"):
@@ -167,7 +202,7 @@ judged = {"rows": rows, "passed": not global_failures, "failures": global_failur
                         "p95": ordered[math.ceil(len(ordered) * 0.95) - 1]} if timings else None,
           "scope": protocol["scope"], "protocol_sha256": manifest["protocol_sha256"]}
 judged["timing_kind"] = (
-    "Conservative browser-clock upper bounds; native event matched by unique job"
+    "Conservative browser-clock upper bounds minus verified post-native-ack cleanup rounded down"
 )
 (args.folder / "physical-stop-judged.json").write_text(json.dumps(judged, indent=2) + "\n")
 print(json.dumps({"passed": judged["passed"], "rows": len(rows), "failures": global_failures,
