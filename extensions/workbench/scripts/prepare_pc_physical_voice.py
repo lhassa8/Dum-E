@@ -14,6 +14,7 @@ root = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("output", type=Path)
 parser.add_argument("--sources", type=Path, required=True)
+parser.add_argument("--speech-output", action="store_true")
 args = parser.parse_args()
 protocol_file = root / "fixtures/pc_physical_voice_stop_protocol.json"
 protocol_bytes = protocol_file.read_bytes()
@@ -47,6 +48,19 @@ manifest = {
         ]
     }, "cases": [],
 }
+if args.speech_output:
+    manifest["speech_output"] = {
+        "backend": "windows-sapi", "maximum_acknowledgment_start_ms": 500,
+        "maximum_post_to_playing_ms": 500, "minimum_acknowledgments_per_case": 4,
+        "scope": "Windows playback during saved-voice physics journeys; no mic/acoustic check",
+    }
+    for file in ["integrations/speech-vad/physical-speech.mjs",
+                 "src/physical_ai_lab/dume/web/local-speech.mjs",
+                 "src/physical_ai_lab/dume/windows_speech.py",
+                 "src/physical_ai_lab/dume/speech.py", "scripts/windows_speech_worker.ps1",
+                 ".cache/local-speech/acknowledgment.wav"]:
+        manifest["implementation_sha256"][file] = hashlib.sha256(
+            (root / file).read_bytes()).hexdigest()
 for case_id in protocol["stop_cases"]:
     case = next(row for row in endpoint["cases"] if row["id"] == case_id)
     data = (endpoint_folder / case["file"]).read_bytes()

@@ -2,8 +2,10 @@
 <html lang="en"><meta charset="utf-8"><title>Browser voice to physical Stop verification</title>
 <style>body{font:16px system-ui;max-width:1000px;margin:40px auto}table{border-collapse:collapse;width:100%}td,th{padding:8px;border-bottom:1px solid #ddd}pre{white-space:pre-wrap}.bad{color:#b22}</style>
 <h1>Speech to simulated physical Stop</h1>
-<p>Saved speech only. Actual browser capture, local models, task bus and MuJoCo. No microphone or speaker use.</p>
+<p id="input-scope">Saved speech only. Actual browser capture, local models, task bus and MuJoCo. No microphone or speaker use.</p>
 <p>Turn off Voice and Listen while working in the public app before running.</p>
+<p id="speech-scope" hidden>Native Windows replies and acknowledgment are played through local speakers. No microphone is opened. The test has its own isolated arm service.</p>
+<img id="frame" hidden alt="Actual isolated simulated arm" style="width:520px;max-width:100%">
 <button id="run">Run six controlled Stop trials</button><p id="status" role="status">Not started.</p>
 <button id="judge">Read independent native verification</button>
 <table><thead><tr><th>Clip</th><th>Browser checks</th><th>End to Stop POST</th><th>Settled drift</th><th>Reply pending</th></tr></thead><tbody id="rows"></tbody></table>
@@ -12,6 +14,8 @@
 <script type="module">
 import {MicrophoneInput} from '/voice-input.mjs';
 import {createSpeechMonitor} from '/speech-detector.mjs';
+import {PhysicalSpeech} from '/physical-speech.mjs';
+let output=null;
 const status=document.querySelector('#status'),button=document.querySelector('#run');
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const epoch=()=> (performance.timeOrigin+performance.now())/1000;
@@ -47,8 +51,9 @@ async function speakSaved(clip,monitor){
    await context.resume();source.start(context.currentTime);return cleanup;
   },fetchAudio:async(route,options)=>{
    const response=await fetch(route,options);if(response.ok)recognized=await response.clone().json();return response;
-  },stopSpeech:async()=>{},onStop:()=>{throw Error('Unexpected Stop during continuation');},
-  onText:async text=>{result=await post('/interact',{message:text,source:'voice'});done=true;},
+  },stopSpeech:async()=>{if(output)await output.stopSignal();},
+  onEndpoint:info=>output?.endpoint(info),onStop:()=>{throw Error('Unexpected Stop during continuation');},
+  onText:async text=>{result=await post('/interact',{message:text,source:'voice'});if(output)output.observe(await request('/api/state'));done=true;},
   onError:message=>{if(message)error=message;}});
  try{
   mic.setReady(true);await mic.start('request');
@@ -76,9 +81,14 @@ document.querySelector('#judge').onclick=async()=>{
 };
 button.onclick=async()=>{
  button.disabled=true;const monitor=createSpeechMonitor(),rows=[];
- let mic=null,finished=false;
+ let mic=null,finished=false,frameTimer=null;
  try{
   const manifest=await request('/clips/physical-manifest.json'),criteria=manifest.protocol.criteria;
+  if(manifest.speech_output){document.querySelector('#speech-scope').hidden=false;
+   document.querySelector('#input-scope').textContent='Saved speech streams, actual models, native reply playback, task bus and MuJoCo. No microphone use.';
+   const frame=document.querySelector('#frame');frame.hidden=false;
+   frameTimer=setInterval(()=>{if(frame.complete)frame.src='/api/frame.jpg?v='+performance.now();},500);
+  }
   const initial=await request('/api/native-state');
   verify(initial.backend==='workbench'&&initial.profile==='tools'&&initial.robot_joints?.length===7,'Expected native simulated Panda state');
   await monitor.prepare();
@@ -86,6 +96,7 @@ button.onclick=async()=>{
    status.textContent='Starting '+item.id+'…';
    await waitState(s=>s.model_status==='ready'&&s.speech_input.status==='ready'&&!s.busy&&!s.interaction?.busy);
    await post('/reset');await waitState(s=>s.phase==='Ready'&&s.last_intent===null);
+   if(manifest.speech_output){output=new PhysicalSpeech(request,post);await output.initialize();}
    const initialRequest=manifest.fetch?await speakSaved(manifest.fetch,monitor):null;
    const task=initialRequest?initialRequest.result.task_id:
      (await post('/interact',{message:'Bring me the screwdriver.'})).task_id;
@@ -116,7 +127,7 @@ button.onclick=async()=>{
     fetchAudio:async(route,options)=>{
      const response=await fetch(route,options);if(response.ok)recognized.push(await response.clone().json());return response;
     },
-    stopSpeech:async()=>{},onText:()=>{throw Error('Unexpected idle request');},
+    stopSpeech:async()=>{if(output)await output.stopSignal();},onText:()=>{throw Error('Unexpected idle request');},
     onDuringWork:text=>{
      verify(!dialogue,'Unexpected extra dialogue');questionStarted=epoch();
      dialogue=post('/interact',{message:text,source:'voice'}).then(value=>{questionResolved=epoch();questionResult=value;return value;});
@@ -127,7 +138,7 @@ button.onclick=async()=>{
      // independent sample; native event phase separately proves active work.
      beforeStop=sampledNative;beforeSampleAge=epoch()-sampledAt;
      verify(beforeSampleAge<=.25&&beforeStop.busy,'No recent active native Stop sample');
-     stopPosted=epoch();stops++;stopResponse=await post('/stop');stopDone=epoch();
+     output?.stop();stopPosted=epoch();stops++;stopResponse=await post('/stop');stopDone=epoch();
     },
     onError:message=>{if(message)errors.push(message);},
    });
@@ -145,6 +156,7 @@ button.onclick=async()=>{
    const physical=await nativeSnapshot();
    await sleep(criteria.settling_observation_ms);const laterPhysical=await nativeSnapshot(),later=await request('/api/state');
    await dialogue;
+   if(output)await output.settled();
    const drift=Math.max(...physical.robot_joints.map((q,i)=>Math.abs(q-laterPhysical.robot_joints[i])));
    const motion=Math.max(...firstHeld.robot_joints.map((q,i)=>Math.abs(q-beforeStop.robot_joints[i])));
    const pending=questionStarted!==null&&questionResolved>stopPosted;
@@ -157,6 +169,7 @@ button.onclick=async()=>{
     pre_stop_joint_motion_rad:motion,settled_joint_drift_rad:drift,tracks_ended:tracksEnded,
     first_held:firstHeld,before_stop:beforeStop,after_stop:physical,after_settling:laterPhysical,
     task_status:later.tasks.find(t=>t.task_id===task)?.status,remaining_work:later.tasks.filter(t=>t.status==='pending'||t.status==='running'),stopped_phase:stopped.phase};
+   if(output)row.speech_output={records:output.records,errors:output.errors};
    rows.push(row);
    verify(row.task_status==='cancelled'&&row.remaining_work.length===0,'Task cancellation/queue failed');
    verify(drift<criteria.maximum_settled_joint_drift_rad,'Arm did not settle');
@@ -170,17 +183,20 @@ button.onclick=async()=>{
     verify(row.resume.result.mode==='task','Proceed did not select paused work');
     await waitState(s=>!s.busy&&s.last_outcome?.status==='success');
     row.delivered=await nativeSnapshot();
+    if(output)await output.settled();
     verify(row.delivered.last_outcome.distance_m<criteria.maximum_placement_distance_m,'Delivery placement failed');
     const completedJob=row.delivered.job_id;
     row.completed_resume=await speakSaved(manifest.resume,monitor);
     await sleep(500);row.after_completed_resume=await nativeSnapshot();
     verify(row.completed_resume.result.mode==='conversation'&&!row.completed_resume.result.task_id&&
       row.after_completed_resume.job_id===completedJob&&!row.after_completed_resume.busy,'Completed Proceed launched another pickup');
+    if(output)await output.settled();
     row.return=await speakSaved(manifest.return,monitor);
     await waitState(s=>!s.busy&&s.last_outcome?.status==='success'&&s.last_intent?.action==='return');
     row.returned=await nativeSnapshot();
     verify(row.returned.last_outcome.distance_m<criteria.maximum_placement_distance_m,'Return placement failed');
    }
+   if(output){await output.settled();row.speech_output={records:output.records,errors:output.errors};output.close();output=null;}
    row.passed=true;
    await save({kind:'physical-stop',protocol_sha256:manifest.protocol_sha256,
      rows,count:rows.length,in_progress:true});
@@ -194,9 +210,10 @@ button.onclick=async()=>{
   finished=true;status.textContent=`Finished ${rows.length}/${manifest.cases.length}. Native timing still requires independent event-log verification.`;
  }catch(error){
   document.querySelector('#error').textContent=error.message;status.textContent='Failed; no completion claim.';
-  await save({kind:'physical-stop',failed:true,error:error.message,rows}).catch(()=>{});
+  await save({kind:'physical-stop',failed:true,error:error.message,rows,
+   failed_speech_output:output?{records:output.records,errors:output.errors}:null}).catch(()=>{});
  }finally{
-  mic?.close();if(!finished)await post('/stop').catch(()=>{});await monitor.close().catch(()=>{});
+  mic?.close();output?.close();clearInterval(frameTimer);if(!finished)await post('/stop').catch(()=>{});await monitor.close().catch(()=>{});
  }
 };
 </script></html>

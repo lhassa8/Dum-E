@@ -48,6 +48,7 @@ def main():
         "/acknowledgment": ROOT / "integrations/speech-vad/acknowledgment.html",
         "/tts-diagnostic": ROOT / "integrations/speech-vad/tts-diagnostic.html",
         "/local-speech.mjs": ROOT / "src/physical_ai_lab/dume/web/local-speech.mjs",
+        "/physical-speech.mjs": ROOT / "integrations/speech-vad/physical-speech.mjs",
         "/acknowledgment.wav": ROOT / ".cache/local-speech/acknowledgment.wav",
         "/voice-input.mjs": ROOT / "src/physical_ai_lab/dume/web/voice-input.mjs",
         "/speech-detector.mjs": ROOT / "src/physical_ai_lab/dume/web/speech-detector.mjs",
@@ -77,7 +78,8 @@ def main():
                 response = connection.getresponse()
                 data = response.read()
                 self.send_response(response.status)
-                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Type", response.getheader(
+                    "Content-Type", "application/json"))
                 self.send_header("Content-Length", str(len(data)))
                 self.end_headers()
                 self.wfile.write(data)
@@ -101,6 +103,10 @@ def main():
                     else args.browser_port, "/state"
                 )
                 return
+            if args.physical_checks and (route in {"/api/frame.jpg", "/acknowledgment.wav"}
+                                         or route.startswith("/speech-audio/")):
+                self.forward("GET", args.browser_port, route.removeprefix("/api"))
+                return
             selected = routes.get(route)
             for prefix, folder in folders.items():
                 if route.startswith(prefix):
@@ -117,6 +123,29 @@ def main():
             self.wfile.write(selected.read_bytes())
 
         def do_POST(self):
+            if args.physical_checks and (self.path in {"/api/speak", "/api/speech-stop"}
+                                        or self.path.startswith(("/api/speech-started/",
+                                                                 "/api/speech-finished/"))):
+                size = int(self.headers.get("Content-Length", "0"))
+                if not 0 < size < 10_000:
+                    self.send_error(413)
+                    return
+                connection = http.client.HTTPConnection("127.0.0.1", args.browser_port, timeout=15)
+                try:
+                    connection.request("POST", self.path.removeprefix("/api"),
+                                       self.rfile.read(size),
+                                       {"Content-Type": "application/json"})
+                    response = connection.getresponse()
+                    result = json.loads(response.read())
+                    data = json.dumps(result).encode()
+                    self.send_response(response.status)
+                    self.send_header("Content-Type", "application/json")
+                    self.send_header("Content-Length", str(len(data)))
+                    self.end_headers()
+                    self.wfile.write(data)
+                finally:
+                    connection.close()
+                return
             if speech and self.path in {"/speak", "/speech-stop"}:
                 size = int(self.headers.get("Content-Length", "0"))
                 if not 0 < size < 2000:

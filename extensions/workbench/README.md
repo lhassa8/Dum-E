@@ -26,7 +26,11 @@ The [installed Windows reply backend](docs/windows-speech-output.md), explicitly
 enabled with `-WindowsSpeech`, generates ordinary replies locally and plays WAVs.
 Twelve complete browser/API replies pass at67ms median /101ms p95 after text
 readiness, with accepted playback events and cancelled-generation rejection.
-It is enabled at8996; human audible/echo and full robot-journey checks remain open.
+It is enabled at8996; human audible/echo checks remain open.
+The [combined saved-voice qualification](docs/full-spoken-journeys-pc.md) now passes
+six complete speech-enabled arm journeys, including24 finished acknowledgments
+and42 replies. Stop bounds are802ms median /966ms p95. Human microphone/room echo
+and broad-layout qualification remain open; simulation is not hardware readiness.
 
 The optional [PC camera interface](docs/live-camera-interface-pc.md) uses
 `-CameraTools` and separate ports at http://127.0.0.1:8886. It has measured typed

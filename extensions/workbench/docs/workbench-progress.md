@@ -2058,3 +2058,31 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
 - Remaining:fullspeech-enabledarmjourneys, humanaudibility/acoustic/roomEcho,
   movingconversationack andbroaderassistantgoals. No micactivation,hardware,
   paidservices,rawupload or externalmessages. Sustainedgoalactive.
+
+### B40 — Full saved-voice speech/physics journeys in isolated profile (PC)
+
+- Previousb8cb452 adds actualWindowsordinaryreplies,350regressions pass; full
+  speech-enabledarmjourney andhumanroom checks remain open. Progressnotcompletion.
+- With935MBfreeGPU, temporarilycloseidle8996 andlaunchsameCUDA/CPUStop/native
+  speech camera profile on9036/9035/8806. Neveropen itspublicmicpage; generated
+  streams only. Fouroriginaldemos preserved. Actualrenderedarm view inprobe.
+- Preserveoriginalsixcases/criteria. Supplementnativeoutput lifecycle checks;
+  fullStop/delivery/completedProceed/return replies finish,4ack percase required.
+  NoAPI/actor tweaks. Run001preparedunused afterlabelrepair;002failsafter1row
+  onobserverunfinishedreply despite nativeendedlogs. Retainfailedqualification.
+- Testobservermonotonicmessagecount matchespublicUI; oldpollcannotreplayreply.
+  MarklogicalqueuedreplysupersededbeforeAPI dispatch; persistfailure/media clocks.
+  Bothracecontracts pass. Addedmediaendpointcheck,keptoriginalduration tolerance.
+- Final003passes6/6 physics/state/speech/timing;12placements,minlift201.30mm,
+  maxerror9.26mm,drift0.002471rad,heldmotion0.392mm,5nativependingcamera interruptions.
+  ConservativeStop802.25/965.60ms med/p95 n6,all<1000; no target orclockchange.
+- All24acks/42ordinaryreplies complete;ackstart64.10/124.10ms n24,API-to-player
+  95.45/151.80ms n66,outputqueuewait separate. Fourackedidlecommandspercase;
+  completedProceed no repick,return contextcorrect. Source/PCM/WAV/nativeevents pass.
+- Sixnegativeevidencechecks rejectmissing/truncated/late/failedoutput; observer,
+  recorder,output,static and46upstreamchecks pass. Priorproduction350pass retained;
+  thisturn onlytesttooling. No extrapolation tolive acoustic/audible performance.
+- Restore8996Ready,d9410c6e,CUDAsmall/CPUStop/SAPI;ASR3.268spreparation/2.146swarmup.
+  Isolatedtestservicesgracefullyclosed. Humanmic/echo, broadutterances/layouts,
+  learnedpolicy andwholegoal remainopen. No microphoneactivation,hardware,
+  paidservices,rawuploads or externalmessages. Sustainedgoalactive.
