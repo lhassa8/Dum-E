@@ -1,0 +1,152 @@
+{
+  "date": "2026-10-13",
+  "decision": "Evaluate Strands selectively; preserve verified OpenPi/LIBERO lab and existing Stop/hold baseline. No public replacement qualified.",
+  "robots_revision": "a6f2e776b5b8a7d4ab96feccbc9ceac82bef1702",
+  "decider_revision": "b9fc83626bcca822d00f822d6c2e151b8d244ee9",
+  "runtime_probe_sha256": "8211108281e89b2fecd68ef12c8ac99de3ef00519cfd7b94245c538fad2bf26e",
+  "measured_runtime": {
+    "source_revision": "a6f2e776b5b8a7d4ab96feccbc9ceac82bef1702",
+    "rendering": "software llvmpipe reported by framework; no GPU rendering claim",
+    "packages": {
+      "strands-robots": "0.0.0+eval.a6f2e776",
+      "strands-agents": "1.60.0",
+      "mujoco": "3.15.0",
+      "numpy": "2.5.4"
+    },
+    "asset_sha256": "c5a92e6ff47e7282ea303ffe13530ffe150248a22bb4b349a9369881e52facf0",
+    "scope": "real MuJoCo joint execution and cooperative cancellation, no grasp or pretrained policy",
+    "trials": [
+      {
+        "trial": 0,
+        "action_keys": [
+          "actuator1",
+          "actuator2",
+          "actuator3",
+          "actuator4",
+          "actuator5",
+          "actuator6",
+          "actuator7",
+          "actuator8"
+        ],
+        "applied_actions": 9,
+        "stop_to_terminal_ms": 23.683957995672245,
+        "joint1_displacement_rad": 0.052080190255256884,
+        "max_state_change": 0.052080190255256884,
+        "post_cancel_1s_sim_drift": 0.03791866477978083,
+        "stopped_reason": "cancelled",
+        "within_existing_0_02_rad_hold_bound_at_1s": false,
+        "stop_response": {
+          "status": "success",
+          "content": [
+            {
+              "text": "Stopped on 'panda'"
+            },
+            {
+              "json": {
+                "robot": "panda",
+                "was_running": true,
+                "exited": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "trial": 1,
+        "action_keys": [
+          "actuator1",
+          "actuator2",
+          "actuator3",
+          "actuator4",
+          "actuator5",
+          "actuator6",
+          "actuator7",
+          "actuator8"
+        ],
+        "applied_actions": 9,
+        "stop_to_terminal_ms": 19.750461004150566,
+        "joint1_displacement_rad": 0.052080190255256884,
+        "max_state_change": 0.052080190255256884,
+        "post_cancel_1s_sim_drift": 0.03791866477978083,
+        "stopped_reason": "cancelled",
+        "within_existing_0_02_rad_hold_bound_at_1s": false,
+        "stop_response": {
+          "status": "success",
+          "content": [
+            {
+              "text": "Stopped on 'panda'"
+            },
+            {
+              "json": {
+                "robot": "panda",
+                "was_running": true,
+                "exited": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "trial": 2,
+        "action_keys": [
+          "actuator1",
+          "actuator2",
+          "actuator3",
+          "actuator4",
+          "actuator5",
+          "actuator6",
+          "actuator7",
+          "actuator8"
+        ],
+        "applied_actions": 9,
+        "stop_to_terminal_ms": 22.074223001254722,
+        "joint1_displacement_rad": 0.052080190255256884,
+        "max_state_change": 0.052080190255256884,
+        "post_cancel_1s_sim_drift": 0.03791866477978083,
+        "stopped_reason": "cancelled",
+        "within_existing_0_02_rad_hold_bound_at_1s": false,
+        "stop_response": {
+          "status": "success",
+          "content": [
+            {
+              "text": "Stopped on 'panda'"
+            },
+            {
+              "json": {
+                "robot": "panda",
+                "was_running": true,
+                "exited": true
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "passed": true,
+    "workbench_stop_qualified": false,
+    "qualification_note": "No tool, 1s diagnostic only; original 32s/tool hold qualification not run. Drift exceeding 0.02 rad already contradicts the joint hold bound."
+  },
+  "initial_failure": "Generic local-XML action keys are actuator1..8; joint observation names are joint1..7 and finger_joint1..2. First probe retained at runs/strands-runtime-001; explicit XML-validated mapping resolves execution.",
+  "source_findings": [
+    "Current source removed its vendored LIBERO adapter; stale panda_libero configuration is not an executable adapter.",
+    "Strands RemotePolicy uses WS-JSON; verified OpenPi server uses a different observation/action and wire contract.",
+    "MoveIt2 and cuRobo provider wrappers are deprecated for removal in 0.7. Evaluate maintained ROS 2/MoveIt interfaces independently.",
+    "Built-in motion primitives explicitly lack collision awareness.",
+    "Framework supports object welds/attachments; those are excluded from our manipulation qualification."
+  ],
+  "decider_status": "Source inspected only. No checkpoint inference, accuracy, calibration or workstation latency reproduced.",
+  "installation": [
+    "Two editable metadata attempts failed on Windows-mount Git status timeout.",
+    "Immutable git archive with explicit evaluation-only version installed in separate temporary Linux environment; no assistant dependency changes.",
+    "Windows-mount pip install observed blocked in p9_client_rpc after 5m34s; stopped inspected owned installer and moved disposable environment to Linux tmp."
+  ],
+  "next_experiments": [
+    "Compare local 2B Decider against Bonsai on frozen natural task-selection and uncertainty cases, with real compatible GPU kernels and end-to-end latency.",
+    "Evaluate maintained collision-aware manipulation components behind the existing workbench interface, preserving actual contact physics and independent placement/lift/Stop judges."
+  ],
+  "sources": [
+    "https://github.com/strands-labs/robots/tree/a6f2e776b5b8a7d4ab96feccbc9ceac82bef1702",
+    "https://github.com/strands-labs/strands-decider/tree/b9fc83626bcca822d00f822d6c2e151b8d244ee9",
+    "https://docs.typesafe.ai/introduction"
+  ]
+}

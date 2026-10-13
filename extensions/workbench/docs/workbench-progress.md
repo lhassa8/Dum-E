@@ -1710,3 +1710,40 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   after cancellation inside computation remain outstanding; held resume currently
   refuses/retains context for fresh destination. Human camera demo pending.
   Goal active. Details/evidence: live-camera-recovery-pc.md/live-camera-recovery-pc-evidence.json.
+
+### B30 — Existing robotics components and decision models (PC, 2026-10-13)
+
+- Previous goal turn is progress: primary-source model research changed the
+  strategy toward existing execution components and pretrained skills. User
+  explicitly challenges excessive work on custom basic arm functions.
+- Inspected immutable Strands Robots a6f2e776 and Decider b9fc8362 sources.
+  No external issues, messages, paid calls, recordings or hardware. Main8876
+  and camera8886 remain on their existing runtimes; no dependency changes there.
+- Robots source removed its vendored LIBERO adapter; stale embodiment entries
+  do not supply one. Preserve our verified OpenPi/LIBERO stack. Generic robot
+  joint execution cannot consume LIBERO delta-EEF actions by matching lengths;
+  remote WS-JSON is also not our OpenPi wire protocol.
+- Separate real MuJoCo probe uses unchanged workbench Panda XML. First run fails
+  because local-file action names are actuators, while observations name joints.
+  Explicit XML-validated arm mapping and original split-tendon 0..255 open-hand
+  units resolve it. No pretrained model, grasp, object attachment or tool claim.
+- Final probe: 3/3 joint execution/cooperative cancellations, observed terminal
+  latencies23.68/19.75/22.07ms, n3 warm. Physics advanced independently another
+  1simsecond: every arm drifts0.03792rad, violating existing0.02rad hold bound.
+  Workbench Stop is unqualified; original32s/tool hold test not run. Do not
+  conflate ending policy execution with physical braking or audible Stop.
+- Inspected before/after rendered PNGs; framework reports llvmpipe software
+  rendering. No GPU rendering speed claim. Source package installed from
+  immutable archive into separate Linux/tmp environment with evaluation-only
+  version after two Windows-mount Git timeouts; an owned pip installer blocked
+  on p9 filesystem RPC was stopped before moving the disposable runtime.
+- Built-in primitives explicitly lack collision awareness. MoveIt2/cuRobo
+  wrappers deprecated; evaluate maintained planners independently rather than
+  adopt obsolete wrappers. Decider source inspected, checkpoint not yet run.
+- Added reusable standalone runtime probe; its lint passes. Raw failed and
+  successful runs remain local. Curated result: strands-selection-evidence.json.
+  Earlier async-camera cancellation edits remain unpublished and incomplete;
+  their best known diagnostic22/23 is not promotion evidence. Next priority:
+  local Decider comparison and existing manipulation components behind our
+  working voice/task interface, with original independent physical judges.
+  Full assistant goal remains active.
