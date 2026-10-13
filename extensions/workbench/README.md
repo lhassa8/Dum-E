@@ -64,6 +64,9 @@ An [exact-action contact replay](docs/libero-contact-diagnosis-pc.md) explains
 the failed layout: the elevated bowl contacts one finger pad and the other
 finger body. Substep sampling still never meets the bilateral-pad lift gate;
 the original qualification remains unchanged.
+The [bounded alignment experiment](docs/libero-grasp-alignment-pc.md) improves
+four of six corrected replays through a physical hold and native placement,
+with both failed variants retained. Fresh-policy adaptation remains unqualified.
 
 The [hardware adaptation plan](docs/hardware-adaptation-plan.md) documents what
 can be reused and what must be measured before choosing an arm. Our primitive

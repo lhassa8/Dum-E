@@ -2106,3 +2106,27 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   frozen actor. Documentation records source/actor hashes and reproduction.
   Next: separate frozen grasp-adaptation/recovery experiment, with this known
   trace confined to diagnosis/development and independent held-out evaluation.
+
+### C — Frozen 3 mm alignment experiment changes physical grasp outcome (PC)
+
+- Previous b373dc9 is verified progress: exact replay diagnoses right-finger body
+  contact instead of the required pad. Hypothesis: small approach alignment
+  changes can establish bilateral-pad contact without changing geometry/judges.
+- Freeze baseline and six +/-3mm world-axis variants before physics execution;
+  one attempt grid, no retuning. Apply once at last open-gripper action56.
+  Native OSC scaling0.05m/input verified, correction0.06input; all other recorded
+  actions retained. Evaluator truth only triggers/measures pause, not correction.
+- Unchanged103-step baseline reproduces source physics exactly. X-/X+/Z-/Z+
+  reach80mm bilateral pads, retain them during nativejointkp300/damping2 hold,
+  and place successfully after resuming recorded actions. Y- fails grasp trigger
+  and native placement; Y+ places but never reaches qualified grasp trigger.
+- Four held windows advance1.05sim seconds over3.215–3.437wall seconds;
+  minlift80.087–85.807mm, motion2.550–5.508mm, joint range0.007963–0.017203rad.
+  All original LIBERO physical gates retained; no ASR/Stop latency claim.
+- Raw grasp-alignment-001 includes all7 outcomes, exact action/hold traces,
+  frozen actor/protocol and videos. Independent raw audit checks action edits,
+  all baseline states, metrics, denominator and hashes; rendered hold inspected.
+- This is one known-source counterfactual grid, not seven independent learned
+  policy rollouts or held-out cases. Original2/3 qualification unchanged; no
+  adapter enabled. Next: separately frozen paired fresh-policy experiment with
+  explicit RNG and refreshed observations after interruption, no repeat grid.

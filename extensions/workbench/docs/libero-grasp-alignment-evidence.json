@@ -1,0 +1,302 @@
+{
+  "date": "2026-10-13",
+  "scope": "Known-trace development, not fresh policy inference or held-out qualification",
+  "raw_run": "runs/policy-runtime/grasp-alignment-001",
+  "protocol": {
+    "scope": "Known-trace development, not fresh policy inference or held-out qualification",
+    "source_sha256": "bb119868b212deec99ed3ea3795d413bb22a07a378ade8dec42349680fd9c1a2",
+    "actor_sha256": "2e41a4a7bc40a6acfceed3a8cbc2c7d77f2075a9b7b5f15982616df9aa18043f",
+    "task_id": 0,
+    "epoch": 1,
+    "seed": 7,
+    "initial_state_index": 0,
+    "source_steps": 103,
+    "variants": [
+      {
+        "name": "baseline",
+        "offset_m": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "x-3mm",
+        "offset_m": [
+          -0.003,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "x+3mm",
+        "offset_m": [
+          0.003,
+          0.0,
+          0.0
+        ]
+      },
+      {
+        "name": "y-3mm",
+        "offset_m": [
+          0.0,
+          -0.003,
+          0.0
+        ]
+      },
+      {
+        "name": "y+3mm",
+        "offset_m": [
+          0.0,
+          0.003,
+          0.0
+        ]
+      },
+      {
+        "name": "z-3mm",
+        "offset_m": [
+          0.0,
+          0.0,
+          -0.003
+        ]
+      },
+      {
+        "name": "z+3mm",
+        "offset_m": [
+          0.0,
+          0.0,
+          0.003
+        ]
+      }
+    ],
+    "intervention_step": 56,
+    "intervention": "One world-frame OSC displacement offset on last open-gripper action",
+    "input_contract": "LIBERO OSC_POSE; convert metres using verified native action scaling",
+    "trigger": "Evaluator sees native bilateral-pad grasp and lift >=80mm at completed step",
+    "hold": "Native JointPositionController kp300 damping_ratio2, unchanged torque caps",
+    "min_lift_m": 0.08,
+    "max_translation_m": 0.01,
+    "max_joint_range_rad": 0.02,
+    "min_hold_wall_s": 2.0,
+    "min_hold_sim_s_exclusive": 1.0,
+    "max_hold_wall_s": 5.0,
+    "max_baseline_replay_error": 1e-06,
+    "resumption": "Remaining recorded actions; no refreshed learned-policy observations",
+    "attempt_budget": "One frozen seven-variant grid; retain all outcomes; no grid retuning"
+  },
+  "episodes": [
+    {
+      "name": "baseline",
+      "offset_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "error": null,
+      "trigger_reached": false,
+      "hold_passed": false,
+      "native_success": true,
+      "translation_action_scale_m": [
+        0.05,
+        0.05,
+        0.05
+      ],
+      "applied_recorded_steps": 103,
+      "max_lift_m": 0.11943051962244366,
+      "max_bilateral_lift_m": 0.007732687061290933,
+      "max_baseline_replay_error": 0.0
+    },
+    {
+      "name": "x-3mm",
+      "offset_m": [
+        -0.003,
+        0.0,
+        0.0
+      ],
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": true,
+      "native_success": true,
+      "translation_action_scale_m": [
+        0.05,
+        0.05,
+        0.05
+      ],
+      "trigger_step": 83,
+      "hold_wall_s": 3.436749617001624,
+      "hold_sim_s": 1.0499999999998844,
+      "min_hold_lift_m": 0.08008749662632686,
+      "max_hold_translation_m": 0.004257728669763239,
+      "max_hold_joint_range_rad": 0.009834932392798201,
+      "all_hold_grasp_contacts": true,
+      "applied_recorded_steps": 98,
+      "max_lift_m": 0.08382990985466932,
+      "max_bilateral_lift_m": 0.08382990985466932
+    },
+    {
+      "name": "x+3mm",
+      "offset_m": [
+        0.003,
+        0.0,
+        0.0
+      ],
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": true,
+      "native_success": true,
+      "translation_action_scale_m": [
+        0.05,
+        0.05,
+        0.05
+      ],
+      "trigger_step": 84,
+      "hold_wall_s": 3.214619902006234,
+      "hold_sim_s": 1.0499999999998844,
+      "min_hold_lift_m": 0.08495518912164512,
+      "max_hold_translation_m": 0.0026110489097021018,
+      "max_hold_joint_range_rad": 0.007963394233014176,
+      "all_hold_grasp_contacts": true,
+      "applied_recorded_steps": 101,
+      "max_lift_m": 0.08525942353375648,
+      "max_bilateral_lift_m": 0.08525942353375648
+    },
+    {
+      "name": "y-3mm",
+      "offset_m": [
+        0.0,
+        -0.003,
+        0.0
+      ],
+      "error": null,
+      "trigger_reached": false,
+      "hold_passed": false,
+      "native_success": false,
+      "translation_action_scale_m": [
+        0.05,
+        0.05,
+        0.05
+      ],
+      "applied_recorded_steps": 103,
+      "max_lift_m": 0.11496330111216158,
+      "max_bilateral_lift_m": null
+    },
+    {
+      "name": "y+3mm",
+      "offset_m": [
+        0.0,
+        0.003,
+        0.0
+      ],
+      "error": null,
+      "trigger_reached": false,
+      "hold_passed": false,
+      "native_success": true,
+      "translation_action_scale_m": [
+        0.05,
+        0.05,
+        0.05
+      ],
+      "applied_recorded_steps": 102,
+      "max_lift_m": 0.1168278983938893,
+      "max_bilateral_lift_m": null
+    },
+    {
+      "name": "z-3mm",
+      "offset_m": [
+        0.0,
+        0.0,
+        -0.003
+      ],
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": true,
+      "native_success": true,
+      "translation_action_scale_m": [
+        0.05,
+        0.05,
+        0.05
+      ],
+      "trigger_step": 81,
+      "hold_wall_s": 3.401202282999293,
+      "hold_sim_s": 1.0499999999998844,
+      "min_hold_lift_m": 0.08580653417683837,
+      "max_hold_translation_m": 0.002550057782253214,
+      "max_hold_joint_range_rad": 0.017203129746493406,
+      "all_hold_grasp_contacts": true,
+      "applied_recorded_steps": 101,
+      "max_lift_m": 0.10599539935074942,
+      "max_bilateral_lift_m": 0.08935581169358797
+    },
+    {
+      "name": "z+3mm",
+      "offset_m": [
+        0.0,
+        0.0,
+        0.003
+      ],
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": true,
+      "native_success": true,
+      "translation_action_scale_m": [
+        0.05,
+        0.05,
+        0.05
+      ],
+      "trigger_step": 84,
+      "hold_wall_s": 3.229927268999745,
+      "hold_sim_s": 1.0499999999998844,
+      "min_hold_lift_m": 0.08471220424068293,
+      "max_hold_translation_m": 0.005507671822612619,
+      "max_hold_joint_range_rad": 0.007963887539772063,
+      "all_hold_grasp_contacts": true,
+      "applied_recorded_steps": 103,
+      "max_lift_m": 0.08612031777641227,
+      "max_bilateral_lift_m": 0.08612031777641227
+    }
+  ],
+  "raw_sha256": {
+    "probe_libero_grasp_alignment.py": "2e41a4a7bc40a6acfceed3a8cbc2c7d77f2075a9b7b5f15982616df9aa18043f",
+    "protocol.json": "c68059cc4b852cad1a092715a723c5ceccc41caf90fc170420553cc0856309f6",
+    "report.json": "20c16c98c15323d28c26619b3d245516a15b8b4421c35b7a390b8535600ba83e",
+    "baseline\\actions.json": "37880e589125a44ea0e11440c5bfb7a3c971c30acb7c6ae34b78353d4871ef6c",
+    "baseline\\episode.json": "e3934a9609192eb38872e8d61a3a7b0ea6cd4df427f9b1319311c24faecda482",
+    "baseline\\hold.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "baseline\\replay.mp4": "771673aa222998e966c34befd13f2ba84bd96ae6bda28931ffcf17ffcc5430c1",
+    "baseline\\samples.json": "5d0fc7937fe2e51681f395917717c8fe0bd0400bb4cef6785be6cf31578c93c9",
+    "x+3mm\\actions.json": "daff773f936224298d3e2c5112d38b7671957fe6f9b9dada22588db3351a766d",
+    "x+3mm\\episode.json": "ee29c0306e1f16d67e54b225082567001d9eb82440b45853708d5be0f0a9589e",
+    "x+3mm\\hold.json": "129f3aa780230f38c25d8c1ec91b951f12b5d1fc30008351ab742ea8594f4431",
+    "x+3mm\\replay.mp4": "3251afd143f10a516333e73f32a92b5a382290c41382abeaf03658379fe07d75",
+    "x+3mm\\samples.json": "692dfb7a8fad7fd6bbddb5ee5f460fda4b83520bdc8993b384e5954f076e8613",
+    "x-3mm\\actions.json": "99e35f437e8f0718381e4b6fdc6b2c47e3ee57849162031049141fe4557bccf2",
+    "x-3mm\\episode.json": "c38e95145beedc6ed5a039c0e8b9b3198a3cb90d5f57b08df00cd6a39bf5f8fd",
+    "x-3mm\\hold.json": "e3dbefec8174d411aae22f39eda57aaff355e4d903168bdfe88e2bc9be365581",
+    "x-3mm\\replay.mp4": "5edc8c0b640b89798d3cbade016a42062b400efe328d860e8ce215a9590d80e7",
+    "x-3mm\\samples.json": "617dbde3cf3e2c141f12816a117af0491ddb42cf0254211a6d773d3404ead4b7",
+    "y+3mm\\actions.json": "2fe269cd2a6617aa0b83f754ef1963875d64edef9264781a641484819587452d",
+    "y+3mm\\episode.json": "2fc0a14e3814121fe48a467674bc661e2c8567d2793c064476caf5027c1f6095",
+    "y+3mm\\hold.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "y+3mm\\replay.mp4": "fd33fc956263df84c831aa7f364d43404e3389fee456e2a5850be9019c2c7b00",
+    "y+3mm\\samples.json": "3b26ef74562b32e110e726e4b7dfabeb848e19e25587692cf6426bad390a224d",
+    "y-3mm\\actions.json": "ce287056b084cdbc02e5146b8622cbde2fd663c5afa3d9197be299e807ac8cc9",
+    "y-3mm\\episode.json": "8185e44ff46c22c8ed294bc53c05c8ff3085c93ca8279bf0849cc08287356dc3",
+    "y-3mm\\hold.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "y-3mm\\replay.mp4": "ce5bec0f311ee7cce5567ad46629c95dd1c528c39ff16b83163764a731aa933f",
+    "y-3mm\\samples.json": "2b098693a5160bbe431095098d2693eded3e9de175e66eb344fc76d20288d3ab",
+    "z+3mm\\actions.json": "5e6dcde2c0f1fee47aeebe28f51c2ca3f96d770403013cf96f9e8fb40dd04b18",
+    "z+3mm\\episode.json": "ce7cd19c8d39e349db04afff0722334cac4acf7919f1b7eb33d9489a67469ba2",
+    "z+3mm\\hold.json": "4ce9d84d4454bbc7c947da4a47772563d3ce2582385a25a64f6b89ef76a98412",
+    "z+3mm\\replay.mp4": "7df39b59f04e3ac58b524ad9cfffd52f0f7c7493a824b92709da34049b10a95a",
+    "z+3mm\\samples.json": "bf09ecb8fe99f063117a018274bcd1af8ab2bd0c8525038993d64cb2906fb822",
+    "z-3mm\\actions.json": "a990e7ff429b4bbb7c025e20b7e5b362712147cd05a2529200fccd1978533060",
+    "z-3mm\\episode.json": "2ba0d7a1e80e5f574a07dad3e86c7d6d2d3e505080b067bd66073946947ab4c0",
+    "z-3mm\\hold.json": "28ce66855128ba3919686fb8ba622723554e22d0f46bf5659d7de785179ddcdc",
+    "z-3mm\\replay.mp4": "c0e1a8ef8167661167431ea48e4fcb6fcc193ea0726cc0a92f2703c1dbef1f38",
+    "z-3mm\\samples.json": "bb5d3b677930af9270a77de13385af667d76ec0a40da9671f2ef8911fa1514c5",
+    "x-3mm/holding.png": "ad8398c2b9f60dbb48c8a53c03a9c0cdd3d0a69e266512fdc4237c80c8ed4dc5"
+  },
+  "independent_raw_audit": "passed",
+  "original_voice_qualification": "2/3; unchanged",
+  "promotion": "none"
+}
