@@ -6,6 +6,24 @@ Mink and the original solver. Six Mink Stop tests each hold the tool for
 32 simulated seconds, with maximum joint drift 0.000252 radians and tool drift
 0.331 mm. These are two default-layout seeds, not broad held-out qualification.
 
+The subsequent frozen prospective comparison evaluates all 54 new layouts per
+backend, including randomized lane assignments, yaw and lighting, delivery,
+Stop/resume, redirect, and return. Both adapters pass **52/54 full journeys
+(96.3%)**, meeting the original 95% observed-success gate. Each applies 90
+physical legs; 88 pass. Sources, judge, recipe and runtime hashes match before
+and after the cohort. No cases were replaced or tuned against.
+
+Mink's two failures are screwdriver returns: ambiguous neighboring wrench and
+stale camera frame. Both stop with the tool held rather than report placement.
+The original backend instead has one 4.457 mm unrelated-tool disturbance (above
+the unchanged 4 mm bound) and one stale frame. Mink passes screwdriver 16/18,
+wrench 18/18, hammer 18/18; the original passes 18/18, 17/18, 17/18 respectively.
+The rates provide no overall reliability improvement. The 95% Wilson interval
+is 87.5–99.0%, so this sample does not establish 95% population reliability.
+See [prospective evidence](mink-cohort-evidence.json); raw data remain local in
+`runs/mink-cohort-001`. Planning-time cancellation and full voice qualification
+are still outstanding; the profile remains experimental.
+
 The live typed sequence passes screwdriver delivery, conversation during motion,
 Stop/resume, changing to the wrench while first returning the screwdriver, and
 contextual return. All four placements have successful independent outcomes;
@@ -49,8 +67,8 @@ Some final camera checks still report placement unverified; the independent
 simulation evaluator supplies the verified placement outcome. This result does
 not establish sensor-only operation or real-hardware readiness.
 
-Next: prospective varied-layout journeys with this backend, cancellation during
-planning, and the full acoustic/acknowledgment measurements. Preserve the existing
+Next: cancellation during planning and the full acoustic/acknowledgment
+measurements. Preserve the existing
 baseline while those gates remain outstanding. Pretrained VLA adaptation is a
 separate step; this IK library does not itself learn manipulation skills.
 

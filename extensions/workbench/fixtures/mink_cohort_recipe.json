@@ -1,0 +1,17 @@
+{
+  "reference_revision": "296cc6f",
+  "source_recipe": "camera_multiview_protocol.json",
+  "seed": 2026101305,
+  "case_count": 54,
+  "tools": ["screwdriver", "wrench", "hammer"],
+  "journeys": ["deliver", "resume", "redirect"],
+  "x_range_m": [0.405, 0.475],
+  "y_lanes_m": [-0.22, 0, 0.22],
+  "y_jitter_range_m": [-0.02, 0.02],
+  "yaw_range_rad": [-3.141592653589793, 3.141592653589793],
+  "light_range": [0.8, 1.2],
+  "hold_frames": 19,
+  "criterion_fixture": "release_model_cases.json",
+  "criterion_fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+  "scope": "Paired actual camera-task adapters on all prospective cases; no acoustic or hardware claim. Original95percent journey gate; additional stricter hold checks retained."
+}

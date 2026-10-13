@@ -1831,3 +1831,39 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   cancellation and measured full speech/acknowledgment. Main policy lab3/3native
   success and2/3strictqualification remains separate; no trained-policy replacement
   or hardware readiness claim. Full goal active, live human feedback outstanding.
+
+### B33 — Prospective maintained-backend camera journeys (PC, 2026-10-13)
+
+- Previous turn is progress:6a3ae58 publishes the maintained IK adapter,12/12
+  known-layout physical legs,six32s holds,and a real four-placement bus sequence.
+- Freeze actor/reference296cc6f,all robot assets,maintained adapter,judge,recipe,
+  dependencies before generating54newcases; seed2026101305. Original lane/yaw/
+  light distribution and protected criterion fixture unchanged. No filtering,
+  sample replacement,fits or threshold changes. Manifest0d7c4b11;fixture21e9b91c.
+- Extend reusable verifier to actualCameraTasks deliver/resume/redirect journeys
+  and contextual return. Actor object-state/support-height access refused;
+  independent truth judge samples every actualphysics tick. Preserve35mm/80mm,
+  rest/open,4mm unrelated-motion gates plus existing stricterhold checks.19frame
+  short hold here; separate32s qualification retained. Old unfinished async
+  camera edits excluded from experiment via frozen reference archive.
+- All54journeys per backend,90legs each,180actual leg rows. Both52/54complete
+  journeys (96.296%),88/90legs,pass original95%observed criterion. Post-run
+  actor/judge/recipe/runtime manifest identical. No overall improvement claim.
+  Wilson95 interval87.46–98.98%,not95%population guarantee.
+- Raw report inherits default-layout scope text; fixture/source identities and
+  all54cases establish prospective scope. Metadata-only label corrected after
+  the unchanged-manifest check; no controller,judge,cases or results changed.
+- Original fails005hammer return on4.457mm unrelated movement (4mm cap),049wrench
+  return onstale frame. Mink fails021screwdriver return onambiguous neighboring
+  wrench,027screwdriver return onstale frame. BothMink refusals leave the held
+  tool around219mm high; do not claim release/completion. Failures retained.
+- Per-tool journeys: original screwdriver18/18,wrench17/18,hammer17/18;
+  Mink16/18,18/18,18/18. This is a whole-adapter test,notonlybarecontrollerIK.
+- Unpaced leg execution med/p95: original1535.06/2313.20ms,Mink1530.14/2140.76ms,
+  n90each; excludes hub setup,language,speech,andacousticoutput. No live-speed
+  target or contention qualification inferred. Raw:mink-cohort-001.
+- Curatedmink-cohort-evidence.json,source freeze/generation helper and recipe
+  added. Actual current main/camera/Mink demos preserved; no real hardware,
+  microphone activation,external messages or data uploads. Candidate remains
+  experimental pendingplanning-timecancel/resume and fullspokenmeasurement.
+  Sourceasyncpatch remains incomplete. Full assistant goal active.

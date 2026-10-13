@@ -1,0 +1,338 @@
+{
+  "date": "2026-10-13",
+  "decision": "Both actual camera-task adapters meet the frozen95percent observed journey gate on this prospective cohort. No overall reliability improvement; keep experimental pending planning-cancellation and full voice qualification.",
+  "reference_revision": "296cc6f",
+  "fixture_sha256": "21e9b91cb0e4d267d33a8b49ca2d83680a77386767ec3fd488e316e91b820d6f",
+  "manifest_sha256": "0d7c4b1118067b5dd96533e29446274bcea0a4ab5988058bedb7a886a05f925e",
+  "sources_unchanged_after": "0d7c4b1118067b5dd96533e29446274bcea0a4ab5988058bedb7a886a05f925e",
+  "source_manifest": {
+    "files": {
+      "reference/physical_ai_lab/assistant/__init__.py": "82b8bd80daeb465e026195ab468dc9776c7db9b889229558cabab53221427293",
+      "reference/physical_ai_lab/assistant/app.py": "29b8b5868bacd03b4b248744225e0699c3404ff8068ebf1d649594bc5dce968f",
+      "reference/physical_ai_lab/assistant/assets/learned/README.md": "f1844168fbc78cba792f4dccc23ff7dc5aa81a098c225ebbd40d4a0019fbcf38",
+      "reference/physical_ai_lab/assistant/assets/learned/carry-position-v2-rejected.json": "244015dfd347a164871694cd3d96afc52ef747a44a8357b187bbddb006eae1a1",
+      "reference/physical_ai_lab/assistant/assets/learned/carry-position-v2-rejected.npz": "e0c74098d267ae644a6f252027976a71d08d6ca1c0e31f01b610c54c3eaf91f9",
+      "reference/physical_ai_lab/assistant/assets/learned/release-outcome-v2-experimental.json": "54370f146b8649d2aaee5037169887f4eee89ed4170fbf9f8c5e9c063b0392fb",
+      "reference/physical_ai_lab/assistant/assets/learned/release-outcome-v2-experimental.npz": "0f8ed20dce5f72cdcd0ba5a2a9a7f163ccb110ca3e264499672db708b722dacb",
+      "reference/physical_ai_lab/assistant/assets/learned/release-outcome-v3-rejected.npz": "9ef61218afe9639ac61fea342402d3a5ec554fec733e93178e7edd55e00040ed",
+      "reference/physical_ai_lab/assistant/assets/panda/LICENSE": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9",
+      "reference/physical_ai_lab/assistant/assets/panda/README.md": "e12684556d0154bdf2a9e77e7009ed680cd06ca89904f9e6303050f9fe59300c",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/finger_0.obj": "215098c0fcdf7192f6c503a37cf49e3efecf8a9e1320f02b17c5584d89cc5b2c",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/finger_1.obj": "cf239e9aca26bba09dbbf1c544c47d87cfc9a2f0637c8bb786af750b6d4eca44",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/hand.stl": "94493e94f30fe940f2c8ca2f155c3bbe67bbff406d3edf5e261670d2f0f6e2ed",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/hand_0.obj": "b94aab901086f85df04c019b30f43bf9aa23a7ad0443ec80a8c14662a41cabd2",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/hand_1.obj": "cd76f7494bb314406a1819c46eb826ee254894f87235714f604a470653d9badb",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/hand_2.obj": "e0f44a71712afa5b98eb20355eff17763d3e2e19f459b2bef19abed3727e64b3",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/hand_3.obj": "a431a06d99e88a1b322b3122a01424ee7704daeaad0bc343b90b9604f014ad0c",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/hand_4.obj": "21f96ef6a8de082e41b1ea9834f1043de359e5d60305541bcb63539581f53bff",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link0.stl": "dfc6d94330de8ddb005b311bfdba9f3b8e1aa7c256b71592ee7ff32cb9a9a5aa",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link0_0.obj": "6b9f41a4c203540daaeb7a33cc3d0d6c6a32dc8bba187074eeaf97b3e36b3f9c",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link0_1.obj": "57673d2ee2a9db2e10c8986ae57c56a7c39c012b60fd26d7d8549553b664a5ed",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link0_10.obj": "c9198b9d8534d628d097b0f2b239bb30343353182df098ce0d9db6bc13326848",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link0_11.obj": "f0adec78d6677b7799d25121981270e8bfe119b5c18d08a91ee37a54ad75f65c",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link0_2.obj": "1ca435a2a87a9608a146a47955724d43dd7ce10fc3dd3018800aa98f8ba86e05",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link0_3.obj": "3e9c6334d2b3b47944af3458ee5f20519abc20fe7ee23063bb53405ccab28046",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link0_4.obj": "215d25789704936120f119c0bc1cc7f68516dd3f8f1df61457b71acac3873f26",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link0_5.obj": "9361b104e93743045107aa5b15fb1a0835ba9c1f355aae71f56403cf6a9c33f6",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link0_7.obj": "2dc0b8ebbbc80e4c065d71e195adbc384f673438641fac82b07b801b4d2837cb",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link0_8.obj": "3b8c436999db5586b8eb47bed2b0aa7de6993868b2681b4c04246eeac42fdb7a",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link0_9.obj": "45178f97d2b5da6bce11f610212c4ef7d08c73db33a4fc38e1b7f66b93d023f5",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link1.obj": "51091e776b16babdbe2f3849b5c041f921d1f11dd94ac19a0f1c81abf496fbae",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link1.stl": "e41a39a94108fcf56aacff603fc91ec80541f4c1af17b51a0de5617f5566e6d2",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link2.obj": "5c9f8e715de52c3eb71b475de35993b3b96081e02abea9f28c414768877fc59b",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link2.stl": "370f7605a0fae3529db169ded50f52f171024aa792d4d773bc84197301f6a039",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link3.stl": "0a8d638b9349c6c0eefc4e888636ac4838c4b27170f18a51699321118af709c1",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link3_0.obj": "ce2da87f51708e11b189249d41401065dabe89a06e251185a06cef4d5ff27178",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link3_1.obj": "2880b7753a7173f38fa87ee21da4dfc7fa7be46fbe07bac5aef9e128513cb118",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link3_2.obj": "670cff81ae84693769ca4ae658c154cf909d81167e7c8d22b70ea977f2504efa",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link3_3.obj": "30ede0c812efd0e0b767d134a4eae0b84e0fa407bb6325a5a555e0569b3a3ffd",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link4.stl": "0180ebb5772ec9840cb049750cffb29a9ddc90311752a16ea34757782ef9e48d",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link4_0.obj": "443bf6d178177cf347951ecf107ccd10ca444e605e375b67304579e5f948806f",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link4_1.obj": "ca935ec7cc8b3f0e86aa079c76b0b3bf593b1e9830bab0fa7131ac51577c74f0",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link4_2.obj": "c89caf26d379c35bb9e191ee2d91d09ab29ecc792b48d8bc10b39e5b38222175",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link4_3.obj": "1495d17f45bdb230cf58b0beef9da4e8c9cfe76a3d2d38da89017efe5e093136",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link5_0.obj": "a3238b8f2af0f2eb66d9fe63dc5d41ac52d5d38507241b5ed10e3cb019ab3e71",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link5_1.obj": "9d994bbf83ec241e301b5197a6846da13f2a4a0582edb2c0f76962c5549649d6",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link5_2.obj": "83b4ffe9f772cd7fe182e98640650eebc899aaf01842656574b0416c90dd40a4",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link5_collision_0.obj": "3e5aa75fb13f193555c3dfb999df91d81df25006a5c3af5338297d78137c129b",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link5_collision_1.obj": "87cd8f621071df010f774cbde789282b8463840dfe704f8bdfa2e29be0142e15",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link5_collision_2.obj": "823ab6c8f7b1d79e0844fa071d82a03499ff68e34fddb1ba3451032c22736040",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6.stl": "20b768e99a0e0440b5754dcca108016434e57937cc356acd9c352ccd3cb27f77",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_0.obj": "0504c70ebf1b284ee8faae7dcb896b8830bc672a6552015dd5dbd121fa031fb9",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_1.obj": "45f7ca77695198b6d86ec2417ad4e42e6275044f0f96266699ee8e1057757ac1",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_10.obj": "365f26c21d10332cab8d8704645cb46930c30b3085956f2d097498c793f24db4",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_11.obj": "8ae61e08b3ad064f25bbf03b22e59cc15d65883b5a7ce92711aff29df2493901",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_12.obj": "f28d1bfd62b0244ffd19fb35fe9edefdf583d3c9167db944e87185d919e1d021",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_13.obj": "0a55fa92dccb261d07200e6565fca4c850fd17f0c1ecf38821c0b97d51796c7d",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_14.obj": "750ae3ee4781e62e3a045c662195247b03f6642b05aa93104f08258e5f6eba26",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_15.obj": "5999c1c2497a004a7c4bbe034cdf13744f839d85ae7a11b1bc386c48a3e642e6",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_16.obj": "551d7a8b37c53e7a152d008b4e36992e5b5abe74a4be18b57ee6319c27def09f",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_2.obj": "e54eee4d8232947ee8af65afd5a067e09dac2da6e7e585cb1dccb65496457da0",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_3.obj": "d4f6a25ef32fa1fa4734146981994ee760232cb077c80fea6487d78a077c7f27",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_4.obj": "be353480fe71d46f7a96f0a3cbb7e112caaf8d88368826f321a36a253c8749b2",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_5.obj": "7c87664623c3e1a6cb330db273227a69626dc5e53b4caff1d4ee7911eb3340c6",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_6.obj": "8fbc031e0d07b795ebf99115c75223141caaba317cab569159f3d477a7821681",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_7.obj": "7dc5ebb799fe281aab27d6e84e7a4efa0a8e42da2369ec83de3ea3f206f62d73",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_8.obj": "e3f77381817a341030f9dcc4c4aa7c559f80411b453fd87eb0fefecca82151bf",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link6_9.obj": "25a56ea9b02a03b6cb5a81f31c54f54d0185e1a0b3937c37e4289d896e50215a",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link7.stl": "92ac6afcf7574c034d3170d8a68e95ac9048ab9d0dd5bbd8311b86e551b9ab1c",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link7_0.obj": "04586b0bde011715cfc22072ac72fe0717eb4d4817bcf665987ce6cd88eb2b93",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link7_1.obj": "c3f72289f394c9d6749a4a327fb11f05b203c37c95032c92f28019b40ebe7e00",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link7_2.obj": "d2faecedb304d0989040d082410378dc949dbbda23bd18c05134f08aae984db5",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link7_3.obj": "b62d87c4d4bdb7b281ed341d347c39dad0e50bf36aed8ac11d050073701d5f70",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link7_4.obj": "cb78ccb61fd4ad6c7bff4c4d2e6cb41e1964a5a3e1a28e67c0c6202371cfc018",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link7_5.obj": "099071d3090b51471ba52f4f90814fd3089f4975d196e4d488117073d0bfe491",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link7_6.obj": "99469e2d95ab74ce0292f2f16954c87a8a7dc16652e62e970fe37c94330a81bb",
+      "reference/physical_ai_lab/assistant/assets/panda/assets/link7_7.obj": "426c3db8a19373f3dc73d4bec672e948121b2914c10e2e7b9c7ea80643a19e54",
+      "reference/physical_ai_lab/assistant/assets/panda/panda.xml": "96ad67da03710f17f798c9478fd9e9efdf24a3bf8359f05e456dd9fb158ea273",
+      "reference/physical_ai_lab/assistant/assets/panda/provenance.json": "91ecafcb7c7343be7eed0b5c2aa88afcbc88b2d9790328a8ce417f9b1d20f55a",
+      "reference/physical_ai_lab/assistant/camera_control.py": "61ccf0b438c22dfa08be2f3613792bf2f9ffb498f98475facf8497da348ad08b",
+      "reference/physical_ai_lab/assistant/camera_robot.py": "2876bdbff642993b32acde94875f4e65ff106dff2f058b9d5966889b5b0c0913",
+      "reference/physical_ai_lab/assistant/camera_tasks.py": "32fb2f0c3836981f5f6232ce36cc3e6ec923970786aa94b3de04af8cd47af8f9",
+      "reference/physical_ai_lab/assistant/carry_model.py": "42c76c71d49af4751882994c1bd820c595d9b3f54fecb91a865e44f92f54eafa",
+      "reference/physical_ai_lab/assistant/codex_language.py": "238d37d9695f0ea1f6ef499c7c475580abce31c6a2e25388648e5a3a8ad1e26c",
+      "reference/physical_ai_lab/assistant/control.py": "af25bdef75b2d8c67683da17c1e955d537057484fa7bdf07d4e3681a305b2b20",
+      "reference/physical_ai_lab/assistant/entities.py": "e914fa84a925d4c91705496d91015a23f386c79a85a1261148e75caaeff6fcad",
+      "reference/physical_ai_lab/assistant/handoff_planning.py": "a71813ef26461013afc62099a3e8c04ea265f9f1d39a2642c9ca681b7ba62c4d",
+      "reference/physical_ai_lab/assistant/held_perception.py": "05c112ae07a9a146cbed76d8e0e074d0852d2b1758eb276bca28ec2af8089e33",
+      "reference/physical_ai_lab/assistant/language.py": "554aaa1f6e4017bd8df3344cc5c3a417fdacc45c8cfb6a2ff2d1bd998aec7f12",
+      "reference/physical_ai_lab/assistant/lmstudio.py": "186318a4989b9abb3eba5b296e3b7d8f1c41721a06f42f6b7f3223f14f11a4df",
+      "reference/physical_ai_lab/assistant/perception.py": "ad47c3e9bb1f80730903427e95b9bcf0f421b5c8a1441d91970cbbd0afd7e32f",
+      "reference/physical_ai_lab/assistant/perception_scene.py": "f9488fd8fbdd4cfec82018372177d42c011753171e60e4fd7d9fc6d01ce4d23c",
+      "reference/physical_ai_lab/assistant/release_model.py": "f2f9cf18466f76dc519800dbdb354d5c1c420b378110be856c4949ef333afdeb",
+      "reference/physical_ai_lab/assistant/residency.py": "23b6dc8ca076c04f06aa0585090018adf73c30ad5767d0e829d56f204213923d",
+      "reference/physical_ai_lab/assistant/scene.py": "80fcafad82ea4376ad298e078c63e8df889bc0c15ffabacaf3bfa799f5a0185f",
+      "reference/physical_ai_lab/assistant/subscription_session.py": "6e07a3fbc7fa8c6eb7593b0c148e15a9efb659ae015e29a25321229b2ee6277a",
+      "reference/physical_ai_lab/assistant/tasks.py": "387a01a58933b645099ef584ba8cc159dbd02ae65ddcda7cd01d16018e6d0a1c",
+      "reference/physical_ai_lab/assistant/tool_control.py": "0ba26ed05a249c485eed9db6a5274f23282f4e1894ac50ab7899933d81462349",
+      "reference/physical_ai_lab/assistant/tool_geometry.py": "ebb9b514c2ae1112f4603699aa4cadd3be05fd4bdf36477cc3941dfcbf4766b7",
+      "reference/physical_ai_lab/assistant/tool_language.py": "14e15dc9e796958a5dfd8c1283f9c26f9b1fa8221d54082e9b9631e89ddcbe39",
+      "reference/physical_ai_lab/assistant/tool_routing.py": "f1a02488589a42bad8a91cdb7fc7a64997a1794ec9dd4a1e15e9b38fcf358b63",
+      "reference/physical_ai_lab/assistant/tool_scene.py": "8203ae26f9af020fa0037fb93ea96540256feddcdd538794040a6ccf10d3dad3",
+      "reference/physical_ai_lab/assistant/vision_language.py": "2a94cc6bd7a4ab80f9a708907d27a9273144792120cb33d3d06d096d854d28c1",
+      "scripts/mink_robot_adapter.py": "5f329ce33a4d5be1a3caf1daf530c212a4cd87be6e7e368a6b99da46b487e151",
+      "scripts/benchmark_mink_motion.py": "a83e7dc9362ef0c7fc6b3543511303ddd1f648186c0312f5088e40daca606ef7",
+      "scripts/freeze_mink_cohort.py": "18b77a1581aeafda77ef0e0c5daa2cf25c1c26b8c711a7b62a431a65a7d69fd2",
+      "fixtures/mink_motion_protocol.json": "3e3a3dee07027c05b2e9e4e400b9236d7462c007cd8df78a46f84515826b56eb",
+      "fixtures/release_model_cases.json": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+      "fixtures/camera_multiview_protocol.json": "12e5e030cc1a32d3a0a36bfacf76759438206c83fc74f10348e55def6e8a5e96",
+      "recipe": "4165807763254852814d2d9bb0c1aa3933f2e9e30f089259c8158b7ddb9ef6f1"
+    },
+    "python": "3.12.3",
+    "packages": {
+      "mink": "1.3.0",
+      "mujoco": "3.15.0",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "qpsolvers": "4.13.0",
+      "daqp": "0.10.3",
+      "pillow": "12.3.0"
+    }
+  },
+  "recipe": {
+    "reference_revision": "296cc6f",
+    "source_recipe": "camera_multiview_protocol.json",
+    "seed": 2026101305,
+    "case_count": 54,
+    "tools": [
+      "screwdriver",
+      "wrench",
+      "hammer"
+    ],
+    "journeys": [
+      "deliver",
+      "resume",
+      "redirect"
+    ],
+    "x_range_m": [
+      0.405,
+      0.475
+    ],
+    "y_lanes_m": [
+      -0.22,
+      0,
+      0.22
+    ],
+    "y_jitter_range_m": [
+      -0.02,
+      0.02
+    ],
+    "yaw_range_rad": [
+      -3.141592653589793,
+      3.141592653589793
+    ],
+    "light_range": [
+      0.8,
+      1.2
+    ],
+    "hold_frames": 19,
+    "criterion_fixture": "release_model_cases.json",
+    "criterion_fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+    "scope": "Paired actual camera-task adapters on all prospective cases; no acoustic or hardware claim. Original95percent journey gate; additional stricter hold checks retained."
+  },
+  "summaries": [
+    {
+      "backend": "baseline",
+      "planned_cases": 54,
+      "passed_journeys": 52,
+      "success_fraction": 0.9629629629629629,
+      "observed_gate": 0.95,
+      "gate_passed": true,
+      "wilson95_lower": 0.8746482308272454,
+      "wilson95_upper": 0.9897836320515543,
+      "planned_legs": 90,
+      "recorded_legs": 90,
+      "passed_legs": 88,
+      "leg_wall_median_ms": 1535.05698200388,
+      "leg_wall_p95_ms": 2313.2035020025796,
+      "tool_rates": [
+        {
+          "tool": "screwdriver",
+          "cases": 18,
+          "passed": 18
+        },
+        {
+          "tool": "wrench",
+          "cases": 18,
+          "passed": 17
+        },
+        {
+          "tool": "hammer",
+          "cases": 18,
+          "passed": 17
+        }
+      ]
+    },
+    {
+      "backend": "mink",
+      "planned_cases": 54,
+      "passed_journeys": 52,
+      "success_fraction": 0.9629629629629629,
+      "observed_gate": 0.95,
+      "gate_passed": true,
+      "wilson95_lower": 0.8746482308272454,
+      "wilson95_upper": 0.9897836320515543,
+      "planned_legs": 90,
+      "recorded_legs": 90,
+      "passed_legs": 88,
+      "leg_wall_median_ms": 1530.1355464980588,
+      "leg_wall_p95_ms": 2140.7634490024066,
+      "tool_rates": [
+        {
+          "tool": "screwdriver",
+          "cases": 18,
+          "passed": 16
+        },
+        {
+          "tool": "wrench",
+          "cases": 18,
+          "passed": 18
+        },
+        {
+          "tool": "hammer",
+          "cases": 18,
+          "passed": 18
+        }
+      ]
+    }
+  ],
+  "failed_rows": [
+    {
+      "backend": "baseline",
+      "case_id": "mink-prospective-005",
+      "journey": "resume",
+      "tool": "hammer",
+      "returning": true,
+      "error": null,
+      "physical_pass": false,
+      "distance_m": 0.005812740081898752,
+      "height_m": 0.021727383578753045,
+      "speed_m_s": 1.9021148729921782E-11,
+      "lift_m": 0.21392858844454876,
+      "unrelated_m": 0.004457444542240762,
+      "gripper_open": true,
+      "hold": null,
+      "outcome": {
+        "status": "failed",
+        "message": "Placement did not pass the independent physical checks.",
+        "distance_m": 0.005812740081898752
+      }
+    },
+    {
+      "backend": "mink",
+      "case_id": "mink-prospective-021",
+      "journey": "resume",
+      "tool": "screwdriver",
+      "returning": true,
+      "error": null,
+      "physical_pass": false,
+      "distance_m": 0.4139297260834637,
+      "height_m": 0.21907089497624269,
+      "speed_m_s": 0.00026731118702463786,
+      "lift_m": 0.1975155127872112,
+      "unrelated_m": 8.139112754523077E-12,
+      "gripper_open": false,
+      "hold": null,
+      "outcome": {
+        "status": "failed",
+        "message": "Neighboring wrench is ambiguous; no placement planned",
+        "distance_m": null
+      }
+    },
+    {
+      "backend": "mink",
+      "case_id": "mink-prospective-027",
+      "journey": "deliver",
+      "tool": "screwdriver",
+      "returning": true,
+      "error": null,
+      "physical_pass": false,
+      "distance_m": 0.2306571135780998,
+      "height_m": 0.21977237205293157,
+      "speed_m_s": 0.0002682617574123148,
+      "lift_m": 0.19824060370663496,
+      "unrelated_m": 8.100064275942316E-12,
+      "gripper_open": false,
+      "hold": null,
+      "outcome": {
+        "status": "failed",
+        "message": "Workbench camera frame is stale; no scene plan updated",
+        "distance_m": null
+      }
+    },
+    {
+      "backend": "baseline",
+      "case_id": "mink-prospective-049",
+      "journey": "resume",
+      "tool": "wrench",
+      "returning": true,
+      "error": null,
+      "physical_pass": false,
+      "distance_m": 0.4281631681846509,
+      "height_m": 0.2163802885123854,
+      "speed_m_s": 0.0004502630243107322,
+      "lift_m": 0.19488879095231817,
+      "unrelated_m": 6.973328007679181E-12,
+      "gripper_open": false,
+      "hold": null,
+      "outcome": {
+        "status": "failed",
+        "message": "Workbench camera frame is stale; no scene plan updated",
+        "distance_m": null
+      }
+    }
+  ],
+  "timing_scope": "Unpaced physical leg execution wall times; excludes initial hub survey/setup, language, speech and acoustic output. Not live task or responsiveness timing.",
+  "limits": [
+    "All54generated cases counted per backend,180actual leg rows; no sample replacement or post-result tuning.",
+    "Newseed2026101305; original distribution and protected criterion fixture preserved. Actual task adapter and evaluator, not only a bare controller.",
+    "Published296cc6f source excludes unfinished working-tree async-camera patch. Actor access to privileged bench object observation/support-height is refused.",
+    "Original35mm placement,80mm lift,4mm unrelated motion,rest/open checks retained. Existing extra stricter0.02rad/10mm/max-height hold checks also retained; short19frame hold here, separate six32s holds already verified.",
+    "Some releases are unverified by the camera actor; simulator evaluator verifies outcomes. Simulation results are not sensor-only hardware readiness.",
+    "Both52/54rates are96.3percent; Wilson95interval does not establish95percent population reliability. Neither backend dominates the other.",
+    "Mink screwdriver16/18; wrench18/18; hammer18/18. Refusals preserve holding rather than claim completion.",
+    "Scene collision constraints, planning-time cancellation and full voice/acoustic timing remain outstanding."
+  ],
+  "raw_local": "runs/mink-cohort-001",
+  "reporting_correction": "Raw report inherited the default-layout scope string. Fixture identity, explicit prospective recipe and all54actual cases establish the scope. Future verifier now selects fixture scope; this metadata-only correction occurred after the unchanged before/after manifest check. No actor, judge, cases or results changed."
+}
