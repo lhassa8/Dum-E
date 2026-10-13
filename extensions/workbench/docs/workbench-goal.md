@@ -1,5 +1,16 @@
 # Adopted workbench goal — October 11, 2026
 
+**October 12 Windows mandate:** development and runtime now belong on the user's
+Windows 11 RTX 5090 workstation, using local WSL2 Ubuntu and Windows browser/LM
+Studio. Mac paths below are historical. The user explicitly adopted this as a
+sustained goal, authorized ordinary setup, implementation, experiments, fixes and
+reviewed feature-branch publication, and requested progress through a real
+pretrained policy demonstration. No microphone may start silently; no hardware
+purchases or actuation. Preserve protected physics, judges, uncertainty gates,
+held-out splits and honest distinctions between simulator-state control, camera
+conversation and learned policy control. See [the PC migration ledger](windows-migration.md)
+for current execution evidence, reproducible launch and outstanding work.
+
 User adopted this goal and authorized autonomous implementation. This records the project mandate; current claims are a baseline, not completion evidence.
 
 Build our Dum-E workbench assistant into a highly responsive, useful, expressive simulated robot companion, inspired by the single-arm workshop robot in Iron Man. Own this as a sustained research and development project. Expect substantial work; do not declare the goal achieved after adding a few commands or gestures.

@@ -1315,3 +1315,55 @@ B16 — bounded camera-response alternatives and access audit, October 12:
   to obtaining real workstation/Linux readiness and execution access. Do not
   claim a policy job is running, verified waiting, camera promotion or completion.
   Full goal remains active; no further speculative model/view/IK tuning this slice.
+
+B17 — Windows migration, measured GPU speech and actual pretrained rollouts, October 12:
+- Adopted the user's PC-only sustained mandate. Windows11Pro ~192GiB RAM,
+  RTX5090 32607MiB/driver616.92; existing Ubuntu24.04.3 WSL2 with94GiB RAM.
+  Fork31cd447 verified before cloning; unrelated Unity checkout preserved.
+  No lab bundle needed and no Mac environment/runtime used.
+- Rebuilt extension from its lock. Replaced Linux MLX ASR with pinned local
+  faster-whisper small.en, and Mac output with installed local browser voices.
+  Mic listening starts off; Stop/mute/page departure reject late speech, and
+  playback errors remain visible. Windows launcher verified, ports8875/8876/8801.
+- Initial suite during package copying was invalid evidence, not a baseline.
+  Windows CRLF conversions restored only when protected hashes match. All46
+  upstream hashes pass; no physics/controller/placement/lift criteria changed.
+  Final251-test suite passes; native echo regression found/fixed; JS checks pass.
+- Complete typed, CPU saved-speech and CUDA saved-speech interaction judges pass:
+  real lift/place, conversation/change, old-tool return, Stop/resume/contextual
+  return, withdrawal and clarification across completion. User live mic remains
+  untested. Chrome renders the real scene; David/Mark/Zira voices and capture APIs
+  present. Forty-five-second native video180frames; raw audio synthetic/local.
+- CPU30/30 phrases correct: cold1601ms, warm median/p95 829/909ms. CUDAFP16
+  own locked libraries30/30: first10102ms, warm187/209ms. Cache-library6/6
+  warm173/178ms, first12346ms. Driver cache/cold and GPU contention limits retained;
+  no CPU fallback. Readiness exercises actual GPU speech before enabling Speak.
+- SavedStop CPU clip-ready→cancel789ms; CUDA274ms; each n1 excludes capture/pause.
+  Separate2-second hold traces max tool drift .452/.778mm and joint range
+  .000135/.00794rad, with verified resume/return. Different stop poses, not a
+  hold-profile comparison. Full spoken-word/ack/acoustic timing remains open.
+- Local Bonsai fixed15-case text check15/15, median/p95 617/778ms. Camera smoke
+  after restoring Local Gemma needed two views1331+1056ms; last-view latency
+  alone is not full response. Existing22/24 camera-motion rejection preserved.
+- Official OpenPi215abfb/LIBEROf78abd6 sources/locks inspected. Huge Windows-mount
+  environment copy replaced by cached native-Linux hardlinks. JAX0.5.3 actual
+  GPU bf16 kernel PASS; pinned Torch2.7.1/cu126 kernel FAIL sm120, preserved.
+  Policy stayed JAX GPU; separate Py3.8 simulator explicitly uses CPU Torch support.
+- Recorded/verified16 GCS objects12,439,085,481bytes with immutable generations,
+  CRC32C and external SHA256 notes. Old EGL build fixed via existing CMake and
+  documented policy-minimum3.5, no simulator source edit. Actual two-camera RGB
+  render and OSC_POSE contract verified; never mapped seven outputs to joints.
+- Frozen before inference: LIBERO spatial0/1/2, init0, seed7, replan5, original
+  220-step limit. Real pi0.5-LIBERO checkpoint3/3 simulator successes in
+  103/110/134steps, saved videos/actions. Load17.453s; first inference31.169s;
+  69 warm calls median/p95 106.577/127.382ms. These are three supported bowl/plate
+  layouts, not workshop generalization or broad benchmark-rate qualification.
+- Policy server forced GPU and loopback, then stopped after bounded evaluation.
+  Local Gemma alias restored; LM Studio confirms both models Local. Public app
+  remains scripted. Source, simulator lock, frozen protocol and curated evidence
+  reviewable; recordings, weights and raw logs stay ignored/local.
+- Next: actual-policy voice selection and Stop at LIBERO execution boundary using
+  existing cancellable client, prewarm before ready, preserve stale-chunk rejection
+  and measure physical holding/recovery. Then held-out workbench camera/adaptation
+  gates and live user-controlled microphone demo. Full goal remains active.
+  Reproduction/details: windows-migration.md and windows-migration-evidence.json.

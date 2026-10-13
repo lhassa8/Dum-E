@@ -50,7 +50,8 @@ def test_voice_ready_waits_for_spoken_decode_and_failed_warmup_stays_unavailable
     from physical_ai_lab.dume import asr
 
     monkeypatch.setattr(asr, "model_path", lambda: "local-test-model")
-    monkeypatch.setattr(asr.shutil, "which", lambda executable: "/test/ffmpeg")
+    executable = asr.ffmpeg_path()
+    monkeypatch.setattr(asr.shutil, "which", lambda name: executable)
     voice = SpeechInput()
     seen = []
 

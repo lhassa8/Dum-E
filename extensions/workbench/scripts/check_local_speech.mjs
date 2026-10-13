@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {LocalSpeech} from '../src/physical_ai_lab/dume/web/local-speech.mjs';
+let complete, played=[], cancelled=0;
+const synthesis={cancel(){cancelled++},getVoices(){return [{lang:'en-US',localService:true}]},speak(u){played.push(u)}};
+const speech=new LocalSpeech({synthesis,Utterance:class {constructor(text){this.text=text}},post:()=>new Promise(r=>complete=r)});
+const pending=speech.speak('Late reply'); speech.stop(); complete({browser:true,generation:1}); await pending;
+assert.equal(played.length,0,'Stop must reject an in-flight speech reply');
+const current=speech.speak('Current reply'); complete({browser:true,generation:2}); await current;
+assert.equal(played.length,1); assert.equal(played[0].text,'Current reply');
+speech.stop(); assert.ok(cancelled>=3);
+let finished=false;
+const remote=new LocalSpeech({synthesis:{cancel(){},getVoices(){return [{lang:'en-US',localService:false}]}},Utterance:class{},post:async path=>{if(path.startsWith('/speech-finished/'))finished=true;return {browser:true,generation:3}}});
+await assert.rejects(remote.speak('Local only'),/No installed local/); assert.ok(finished);
+console.log('PASS: local voice selection, speech cancellation, and stale reply rejection.');

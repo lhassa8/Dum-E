@@ -1,7 +1,8 @@
-"""Mac's installed speech synthesizer: local output, no microphone or cloud API."""
+"""Local output: macOS say or the browser's installed local voices."""
 
 import re
 import subprocess
+import sys
 import time
 from difflib import SequenceMatcher
 
@@ -11,11 +12,32 @@ class Speech:
         self.process = None
         self.last_text = None
         self.finished_at = None
+        self.browser_deadline = 0
+        self.generation = 0
+        self.has_started = False
+
+    def snapshot(self):
+        return {
+            "last_text": self.last_text,
+            "speaking": bool(self.process and self.process.poll() is None)
+            or time.monotonic() < self.browser_deadline,
+            "backend": "say" if sys.platform == "darwin" else "browser-local",
+        }
+
+    def finished(self, generation):
+        if generation == self.generation:
+            self.browser_deadline = 0
+            self.finished_at = time.monotonic()
+
+    def started(self, generation):
+        if generation == self.generation:
+            self.has_started = True
+            self.browser_deadline = time.monotonic() + 40
 
     def is_echo(self, text):
-        if not self.last_text or not self.process:
+        if not self.last_text or not (self.has_started or self.process):
             return False
-        if self.process.poll() is not None:
+        if not self.snapshot()["speaking"]:
             if self.finished_at is None:
                 self.finished_at = time.monotonic()
             if time.monotonic() - self.finished_at > 2:
@@ -32,6 +54,9 @@ class Speech:
         )
 
     def stop(self):
+        self.generation += 1
+        self.browser_deadline = 0
+        self.finished_at = time.monotonic()
         if self.process and self.process.poll() is None:
             self.process.terminate()
 
@@ -39,6 +64,10 @@ class Speech:
         self.stop()
         self.last_text = text
         self.finished_at = None
+        self.has_started = False
+        if sys.platform != "darwin":
+            return {"started": False, "browser": True, "generation": self.generation}
+        self.has_started = True
         self.process = subprocess.Popen(
             ["/usr/bin/say"],
             stdin=subprocess.PIPE,

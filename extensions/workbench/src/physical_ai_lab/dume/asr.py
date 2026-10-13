@@ -4,6 +4,7 @@ import asyncio
 import os
 import shutil
 import subprocess
+import sys
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -13,18 +14,41 @@ import numpy as np
 
 MODEL_REPO = "mlx-community/whisper-small.en-mlx"
 MODEL_REVISION = "52a88bf6e98b114a210c21bb83e22d6e1505cb73"
+FASTER_MODEL_REPO = "Systran/faster-whisper-small.en"
+# Set to the immutable upstream revision verified during Windows preparation.
+FASTER_MODEL_REVISION = "d1d751a5f8271d482d14ca55d9e2deeebbae577f"
 MAX_AUDIO_BYTES = 2 * 1024 * 1024
 MAX_SECONDS = 15
+
+
+def model_identity():
+    return (
+        (MODEL_REPO, MODEL_REVISION)
+        if sys.platform == "darwin"
+        else (FASTER_MODEL_REPO, FASTER_MODEL_REVISION)
+    )
+
+
+def ffmpeg_path():
+    existing = shutil.which("ffmpeg")
+    if existing:
+        return existing
+    if sys.platform != "darwin":
+        from imageio_ffmpeg import get_ffmpeg_exe
+
+        return get_ffmpeg_exe()
+    raise RuntimeError("Install ffmpeg before preparing voice input.")
 
 
 def model_path():
     from huggingface_hub import snapshot_download
 
+    repo, revision = model_identity()
     return os.environ.get("DUME_SPEECH_MODEL") or snapshot_download(
-        MODEL_REPO,
-        revision=MODEL_REVISION,
+        repo,
+        revision=revision,
         local_files_only=True,
-        allow_patterns=["config.json", "weights.npz"],
+        allow_patterns=["config.json", "weights.npz"] if sys.platform == "darwin" else None,
     )
 
 
@@ -34,7 +58,7 @@ def decode_audio(data):
     try:
         result = subprocess.run(
             [
-                "ffmpeg",
+                ffmpeg_path(),
                 "-nostdin",
                 "-v",
                 "error",
@@ -71,6 +95,11 @@ class SpeechInput:
         self.error = None
         self.busy = False
         self.path = None
+        self.model = None
+        self.device = os.environ.get("DUME_ASR_DEVICE", "cpu")
+        self.compute_type = os.environ.get(
+            "DUME_ASR_COMPUTE_TYPE", "float16" if self.device == "cuda" else "int8"
+        )
         self.preparation_seconds = None
         self.warmup_seconds = None
         self.lock = threading.Lock()
@@ -81,8 +110,11 @@ class SpeechInput:
             "status": self.status,
             "error": self.error,
             "busy": self.busy,
-            "model": MODEL_REPO,
-            "revision": MODEL_REVISION,
+            "model": model_identity()[0],
+            "revision": model_identity()[1],
+            "backend": "mlx" if sys.platform == "darwin" else "faster-whisper",
+            "device": "metal" if sys.platform == "darwin" else self.device,
+            "compute_type": self.compute_type if sys.platform != "darwin" else None,
             "local": True,
             "preparation_seconds": self.preparation_seconds,
             "warmup_seconds": self.warmup_seconds,
@@ -91,8 +123,7 @@ class SpeechInput:
     def _prepare(self):
         started = time.monotonic()
         try:
-            if not shutil.which("ffmpeg"):
-                raise RuntimeError("Install ffmpeg with: brew install ffmpeg")
+            ffmpeg_path()
             self.path = model_path()
             # Silence skips spoken-word decoding. Exercise the actual path with
             # a bundled synthetic phrase, on the same executor as user requests.
@@ -111,8 +142,6 @@ class SpeechInput:
         await asyncio.get_running_loop().run_in_executor(self.executor, self._prepare)
 
     def _recognize(self, data):
-        import mlx_whisper
-
         started = time.monotonic()
         audio = decode_audio(data)
         decoded = time.monotonic()
@@ -123,15 +152,51 @@ class SpeechInput:
         decoder_padding = 0.35 if captured_samples < 16000 else 0
         if decoder_padding:
             audio = np.pad(audio, (0, int(decoder_padding * 16000)))
-        result = mlx_whisper.transcribe(
-            audio,
-            path_or_hf_repo=self.path,
-            language="en",
-            temperature=0.0,
-            condition_on_previous_text=False,
-            verbose=False,
-        )
-        segments = result.get("segments", [])
+        if sys.platform == "darwin":
+            import mlx_whisper
+
+            result = mlx_whisper.transcribe(
+                audio,
+                path_or_hf_repo=self.path,
+                language="en",
+                temperature=0.0,
+                condition_on_previous_text=False,
+                verbose=False,
+            )
+            segments = result.get("segments", [])
+        else:
+            from faster_whisper import WhisperModel
+
+            if self.device not in {"cpu", "cuda"}:
+                raise ValueError("DUME_ASR_DEVICE must be cpu or cuda; no automatic fallback.")
+            if self.model is None:
+                if self.device == "cuda":
+                    import ctranslate2
+
+                    if self.compute_type not in ctranslate2.get_supported_compute_types("cuda"):
+                        raise RuntimeError("Requested CUDA compute type unsupported; no fallback.")
+                self.model = WhisperModel(
+                    self.path,
+                    device=self.device,
+                    compute_type=self.compute_type,
+                    cpu_threads=8,
+                    num_workers=1,
+                    local_files_only=True,
+                )
+                if self.device == "cuda" and self.model.model.device != "cuda":
+                    raise RuntimeError("Speech model is not executing on CUDA; no fallback.")
+            decoded_segments, _ = self.model.transcribe(
+                audio,
+                language="en",
+                temperature=0.0,
+                condition_on_previous_text=False,
+                beam_size=1,
+                vad_filter=False,
+            )
+            segments = [
+                {"text": s.text, "no_speech_prob": s.no_speech_prob, "avg_logprob": s.avg_logprob}
+                for s in decoded_segments
+            ]
         text = " ".join(
             s["text"].strip()
             for s in segments
@@ -146,7 +211,8 @@ class SpeechInput:
             "recognition_seconds": round(time.monotonic() - started, 3),
             "audio_decode_seconds": round(decoded - started, 3),
             "model_recognition_seconds": round(time.monotonic() - decoded, 3),
-            "model": MODEL_REPO,
+            "model": model_identity()[0],
+            "device": "metal" if sys.platform == "darwin" else self.device,
             "local": True,
         }
 

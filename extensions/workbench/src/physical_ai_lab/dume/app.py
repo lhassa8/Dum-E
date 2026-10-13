@@ -119,6 +119,10 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
     async def microphone_script():
         return FileResponse(WEB / "voice-input.mjs", media_type="application/javascript")
 
+    @api.get("/local-speech.mjs")
+    async def local_speech_script():
+        return FileResponse(WEB / "local-speech.mjs", media_type="application/javascript")
+
     @api.get("/speech-detector.mjs")
     async def speech_detector_script():
         return FileResponse(WEB / "speech-detector.mjs", media_type="application/javascript")
@@ -157,10 +161,7 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
             last_result=agent.last_result,
             upstream_revision="f09a96827ea60e4b18a55fa67e2acb97800dc46b",
             mcp_status="running" if mcp_process.poll() is None else "failed",
-            speech={
-                "last_text": speech.last_text,
-                "speaking": bool(speech.process and speech.process.poll() is None),
-            },
+            speech=speech.snapshot(),
             speech_input=speech_input.snapshot(),
             interaction=agent.interaction.snapshot()
             if hasattr(agent, "interaction")
@@ -270,7 +271,17 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
                 file.write(json.dumps({"text": request.message[:500], **result}) + "\n")
             return result
         except OSError as error:
-            raise HTTPException(503, "Local Mac speech output is unavailable.") from error
+            raise HTTPException(503, "Local speech output is unavailable.") from error
+
+    @api.post("/speech-finished/{generation}")
+    async def speech_finished(generation: int):
+        speech.finished(generation)
+        return {"finished": True}
+
+    @api.post("/speech-started/{generation}")
+    async def speech_started(generation: int):
+        speech.started(generation)
+        return {"started": True}
 
     @api.post("/speech-stop")
     async def speech_stop():

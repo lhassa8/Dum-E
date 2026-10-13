@@ -1,0 +1,119 @@
+{
+  "date": "2026-10-12",
+  "platform": "Windows 11 with local WSL2 Ubuntu",
+  "baseline": "31cd447fd95859f388ca53c655e025175df460f0",
+  "full_extension_tests": 251,
+  "typed_journey_passed": true,
+  "saved_synthetic_voice_journey_passed": true,
+  "live_microphone_tested": false,
+  "protected_upstream_hashes": 46,
+  "asr": {
+    "device": "cpu",
+    "compute_type": "int8",
+    "checkpoint_revision": "d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+    "count": 30,
+    "incorrect": 0,
+    "cold_ms": 1601.0,
+    "warm_median_ms": 829.0,
+    "warm_p95_ms": 909.0,
+    "boundary": "saved clip available -> decoded text; excludes microphone, pause, network, decision, speech and motion"
+  },
+  "dialogue": {
+    "count": 15,
+    "incorrect": 0,
+    "median_ms": 616.996702999927,
+    "p95_ms": 778.4595430000536,
+    "fixture_sha256": "cff8e1f60ea825260e70639f7e8cd0399d0974e5dcf522c56575170ac51dd620",
+    "scope": "Synthetic text and real read-only local inference; excludes speech, capture, audible onset and motion."
+  },
+  "stop": {
+    "sample_size": 1,
+    "asr_http_ms": 777.6276110000708,
+    "cancel_http_ms": 11.547696999969048,
+    "clip_ready_to_cancel_response_ms": 789.1753080000399,
+    "cancel_response_to_observed_stopped_ms": 46.40795199998138,
+    "hold_wall_s": 2.016520263000075,
+    "hold_samples": 33,
+    "joint_range_rad": [
+      1.4514329677778326E-05,
+      0.00013461456721249043,
+      2.7249439243925977E-05,
+      0.00010362428946431024,
+      1.1663220734779711E-05,
+      2.0617937885880622E-05,
+      8.629147173477847E-06
+    ],
+    "max_tool_displacement_m": 0.00045175381489439306,
+    "min_tool_height_m": 0.2196714606545381,
+    "scope": "saved synthetic clip ready -> ASR -> HTTP Stop; excludes live capture and pause",
+    "resume_place_error_m": 0.007825471902442722,
+    "return_place_error_m": 0.01240139635179646
+  },
+  "policy": {
+    "source_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "libero_commit": "f78abd68ee283de9f9be3c8f7e2a9ad60246e95c",
+    "jax_gpu_bfloat16_kernel_passed": true,
+    "torch_pinned_gpu_kernel_passed": false,
+    "torch_failure": "Pinned CUDA 12.6 build lacks sm_120 kernel image",
+    "checkpoint_inference_demonstrated": true,
+    "closed_loop_demonstrated": true,
+    "experiment": {
+      "suite": "libero_spatial",
+      "task_ids": [
+        0,
+        1,
+        2
+      ],
+      "seed": 7,
+      "initial_state_index": 0,
+      "episodes": 3,
+      "successes": 3,
+      "steps": [
+        103,
+        110,
+        134
+      ],
+      "inference_calls": 70,
+      "first_server_infer_ms": 31168.64057299972,
+      "warm_count": 69,
+      "warm_server_median_ms": 106.57730100001572,
+      "warm_server_p95_ms": 127.38161700008277,
+      "checkpoint_load_s": 17.452547799000058,
+      "checkpoint_objects_sha256": "450f2d7b90db37ff3db84074fd9a67ba49fba05c1c482c430b1d1c5de8772084",
+      "public_workbench_learned_control": false,
+      "policy_voice_stop_integration": false
+    }
+  },
+  "asr_cuda": {
+    "device": "cuda",
+    "compute_type": "float16",
+    "count": 30,
+    "incorrect": 0,
+    "cold_ms": 10102.0,
+    "warm_median_ms": 187.0,
+    "warm_p95_ms": 209.0,
+    "scope": "saved clip available -> decoded text; excludes microphone, pause, network, decision, speech and motion",
+    "gpu_contention": "Snapshot recorded locally; vision unload overlapped the tail of this probe"
+  },
+  "cuda_saved_voice_journey_passed": true,
+  "stop_cuda": {
+    "sample_size": 1,
+    "clip_ready_to_cancel_response_ms": 274.356723999972,
+    "asr_http_ms": 259.5585399999436,
+    "cancel_http_ms": 14.798184000028414,
+    "cancel_response_to_observed_stopped_ms": 49.25534800031528,
+    "hold_wall_s": 2.0563042260000657,
+    "hold_samples": 32,
+    "max_tool_displacement_m": 0.0007777575150218671,
+    "joint_range_rad": [
+      0.007938285402624666,
+      0.0008198657123861391,
+      0.007321832622288138,
+      0.0006087755306434239,
+      0.0003614876210509682,
+      0.00011663125206018421,
+      3.715484297317495E-05
+    ],
+    "scope": "saved synthetic clip ready -> ASR -> HTTP Stop; excludes live capture and pause"
+  }
+}

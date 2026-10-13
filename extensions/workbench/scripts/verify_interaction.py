@@ -11,14 +11,22 @@ import numpy as np
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("output", type=Path)
+parser.add_argument("--url", default="http://127.0.0.1:8766")
+parser.add_argument("--typed", action="store_true", help="Validate physical journeys before ASR")
+parser.add_argument(
+    "--audio-fixtures", type=Path, help="Directory of locally generated WAV fixtures"
+)
 args = parser.parse_args()
 args.output.mkdir(parents=True, exist_ok=False)
-client = httpx.Client(base_url="http://127.0.0.1:8766", timeout=90, trust_env=False)
+client = httpx.Client(base_url=args.url, timeout=90, trust_env=False)
 evidence = {
-    "capture": "saved synthetic speech and actual ASR, not live microphone",
+    "capture": "typed"
+    if args.typed
+    else "saved synthetic speech and actual ASR, not live microphone",
     "interactions": [],
 }
 audio = {}
+phrases = {}
 for name, text in [
     ("fetch", "Bring me the screwdriver."),
     ("question", "What are you doing?"),
@@ -27,6 +35,12 @@ for name, text in [
     ("resume", "Resume, please."),
     ("return", "Put it back."),
 ]:
+    phrases[name] = text
+    if args.typed:
+        continue
+    if args.audio_fixtures:
+        audio[name] = (args.audio_fixtures / f"{name}.wav").read_bytes()
+        continue
     aiff, wav = args.output / f"{name}.aiff", args.output / f"{name}.wav"
     subprocess.run(["/usr/bin/say", "-o", str(aiff), text], check=True)
     subprocess.run(
@@ -79,20 +93,28 @@ def task(s, tid):
 
 def voice(name, interrupt=False):
     started = time.monotonic()
-    r = client.post(
-        "/transcribe",
-        content=audio[name],
-        headers={
-            "Content-Type": "audio/wav",
-            "X-Dume-Voice-Mode": "interrupt" if interrupt else "request",
-        },
-    )
-    r.raise_for_status()
-    recognized = r.json()
+    if args.typed:
+        recognized = {"text": phrases[name], "source": "typed"}
+    else:
+        r = client.post(
+            "/transcribe",
+            content=audio[name],
+            headers={
+                "Content-Type": "audio/wav",
+                "X-Dume-Voice-Mode": "interrupt" if interrupt else "request",
+            },
+        )
+        r.raise_for_status()
+        recognized = r.json()
+    if name == "stop":
+        assert recognized["text"].strip().lower().rstrip(".!?") == "stop", recognized
     result = (
         post("/stop")
         if name == "stop"
-        else post("/interact", {"message": recognized["text"], "source": "voice"})
+        else post(
+            "/interact",
+            {"message": recognized["text"], "source": "typed" if args.typed else "voice"},
+        )
     )
     evidence["interactions"].append(
         {
@@ -227,7 +249,7 @@ return_choice = post("/interact", {"message": "Put it back."})["task_id"]
 wait(lambda s: not s["busy"] and task(s, return_choice)["status"] == "completed")
 (args.output / "verification.json").write_text(json.dumps(evidence, indent=2) + "\n")
 print(
-    "PASS: spoken question preserves moving task/grip; spoken tool change returns old tool, "
+    "PASS: question preserves moving task/grip; tool change returns old tool, "
     "Stop/resume preserves both steps, contextual return and withdrawal are physically verified, "
     "general conversation preserves motion, and clarification survives task completion."
 )

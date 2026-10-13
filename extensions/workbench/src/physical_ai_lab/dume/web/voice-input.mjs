@@ -89,12 +89,13 @@ export class MicrophoneInput {
     this.stream?.getTracks().forEach(track=>track.stop());this.stream=null;
   }
   abort(hold=true) {
+    const wasActive=this.mode!=='idle';
     this.generation++;if(hold&&this.working)this.held=true;
     this.abortRequest?.abort();
     if(this.recorder?.state==='recording')this.recorder.stop();
     this.release();this.mode='idle';
     this.note.textContent=this.held?'Voice stop paused for this movement. Click Speak to listen again.':
-      'Recording cancelled. Click Speak to try again.';
+      wasActive?'Recording cancelled. Click Speak to try again.':'Click Speak and talk. I’ll finish when you pause.';
     this.paint();
   }
   close(){this.closed=true;this.abort();}

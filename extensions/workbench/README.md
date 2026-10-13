@@ -1,5 +1,10 @@
 # Dum-E workbench: local voice and physical simulation
 
+**Windows 11 / RTX 5090:** start with the [current PC migration guide](docs/windows-migration.md).
+The Mac instructions and measurements below are historical. The PC launcher is
+`powershell.exe -NoProfile -File .\extensions\workbench\scripts\launch_windows.ps1`
+from the repository root; open http://127.0.0.1:8876. Microphone listening starts off.
+
 An additive Mac extension for Dum-E: ask for a screwdriver, wrench or hammer,
 watch a MuJoCo Panda grasp and deliver it to a green handoff tray, and hear the
 assistant respond. Hello/thanks can produce an actual wave/nod. The original
