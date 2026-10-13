@@ -780,6 +780,13 @@ class Application:
                         observed={k: v.tolist() for k, v in bench.observe().items()},
                         lift_m=controller.max_height - controller.initial_height,
                         verified_steps=getattr(controller, "verified_steps", []),
+                        camera_control=(
+                            self.camera_hub.active.diagnostics()
+                            if self.camera_hub
+                            and self.camera_hub.active
+                            and controller.object == self.camera_hub.active.object
+                            else None
+                        ),
                     )
                     controller = None
                     with self.lock:

@@ -103,14 +103,8 @@ def components(mask):
             yield np.asarray(island)
 
 
-def _locate_tools(
-    frame, shadow_recovery=False, names=None, tilted_face=False, height_limit=0.12, region=None
-):
-    """Find complete 44x56mm top faces by appearance and measured depth.
-
-    Supports tabletop tools with roughly horizontal primitive handles. Refuses
-    missing/ambiguous matches; never fills a miss with a rack-slot position.
-    """
+def _prepare_frame(frame, height_limit=0.12, region=None):
+    """Frame-local measured geometry and color, shared by independent fit passes."""
     v, u = np.indices(frame.depth_m.shape)
     cloud = frame.camera.unproject(u, v, frame.depth_m)
     valid = (
@@ -127,7 +121,6 @@ def _locate_tools(
     rgb = frame.rgb.astype(float) / 255
     total = rgb.sum(axis=-1)
     normalized = rgb / np.maximum(total[..., None], 1e-9)
-    r, g, b = np.moveaxis(normalized, -1, 0)
     chroma = rgb.max(axis=-1) - rgb.min(axis=-1)
     # Neutral material remains neutral in an arm shadow. Absolute brightness
     # wrongly loses a visible metal handle during pre-grasp reobservation.
@@ -135,12 +128,42 @@ def _locate_tools(
     # are withheld and colored handles stay outside this normalized hue range.
     brightness = rgb.mean(axis=-1)
     neutral = (chroma < 0.16) & (brightness > 0.28)
+    return {
+        "cloud": cloud,
+        "valid": valid,
+        "normalized": normalized,
+        "brightness": brightness,
+        "neutral": neutral,
+    }
+
+
+def _locate_tools(
+    frame,
+    shadow_recovery=False,
+    names=None,
+    tilted_face=False,
+    height_limit=0.12,
+    region=None,
+    prepared=None,
+):
+    """Find complete 44x56mm top faces by appearance and measured depth.
+
+    Supports tabletop tools with roughly horizontal primitive handles. Refuses
+    missing/ambiguous matches; never fills a miss with a rack-slot position.
+    """
+    prepared = _prepare_frame(frame, height_limit, region) if prepared is None else prepared
+    cloud, valid = prepared["cloud"], prepared["valid"]
+    normalized, brightness = prepared["normalized"], prepared["brightness"]
+    r, g, b = np.moveaxis(normalized, -1, 0)
+    neutral = prepared["neutral"]
     if shadow_recovery:
-        neutral |= (
-            (normalized.max(axis=-1) - normalized.min(axis=-1) < 0.14)
-            & (brightness > 0.04)
-            & (brightness <= 0.28)
-        )
+        if "shadow_neutral" not in prepared:
+            prepared["shadow_neutral"] = neutral | (
+                (normalized.max(axis=-1) - normalized.min(axis=-1) < 0.14)
+                & (brightness > 0.04)
+                & (brightness <= 0.28)
+            )
+        neutral = prepared["shadow_neutral"]
     masks = {
         "screwdriver": valid & (r > 0.48) & (g > 0.23) & (b < 0.13),
         "hammer": valid & (r > 0.43) & (g > 0.23) & (b >= 0.13) & (b < 0.23),
@@ -262,12 +285,15 @@ def _locate_tools(
 
 
 def locate_tools(frame):
-    predictions = _locate_tools(frame)
+    prepared = _prepare_frame(frame)
+    predictions = _locate_tools(frame, prepared=prepared)
     # Broader shadow seeds can join otherwise separate surfaces. Preserve the
     # accepted bright-material estimate; try a separate pass only on a miss.
     # An ambiguous primary observation stays ambiguous.
     if predictions["wrench"]["status"] == "missing":
-        recovered = _locate_tools(frame, shadow_recovery=True, names={"wrench"})["wrench"]
+        recovered = _locate_tools(frame, shadow_recovery=True, names={"wrench"}, prepared=prepared)[
+            "wrench"
+        ]
         recovered["appearance_recovery"] = "normalized_color_in_shadow"
         predictions["wrench"] = recovered
     for name, prediction in predictions.items():
@@ -275,7 +301,11 @@ def locate_tools(frame):
             prediction["status"] == "observed" and prediction["fit_score"] < 0.8
         ):
             recovered = _locate_tools(
-                frame, shadow_recovery=name == "wrench", names={name}, tilted_face=True
+                frame,
+                shadow_recovery=name == "wrench",
+                names={name},
+                tilted_face=True,
+                prepared=prepared,
             )[name]
             recovered["appearance_recovery"] = "measured_tilted_face"
             predictions[name] = recovered

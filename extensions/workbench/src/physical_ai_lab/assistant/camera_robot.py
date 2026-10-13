@@ -54,16 +54,24 @@ class SimRobot:
             )
         raise ValueError("Bounded robot IK recovery found no supported pose")
 
-    def cartesian_path(self, start, point, rotation, ticks):
+    def cartesian_path(
+        self, start, point, rotation, ticks, interpolate_rotation=False, initial_reading=None
+    ):
         if not self.recover_ik:
             raise ValueError("Cartesian lift planning requires the robot recovery port")
         original_ticks = ticks
+        began = perf_counter()
         for multiplier in [1, 2, 4] if self.refine_cartesian else [1]:
             count = original_ticks * multiplier
             if multiplier > 1 and count > 400:
                 break
             try:
-                path = self._cartesian_path(start, point, rotation, count)
+                options = {}
+                if interpolate_rotation:
+                    options["interpolate_rotation"] = True
+                if initial_reading is not None:
+                    options["initial_reading"] = initial_reading
+                path = self._cartesian_path(start, point, rotation, count, **options)
                 if multiplier > 1:
                     self.ik_events.append(
                         {
@@ -73,20 +81,56 @@ class SimRobot:
                             "joint_step_limit_rad": 0.075,
                         }
                     )
+                self.ik_events.append(
+                    {
+                        "kind": "cartesian_pose_plan" if interpolate_rotation else "cartesian_plan",
+                        "waypoints": len(path),
+                        "latency_ms": (perf_counter() - began) * 1000,
+                    }
+                )
                 return path
             except CartesianStepRefusal:
                 if not self.refine_cartesian:
                     raise
         raise CartesianStepRefusal("Bounded Cartesian refinement exhausted; holding")
 
-    def _cartesian_path(self, start, point, rotation, ticks):
-        previous = self.read().joints
+    @staticmethod
+    def interpolated_rotation(start, end, amount):
+        q0, q1 = np.zeros(4), np.zeros(4)
+        mujoco.mju_mat2Quat(q0, np.asarray(start).ravel())
+        mujoco.mju_mat2Quat(q1, np.asarray(end).ravel())
+        dot = float(q0 @ q1)
+        if dot < 0:
+            q1, dot = -q1, -dot
+        if dot > 0.9995:
+            quaternion = (1 - amount) * q0 + amount * q1
+        else:
+            angle = np.arccos(np.clip(dot, 0, 1))
+            quaternion = (np.sin((1 - amount) * angle) * q0 + np.sin(amount * angle) * q1) / np.sin(
+                angle
+            )
+        quaternion /= np.linalg.norm(quaternion)
+        matrix = np.zeros(9)
+        mujoco.mju_quat2Mat(matrix, quaternion)
+        return matrix.reshape(3, 3)
+
+    def _cartesian_path(
+        self, start, point, rotation, ticks, interpolate_rotation=False, initial_reading=None
+    ):
+        reading = self.read() if initial_reading is None else initial_reading
+        previous = reading.joints
+        initial_rotation = reading.rotation if interpolate_rotation else None
         path = []
         for index in range(1, ticks + 1):
             a = index / ticks
             a = a * a * (3 - 2 * a)
             waypoint = start + (point - start) * a
-            answer = self._seed_solution(waypoint, rotation, previous)
+            desired_rotation = (
+                self.interpolated_rotation(initial_rotation, rotation, a)
+                if interpolate_rotation
+                else rotation
+            )
+            answer = self._seed_solution(waypoint, desired_rotation, previous)
             if np.max(np.abs(answer - previous)) > 0.075:
                 raise CartesianStepRefusal("Cartesian lift would change robot IK branch; holding")
             path.append(answer)

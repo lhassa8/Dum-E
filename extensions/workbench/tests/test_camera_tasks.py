@@ -2,12 +2,15 @@
 
 import threading
 import time
+from types import SimpleNamespace
+from unittest.mock import Mock
 
 import numpy as np
 import pytest
 
 import physical_ai_lab.assistant.camera_tasks as tasks
 from physical_ai_lab.assistant.app import Application
+from physical_ai_lab.assistant.camera_control import CameraDelivery
 from physical_ai_lab.assistant.perception_scene import camera_scene_xml
 from physical_ai_lab.assistant.tool_language import ToolIntent
 from physical_ai_lab.assistant.tool_scene import ToolWorkbench
@@ -120,3 +123,102 @@ def test_cancelled_held_camera_generation_refuses_resume_keeps_redirect(hub):
         if not controller.advance():
             break
     assert controller.outcome.status == "success"
+
+
+def recovery_observation_state():
+    before = SimpleNamespace(gap_m=0.001, closing_command=True, tcp_m=np.array([0.4, 0, 0.3]))
+    after = SimpleNamespace(gap_m=0.001, closing_command=True, tcp_m=np.array([0.4, 0, 0.3]))
+    robot = SimpleNamespace(read=lambda: after, hold=Mock())
+    actor = CameraDelivery.__new__(CameraDelivery)
+    actor.robot = robot
+    actor.recover_grip, actor.carrying = True, True
+    actor.grip_recovery_attempts = 1
+    actor.phase = "Observing supported tool after grip loss"
+    actor.evidence = []
+    hub = tasks.CameraTasks.__new__(tasks.CameraTasks)
+    hub.active = SimpleNamespace(actor=actor, robot=robot)
+    return hub, actor, before, after
+
+
+def test_owned_empty_hand_observation_does_not_demand_held_handle():
+    hub, actor, before, _ = recovery_observation_state()
+    hub._check_perception_hold(before)
+    assert actor.carrying  # Fresh tabletop evidence is still required to clear uncertainty.
+    assert actor.grip_recovery_attempts == 1
+
+
+@pytest.mark.parametrize("change", ["nan", "negative", "handle", "open", "before_handle"])
+def test_recovery_observation_refuses_inconsistent_empty_hand(change):
+    hub, actor, before, after = recovery_observation_state()
+    if change == "nan":
+        after.gap_m = float("nan")
+    elif change == "negative":
+        after.gap_m = -0.001
+    elif change == "handle":
+        after.gap_m = 0.015
+    elif change == "open":
+        after.closing_command = False
+    else:
+        before.gap_m = 0.02
+    with pytest.raises(ValueError, match="Empty-hand recovery state changed"):
+        hub._check_perception_hold(before)
+    actor.robot.hold.assert_called_once()
+
+
+@pytest.mark.parametrize("change", ["phase", "zero_budget", "exhausted", "disabled"])
+def test_observation_exception_cannot_bypass_normal_carry_gate(change):
+    hub, actor, before, _ = recovery_observation_state()
+    if change == "phase":
+        actor.phase = "Moving to target"
+    elif change == "zero_budget":
+        actor.grip_recovery_attempts = 0
+    elif change == "exhausted":
+        actor.grip_recovery_attempts = 2
+    else:
+        actor.recover_grip = False
+    with pytest.raises(ValueError):
+        hub._check_perception_hold(before)
+
+
+def test_slow_planning_advances_physics_and_refuses_stale_robot_snapshot(hub, monkeypatch):
+    controller = hub.task(hub.bench, "screwdriver")
+    original = tasks.SimRobot.cartesian_path
+
+    def delayed(*args, **kwargs):
+        time.sleep(0.3)
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(tasks.SimRobot, "cartesian_path", delayed)
+    reading = controller.robot.read()
+    grip = hub.bench.data.ctrl[7]
+    with pytest.raises(ValueError, match="planning snapshot is stale"):
+        controller.robot.cartesian_path(
+            reading.tcp_m, reading.tcp_m + [0, 0, 0.02], reading.rotation, 40
+        )
+    assert hub.bench.data.time - reading.time_s > 0.25
+    assert hub.bench.data.ctrl[7] == grip
+
+
+def test_cancelled_planning_discards_result_without_gripper_command(hub, monkeypatch):
+    epoch = [0]
+    hub.epoch = lambda: epoch[0]
+    controller = hub.task(hub.bench, "screwdriver")
+    original = tasks.SimRobot.cartesian_path
+
+    def delayed(*args, **kwargs):
+        time.sleep(0.15)
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr(tasks.SimRobot, "cartesian_path", delayed)
+    reading = controller.robot.read()
+    grip = hub.bench.data.ctrl[7]
+    timer = threading.Timer(0.05, lambda: epoch.__setitem__(0, 1))
+    timer.start()
+    try:
+        with pytest.raises(tasks.MotionCancelled):
+            controller.robot.cartesian_path(
+                reading.tcp_m, reading.tcp_m + [0, 0, 0.02], reading.rotation, 40
+            )
+    finally:
+        timer.join()
+    assert hub.bench.data.ctrl[7] == grip

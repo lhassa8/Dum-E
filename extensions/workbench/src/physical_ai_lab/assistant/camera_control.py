@@ -139,6 +139,7 @@ class CameraDelivery:
         phase_recovery=False,
         verify_release=False,
         recover_grip=False,
+        cartesian_carry=False,
         perceive=None,
     ):
         self.robot, self.camera, self.object = robot, camera, tool
@@ -177,6 +178,9 @@ class CameraDelivery:
         self.correction_attempts = 0
         self.recover_grip = recover_grip
         self.grip_recovery_attempts = 0
+        self.cartesian_carry = cartesian_carry
+        if cartesian_carry and not (linear_lifts and verify_motion and safe_handoff):
+            raise ValueError("Cartesian carry requires verified linear motion and safe handoff")
         if recover_grip and not (safe_handoff and verify_motion and linear_lifts):
             raise ValueError(
                 "Grip recovery requires safe handoff, verified motion and linear lifts"
@@ -281,6 +285,18 @@ class CameraDelivery:
         if not present:
             raise ValueError("Gripper no longer indicates a held handle; holding position")
 
+    def _check_empty_loss_hold(self, before):
+        if not (self.recover_grip and self.grip_recovery_attempts == 1 and self.carrying):
+            self.robot.hold()
+            raise ValueError("Empty-hand loss recovery has no owned attempt; holding")
+        after = self.robot.read()
+        if not all(
+            reading.closing_command and np.isfinite(reading.gap_m) and 0 <= reading.gap_m < 0.015
+            for reading in [before, after]
+        ):
+            self.robot.hold()
+            raise ValueError("Empty-hand recovery state changed during camera processing; holding")
+
     def _motion(self, point, phase, grip):
         self.phase = phase
         end = self.robot.solve(point, self.orientation)
@@ -292,18 +308,39 @@ class CameraDelivery:
                 start = reading.joints
                 ticks = max(40, int(np.max(np.abs(end - start)) / 0.025))
                 path = None
-                if self.linear_lifts and phase in {
-                    "Lifting tool",
-                    "Lifting for return",
-                    "Retracting empty hand for rescan",
-                }:
+                pose_carry = (
+                    self.cartesian_carry
+                    and self.carrying
+                    and phase
+                    in {
+                        "Moving to target",
+                        "Placing tool",
+                    }
+                )
+                if (
+                    self.linear_lifts
+                    and phase
+                    in {
+                        "Lifting tool",
+                        "Lifting for return",
+                        "Retracting empty hand for rescan",
+                    }
+                ) or pose_carry:
                     path = self.robot.cartesian_path(
-                        reading.tcp_m, np.asarray(point), self.orientation, ticks
+                        reading.tcp_m,
+                        np.asarray(point),
+                        self.orientation,
+                        ticks,
+                        **({"interpolate_rotation": True} if pose_carry else {}),
                     )
                     ticks = len(path)
                     end = path[-1]
                     self.evidence.append(
-                        {"kind": "cartesian_lift_plan", "phase": phase, "waypoints": ticks}
+                        {
+                            "kind": "cartesian_carry_plan" if pose_carry else "cartesian_lift_plan",
+                            "phase": phase,
+                            "waypoints": ticks,
+                        }
                     )
                 index, revision = 0, self.revision
                 remaining = ticks + 12
@@ -582,7 +619,7 @@ class CameraDelivery:
                 if capture is not None:
                     try:
                         alternative = capture()
-                        estimates = locate_tools(alternative.frame)
+                        estimates = self.perceive(alternative.frame)
                         observed = neighbors(alternative, estimates)
                     except (ValueError, KeyError) as alternate_error:
                         refusals.append({"view": "alternate", "reason": str(alternate_error)})
@@ -706,10 +743,14 @@ class CameraDelivery:
                         and 0 <= reading.gap_m <= 0.080
                     ):
                         raise ValueError("Interrupted grip settling has inconsistent hand state")
-                elif self.carrying or not np.isfinite(reading.gap_m) or (
-                    reading.closing_command
-                    if phase == "Opening confirmed empty hand"
-                    else not open_hand
+                elif (
+                    self.carrying
+                    or not np.isfinite(reading.gap_m)
+                    or (
+                        reading.closing_command
+                        if phase == "Opening confirmed empty hand"
+                        else not open_hand
+                    )
                 ):
                     raise ValueError("Interrupted empty-hand recovery has inconsistent hand state")
                 route = "continue bounded grip recovery"

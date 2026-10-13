@@ -1670,3 +1670,43 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   Next investigate resumed carry across returned poses, then full camera voice,
   latency, broader layouts and user-controlled demonstration. Goal remains active.
   Details/evidence: live-camera-interface-pc.md/live-camera-interface-pc-evidence.json.
+
+## B29 — recovery wait and continuous pose carry repair (2026-10-13)
+- Previous d975557 is concrete progress, with a retained continued-session
+  resumed-carry failure. Frozen diagnostic baseline: ten legs succeeded, two
+  failed, last return unreached. Both abort while observing after loss: owned
+  one-attempt recovery has confirmed closed empty-gap, but computation wait
+  demands a held handle. Fix only that phase, finite closed gaps [0,15mm) on both
+  sides of each tick; carrying uncertainty persists until fresh supported camera.
+- Corrected alternate-view detector to use cooperative physics. This exposed
+  repeated hammer-return freshness failure: two views took440ms. Profile showed
+  duplicate full-image depth/color preparation across fallback passes. Reuse
+  within one frame; exact outputs on48 frozen optical cases and2 failed-frame
+  captures, five paired trials each. Their medians154/247→67/118ms. No fitting,
+  cross-frame cache, confidence changes or relaxed250ms freshness.
+- Closed-empty-hand retreat/resurvey prototype still cannot fit the dropped
+  wrench. Rolled back; rejected images/trace retained, no third similar fit.
+- New hypothesis: continuous Cartesian transport/descent and smooth shortest
+  wrist rotation preserve grip through intermediate motion better than joint
+  interpolation. Optional cartesian_carry leaves old actor/default main off.
+  Original.075rad/solver/refinement caps unchanged. Plans>200ms measured: separate
+  kinematic worker/captured robot readings, real physics under gravity while
+  waiting, epoch/stale250ms/measured-first-waypoint checks before movement.
+- Final diagnostic13/13 physical legs; external truth observer at every physics
+  tick independently confirms original lift, placement, rest, open-hand and
+  unrelated-tool gates. Known/repeated replay, not unseen rate. Original losses
+  retained; pose geometry/orientation/timing changed together, no speed-only claim.
+- Three live interface sequences in one continued session, all12placements,
+  conversation, Stop/resume, old-tool return before change, contextual return.
+  StopHTTP→observedstate63.64/112.00/24.62ms, n3, no acoustic claim.
+- Actual Windows saved speech natural semantic request → CUDA ASR → Bonsai model
+  → original bus → camera delivery/return. ASR315.55ms, model507.49ms,
+  native decision538.71ms; delivery7.52mm/lift201.95mm, return9.55mm. n1 warm,
+  quiet benchmark window. Substantive acknowledgment cannot meet0.5s in this
+  sample; full utterance/audible timing, distributions/contention still needed.
+- Full315tests/lint/46protectedhashes pass. No ASR fallback, new models/fits,
+  mic activation, raw-data publication or hardware. Main8876 remains ready,
+  candidate8886 ready. Broad prospective actual-adapter layouts and recovery
+  after cancellation inside computation remain outstanding; held resume currently
+  refuses/retains context for fresh destination. Human camera demo pending.
+  Goal active. Details/evidence: live-camera-recovery-pc.md/live-camera-recovery-pc-evidence.json.

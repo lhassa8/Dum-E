@@ -6,7 +6,7 @@ from concurrent.futures import ThreadPoolExecutor
 import numpy as np
 
 from physical_ai_lab.assistant.camera_control import CameraDelivery, validate_observation
-from physical_ai_lab.assistant.camera_robot import SimRobot
+from physical_ai_lab.assistant.camera_robot import CartesianStepRefusal, SimRobot
 from physical_ai_lab.assistant.control import Outcome
 from physical_ai_lab.assistant.perception import locate_tools
 from physical_ai_lab.assistant.perception_scene import CameraSensor
@@ -19,9 +19,30 @@ class MotionCancelled(Exception):
 
 
 class GuardedRobot(SimRobot):
-    def __init__(self, bench, cancelled):
+    def __init__(self, bench, cancelled, planning=None):
         super().__init__(bench, recover_ik=True, refine_cartesian=True)
         self.cancelled = cancelled
+        self.planning = planning
+
+    def cartesian_path(self, start, point, rotation, ticks, interpolate_rotation=False):
+        if self.planning is None:
+            return super().cartesian_path(start, point, rotation, ticks, interpolate_rotation)
+        reading = self.read()
+        # Independent kinematic data prevents an abandoned worker from racing
+        # a subsequent recovery plan. Only robot readings leave the owner.
+        planner = SimRobot(self._bench, recover_ik=True, refine_cartesian=True)
+        path = self.planning(
+            lambda: planner.cartesian_path(
+                start, point, rotation, ticks, interpolate_rotation, initial_reading=reading
+            )
+        )
+        now = self.read()
+        if not 0 <= now.time_s - reading.time_s <= 0.25:
+            raise ValueError("Robot planning snapshot is stale; holding")
+        if np.max(np.abs(path[0] - now.joints)) > 0.075:
+            raise CartesianStepRefusal("Measured first Cartesian waypoint exceeds continuity limit")
+        self.ik_events.extend(planner.ik_events)
+        return path
 
     def tick(self, joints=None, gripper=None):
         if self.cancelled():
@@ -89,10 +110,13 @@ class CameraTasks:
         }
 
     def perceive(self, frame):
+        return self.compute(lambda: locate_tools(frame))
+
+    def compute(self, work):
         expected = self.active.expected_epoch if self.active else self.epoch()
         if self.stopping() or self.epoch() != expected:
             raise MotionCancelled()
-        future = self.pool.submit(locate_tools, frame)
+        future = self.pool.submit(work)
         self.bench.hold_joints()
         while not future.done():
             started = time.monotonic()
@@ -103,11 +127,26 @@ class CameraTasks:
             self.bench.tick()
             if self.active:
                 self.active.measure()  # Evaluator only; no return value feeds perception.
-                self.active.actor._check_carry_grip(before)
+                self._check_perception_hold(before)
             time.sleep(max(0, 0.032 - (time.monotonic() - started)))
         if self.stopping() or self.epoch() != expected:
             raise MotionCancelled()
         return future.result()
+
+    def _check_perception_hold(self, before):
+        actor = self.active.actor
+        if (
+            actor.recover_grip
+            and actor.grip_recovery_attempts == 1
+            and actor.carrying
+            and actor.phase == "Observing supported tool after grip loss"
+        ):
+            # The original recovery sequence has braked and checked empty gap,
+            # but keeps carrying=True until fresh tabletop evidence arrives.
+            # Retain that uncertainty without demanding a held handle here.
+            actor._check_empty_loss_hold(before)
+            return
+        actor._check_carry_grip(before)
 
     def close(self):
         self.pool.shutdown(wait=True, cancel_futures=True)
@@ -119,7 +158,7 @@ class CameraPerformance:
         self.hub, self.object = hub, tool
         self.destination = "rack" if returning else "handoff"
         self.expected_epoch = hub.epoch()
-        self.robot = GuardedRobot(hub.bench, self.cancelled)
+        self.robot = GuardedRobot(hub.bench, self.cancelled, planning=hub.compute)
         self.actor = CameraDelivery(
             self.robot,
             hub.sensor,
@@ -135,6 +174,7 @@ class CameraPerformance:
             phase_recovery=True,
             verify_release=True,
             recover_grip=True,
+            cartesian_carry=True,
             perceive=hub.perceive,
         )
         self.initial = {name: xyz.copy() for name, xyz in hub.truth().items()}
@@ -148,6 +188,22 @@ class CameraPerformance:
     @property
     def phase(self):
         return self.actor.phase
+
+    def diagnostics(self):
+        """Owner-thread actor evidence; never used to select or validate motion."""
+        reading = self.robot.read()
+        return {
+            "object": self.object,
+            "phase": self.phase,
+            "carrying": self.actor.carrying,
+            "gap_m": reading.gap_m,
+            "gripper_closing": reading.closing_command,
+            "tcp_m": reading.tcp_m.tolist(),
+            "grip_recovery_attempts": self.actor.grip_recovery_attempts,
+            "release_correction_attempts": self.actor.correction_attempts,
+            "evidence": list(self.actor.evidence),
+            "robot_plans": list(self.robot.ik_events),
+        }
 
     def cancelled(self):
         return self.hub.stopping() or self.hub.epoch() != self.expected_epoch

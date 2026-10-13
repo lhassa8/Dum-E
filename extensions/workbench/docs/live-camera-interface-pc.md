@@ -6,6 +6,10 @@ simulator object state. Hypothesis: an adapter can reuse the existing Dum-E
 task/MCP interface while using camera observations for motion and task context
 for dialogue, preserving the original independent physical judge and Stop.
 
+Later repairs and the current candidate are documented in
+[live-camera-recovery-pc.md](live-camera-recovery-pc.md). The measurements below
+describe d975557 and retain its continued-session failure.
+
 Launch from the repository root:
 
 ```powershell

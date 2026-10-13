@@ -2,6 +2,7 @@
 
 from types import SimpleNamespace
 
+import mujoco
 import numpy as np
 import pytest
 
@@ -64,3 +65,36 @@ def test_refinement_has_an_absolute_waypoint_cap():
     with pytest.raises(CartesianStepRefusal, match="exhausted"):
         robot.cartesian_path(np.zeros(3), np.ones(3), np.eye(3), 150)
     assert counts == [150, 300]
+
+
+def test_cartesian_carry_changes_full_pose_continuously_without_physics_writes():
+    bench = ToolWorkbench()
+    robot = SimRobot(bench, recover_ik=True, refine_cartesian=True)
+    try:
+        reading = robot.read()
+        point = reading.tcp_m + [0.03, 0.015, 0.03]
+        angle = 0.2
+        yaw = np.array(
+            [[np.cos(angle), -np.sin(angle), 0], [np.sin(angle), np.cos(angle), 0], [0, 0, 1]]
+        )
+        rotation = yaw @ reading.rotation
+        original = bench.data.qpos.copy(), bench.data.qvel.copy(), bench.data.ctrl.copy()
+        path = robot.cartesian_path(reading.tcp_m, point, rotation, 40, interpolate_rotation=True)
+        assert np.max(np.abs(np.diff(np.vstack([reading.joints, path]), axis=0))) <= 0.075
+        independent = mujoco.MjData(bench.model)
+        previous = reading.rotation
+        for joints in path:
+            independent.qpos[:7] = joints
+            mujoco.mj_forward(bench.model, independent)
+            measured = independent.site_xmat[bench.tcp].reshape(3, 3).copy()
+            step_angle = np.arccos(np.clip((np.trace(previous.T @ measured) - 1) / 2, -1, 1))
+            assert step_angle < 0.04
+            previous = measured
+        assert np.linalg.norm(independent.site_xpos[bench.tcp] - point) < 0.0008
+        assert np.arccos(np.clip((np.trace(previous.T @ rotation) - 1) / 2, -1, 1)) < 0.008
+        for actual, before in zip(
+            [bench.data.qpos, bench.data.qvel, bench.data.ctrl], original, strict=True
+        ):
+            np.testing.assert_array_equal(actual, before)
+    finally:
+        bench.close()

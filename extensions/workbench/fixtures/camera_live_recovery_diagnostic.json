@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "scope": "Diagnostic known-loss replay and continued returned-tool journeys; not held-out qualification or acoustic latency",
+  "known_fixture": "runs/pc-camera-release-reserved-001/fixture.json",
+  "known_fixture_sha256": "cb2a45805efad6018e04850d5da897b83f19ea9a19f82d9590d88a09665e7a2c",
+  "known_case": "pc-reserved-025",
+  "repeat_tools": ["screwdriver", "wrench"],
+  "repeat_cycles": 3,
+  "stop_phase": "Moving to target",
+  "stop_frames": 19,
+  "frame_limit": 3000,
+  "criteria": {"placement_m": 0.035, "lift_m": 0.08, "rest_height_m": 0.04, "rest_speed_m_s": 0.03, "unrelated_translation_m": 0.004},
+  "invariants": "No object pose/velocity writes, geometry/force/contact changes, model fits or threshold widening; independent outcome evaluator stays unchanged"
+}

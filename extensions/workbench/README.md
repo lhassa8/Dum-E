@@ -8,9 +8,10 @@ from the repository root; open http://127.0.0.1:8876. Microphone listening start
 The optional [PC camera interface](docs/live-camera-interface-pc.md) uses
 `-CameraTools` and separate ports at http://127.0.0.1:8886. It has measured typed
 pickup, return, conversation, Stop/resume and tool-change journeys; camera-mode
-repeatability across returned poses, voice and broad live-layout qualification
-remain outstanding. A continued-session resumed carry failed after two complete
-interface runs; the profile remains experimental.
+voice timing and broad live-layout qualification remain outstanding. The
+[continued-session repair](docs/live-camera-recovery-pc.md) passes three repeated
+interface sequences and a natural saved-speech delivery/return after retaining
+the original failure; the profile remains experimental.
 
 An additive Mac extension for Dum-E: ask for a screwdriver, wrench or hammer,
 watch a MuJoCo Panda grasp and deliver it to a green handoff tray, and hear the
@@ -19,10 +20,11 @@ Dum-E task manager, message broker and MCP server run directly from this checkou
 Upstream files are unchanged; this extension replaces the concrete hardware agent
 with a simulation implementation of the same interface.
 
-The next manipulation experiment reuses OpenPi's pretrained π0.5-LIBERO policy in
-its supported simulator. The separate [OpenPi client](integrations/openpi-client/README.md)
-is pinned and tested for communication/interruption. It has not loaded model
-weights or driven a robot; the public app below still uses its existing controller.
+The separate [PC policy lab](docs/libero-live-pc.md) runs actual OpenPi π0.5-LIBERO
+checkpoint inference in its supported simulator. Its stricter voice/interruption
+qualification is 2/3; failures remain documented. The pinned
+[OpenPi client](integrations/openpi-client/README.md) provides transport. The
+workbench's tool controller and optional camera profile remain separate from that policy.
 
 The [hardware adaptation plan](docs/hardware-adaptation-plan.md) documents what
 can be reused and what must be measured before choosing an arm. Our primitive

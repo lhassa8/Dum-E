@@ -1,6 +1,7 @@
 """Independent real-audio -> local ASR -> original task bus -> native physics check."""
 
 import argparse
+import hashlib
 import io
 import json
 import math
@@ -17,10 +18,16 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--url", default="http://127.0.0.1:8766")
     parser.add_argument("--message", default="Bring me the screwdriver, please.")
+    parser.add_argument("--audio", type=Path, help="Existing saved audio for Windows/WSL checks")
+    parser.add_argument("--audio-source", default="Saved audio; no microphone recording")
     parser.add_argument("--return-after-delivery", action="store_true")
     parser.add_argument("--expect-model-interpretation", action="store_true")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
+    if args.audio and not args.audio.is_file():
+        parser.error("The saved audio file does not exist")
+    if args.audio is None and not Path("/usr/bin/say").is_file():
+        parser.error("Use --audio with a saved speech clip on Windows/WSL")
     args.output.mkdir(parents=True, exist_ok=False)
     with httpx.Client(base_url=args.url, timeout=30, trust_env=False) as client:
 
@@ -58,7 +65,7 @@ def main():
         assert initial["speech_input"]["status"] == "ready"
         # Return an already delivered tool through physics instead of resetting it.
         for tool, location in initial["inventory"].items():
-            if location == "handoff tray":
+            if location.startswith("handoff tray"):
                 returned, _ = run_task(f"Put the {tool} back in its rack, please.")
                 assert returned["last_result"]["physical_success"]
         initial = wait_ready()
@@ -75,15 +82,25 @@ def main():
         assert silence.status_code == 422
         assert len(state()["tasks"]) == count
         with tempfile.TemporaryDirectory() as directory:
-            request = Path(directory) / "request.txt"
-            recording = Path(directory) / "request.aiff"
-            request.write_text(args.message + "\n")
-            subprocess.run(["/usr/bin/say", "-o", str(recording), "-f", str(request)], check=True)
+            if args.audio:
+                recording = args.audio
+                source = args.audio_source
+            else:
+                request = Path(directory) / "request.txt"
+                recording = Path(directory) / "request.aiff"
+                request.write_text(args.message + "\n")
+                subprocess.run(
+                    ["/usr/bin/say", "-o", str(recording), "-f", str(request)], check=True
+                )
+                source = "Native Mac synthesized speech; no microphone recording"
+            payload = recording.read_bytes()
             recognition_started = time.monotonic()
             response = client.post(
                 "/transcribe",
-                content=recording.read_bytes(),
-                headers={"Content-Type": "audio/aiff"},
+                content=payload,
+                headers={
+                    "Content-Type": "audio/aiff" if recording.suffix == ".aiff" else "audio/wav"
+                },
             )
             recognition_ms = (time.monotonic() - recognition_started) * 1000
         response.raise_for_status()
@@ -110,12 +127,21 @@ def main():
         if args.return_after_delivery:
             returned, _ = run_task("Put the screwdriver back in its rack.")
             assert returned["last_result"]["physical_success"]
-            assert returned["inventory"]["screwdriver"] == "tool rack"
+            assert returned["last_result"]["intent"]["action"] == "return"
+            assert returned["last_result"]["intent"]["object"] == "screwdriver"
+            assert (
+                math.dist(
+                    returned["objects"]["screwdriver"][:2], initial["objects"]["screwdriver"][:2]
+                )
+                < 0.035
+            )
             return_result = returned["last_result"]
         (args.output / "verification.json").write_text(
             json.dumps(
                 {
-                    "source": "native Mac synthesized speech, not user's microphone",
+                    "source": source,
+                    "audio_sha256": hashlib.sha256(payload).hexdigest(),
+                    "tool_control": final.get("tool_control", "baseline"),
                     "requested_speech": args.message,
                     "recognition_ms": recognition_ms,
                     "native_responsiveness": final["responsiveness"],
