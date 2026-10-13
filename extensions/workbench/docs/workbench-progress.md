@@ -1575,3 +1575,21 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   real-physics tests refuse additional pickup without advancing physics.
   Public camera still unpromoted, model fit budget0, full goal remains active.
   Details/evidence: camera-release-correction-pc.md/camera-release-correction-pc-evidence.json.
+
+## B25 — grip recovery prototype and Odyssey-3 assessment (2026-10-13)
+- Published baseline1c77eab remains authoritative. Fixed2mm per-frame gap-shrink
+  brake on evaluated025/046 stabilizes joints but does not retain either tool
+  over32s; they fall naturally. No held-object freeze or proxy success claimed.
+- Experimental recover_grip flag: cancel carry,3.2s gravity hold, require closed
+  empty-gap indication plus fresh supported-tabletop camera, open/reacquire once.
+  First retrospective same54 replay50/54 versusbaseline51/54;025 recovered,
+  046 camera-refuses,001/049 conservatively refuse a still-possible tabletop grasp.
+  Known nine-phase validation27/27,284 tests, original longhold6/6,46 upstream hashes.
+  Prototype remains uncommitted/unpromoted pending investigation, no threshold widening.
+- User steering: research Odyssey-3. Primary launch/robotics/SDK/docs/model-hub
+  sources reviewed. Recovery-policy representation/action decoder is relevant;
+  public preview is not verified arm-control access. Docs still name2Pro, public
+  hub has kernel packages, no verified3 checkpoint/5090 deployment recipe.
+  Saved odyssey-3-assessment.md with access questions and guarded evaluation plan.
+  No accounts, external messages, paid calls, uploads, installations or hardware.
+  Goal remains active; research does not replace independent physical qualification.
