@@ -1,0 +1,52 @@
+{
+  "version": 2,
+  "scope": "Prospective complete-scene RGB-D optical recovery; offline simulated journeys, not live speech or hardware",
+  "seed": 2026101302,
+  "case_count": 54,
+  "tools": [
+    "screwdriver",
+    "wrench",
+    "hammer"
+  ],
+  "journeys": [
+    "deliver",
+    "resume",
+    "redirect"
+  ],
+  "x_range_m": [
+    0.405,
+    0.475
+  ],
+  "y_lanes_m": [
+    -0.22,
+    0,
+    0.22
+  ],
+  "y_jitter_range_m": [
+    -0.02,
+    0.02
+  ],
+  "yaw_range_rad": [
+    -3.141592653589793,
+    3.141592653589793
+  ],
+  "light_range": [
+    0.8,
+    1.2
+  ],
+  "distribution_provenance": "Rounded bounds/three lane structure from existing training cohort only; no reserved-case coordinates used",
+  "criterion_fixture": "release_model_cases.json",
+  "criterion_fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+  "profile": {
+    "recover_ik": true,
+    "verify_motion": true,
+    "release_fallback": true,
+    "linear_lifts": true,
+    "center_grasp": true,
+    "safe_handoff": true,
+    "alternate_view": true,
+    "return_after_delivery": true
+  },
+  "evaluation_rules": "Freeze actor, perception, optics, physics and judge before generating cases; all cases counted; no post-result tuning or sample replacement",
+  "hold_scope": "Existing 0.608 simulation-second short hold criterion; separate 32-second six-case hold qualification remains required"
+}

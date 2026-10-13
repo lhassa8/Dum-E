@@ -1441,3 +1441,36 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   failure; no physics or IK sweep. All-phase recovery/task-layer integration and
   user-controlled live mic verification remain required. Goal active.
   Details: camera-multiview-pc.md and camera-multiview-pc-evidence.json.
+
+## B20 — complete-scene optical recovery and grasp-state diagnosis (2026-10-12)
+
+- Baseline5aafd82. Bounded change: opt-in complete alternate scene on primary
+  neighboring observation failure, with unchanged fit/freshness/clearance/cache
+  bounds. Require all neighbors from one selected frame; ambiguous identity is
+  never replaced by cache or a partial-view merge. Defaults remain off.
+- Validation18/18,12 returns,7 selected side scenes. Three new scene guards pass.
+  Frozen sources/runtime/recipe before new seed2026101302 generated54 balanced
+  cases, fixtureSHAd2de78089c7f1d886f5c67a2d4453c715b900cd85cd855f223231923a47bd9e8.
+- Prospective **50/54 complete journeys (92.59%) FAIL unchanged95% gate**;52/54
+  first-leg physical placements not substituted.34 return attempts,8 selected
+  side scenes,1 side target. All54 verdicts independently reconstructed. Wilson
+  interval82.45–97.08%; no causal rate comparison with different-seed51/54.
+- Failures retained:000 return grip loss(.947m/s,162.84mm high);009 ambiguous
+  wrench neighbor/return held high;014 hammer lift branch guard;029 hammer weak
+  observation/no pickup. No solver, physics, force/gain/model/threshold changes.
+- After two failed optical cohorts, switch strategy. Posthoc four-case replay
+  denies tool truth to actor, labels only evaluator. Rigid center error76.70mm;
+  still56.75mm with supported23.36mm jaw gap during descent. Successful/failing
+  peak joint speeds1.111/1.119rad/s do not establish speed causation. Closed gap
+  does not establish held pose; no new optical, IK or physics sweep proposed.
+- Earlier held fits already reject12/12 views; reuse that evidence. Prepared
+  reorientation curriculum remains next substantive research action. PC dataset
+  preflight:hash verified,1314x76,1044train/270val/0test,disjoint scenes,0 deliberate
+  training turns. Existing pinned Torch2.7.1 CPU forward/backward works; no model
+  trained or policy CPU fallback. Remaining bounded fit budget stays1.
+- 257 full tests pass,46/46 protected hashes. Read-only hardware geometry inventory
+  recompiles identically on PC; no hardware IO/simulation step. Hardware plan now
+  records actual PC policy baseline instead of pending workstation access.
+- Public camera motion remains unpromoted. All-phase recovery, task-layer camera,
+  responsive live voice and user demonstration remain incomplete; goal active.
+  Details: camera-scene-pc.md and camera-scene-pc-evidence.json. Raw data local.

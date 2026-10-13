@@ -1,5 +1,11 @@
 # D2e: held geometry and future release learning
 
+**Historical October 11 experiment.** Its two rejected held-view fits, failed
+model gate and training-exposure finding remain evidence. Subsequent PC camera
+cohorts are documented in [camera-scene-pc.md](camera-scene-pc.md); the old 24
+reserved layouts have since been evaluated and are not future unseen tests.
+The prepared training-only curriculum has not yet been collected or refitted.
+
 Experimental, October 11, 2026. Public voice assistant and enabled controllers
 remain unchanged. No hardware or camera permissions were added. Full goal active.
 

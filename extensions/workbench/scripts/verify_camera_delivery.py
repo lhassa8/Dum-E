@@ -270,6 +270,12 @@ summary = {
     "safe_handoff": args.safe_handoff,
     "alternate_view": args.alternate_view,
     "return_after_delivery": args.return_after_delivery,
+    "selected_alternate_scene_views": sum(
+        e.get("kind") == "camera_scene_view" and e.get("view") == "alternate"
+        for row in rows
+        for e in row["observations"]
+        + ([] if row["return"] is None else row["return"]["observations"])
+    ),
     "accepted_alternate_views": sum(
         e.get("view") == "alternate" and e.get("accepted", False)
         for row in rows

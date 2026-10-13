@@ -413,12 +413,8 @@ class CameraDelivery:
 
     def _carry(self):
         if self.safe_handoff:
-            from physical_ai_lab.assistant.handoff_planning import choose_handoff
-
             self.phase = "Checking clear space for release"
-            sample = self.camera.capture_timed()
-            predictions = locate_tools(sample.frame)
-            self.orientation, plan = choose_handoff(self, sample, predictions)
+            self.orientation, plan = self._handoff_plan()
             self.reoriented_carry = plan["mode"] == "tabletop_reorientation"
             self.evidence.append(plan)
         point = self._place_point(apply_correction=self.carry_policy == "full_xyz")
@@ -469,6 +465,53 @@ class CameraDelivery:
                     }
                 )
         yield from self.finish_release(point)
+
+    def _handoff_plan(self):
+        """Select one complete calibrated scene; never discard an uncertain neighbor."""
+        from physical_ai_lab.assistant.handoff_planning import choose_handoff
+
+        began = perf_counter()
+        sample = self.camera.capture_timed()
+        predictions = locate_tools(sample.frame)
+        view = "primary"
+        refusals = []
+
+        def neighbors(frame, estimates):
+            now = self.robot.read().time_s
+            return {
+                name: validate_observation(name, estimates[name], frame.captured_s, now)
+                for name in ("screwdriver", "wrench", "hammer")
+                if name != self.object
+            }
+
+        if self.alternate_view:
+            try:
+                neighbors(sample, predictions)
+            except ValueError as error:
+                refusals.append({"view": "primary", "reason": str(error)})
+                capture = getattr(self.camera, "capture_alternate_timed", None)
+                if capture is not None:
+                    try:
+                        alternative = capture()
+                        estimates = locate_tools(alternative.frame)
+                        observed = neighbors(alternative, estimates)
+                    except (ValueError, KeyError) as alternate_error:
+                        refusals.append({"view": "alternate", "reason": str(alternate_error)})
+                    else:
+                        sample, predictions, view = alternative, estimates, "alternate"
+                        self.scene_history.update(observed)
+        self.evidence.append(
+            {
+                "kind": "camera_scene_view",
+                "view": view,
+                "phase": self.phase,
+                "captured_s": sample.captured_s,
+                "refusals": refusals,
+                "observation_total_ms": (perf_counter() - began) * 1000,
+                "selection": "Complete view; planner gates and labeled cache bounds unchanged",
+            }
+        )
+        return choose_handoff(self, sample, predictions)
 
     def placement_clearance(self, predicted_xy):
         if self.planned_neighbors is None:

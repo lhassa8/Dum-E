@@ -21,7 +21,6 @@ FILES = [
     "src/physical_ai_lab/assistant/scene.py",
     "scripts/verify_camera_delivery.py",
     "scripts/generate_camera_reserved.py",
-    "fixtures/camera_multiview_protocol.json",
     "upstream-source.json",
     "uv.lock",
 ]
@@ -35,6 +34,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=Path)
     parser.add_argument(
+        "--protocol", type=Path, default=ROOT / "fixtures/camera_multiview_protocol.json"
+    )
+    parser.add_argument(
         "--freeze", action="store_true", help="Record source hashes only; generate no cases"
     )
     parser.add_argument(
@@ -45,6 +47,10 @@ def main():
         name: hashlib.sha256((ROOT / name).read_bytes().replace(b"\r\n", b"\n")).hexdigest()
         for name in FILES
     }
+    protocol_path = args.protocol.resolve()
+    hashes[str(protocol_path.relative_to(ROOT))] = hashlib.sha256(
+        protocol_path.read_bytes().replace(b"\r\n", b"\n")
+    ).hexdigest()
     runtime = {
         "python": sys.version.split()[0],
         "numpy": np.__version__,
@@ -70,7 +76,7 @@ def main():
     manifest = {} if args.manifest is None else json.loads(args.manifest.read_text())
     if manifest.get("source_sha256") != hashes or manifest.get("runtime") != runtime:
         parser.error("Candidate/judge/recipe changed or no frozen manifest supplied")
-    spec = json.loads((ROOT / "fixtures/camera_multiview_protocol.json").read_text())
+    spec = json.loads(protocol_path.read_text())
     criteria_path = ROOT / "fixtures" / spec["criterion_fixture"]
     if digest(criteria_path) != spec["criterion_fixture_sha256"]:
         parser.error("Protected criterion fixture changed")
@@ -104,7 +110,7 @@ def main():
                 "scope": spec["scope"],
                 "criteria": json.loads(criteria_path.read_text())["criteria"],
                 "cases": cases,
-                "protocol_sha256": digest(ROOT / "fixtures/camera_multiview_protocol.json"),
+                "protocol_sha256": hashes[str(protocol_path.relative_to(ROOT))],
                 "freeze_manifest_sha256": digest(args.manifest),
             },
             indent=2,

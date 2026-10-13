@@ -116,8 +116,12 @@ retain task-generation checks immediately before execution.
 
 1. **Matched pretrained baseline.** Run π0.5-LIBERO in its supported Linux
    simulator first. Record exact checkpoint/runtime, independent task success,
-   replay videos, and cold/warm timings. Workstation access is pending. This
-   validates reuse, not screwdriver handling or SO-101 transfer.
+   replay videos, and cold/warm timings. This baseline now runs locally on the
+   Windows/WSL RTX5090: 3/3 native LIBERO successes and 2/3 stricter saved-voice
+   interruption sequences. See libero-live-pc.md. The simulation geometry
+   inventory was independently recompiled on the PC and matches its recorded
+   masses/bounds. This validates reuse, not screwdriver handling, calibrated
+   hardware payload or SO-101 transfer.
 2. **Embodiment and station simulation.** Use the selected arm's existing model
    and a measured tool/layout catalog. Verify reachable poses and grip geometry,
    then adapt a compatible policy with demonstrations. Keep the old scene and
