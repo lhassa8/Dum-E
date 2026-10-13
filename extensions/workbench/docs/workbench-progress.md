@@ -1641,3 +1641,32 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   Next wire opt-in live camera interaction and measure full natural journeys;
   defaults off, voice/human demonstration outstanding, goal active, fitbudgets0.
   Details/evidence: grip-recovery-interruptions-pc.md/grip-recovery-interruptions-pc-evidence.json.
+
+## B28 — camera candidate reaches the interface; repeatability remains open (2026-10-13)
+- Baseline dc708dc: camera candidate offline only, public motion/routing from
+  simulator state. Added optional CameraTasks/CameraPerformance adapter through
+  original task/MCP bus. Rack context from calibrated RGB-D; both language paths
+  omit object coordinates; separate original physical evaluator owns success.
+- Camera detection worker runs while native physics advances under shared
+  gravity hold; epoch guards reject stale commands/results. Cancelled held
+  generator cannot optimistically resume; preserve paused context for fresh
+  destination plan. Missing next-rack context refuses before rerouting old task.
+- -CameraTools starts separate8886/8885/8802; existing8876 remains untouched.
+  Default scene6/6 direct pickup/return legs with actor truth access denied.
+  Two complete interface sequences pass delivery, conversation, Stop/resume,
+  verified old return before tool change and contextual return; final errors
+  7.49/9.69/10.60/15.96mm, StopHTTP-to-observedstate53.25ms(earlier54.11ms).
+- Reusable script's first actual run on already-returned poses failed during
+  resumed screwdriver carry: grip changed, real drop, success withheld, later
+  legs not run. Stop97.31ms, lift187.17mm. Confounds include changed starting
+  poses and concurrent host load; cause unresolved, no threshold/fit change.
+  Preserve failed state/frame/logs. Two successful sequences do not prove broad
+  live qualification; earlier53/54 belongs to its frozen offline candidate.
+- User reports "it worked." for main live microphone screwdriver journey.
+  Main outcome9.65mm, applicationclock16.58s, no acoustic-latency/echo measurements.
+  One human main journey confirmed, camera live voice/demo still outstanding.
+- Final302 tests/lint/46protectedhashes pass. Local reports/raw traces retained;
+  rollback omits switch. No mic activation, model fits, cloud upload or hardware.
+  Next investigate resumed carry across returned poses, then full camera voice,
+  latency, broader layouts and user-controlled demonstration. Goal remains active.
+  Details/evidence: live-camera-interface-pc.md/live-camera-interface-pc-evidence.json.

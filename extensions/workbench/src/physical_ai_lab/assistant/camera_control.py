@@ -139,8 +139,10 @@ class CameraDelivery:
         phase_recovery=False,
         verify_release=False,
         recover_grip=False,
+        perceive=None,
     ):
         self.robot, self.camera, self.object = robot, camera, tool
+        self.perceive = perceive or locate_tools
         self.target = np.asarray(destination_xy, dtype=float).copy()
         if self.target.shape != (2,) or not np.isfinite(self.target).all():
             raise ValueError("Invalid destination")
@@ -217,7 +219,7 @@ class CameraDelivery:
         start = perf_counter()
         sample = capture()
         captured_s = sample.captured_s
-        predictions = locate_tools(sample.frame)
+        predictions = self.perceive(sample.frame)
         now_s = self.robot.read().time_s
         prediction = predictions[self.object]
         self.evidence.append(
@@ -559,7 +561,7 @@ class CameraDelivery:
 
         began = perf_counter()
         sample = self.camera.capture_timed()
-        predictions = locate_tools(sample.frame)
+        predictions = self.perceive(sample.frame)
         view = "primary"
         refusals = []
 

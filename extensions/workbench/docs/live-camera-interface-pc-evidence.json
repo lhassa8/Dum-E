@@ -1,0 +1,575 @@
+{
+  "interface_final": [
+    {
+      "request": "Bring me the screwdriver",
+      "response": {
+        "accepted": true,
+        "mode": "task",
+        "task_id": "51c6b47a-0d83-4dfa-8bda-b003da845776"
+      },
+      "http_ms": 44.9995230010245
+    },
+    {
+      "request": "What are you doing?",
+      "response": {
+        "accepted": true,
+        "mode": "conversation",
+        "task_id": null,
+        "message": "I'm working on the screwdriver: moving to target. Placement isn't confirmed yet.",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "I'm working on the screwdriver: moving to target. Placement isn't confirmed yet."
+        },
+        "route": "state",
+        "elapsed_ms": 0.06363799911923707,
+        "profile": null
+      },
+      "http_ms": 37.69795599509962
+    },
+    {
+      "stop_http_to_observed_hold_ms": 53.252678000717424,
+      "gripper_command": 0.0
+    },
+    {
+      "request": "Resume",
+      "response": {
+        "accepted": true,
+        "mode": "task",
+        "task_id": "10d5ed8d-bfea-451f-ab4d-86574d10cf39"
+      },
+      "http_ms": 13.291080998897087
+    },
+    {
+      "completion": {
+        "status": "success",
+        "message": "The screwdriver is ready in the handoff tray.",
+        "distance_m": 0.007489905524521848
+      },
+      "timings": {
+        "job_id": "01b4b65a",
+        "route": "resolved",
+        "interpretation_ms": 17.186,
+        "decision_ms": 28.49,
+        "task_finished_ms": 8127.956
+      },
+      "verified_steps": []
+    },
+    {
+      "request": "Actually bring me the wrench instead",
+      "response": {
+        "accepted": true,
+        "mode": "task",
+        "task_id": "25653824-75f1-47e6-9198-269c06acb8ca"
+      },
+      "http_ms": 10.864800002309494
+    },
+    {
+      "completion": {
+        "status": "success",
+        "message": "The wrench is ready in the handoff tray.",
+        "distance_m": 0.010601098437407863
+      },
+      "timings": {
+        "job_id": "672d0103",
+        "route": "resolved",
+        "interpretation_ms": 12.392,
+        "decision_ms": 52.446,
+        "pickup_started_ms": 20074.345,
+        "task_finished_ms": 35782.174
+      },
+      "verified_steps": [
+        {
+          "object": "screwdriver",
+          "destination": "rack",
+          "status": "success",
+          "distance_m": 0.009686388964533355
+        },
+        {
+          "object": "wrench",
+          "destination": "handoff",
+          "status": "success",
+          "distance_m": 0.010601098437407863
+        }
+      ]
+    },
+    {
+      "request": "Put it back",
+      "response": {
+        "accepted": true,
+        "mode": "task",
+        "task_id": "e7dfd04e-ec46-46c9-b9ae-e5df32114a5a"
+      },
+      "http_ms": 12.765313003910705
+    },
+    {
+      "completion": {
+        "status": "success",
+        "message": "The wrench is ready in the rack.",
+        "distance_m": 0.015960432829984137
+      },
+      "timings": {
+        "job_id": "151ac86c",
+        "route": "resolved",
+        "interpretation_ms": 21.128,
+        "decision_ms": 30.131,
+        "pickup_started_ms": 2079.364,
+        "task_finished_ms": 18334.45
+      },
+      "verified_steps": []
+    }
+  ],
+  "interface_first": [
+    {
+      "request": "Bring me the screwdriver",
+      "response": {
+        "accepted": true,
+        "mode": "task",
+        "task_id": "0d41bb5a-8c7f-4ac5-b2e5-977b8171bc9d"
+      },
+      "http_ms": 21.99624500644859
+    },
+    {
+      "request": "What are you doing?",
+      "response": {
+        "accepted": true,
+        "mode": "conversation",
+        "task_id": null,
+        "message": "I'm working on the screwdriver: moving to target. Placement isn't confirmed yet.",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "I'm working on the screwdriver: moving to target. Placement isn't confirmed yet."
+        },
+        "route": "state",
+        "elapsed_ms": 0.08424199768342078,
+        "profile": null
+      },
+      "http_ms": 41.87059400283033
+    },
+    {
+      "stop_http_to_observed_hold_ms": 54.10536500130547,
+      "gripper_command": 0.0
+    },
+    {
+      "request": "Resume",
+      "response": {
+        "accepted": true,
+        "mode": "task",
+        "task_id": "3ea50285-8481-4faa-9905-3820952003fe"
+      },
+      "http_ms": 25.056367994693574
+    },
+    {
+      "completion": {
+        "status": "success",
+        "message": "The screwdriver is ready in the handoff tray.",
+        "distance_m": 0.007495511992813672
+      },
+      "timings": {
+        "job_id": "95027c3d",
+        "route": "resolved",
+        "interpretation_ms": 10.508,
+        "decision_ms": 15.445,
+        "task_finished_ms": 8126.431
+      },
+      "verified_steps": []
+    },
+    {
+      "request": "Actually bring me the wrench instead",
+      "response": {
+        "accepted": true,
+        "mode": "task",
+        "task_id": "05e2c0c2-42ff-4c92-906b-76a7d3f89243"
+      },
+      "http_ms": 15.974166999512818
+    },
+    {
+      "completion": {
+        "status": "success",
+        "message": "The wrench is ready in the handoff tray.",
+        "distance_m": 0.010672132151620557
+      },
+      "timings": {
+        "job_id": "5542fca3",
+        "route": "resolved",
+        "interpretation_ms": 13.582,
+        "decision_ms": 31.831,
+        "pickup_started_ms": 19995.851,
+        "task_finished_ms": 35709.552
+      },
+      "verified_steps": [
+        {
+          "object": "screwdriver",
+          "destination": "rack",
+          "status": "success",
+          "distance_m": 0.00968668969056734
+        },
+        {
+          "object": "wrench",
+          "destination": "handoff",
+          "status": "success",
+          "distance_m": 0.010672132151620557
+        }
+      ]
+    },
+    {
+      "request": "Put it back",
+      "response": {
+        "accepted": true,
+        "mode": "task",
+        "task_id": "70ce9898-9386-4634-952f-15a12d7699a6"
+      },
+      "http_ms": 18.275751994224265
+    },
+    {
+      "completion": {
+        "status": "success",
+        "message": "The wrench is ready in the rack.",
+        "distance_m": 0.01596886861996966
+      },
+      "timings": {
+        "job_id": "668b1b1a",
+        "route": "resolved",
+        "interpretation_ms": 11.014,
+        "decision_ms": 53.662,
+        "pickup_started_ms": 2027.861,
+        "task_finished_ms": 18389.713
+      },
+      "verified_steps": []
+    }
+  ],
+  "raw_runs": [
+    "runs/camera-live-adapter-001",
+    "runs/dume-52693277"
+  ],
+  "direct_legs": [
+    {
+      "tool": "screwdriver",
+      "returning": false,
+      "steps": 415,
+      "elapsed_s": 1.1694321629984188,
+      "phases": [
+        "Approaching tool",
+        "Lowering gripper",
+        "Grasping",
+        "Lifting tool",
+        "Moving to target",
+        "Choosing release action",
+        "Placing tool",
+        "Releasing",
+        "Withdrawing gripper",
+        "Awaiting independent placement check",
+        "Released; placement unverified"
+      ],
+      "outcome": {
+        "status": "success",
+        "message": "The screwdriver is ready in the handoff tray.",
+        "distance_m": 0.007497280934213982
+      },
+      "racks": {
+        "screwdriver": [
+          0.43496142219717,
+          -0.2309140225092547
+        ],
+        "wrench": [
+          0.45655658114806075,
+          0.0033144085911725237
+        ],
+        "hammer": [
+          0.42342729801596346,
+          0.2374573008720997
+        ]
+      },
+      "lift_m": 0.20499238755384422,
+      "disturbance_m": 3.017013466485978E-11
+    },
+    {
+      "tool": "screwdriver",
+      "returning": true,
+      "steps": 468,
+      "elapsed_s": 1.1646563790054643,
+      "phases": [
+        "Surveying workbench with an empty hand",
+        "Approaching tool",
+        "Lowering gripper",
+        "Grasping",
+        "Lifting tool",
+        "Moving to target",
+        "Choosing release action",
+        "Placing tool",
+        "Releasing",
+        "Withdrawing gripper",
+        "Awaiting independent placement check",
+        "Released; placement unverified"
+      ],
+      "outcome": {
+        "status": "success",
+        "message": "The screwdriver is ready in the rack.",
+        "distance_m": 0.009870047553186972
+      },
+      "racks": {
+        "screwdriver": [
+          0.43496142219717,
+          -0.2309140225092547
+        ],
+        "wrench": [
+          0.45655658114806075,
+          0.0033144085911725237
+        ],
+        "hammer": [
+          0.42342729801596346,
+          0.2374573008720997
+        ]
+      },
+      "lift_m": 0.22768574221242874,
+      "disturbance_m": 8.397756123173644E-12
+    },
+    {
+      "tool": "wrench",
+      "returning": false,
+      "steps": 414,
+      "elapsed_s": 1.3026478119936655,
+      "phases": [
+        "Approaching tool",
+        "Lowering gripper",
+        "Grasping",
+        "Lifting tool",
+        "Moving to target",
+        "Choosing release action",
+        "Placing tool",
+        "Releasing",
+        "Withdrawing gripper",
+        "Awaiting independent placement check",
+        "Released; placement unverified"
+      ],
+      "outcome": {
+        "status": "success",
+        "message": "The wrench is ready in the handoff tray.",
+        "distance_m": 0.013367002235705978
+      },
+      "racks": {
+        "screwdriver": [
+          0.43496142219717,
+          -0.2309140225092547
+        ],
+        "wrench": [
+          0.45655658114806075,
+          0.0033144085911725237
+        ],
+        "hammer": [
+          0.42342729801596346,
+          0.2374573008720997
+        ]
+      },
+      "lift_m": 0.20139301748929603,
+      "disturbance_m": 3.016171092450053E-11
+    },
+    {
+      "tool": "wrench",
+      "returning": true,
+      "steps": 468,
+      "elapsed_s": 1.511731205995602,
+      "phases": [
+        "Surveying workbench with an empty hand",
+        "Approaching tool",
+        "Lowering gripper",
+        "Grasping",
+        "Lifting tool",
+        "Moving to target",
+        "Choosing release action",
+        "Placing tool",
+        "Releasing",
+        "Withdrawing gripper",
+        "Awaiting independent placement check",
+        "Released; placement unverified"
+      ],
+      "outcome": {
+        "status": "success",
+        "message": "The wrench is ready in the rack.",
+        "distance_m": 0.010357656412521815
+      },
+      "racks": {
+        "screwdriver": [
+          0.43496142219717,
+          -0.2309140225092547
+        ],
+        "wrench": [
+          0.45655658114806075,
+          0.0033144085911725237
+        ],
+        "hammer": [
+          0.42342729801596346,
+          0.2374573008720997
+        ]
+      },
+      "lift_m": 0.21335964244981528,
+      "disturbance_m": 6.966275595024536E-12
+    },
+    {
+      "tool": "hammer",
+      "returning": false,
+      "steps": 415,
+      "elapsed_s": 1.1369202850037254,
+      "phases": [
+        "Approaching tool",
+        "Lowering gripper",
+        "Grasping",
+        "Lifting tool",
+        "Moving to target",
+        "Choosing release action",
+        "Placing tool",
+        "Releasing",
+        "Withdrawing gripper",
+        "Awaiting independent placement check",
+        "Released; placement unverified"
+      ],
+      "outcome": {
+        "status": "success",
+        "message": "The hammer is ready in the handoff tray.",
+        "distance_m": 0.01718857530934848
+      },
+      "racks": {
+        "screwdriver": [
+          0.43496142219717,
+          -0.2309140225092547
+        ],
+        "wrench": [
+          0.45655658114806075,
+          0.0033144085911725237
+        ],
+        "hammer": [
+          0.42342729801596346,
+          0.2374573008720997
+        ]
+      },
+      "lift_m": 0.20728717203356362,
+      "disturbance_m": 1.0140302044154193E-11
+    },
+    {
+      "tool": "hammer",
+      "returning": true,
+      "steps": 468,
+      "elapsed_s": 1.3684358340033214,
+      "phases": [
+        "Surveying workbench with an empty hand",
+        "Approaching tool",
+        "Lowering gripper",
+        "Grasping",
+        "Lifting tool",
+        "Moving to target",
+        "Choosing release action",
+        "Placing tool",
+        "Releasing",
+        "Withdrawing gripper",
+        "Awaiting independent placement check",
+        "Released; placement unverified"
+      ],
+      "outcome": {
+        "status": "success",
+        "message": "The hammer is ready in the rack.",
+        "distance_m": 0.008490774229891824
+      },
+      "racks": {
+        "screwdriver": [
+          0.43496142219717,
+          -0.2309140225092547
+        ],
+        "wrench": [
+          0.45655658114806075,
+          0.0033144085911725237
+        ],
+        "hammer": [
+          0.42342729801596346,
+          0.2374573008720997
+        ]
+      },
+      "lift_m": 0.21865583234810762,
+      "disturbance_m": 8.49238052066187E-12
+    }
+  ],
+  "final_validation": "Final source: 302 pytest tests passed; ruff passed; 46 protected upstream byte hashes verified. Continued-session interface failure retained; no full live qualification claim.",
+  "baseline": "dc708dc",
+  "date": "2026-10-13",
+  "source_raw_sha256": {
+    "scripts/launch_wsl.sh": "6f0a0851bf7c7300550f3ed6abfd275ab10ab3adeff56a90335befcf29d8bc9c",
+    "src/physical_ai_lab/assistant/camera_control.py": "325c0d5cbe5148abb50074e5972022ca2241b69847be7cf3b8b5bbbc42d8bc0b",
+    "scripts/verify_live_camera_interface.py": "8da71774e83a6a0267348312654d14b93fe4428789d42eab02539cde34648961",
+    "src/physical_ai_lab/assistant/app.py": "ab192b62c93fc5573fdd8df6e21968b7a01697681903201c92b928ddb5dd18ea",
+    "src/physical_ai_lab/dume/app.py": "827ec16614ad3cebd784b8703f5c8fc9bb5798889cf7fe0f896d9759833f803b",
+    "scripts/launch_windows.ps1": "1476fa4f2649ad96c6422b02eb5b4a42ae18b385cd319d97e62b8ff6e99cc7a7",
+    "src/physical_ai_lab/dume/interaction.py": "49d41c43dcbd16b5b828fdbfa592acb517dc2d44cd41e87bc51c6efbe6630903",
+    "src/physical_ai_lab/assistant/tool_control.py": "b1b97d3928baea0bc380bbb3c27f58ff072a602005b51ebbf6bc9e3cd8184021",
+    "src/physical_ai_lab/assistant/camera_tasks.py": "0a2f0631cfed2be1e2a12821a748018c8e13bf7771ea3796e4b271a52902f801"
+  },
+  "scope": "Opt-in live camera integration, default scene, typed interface. Not prospective varied-layout or live microphone qualification.",
+  "human": {
+    "report": "it worked.",
+    "acoustic_latency_measured": false,
+    "completion_clock_ms": 16581.988,
+    "echo_feedback": null,
+    "placement_m": 0.009652233303273644,
+    "profile": "main baseline assistant"
+  },
+  "interface_continued_session_failure": [
+    {
+      "request": "Bring me the screwdriver",
+      "response": {
+        "accepted": true,
+        "mode": "task",
+        "task_id": "91541053-5df9-4851-af7c-057ef6ead51f"
+      },
+      "http_ms": 12.424551998265088
+    },
+    {
+      "request": "What are you doing?",
+      "response": {
+        "accepted": true,
+        "mode": "conversation",
+        "task_id": null,
+        "message": "I'm working on the screwdriver: moving to target. Placement isn't confirmed yet.",
+        "intent": {
+          "action": "answer",
+          "object": null,
+          "destination": null,
+          "message": "I'm working on the screwdriver: moving to target. Placement isn't confirmed yet."
+        },
+        "route": "state",
+        "elapsed_ms": 0.02997399860760197,
+        "profile": null
+      },
+      "http_ms": 27.51992500270717
+    },
+    {
+      "stop_http_to_observed_hold_ms": 97.30678400228499,
+      "gripper_command": 0.0
+    },
+    {
+      "request": "Resume",
+      "response": {
+        "accepted": true,
+        "mode": "task",
+        "task_id": "854785da-54df-4d53-9f02-053c8dca56ec"
+      },
+      "http_ms": 16.28249500208767
+    },
+    {
+      "completion": {
+        "status": "failed",
+        "message": "Grip changed during motion; queued carry cancelled",
+        "distance_m": null
+      },
+      "timings": {
+        "job_id": "e13a8736",
+        "route": "resolved",
+        "interpretation_ms": 15.56,
+        "decision_ms": 36.881,
+        "task_finished_ms": 4161.457
+      },
+      "verified_steps": []
+    }
+  ],
+  "qualification": "Two fresh-session complete typed sequences passed; third continued-session sequence failed during resumed screwdriver carry. Later legs not run. Repeatability unresolved; defaults unchanged."
+}

@@ -220,6 +220,7 @@ class ToolPerformance:
     def resume(self):
         self.outcome = None
         self.current.resume()
+        self.outcome = self.current.outcome
 
     def return_to_rack(self):
         return ToolPerformance(
@@ -288,12 +289,13 @@ class EmptyTransit:
 class ToolChange:
     """Return an interrupted tool, verify its rack placement, then start the new skill."""
 
-    def __init__(self, bench, paused, tool, returning=False):
+    def __init__(self, bench, paused, tool, returning=False, task_factory=None):
         self.bench = bench
         self.current = paused.return_to_rack()
         self.previous_tool = self.current.object
         self.requested_tool, self.returning = tool, returning
         self.stage = "return_previous"
+        self.task_factory = task_factory or ToolPerformance
         self.outcome = None
         self.notifications = []
         self.verified_steps = []
@@ -332,6 +334,7 @@ class ToolChange:
     def resume(self):
         self.outcome = None
         self.current.resume()
+        self.outcome = self.current.outcome
 
     def return_to_rack(self):
         return self.current.return_to_rack()
@@ -363,7 +366,7 @@ class ToolChange:
                 )
                 return False
             self.notifications.append(outcome.message)
-            self.current = ToolPerformance(self.bench, self.requested_tool, self.returning)
+            self.current = self.task_factory(self.bench, self.requested_tool, self.returning)
             self.stage = "requested"
             return True
         self.outcome = outcome

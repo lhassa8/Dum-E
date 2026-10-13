@@ -309,7 +309,12 @@ def check_port(port):
 
 
 def ensure_simulator(
-    port, logdir, tools=False, vision_model=None, vision_coordinates="normalized_xy"
+    port,
+    logdir,
+    tools=False,
+    vision_model=None,
+    vision_coordinates="normalized_xy",
+    camera_tools=False,
 ):
     url = f"http://127.0.0.1:{port}"
     try:
@@ -328,6 +333,11 @@ def ensure_simulator(
                 "Workbench is busy. Finish or stop that task before launching Dum-E."
             )
         expected = "tools" if tools else "blocks"
+        if state.get("tool_control", "baseline") != ("camera" if camera_tools else "baseline"):
+            raise RuntimeError(
+                "The existing simulator uses a different tool controller. "
+                "Choose an unused --sim-port."
+            )
         if state.get("profile", "blocks") != expected:
             raise RuntimeError(
                 f"The existing simulator uses {state.get('profile', 'blocks')} mode. "
@@ -407,6 +417,7 @@ def ensure_simulator(
             str(logdir / "physics"),
         ]
         + (["--tools"] if tools else [])
+        + (["--camera-tools"] if camera_tools else [])
         + (
             ["--vision-model", vision_model, "--vision-coordinates", vision_coordinates]
             if vision_model
@@ -445,6 +456,9 @@ def _main():
     parser.add_argument("--mcp-port", type=int, default=8001)
     parser.add_argument("--log-dir", type=Path)
     parser.add_argument("--blocks", action="store_true", help="Run the earlier colored-block demo")
+    parser.add_argument(
+        "--camera-tools", action="store_true", help="Opt-in camera-based tool motion"
+    )
     parser.add_argument("--language-backend", choices=["mlx", "lmstudio", "codex"])
     parser.add_argument("--model", help="MLX model folder or LM Studio model ID")
     parser.add_argument("--lmstudio-url", help="LM Studio server, default http://127.0.0.1:1234")
@@ -456,6 +470,8 @@ def _main():
     from physical_ai_lab.assistant.tool_language import configure_tool_language
 
     try:
+        if args.camera_tools and args.blocks:
+            raise ValueError("Camera tool motion requires the tool scene")
         if args.vision_model and args.blocks:
             raise ValueError("Camera questions require the tool scene")
         if args.blocks and args.language_backend not in {None, "mlx"}:
@@ -480,6 +496,7 @@ def _main():
         tools=not args.blocks,
         vision_model=args.vision_model,
         vision_coordinates=args.vision_coordinates,
+        camera_tools=args.camera_tools,
     )
     mcp = None
     try:

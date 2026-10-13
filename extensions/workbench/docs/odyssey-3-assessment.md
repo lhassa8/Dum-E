@@ -95,8 +95,8 @@ equivalent to conditioning on our actual joint or end-effector command.
 - What are the applicable fees, retention/training terms, version guarantees and
   published quantitative robotics evaluations?
 
-These questions are prepared locally; no message has been sent. Published local
-baseline remains1c77eab. The in-progress gap-recovery prototype is unpromoted:
+These questions are prepared locally; no message has been sent. At the time of
+this assessment, published local baseline was1c77eab and gap recovery was unpromoted:
 first retrospective replay50/54 versus published51/54, with two conservative
 tabletop-grasp refusals. Preserve its failed traces while continuing research;
 do not use it as evidence that the arm is already qualified.

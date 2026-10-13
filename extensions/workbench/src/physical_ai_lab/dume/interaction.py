@@ -53,7 +53,8 @@ class InteractionCoordinator:
                     decline
                     and completed_fetch.get("action") == "fetch"
                     and completed_fetch.get("object") == decline
-                    and state.get("inventory", {}).get(decline) == "handoff tray"
+                    and state.get("inventory", {}).get(decline)
+                    in {"handoff tray", "handoff tray (verified previous task)"}
                 )
                 if not working and self.clarification is None and not withdraw_delivered:
                     familiar, _ = known_intent(text, state.get("recovery", {}).get("tool"))

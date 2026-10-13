@@ -22,6 +22,7 @@ def prediction(x):
 
 def actor():
     a = control.CameraDelivery.__new__(control.CameraDelivery)
+    a.perceive = lambda frame: control.locate_tools(frame)
     a.object = "screwdriver"
     a.alternate_view = True
     a.phase = "Checking clear space for release"

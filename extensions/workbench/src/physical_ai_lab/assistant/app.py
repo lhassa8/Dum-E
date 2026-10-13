@@ -46,7 +46,7 @@ class UnderstandingRequest(ChatRequest):
 
 
 class Application:
-    def __init__(self, model_path=None, log_path=None, tools=False):
+    def __init__(self, model_path=None, log_path=None, tools=False, camera_tools=False):
         self.lock = threading.RLock()
         self.commands = queue.Queue()
         self.requests = queue.Queue()
@@ -70,6 +70,8 @@ class Application:
         self.log_path = log_path
         self.events = []
         self.tools = tools
+        self.camera_tools = camera_tools
+        self.camera_hub = None
         self.physics_profile = None
         self.vision = None
         self.vision_lock = threading.Lock()
@@ -122,6 +124,7 @@ class Application:
                 "backend": "workbench",
                 "schema_version": 2,
                 "profile": "tools" if self.tools else "blocks",
+                "tool_control": "camera" if self.camera_tools else "baseline",
                 "physics_profile": self.physics_profile,
                 "camera": {
                     "model": getattr(self.vision, "model", None),
@@ -308,7 +311,7 @@ class Application:
                         text,
                         history,
                         observations={
-                            "positions_m": snapshot["objects"],
+                            "positions_m": {} if self.camera_tools else snapshot["objects"],
                             "locations": snapshot["inventory"],
                             "recent_tool": snapshot["recovery"]["tool"],
                             "interrupted_task": snapshot["recovery"]["interrupted"],
@@ -416,7 +419,7 @@ class Application:
                 self.timing_point("interpretation_started_ms", job)
                 if self.tools:
                     with self.lock:
-                        positions = dict(self.observations)
+                        positions = {} if self.camera_tools else dict(self.observations)
                     with self.language_lock:
                         intent, raw = self.language.interpret(
                             text,
@@ -465,6 +468,8 @@ class Application:
     def inventory(self, positions=None):
         if not self.tools:
             return {}
+        if self.camera_tools:
+            return self.camera_hub.inventory() if self.camera_hub else {}
         import numpy as np
 
         from physical_ai_lab.assistant.tool_scene import HANDOFF, TOOLS
@@ -504,12 +509,54 @@ class Application:
             else:
                 controller = self.paused_controller
                 controller.resume()
+                if (
+                    self.camera_tools
+                    and controller.outcome
+                    and controller.outcome.status == "failed"
+                ):
+                    self.add_message("assistant", controller.outcome.message)
+                    self.busy = False
+                    self.phase = "Stopped"
+                    self.task = None
+                    return None
                 self.last_intent = self.interrupted["intent"]
                 self.current_request = self.interrupted["request"]
-                reply = "Resuming the stopped task from where I paused."
+                reply = (
+                    controller.outcome.message
+                    if controller.outcome and controller.outcome.status == "failed"
+                    else "Resuming the stopped task from where I paused."
+                )
                 self.interrupted = self.paused_controller = None
         elif intent.action in {"fetch", "return"}:
             paused = self.paused_controller
+            if self.camera_tools:
+                try:
+                    controller = self.camera_hub.select(
+                        intent.object, returning=intent.action == "return", paused=paused
+                    )
+                except ValueError as error:
+                    self.event("camera_request_refused", error=str(error), job_id=job)
+                    self.add_message(
+                        "assistant", "I cannot confirm a safe camera task. Resume or reset first."
+                    )
+                    self.busy = False
+                    self.phase = "Stopped" if paused else "Task failed"
+                    return None
+                self.last_tool = controller.object
+                self.interrupted = self.paused_controller = None
+                verb = "bring you" if intent.action == "fetch" else "put back"
+                reply = f"I'll {verb} the {intent.object}."
+                if isinstance(controller, ToolChange):
+                    reply = (
+                        f"I'll return the {controller.previous_tool} first, "
+                        f"then handle the {intent.object}."
+                    )
+                self.add_message("assistant", reply)
+                self.busy = True
+                self.phase = controller.phase
+                self.task = {"object": controller.object, "destination": controller.destination}
+                self.event("execution_started", job_id=job, **self.task)
+                return controller
             if isinstance(paused, (ToolPerformance, ToolChange)):
                 if paused.object == intent.object:
                     controller = (
@@ -617,7 +664,15 @@ class Application:
             while not self.commands.empty():
                 kind, value = self.commands.get_nowait()
                 if kind == "reset":
+                    if self.camera_hub:
+                        self.camera_hub.close()
                     bench.reset(42)
+                    if self.camera_tools:
+                        from physical_ai_lab.assistant.camera_tasks import CameraTasks
+
+                        self.camera_hub = CameraTasks(
+                            bench, lambda: self.epoch, self.stop_event.is_set
+                        )
                     controller = None
                     with self.lock:
                         self.interrupted = self.paused_controller = self.last_tool = None
@@ -736,6 +791,8 @@ class Application:
                         self.interrupted = self.paused_controller = None
             else:
                 bench.tick()
+            if self.camera_hub and self.camera_hub.active:
+                self.camera_hub.active.measure()
             with self.lock:
                 self.observations = {k: v.tolist() for k, v in bench.observe().items()}
                 self.joint_positions = bench.data.qpos[:7].tolist()
@@ -849,6 +906,9 @@ def main():
     parser.add_argument("--language-backend", choices=["mlx", "lmstudio", "codex"])
     parser.add_argument("--lmstudio-url", help="LM Studio server, default http://127.0.0.1:1234")
     parser.add_argument("--tools", action="store_true")
+    parser.add_argument(
+        "--camera-tools", action="store_true", help="Opt-in camera-based tool motion"
+    )
     parser.add_argument("--vision-model", help="Optional already loaded LM Studio vision instance")
     parser.add_argument(
         "--vision-coordinates", choices=["normalized_xy", "grid1000_yx"], default="normalized_xy"
@@ -859,6 +919,8 @@ def main():
     from physical_ai_lab.assistant.tool_language import configure_tool_language
 
     try:
+        if args.camera_tools and not args.tools:
+            raise ValueError("Camera tool motion requires --tools")
         if args.vision_model and not args.tools:
             raise ValueError("Camera questions require --tools")
         if not args.tools and args.language_backend not in {None, "mlx"}:
@@ -880,11 +942,20 @@ def main():
             )
     logdir = args.log_dir or Path("runs") / ("workbench-" + uuid.uuid4().hex[:8])
     logdir.mkdir(parents=True, exist_ok=False)
-    state = Application(args.model, logdir / "events.jsonl", tools=args.tools)
+    state = Application(
+        args.model, logdir / "events.jsonl", tools=args.tools, camera_tools=args.camera_tools
+    )
     if args.tools:
         from physical_ai_lab.assistant.tool_scene import ToolWorkbench
 
-        bench = ToolWorkbench()
+        if args.camera_tools:
+            from physical_ai_lab.assistant.camera_tasks import CameraTasks
+            from physical_ai_lab.assistant.perception_scene import camera_scene_xml
+
+            bench = ToolWorkbench(xml=camera_scene_xml({"layout": {}}, alternate_view=True))
+            state.camera_hub = CameraTasks(bench, lambda: state.epoch, state.stop_event.is_set)
+        else:
+            bench = ToolWorkbench()
         state.physics_profile = bench.physics_profile
         if args.vision_model:
             from physical_ai_lab.assistant.vision_language import LMStudioVision
@@ -926,6 +997,8 @@ def main():
         language_thread.join(timeout=5)
         if state.vision:
             state.vision.close()
+        if state.camera_hub:
+            state.camera_hub.close()
         bench.close()
 
 
