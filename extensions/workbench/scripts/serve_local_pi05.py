@@ -15,6 +15,8 @@ parser.add_argument("--openpi", type=Path, required=True)
 parser.add_argument("--checkpoint", type=Path, required=True)
 parser.add_argument("--output", type=Path, required=True)
 parser.add_argument("--port", type=int, default=8900)
+parser.add_argument("--paired-experiment", action="store_true",
+                    help="Require explicit experiment seed/draw keys; separate lab only")
 parser.add_argument(
     "--warmup", type=Path, help="Actual preprocessed observation NPZ; discard actions"
 )
@@ -76,6 +78,27 @@ if args.warmup:
     )
 else:
     metadata["warmup_complete"] = False
+if args.paired_experiment:
+    trained_policy = policy
+
+    class PairedExperimentPolicy:
+        def infer(self, observation):
+            observation = dict(observation)
+            seed = observation.pop("experiment_seed", None)
+            draw = observation.pop("experiment_draw", None)
+            if type(seed) is not int or not 0 <= seed < 2**31:
+                raise ValueError("Explicit bounded experiment seed required")
+            if type(draw) is not int or not 0 <= draw < 1000:
+                raise ValueError("Explicit bounded experiment draw required")
+            # Pinned Policy.infer splits this key once. No upstream code change;
+            # this opt-in endpoint is not compatible with the public coordinator.
+            trained_policy._rng = jax.random.fold_in(jax.random.key(seed), draw)
+            result = trained_policy.infer(observation)
+            result["experiment_rng"] = {"seed": seed, "draw": draw}
+            return result
+
+    policy = PairedExperimentPolicy()
+    metadata["paired_experiment_rng"] = "fold_in(key(seed),draw), then native infer split"
 (args.output / "loaded.json").write_text(json.dumps(metadata, indent=2) + "\n")
 print(json.dumps(metadata, indent=2), flush=True)
 WebsocketPolicyServer(policy, host="127.0.0.1", port=args.port, metadata=metadata).serve_forever()

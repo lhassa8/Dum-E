@@ -2130,3 +2130,31 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   policy rollouts or held-out cases. Original2/3 qualification unchanged; no
   adapter enabled. Next: separately frozen paired fresh-policy experiment with
   explicit RNG and refreshed observations after interruption, no repeat grid.
+
+### C — Fresh policy comparison rejects universal offset and exposes brake failures (PC)
+
+- Previous3a0b7e8 is progress: frozen replay4/6 corrections improve physical grasp;
+  move to actual closed-loop checkpoint feedback rather than another replay grid.
+- Add explicit opt-in seed/draw policy endpoint; pinned nativeJAX fold/split,
+  no upstream edits or default-server RNG/interface changes. Actual repeated
+  same observation/seed/draw actions exactly equal. Initial helper import-path
+  mistake corrected before cohort; no policy episode dropped for that setup error.
+- Freeze all3 layouts×2 policy seeds101/202×baseline/candidate=12episodes.
+  Candidate+3mmX occurs first closing command, one action later than replay.
+  Continuous physics and wall-time waits prevent exact pre-intervention pairing;
+  no isolated causal-effect claim. NPZ archive hash is not semantic array equality.
+- All12 native placements succeed. Combined gate: baseline4/6, corrected1/6.
+  Two episodes lack qualified grasp; four exceedjoint20mrad, another loses pad
+  contact and moves13.494mm>10mm. Ten triggered episodes discard old work,
+  reject stale generations, hold physically and request fresh inference onresume.
+- Original pad/contact/lift/hold/active budgets retained; terminal positive grip
+  does not establish release/resting. No voice/hardware or broadheldout claim;
+  original2/3 voice qualification unchanged. Reject candidate, no adapterenabled.
+- Actual268 warmed requests median/p95/max130.79/217.99/353.49ms afterpreprocessing;
+  GPUload26.021s,warm15.885s. TemporarilyunloadGemma; Bonsai/ASR stayresident.
+  Closeownedpolicy484775/sim485001, verify8900/8901closed; Gemma restoredlocal
+  Q4_K_M/4096/1slot/3600s. Existing8896/8996 PIDs preserved.
+- Independent raw audit checks12denominator, singleactioncorrection, holdmetrics,
+  native physics goals and freshpost-resume calls; raw actors/hashes retained.
+  Ruff/46upstreamchecks pass. No public controller edits. Next: bounded native
+  braking experiment using failed velocity/hold windows, then prospective cohort.
