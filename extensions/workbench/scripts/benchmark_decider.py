@@ -50,7 +50,8 @@ def main():
         return
     if args.checkpoint is None:
         parser.error("--checkpoint is required for inference")
-    if any((args.output / name).exists() for name in ("decider-summary.json", "decider-rows.jsonl")):
+    result_files = ("decider-summary.json", "decider-rows.jsonl")
+    if any((args.output / name).exists() for name in result_files):
         raise ValueError("Refusing to overwrite an existing run; choose a new output directory")
 
     import torch
