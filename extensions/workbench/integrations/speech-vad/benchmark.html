@@ -60,7 +60,7 @@ async function streamChecks(useASR=false){
  const monitor=createSpeechMonitor();const rows=[];
  try{
   await monitor.prepare();const manifest=await (await fetch('/clips/manifest.json')).json();
-  const selected=['screwdriver-gain0.2-white','negative-gain1-hum','stop-gain0.2-white','stop-gain1-hum','control-white-0.012'];
+  const selected=manifest.stream_cases||['screwdriver-gain0.2-white','negative-gain1-hum','stop-gain0.2-white','stop-gain1-hum','control-white-0.012'];
   for(const id of selected){
    status.textContent='Streaming '+id+'…';const item=manifest.cases.find(x=>x.id===id);
    const pcm=new Float32Array(await(await fetch('/clips/'+item.file)).arrayBuffer());
@@ -68,23 +68,27 @@ async function streamChecks(useASR=false){
    const buffer=context.createBuffer(1,pcm.length,16000);buffer.copyToChannel(pcm,0);
    const source=context.createBufferSource();source.buffer=buffer;source.connect(destination);
    const element=()=>({textContent:'',hidden:false,disabled:false,setAttribute(){}});
-   let completed=null,submissions=0,stopCalls=0,error=null,started,recognized=null;
+   let completed=null,submissions=0,stopCalls=0,error=null,started,recognized=null,asrResult=null;
    const done=()=>{completed=performance.now()-started;};
    const mic=new MicrophoneInput({button:element(),cancel:element(),note:element(),heard:element(),
     mediaDevices:{getUserMedia:async()=>destination.stream},monitor:monitor.monitor,
-    fetchAudio:async(...args)=>{submissions++;return useASR?fetch(...args):{ok:true,json:async()=>({text:id.startsWith('stop')?'Stop.':'Test request.'})};},
+    fetchAudio:async(...args)=>{submissions++;if(!useASR)return {ok:true,json:async()=>({text:id.startsWith('stop')?'Stop.':'Test request.'})};
+      const response=await fetch(...args);if(response.ok)asrResult=await response.clone().json();return response;},
     onText:async text=>{recognized=text;done();},onDuringWork:async text=>{recognized=text;done();},
     onStop:async()=>{stopCalls++;done();},onError:message=>{error=message;},stopSpeech:async()=>{}});
-   mic.setReady(true);await mic.start(id.startsWith('stop')?'interrupt':'request');
+   mic.setReady(true);await mic.start(item.voice_mode||(id.startsWith('stop')?'interrupt':'request'));
    await context.resume();started=performance.now();source.start(context.currentTime);
    const deadline=started+13000;while(completed===null&&performance.now()<deadline&&!error)await new Promise(r=>setTimeout(r,25));
+   const captureMetrics=mic.captureMetrics;
    mic.close();source.stop();await context.close();
    const premature=item.expected_speech&&completed!==null&&completed<item.last_clean_voiced_ms-40;
    const expectedSilence=!item.expected_speech&&error==='No speech heard. Check your microphone and try again.';
-   const recognizedCorrectly=!useASR||!item.expected_speech||(id.startsWith('stop')?stopCalls===1:
-     id.startsWith('screwdriver')?/screwdriver/i.test(recognized||''):/\b(?:don.t|do not)\b/i.test(recognized||''));
+   const recognizedCorrectly=!useASR||!item.expected_speech||(
+     (item.expected_text?new RegExp(item.expected_text,'i').test(asrResult?.text||recognized||''):
+      id.startsWith('stop')?true:id.startsWith('screwdriver')?/screwdriver/i.test(recognized||''):
+      /\b(?:don.t|do not)\b/i.test(recognized||''))&&stopCalls===(id.startsWith('stop')?1:0));
    const passed=(!error||expectedSilence)&&recognizedCorrectly&&(item.expected_speech?submissions===1&&completed!==null&&!premature:submissions===0);
-   rows.push({id,passed,error,submissions,recognized,recognized_correctly:recognizedCorrectly,stop_calls:stopCalls,completed_ms:completed,premature,
+   rows.push({id,passed,error,submissions,recognized,recognized_correctly:recognizedCorrectly,stop_calls:stopCalls,completed_ms:completed,premature,capture_metrics:captureMetrics,asr_result:asrResult,
      completion_after_clean_voice_ms:completed===null||item.last_clean_voiced_ms===null?null:completed-item.last_clean_voiced_ms});
   }
   await monitor.close();

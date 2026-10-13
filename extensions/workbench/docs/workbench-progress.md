@@ -1898,3 +1898,34 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
 - Full suite329passed204.04s,24dependency/multiprocessingwarnings; bothJSvoice
   contracts pass; Ruff clean and46upstream bytes verified unchanged. Source
   repairs now reviewable; full live acoustic demonstration still outstanding.
+
+### B35 — Reproduce noisy late Stop misses; prospective speech-edge candidate (PC)
+
+- Previous turn is verified progress: de9bfde publishes current-state continuation,
+  post-release resume and camera-worker cancellation; live typed journey passed.
+- Human Chrome session was8876, not8886. Mac endpoint raw clips absent on PC;
+  generate a separately identified PC corpus from available SAPI fixtures.
+  Protocolf033e027:27cases; mock-ASR real browser stream27/27, queue peak1,
+  Stopcallback472.05/545.50ms med/p95 n12. Actual CUDA ASR24/27: three noisy
+  Stops after5s background rejected. Successful9Stopcallbacks767.20/827.80ms;
+  failures not omitted from reliability. Energy baseline18failures,2noise submits.
+- Installed maintained Silero outer-edge trim preserves all interior samples,
+  existing0.3/120/350browserparameters,default400ms padding,originalWhisper
+  confidence gates/checkpoint. No fitting/search. Relay known27/27 but extra
+  decode/cold latency:1017.90/2945.30ms Stopcallbacks n12; retained.
+- Add experimental SpeechInput(edge_trim=True), defaultFalse. Native prewarming
+  actual VAD+CUDA avoids relay double decode. Fresh source/protocol/code/PCM
+  identities frozen before reserved inference; protocol98026583,26cases,
+  onsets2/7s,gains0.7/0.13,noise newseed,negations/Stopdiscussion included.
+  Actual browser/nativeCUDA26/26,negativeStopcallbacks0,noise submits0;
+  eightStopcallbacks779.55/907.80ms med/p95,max907.80. Preproc3.5/10/12ms
+  med/p95/max n24. Independent frozen-code/PCM/meaning/timing judge passed.
+- Native preparation3.935s,warmup2.007s; Whisperimmutable d1d751a5,FP16CUDA,
+  ONNXCPU VADv6 hash4cbf549b; ORT1.31.0,faster-whisper1.2.1,CTranslate2 4.8.2.
+  Loader/source-generation failures preserved, no device fallback or invalid
+  empty-file samples counted. Detailed scopes inpc-speech-edge-preprocessing.md.
+- Candidate is not enabled in the running assistants. Measurements end at
+  browser Stop callback, notnative cancellation/settling or human final-word
+  acoustics. Next gate: actual moving-arm interruption using this speech path,
+  pending-model cancellation, continuation, fullspeechack and human validation.
+  No mic activation/realhardware/external messaging/rawdata upload. Goal active.

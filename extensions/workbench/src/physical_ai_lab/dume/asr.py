@@ -89,13 +89,32 @@ def decode_audio(data):
     return audio
 
 
+def trim_speech_edges(audio):
+    """Keep outer padded speech bounds and every interior sample, including negation."""
+    from faster_whisper.vad import VadOptions, get_speech_timestamps
+
+    options = VadOptions(threshold=0.3, min_speech_duration_ms=120,
+                         min_silence_duration_ms=350, speech_pad_ms=400)
+    chunks = get_speech_timestamps(audio, options, sampling_rate=16000)
+    if not chunks:
+        raise ValueError("No supported speech interval; no recognition request sent.")
+    first, last = chunks[0]["start"], chunks[-1]["end"]
+    return audio[first:last], {
+        "original_seconds": len(audio) / 16000, "retained_seconds": (last - first) / 16000,
+        "first_sample": first, "last_sample": last, "voiced_intervals": len(chunks),
+        "options": {"threshold": 0.3, "min_speech_duration_ms": 120,
+                    "min_silence_duration_ms": 350, "speech_pad_ms": 400},
+    }
+
+
 class SpeechInput:
-    def __init__(self):
+    def __init__(self, edge_trim=False):
         self.status = "loading"
         self.error = None
         self.busy = False
         self.path = None
         self.model = None
+        self.edge_trim = edge_trim
         self.device = os.environ.get("DUME_ASR_DEVICE", "cpu")
         self.compute_type = os.environ.get(
             "DUME_ASR_COMPUTE_TYPE", "float16" if self.device == "cuda" else "int8"
@@ -110,6 +129,7 @@ class SpeechInput:
             "status": self.status,
             "error": self.error,
             "busy": self.busy,
+            "edge_preprocessing": "silero_v6_outer_bounds" if self.edge_trim else "none",
             "model": model_identity()[0],
             "revision": model_identity()[1],
             "backend": "mlx" if sys.platform == "darwin" else "faster-whisper",
@@ -146,12 +166,18 @@ class SpeechInput:
         audio = decode_audio(data)
         decoded = time.monotonic()
         captured_samples = len(audio)
+        edge_metadata = None
+        if self.edge_trim:
+            if sys.platform == "darwin":
+                raise RuntimeError("Experimental speech edges require the verified PC backend.")
+            audio, edge_metadata = trim_speech_edges(audio)
         # Very short clips can yield no confident segment even with a complete
         # word. Bounded trailing context fixes this without extending capture or
         # weakening speech/confidence gates. Validate the original audio first.
-        decoder_padding = 0.35 if captured_samples < 16000 else 0
+        decoder_padding = 0.35 if len(audio) < 16000 else 0
         if decoder_padding:
             audio = np.pad(audio, (0, int(decoder_padding * 16000)))
+        prepared = time.monotonic()
         if sys.platform == "darwin":
             import mlx_whisper
 
@@ -210,7 +236,9 @@ class SpeechInput:
             "decoder_padding_seconds": decoder_padding,
             "recognition_seconds": round(time.monotonic() - started, 3),
             "audio_decode_seconds": round(decoded - started, 3),
-            "model_recognition_seconds": round(time.monotonic() - decoded, 3),
+            "speech_preprocessing_seconds": round(prepared - decoded, 3),
+            "speech_edge_preprocessing": edge_metadata,
+            "model_recognition_seconds": round(time.monotonic() - prepared, 3),
             "model": model_identity()[0],
             "device": "metal" if sys.platform == "darwin" else self.device,
             "local": True,

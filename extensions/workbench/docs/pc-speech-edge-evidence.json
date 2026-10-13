@@ -1,0 +1,22 @@
+{
+  "scope": "Saved audio through real browser capture/VAD and actual CUDA ASR to Stop callback; no native cancellation or acoustic qualification",
+  "candidate": {"enabled_in_public_assistants": false, "constructor": "SpeechInput(edge_trim=True)", "default": false, "interior_samples_preserved": true, "whisper_confidence_gates_changed": false, "fits_or_parameter_search": false},
+  "known_protocol_sha256": "f033e027286d6dae691fbe04338f66c0d2670bc5022f67148c7839cca678c50f",
+  "baseline": {
+    "mock_asr_browser": {"passes": 27, "cases": 27, "noise_submissions": 0, "stop_count": 12, "stop_median_ms": 472.0500000715256, "stop_p95_ms": 545.5, "max_pending_frames": 1},
+    "actual_cuda_asr_browser": {"passes": 24, "cases": 27, "stop_failures": 3, "successful_stop_count": 9, "successful_stop_median_ms": 767.2000000476837, "successful_stop_p95_ms": 827.7999999523163,
+      "failed_ids": ["stop-onset5000-gain1-hum", "stop-onset5000-gain0.2-white", "stop-onset5000-gain0.2-hum"]}
+  },
+  "relay_candidate": {"passes": 27, "cases": 27, "stop_count": 12, "stop_median_ms": 1017.8999999761581, "stop_p95_ms": 2945.2999999523163, "extra_decode": true, "includes_first_cold_trial": true, "warm_stop_count": 11, "warm_stop_median_ms": 1014.6999998092651, "warm_stop_p95_ms": 1094.5},
+  "prospective_native_candidate": {
+    "protocol_sha256": "980265836572f64e42494bb15f43436494a394046573b84985b1441d8ee1f7e6",
+    "passes": 26, "cases": 26, "noise_submissions": 0, "negative_stop_callbacks": 0,
+    "stop_callback_count": 8, "stop_callback_median_ms": 779.5500000715256, "stop_callback_p95_ms": 907.7999999523163, "stop_callbacks_over_1000_ms": 0,
+    "native_preprocessing_count": 24, "native_preprocessing_median_ms": 3.5, "native_preprocessing_p95_ms": 10.0, "native_preprocessing_max_ms": 12.0,
+    "independent_frozen_implementation_and_pcm_check": "passed", "observed_asr_devices": ["cuda"], "preparation_seconds": 3.935, "warmup_seconds": 2.007,
+    "raw_directory": "runs/pc-voice-edge-reserved-003"
+  },
+  "runtime": {"faster_whisper": "1.2.1", "ctranslate2": "4.8.2", "onnxruntime": "1.31.0", "asr_device": "cuda", "asr_compute_type": "float16", "asr_model": "Systran/faster-whisper-small.en", "asr_revision": "d1d751a5f8271d482d14ca55d9e2deeebbae577f", "vad_asset_sha256": "4cbf549b8326f60f80f2536d9eefeb450a9abe83365a098031c89719f1be17d2", "cpu_recognition_fallback": false},
+  "validation": {"focused_python_speech_tests": 13, "js_capture_contract": "passed", "js_vad_contract": "passed", "ruff": "passed"},
+  "remaining": ["actual moving-arm native cancellation and settling with this speech path", "pending-model interruption", "state-correct continuation", "full acoustic timing and acknowledgment", "human-controlled microphone demonstration", "controlled GPU contention"]
+}

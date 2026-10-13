@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "seed": 2026101307,
+  "sample_rate": 16000,
+  "capture_max_s": 12,
+  "sources": {"stopnow": "stopnow.wav", "negative": "negative.wav", "negative-moving": "negative-moving.wav", "question-stop": "question-stop.wav", "screwdriver": "screwdriver.wav"},
+  "source_text": {"stopnow": "Stop now.", "negative": "Don't stop.", "negative-moving": "Please don't stop moving.", "question-stop": "Why did you stop?", "screwdriver": "Could you bring me the screwdriver, please?"},
+  "expected_text": {"stopnow": "stop now", "negative": "(?:don't|do not).*stop", "negative-moving": "(?:don't|do not).*stop.*moving", "question-stop": "why.*stop", "screwdriver": "screwdriver"},
+  "interrupt_sources": ["negative", "negative-moving", "question-stop"],
+  "stop_onsets_ms": [2000, 7000],
+  "gains": [0.7, 0.13],
+  "backgrounds": {"white": 0.012, "hum": 0.012},
+  "stop_pause_ms": 350,
+  "request_pause_ms": 900,
+  "speech_reference": "Last 40 ms source frame with RMS >= 0.008, before gain/noise; original boundary",
+  "criteria": {"no_early_completion": true, "must_complete_before_limit": true, "noise_only_never_submit": true, "command_meaning_preserved": true, "negation_must_not_trigger_stop": true},
+  "scope": "Prospective saved SAPI speech including negation and Stop discussion, unseen onsets/gains/noise seed; no microphone, speakers, or room-acoustic qualification"
+}

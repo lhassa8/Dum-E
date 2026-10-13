@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "seed": 2026101306,
+  "sample_rate": 16000,
+  "capture_max_s": 12,
+  "sources": {"stop": "stop.wav", "screwdriver": "fetch.wav", "question": "question.wav"},
+  "stop_onsets_ms": [0, 5000],
+  "gains": [1, 0.2],
+  "backgrounds": {"clean": 0, "white": 0.012, "hum": 0.012},
+  "stop_pause_ms": 350,
+  "request_pause_ms": 900,
+  "speech_reference": "Last 40 ms source frame with RMS >= 0.008, before gain/noise; original boundary",
+  "criteria": {"no_early_completion": true, "must_complete_before_limit": true, "noise_only_never_submit": true},
+  "scope": "PC saved SAPI speech and synthetic stationary noise; no microphone, speakers, or room-acoustic qualification"
+}
