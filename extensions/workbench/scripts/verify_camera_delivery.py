@@ -34,6 +34,7 @@ parser.add_argument("--alternate-view", action="store_true")
 parser.add_argument("--phase-recovery", action="store_true")
 parser.add_argument("--refine-cartesian", action="store_true")
 parser.add_argument("--verify-release", action="store_true")
+parser.add_argument("--recover-grip", action="store_true")
 parser.add_argument(
     "--release-kind", choices=["ensemble", "linear", "constant"], default="ensemble"
 )
@@ -76,6 +77,7 @@ for case in fixture["cases"]:
         alternate_view=args.alternate_view,
         phase_recovery=args.phase_recovery,
         verify_release=args.verify_release,
+        recover_grip=args.recover_grip,
     )
     images = args.output / case["id"]
     images.mkdir()
@@ -162,6 +164,7 @@ for case in fixture["cases"]:
                 alternate_view=args.alternate_view,
                 phase_recovery=args.phase_recovery,
                 verify_release=args.verify_release,
+                recover_grip=args.recover_grip,
             )
             return_initial = truth()[case["tool"]].copy()
             return_max = float(return_initial[2])
@@ -285,6 +288,7 @@ summary = {
     "phase_recovery": args.phase_recovery,
     "refine_cartesian": args.refine_cartesian,
     "verify_release": args.verify_release,
+    "recover_grip": args.recover_grip,
     "return_after_delivery": args.return_after_delivery,
     "selected_alternate_scene_views": sum(
         e.get("kind") == "camera_scene_view" and e.get("view") == "alternate"

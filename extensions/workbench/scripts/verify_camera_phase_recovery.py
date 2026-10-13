@@ -17,6 +17,7 @@ parser.add_argument("output", type=Path)
 parser.add_argument("--phase-recovery", action="store_true")
 parser.add_argument("--refine-cartesian", action="store_true")
 parser.add_argument("--verify-release", action="store_true")
+parser.add_argument("--recover-grip", action="store_true")
 args = parser.parse_args()
 root = Path(__file__).resolve().parents[1]
 protocol_bytes = (root / "fixtures/camera_phase_recovery_protocol.json").read_bytes()
@@ -39,6 +40,8 @@ for ident in protocol["cases"]:
             flags["phase_recovery"] = True
         if args.verify_release:
             flags["verify_release"] = True
+        if args.recover_grip:
+            flags["recover_grip"] = True
         actor = CameraDelivery(robot, sensor, case["tool"], HANDOFF["handoff"], **flags)
         truth = bench.observe
         initial = truth()
@@ -151,6 +154,7 @@ summary = {
     "phase_recovery": args.phase_recovery,
     "refine_cartesian": args.refine_cartesian,
     "verify_release": args.verify_release,
+    "recover_grip": args.recover_grip,
     "cases": len(rows),
     "passes": sum(r["passed"] for r in rows),
     "passed": all(r["passed"] for r in rows),

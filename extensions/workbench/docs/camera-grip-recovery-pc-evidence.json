@@ -1,0 +1,193 @@
+{
+  "scope": "Frozen prospective complete camera journeys; grip reacquisition positive evidence remains retrospective",
+  "baseline_commit": "1c77eab",
+  "frozen_candidate": {
+    "source_sha256": {
+      "src/physical_ai_lab/assistant/camera_control.py": "52076a2edce461fed73cc930981760d0fb0158d32e702247ebae37dce606f8cc",
+      "src/physical_ai_lab/assistant/camera_robot.py": "8952a7c7f07e1aa9a03492c60ed87c10c0861f309d3b612cde7681bd96613d8f",
+      "src/physical_ai_lab/assistant/perception.py": "c0ad627b244ae032b2c6abf98c87bc19ae5d0a657746d8b18e839ca689718408",
+      "src/physical_ai_lab/assistant/perception_scene.py": "f9488fd8fbdd4cfec82018372177d42c011753171e60e4fd7d9fc6d01ce4d23c",
+      "src/physical_ai_lab/assistant/handoff_planning.py": "a71813ef26461013afc62099a3e8c04ea265f9f1d39a2642c9ca681b7ba62c4d",
+      "src/physical_ai_lab/assistant/tool_scene.py": "8203ae26f9af020fa0037fb93ea96540256feddcdd538794040a6ccf10d3dad3",
+      "src/physical_ai_lab/assistant/tool_geometry.py": "ebb9b514c2ae1112f4603699aa4cadd3be05fd4bdf36477cc3941dfcbf4766b7",
+      "src/physical_ai_lab/assistant/scene.py": "80fcafad82ea4376ad298e078c63e8df889bc0c15ffabacaf3bfa799f5a0185f",
+      "scripts/verify_camera_delivery.py": "24dcaa208e3d956b8d522c95e98aa0187fa0eb81bb1b2a6dd5b8f5729146e970",
+      "scripts/generate_camera_reserved.py": "9754bc340156dd8f7d970e449b3962f03cda79be6ec4f303929bff530e650fdd",
+      "upstream-source.json": "b91de65566fb2da48264d5a19cea1e513748a0208700d7ea4f9b31722864fd32",
+      "uv.lock": "84abb32165bf8f819e3b3f5993aa85c40d035f925d571312912ddc99e2e902c0",
+      "fixtures/camera_grip_recovery_protocol.json": "8ce66d6932b037731ebd04855b3c3d8bb801d58079edea1c328408fef22b4cc0"
+    },
+    "runtime": {
+      "python": "3.12.3",
+      "numpy": "2.5.4",
+      "mujoco": "3.15.0"
+    },
+    "hash_encoding": "LF text; upstream binaries separately verified"
+  },
+  "source_runtime_unchanged_after_evaluation": true,
+  "prospective": {
+    "fixture_sha256": "eae7dcfdf07f849c0c57d2e4addeb1824deca9aca5d6807d08621dea8e68c81c",
+    "split": "heldout",
+    "cases": 54,
+    "physical_successes": 54,
+    "all_criteria_successes": 53,
+    "fresh_camera_return_count": 36,
+    "passed": true,
+    "carry_model_sha256": null,
+    "carry_policy": "rigid",
+    "release_model_sha256": null,
+    "release_kind": null,
+    "recover_ik": true,
+    "verify_motion": true,
+    "release_fallback": true,
+    "linear_lifts": true,
+    "center_grasp": true,
+    "safe_handoff": true,
+    "alternate_view": true,
+    "phase_recovery": true,
+    "refine_cartesian": true,
+    "verify_release": true,
+    "recover_grip": true,
+    "return_after_delivery": true,
+    "selected_alternate_scene_views": 7,
+    "accepted_alternate_views": 0,
+    "disturbance_judge": "Maximum across motion/hold frames, not just final position",
+    "release_judge": "Actor finished release/withdrawal and independently measured open gripper; resting placement still required"
+  },
+  "prospective_audit": {
+    "fraction": 0.9814814814814815,
+    "qualified_observed_gate": true,
+    "all_verdicts_reconstructed": true,
+    "passes": 53,
+    "wilson_95_interval": [
+      0.9022856251121808,
+      0.9967235122817709
+    ],
+    "cases": 54
+  },
+  "prospective_grip_loss_events": 0,
+  "prospective_grip_reacquisitions": 0,
+  "failed_journeys": [
+    {
+      "id": "pc-reserved-003",
+      "return_outcome": {
+        "status": "failed",
+        "message": "Neighboring wrench is ambiguous; no placement planned",
+        "distance_m": null
+      },
+      "return_distance_m": 0.39115942101920803,
+      "return_height_m": 0.21619859821209883
+    }
+  ],
+  "retrospective": {
+    "recovered_case": "pc-reserved-025",
+    "grip_events": 2,
+    "unconditional_prototype_passes": 50,
+    "baseline_passes": 51,
+    "recovered_distance_m": 0.022148256384625517,
+    "reacquisitions": 1,
+    "independent_verdict_matches": true,
+    "scope": "Already evaluated seed2026101303; inherited split field is not unseen",
+    "context_aware_summary": {
+      "fixture_sha256": "cb2a45805efad6018e04850d5da897b83f19ea9a19f82d9590d88a09665e7a2c",
+      "split": "heldout",
+      "cases": 54,
+      "physical_successes": 53,
+      "all_criteria_successes": 52,
+      "fresh_camera_return_count": 34,
+      "passed": true,
+      "carry_model_sha256": null,
+      "carry_policy": "rigid",
+      "release_model_sha256": null,
+      "release_kind": null,
+      "recover_ik": true,
+      "verify_motion": true,
+      "release_fallback": true,
+      "linear_lifts": true,
+      "center_grasp": true,
+      "safe_handoff": true,
+      "alternate_view": true,
+      "phase_recovery": true,
+      "refine_cartesian": true,
+      "verify_release": true,
+      "recover_grip": true,
+      "return_after_delivery": true,
+      "selected_alternate_scene_views": 9,
+      "accepted_alternate_views": 0,
+      "disturbance_judge": "Maximum across motion/hold frames, not just final position",
+      "release_judge": "Actor finished release/withdrawal and independently measured open gripper; resting placement still required"
+    }
+  },
+  "failed_retention_brake": [
+    {
+      "case": "pc-reserved-025",
+      "gap_shrink_m": 0.008611518035199182,
+      "max_joint_drift_rad": 0.00034235536105020614,
+      "minimum_tool_height_m": 0.014556155688489506,
+      "both_finger_contacts_retained": false,
+      "final_gap_proxy": false
+    },
+    {
+      "case": "pc-reserved-046",
+      "gap_shrink_m": 0.0056573127188047495,
+      "max_joint_drift_rad": 5.8895160816696546E-05,
+      "minimum_tool_height_m": 0.019448254473756428,
+      "both_finger_contacts_retained": false,
+      "final_gap_proxy": false
+    }
+  ],
+  "phase_validation": {
+    "scope": "Offline simulation all-phase recovery on three known validation layouts; not held-out promotion or live speech",
+    "protocol_sha256": "d0943fcce0799fe061b3874fcd18186573e0566c3c532b8fcb14c32e612c298e",
+    "phase_recovery": true,
+    "refine_cartesian": true,
+    "verify_release": true,
+    "recover_grip": true,
+    "cases": 27,
+    "passes": 27,
+    "passed": true
+  },
+  "original_long_hold": {
+    "cases": 6,
+    "passes": 6,
+    "passed": true
+  },
+  "failed_return_hold": {
+    "case": "pc-reserved-003",
+    "measured": {
+      "simulation_seconds": 32,
+      "max_joint_drift_rad": 0.0001019631138907684,
+      "max_tool_translation_m": 0.00030399705811495303,
+      "minimum_tool_height_m": 0.21589675684823173,
+      "gripper_command_retained": true,
+      "both_finger_contacts_retained": true,
+      "passed": true
+    }
+  },
+  "verification": {
+    "fit_budgets_remaining": 0,
+    "warnings": 20,
+    "regression_passed": 287,
+    "protected_upstream_files": 46,
+    "changed_file_ruff": "passed",
+    "elapsed_seconds": 145.09
+  },
+  "promotion": {
+    "public_live_camera_enabled": false,
+    "new_recovery_phase_interruption_complete": false,
+    "goal_complete": false,
+    "recover_grip_default": false,
+    "unseen_grip_recovery_proven": false,
+    "human_demo_complete": false
+  },
+  "runs": {
+    "phase": "runs/pc-grip-recovery-phase-002",
+    "brake": "runs/pc-gap-brake-probe-001",
+    "refusal_hold": "runs/pc-grip-recovery-refusal-hold-001",
+    "candidate": "runs/pc-grip-recovery-candidate-001",
+    "original_long_hold": "runs/pc-grip-recovery-longhold-002",
+    "prospective": "runs/pc-grip-recovery-reserved-001",
+    "final_retrospective": "runs/pc-grip-recovery-replay-002",
+    "first_retrospective": "runs/pc-grip-recovery-replay-001"
+  }
+}

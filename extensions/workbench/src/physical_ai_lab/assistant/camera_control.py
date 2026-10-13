@@ -112,6 +112,10 @@ def support_clearance(name, rotation):
     return clearance
 
 
+class UnstableGrip(ValueError):
+    """Proprioception contradicts continuing the queued carry motion."""
+
+
 class CameraDelivery:
     """Experimental pickup/release; verified placement belongs to an external judge."""
 
@@ -134,6 +138,7 @@ class CameraDelivery:
         preferred_body_yaw=None,
         phase_recovery=False,
         verify_release=False,
+        recover_grip=False,
     ):
         self.robot, self.camera, self.object = robot, camera, tool
         self.target = np.asarray(destination_xy, dtype=float).copy()
@@ -168,6 +173,12 @@ class CameraDelivery:
         self.paused_phase = None
         self.verify_release = verify_release
         self.correction_attempts = 0
+        self.recover_grip = recover_grip
+        self.grip_recovery_attempts = 0
+        if recover_grip and not (safe_handoff and verify_motion and linear_lifts):
+            raise ValueError(
+                "Grip recovery requires safe handoff, verified motion and linear lifts"
+            )
         if verify_release and not (safe_handoff and verify_motion):
             raise ValueError("Visual release recovery requires safe handoff and verified motion")
         self.preferred_body_yaw = preferred_body_yaw
@@ -240,6 +251,34 @@ class CameraDelivery:
         # Encoder gap is a simulated tactile proxy, not object identification.
         return reading.closing_command and 0.015 < reading.gap_m < 0.070
 
+    def _check_carry_grip(self, before):
+        if not self.carrying:
+            return
+        after = self.robot.read()
+        shrink = before.gap_m - after.gap_m
+        present = self._grip_present()
+        # The supported pickup band extends to65mm TCP height. Gap settling
+        # there is not evidence of free-space loss. The binary gate stays active.
+        free_space = min(before.tcp_m[2], after.tcp_m[2]) > 0.100
+        if self.recover_grip and (not present or (free_space and shrink > 0.002)):
+            self.robot.hold()
+            self.evidence.append(
+                {
+                    "kind": "unstable_grip",
+                    "phase": self.phase,
+                    "gap_before_m": before.gap_m,
+                    "gap_after_m": after.gap_m,
+                    "gap_shrink_m": shrink,
+                    "threshold_m": 0.002,
+                    "free_space_monitor_active": bool(free_space),
+                    "tcp_height_before_m": float(before.tcp_m[2]),
+                    "tcp_height_after_m": float(after.tcp_m[2]),
+                }
+            )
+            raise UnstableGrip("Grip changed during motion; queued carry cancelled")
+        if not present:
+            raise ValueError("Gripper no longer indicates a held handle; holding position")
+
     def _motion(self, point, phase, grip):
         self.phase = phase
         end = self.robot.solve(point, self.orientation)
@@ -270,9 +309,9 @@ class CameraDelivery:
             a = min(index / ticks, 1.0)
             a = a * a * (3 - 2 * a)
             command = start + (end - start) * a if path is None else path[min(index, ticks) - 1]
+            before = self.robot.read() if self.carrying else None
             self.robot.tick(command, grip)
-            if self.carrying and not self._grip_present():
-                raise ValueError("Gripper no longer indicates a held handle; holding position")
+            self._check_carry_grip(before)
             remaining -= 1
             yield
         if self.verify_motion:
@@ -319,9 +358,9 @@ class CameraDelivery:
                 )
                 if passed or extra == 60:
                     break
+                before = self.robot.read() if self.carrying else None
                 self.robot.tick(end, grip)
-                if self.carrying and not self._grip_present():
-                    raise ValueError("Grip is unconfirmed while settling robot motion")
+                self._check_carry_grip(before)
                 yield
             self.last_motion_check = {
                 "kind": "robot_motion_check",
@@ -421,10 +460,43 @@ class CameraDelivery:
             )
             yield from self._motion(reading.tcp_m + [0, 0, 0.20], "Lifting tool", 0)
             yield from self._carry()
+        except UnstableGrip:
+            yield from self._recover_lost_grip()
         except (ValueError, FloatingPointError) as error:
             self.robot.hold()
             self.outcome = Outcome("failed", str(error))
             self.phase = "Vision task failed"
+
+    def _recover_lost_grip(self):
+        """One fresh tabletop reacquisition; no claim that braking retained the tool."""
+        try:
+            if self.grip_recovery_attempts >= 1:
+                raise ValueError("Grip recovery budget exhausted; holding")
+            self.grip_recovery_attempts += 1
+            self.robot.hold()
+            yield from self._wait(100, 0, "Holding after unstable grip")
+            reading = self.robot.read()
+            if not (
+                np.isfinite(reading.gap_m) and reading.closing_command and reading.gap_m < 0.015
+            ):
+                raise ValueError("Possible held handle remains; automatic opening refused")
+            self.phase = "Observing supported tool after grip loss"
+            self._observe()
+            self.carrying = False
+            self.evidence.append(
+                {
+                    "kind": "grip_recovery",
+                    "attempt": self.grip_recovery_attempts,
+                    "settling_frames": 100,
+                    "empty_gap_m": reading.gap_m,
+                    "provenance": "Robot gap + fresh supported tabletop camera; no object truth",
+                }
+            )
+            yield from self._wait(28, 255, "Opening confirmed empty hand")
+            yield from self._rescan_recovery(False)
+        except (ValueError, FloatingPointError) as error:
+            self.robot.hold()
+            self.outcome = Outcome("failed", str(error))
 
     def _carry(self):
         if self.safe_handoff:
@@ -689,6 +761,8 @@ class CameraDelivery:
             reading = self.robot.read()
             yield from self._motion(reading.tcp_m + [0, 0, 0.12], "Lifting for return", 0)
             yield from self._carry()
+        except UnstableGrip:
+            yield from self._recover_lost_grip()
         except (ValueError, FloatingPointError) as error:
             self.robot.hold()
             self.outcome = Outcome("failed", str(error))

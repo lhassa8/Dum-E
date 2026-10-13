@@ -1593,3 +1593,30 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   Saved odyssey-3-assessment.md with access questions and guarded evaluation plan.
   No accounts, external messages, paid calls, uploads, installations or hardware.
   Goal remains active; research does not replace independent physical qualification.
+
+## B26 — camera candidate meets prospective observed gate (2026-10-13)
+- Previous turn progress: Odyssey-3 assessment1243f8b; gap prototype remained
+  rejected/unpromoted50/54. Revalidated worktree and authoritative measurements.
+- Investigated two similar001/049 refusals: gap shrinks during tabletop contact
+  settling;001 retains table/both-finger contact. Keep2mm trigger, apply extra
+  shrink check only with before/after TCP>100mm; original binary grip gate remains
+  everywhere. No widening of placement/grip success limits or new model fit.
+- Optional recover_grip: cancel carry, original gravity hold3.2s, require finite
+  closed empty-gap proxy<15mm + fresh supported-tabletop camera, open/reacquire
+  once to unchanged destination/rack. Uncertain hand or second loss refuses.
+- Same previously evaluated54 improves to52/54 versuspublished51 andfirstproto50;
+ 025redirect completes22.148mm,046camera-refuses,005postrelease-camera-refuses.
+  Independent54/54 reconstruction. Inheritedsplitheldout does not make replay unseen.
+- Final candidate frozen before seed2026101304 all54: full53/54=98.15% meets
+  observed95gate, firstphysical54/54,36returns,7side-scene views,0alttarget;
+  one first-leg correction. Independent54/54 verdicts match; Wilson90.23–99.67%.
+  Snapshot unchanged, all failures retained. No causal different-seed rate claim.
+- New cohort has0grip-loss/reacquisition events: positive recovery evidence is
+  known025 replay, not unseen recovery qualification. Remaining003return ambiguity
+  leaves held screwdriver; independent32s hold joint.000102rad/tool.304mm/
+  minheight215.90mm/bothcontacts retained passes; return remains failed.
+- Known phase27/27, originallonghold6/6,287tests,46protectedhashes. Defaultsoff;
+  candidate is not yet live/public. Next test Stop/resume inside new recovery
+  subphases, then wire opt-in camera interaction and measure actual user journeys.
+  Goal active, fit budgets0, no mic/cloud/hardware actions. Details/evidence:
+  camera-grip-recovery-pc.md/camera-grip-recovery-pc-evidence.json.

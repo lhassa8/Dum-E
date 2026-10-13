@@ -23,6 +23,15 @@ parser.add_argument(
 parser.add_argument("--phase-recovery", action="store_true")
 parser.add_argument("--refine-cartesian", action="store_true")
 parser.add_argument("--verify-release", action="store_true")
+parser.add_argument("--recover-grip", action="store_true")
+parser.add_argument(
+    "--final-hold",
+    action="store_true",
+    help="Independent32s hold judge after a carried-tool refusal",
+)
+parser.add_argument(
+    "--gap-brake", action="store_true", help="Post-hoc 2mm shrink trigger and physical 32s hold"
+)
 args = parser.parse_args()
 args.output.mkdir(parents=True, exist_ok=False)
 fixture = json.loads(args.fixture.read_text())
@@ -63,6 +72,7 @@ for ident in args.case_ids:
         alternate_view=True,
         phase_recovery=args.phase_recovery,
         verify_release=args.verify_release,
+        recover_grip=args.recover_grip,
     )
     folder = args.output / ident
     folder.mkdir()
@@ -91,6 +101,7 @@ for ident in args.case_ids:
                     alternate_view=True,
                     phase_recovery=args.phase_recovery,
                     verify_release=args.verify_release,
+                    recover_grip=args.recover_grip,
                 )
             rows = []
             paused = False
@@ -128,9 +139,43 @@ for ident in args.case_ids:
                 rows.append(row)
 
             for _ in range(3000):
+                before_reading = actor.robot.read()
+                was_carrying = actor.carrying
                 active = actor.advance()
                 measure()
                 if not active:
+                    break
+                shrink = before_reading.gap_m - actor.robot.read().gap_m
+                if args.gap_brake and was_carrying and actor.carrying and shrink > 0.002:
+                    trigger = rows[-1].copy()
+                    stopped = actor.robot.read().joints
+                    actor.pause()
+                    max_drift = 0.0
+                    min_height = float("inf")
+                    both_fingers = True
+                    for _ in range(1000):
+                        bench.tick()
+                        measure()
+                        max_drift = max(
+                            max_drift, float(np.max(np.abs(actor.robot.read().joints - stopped)))
+                        )
+                        min_height = min(min_height, rows[-1]["tool_xyz_evaluator_only"][2])
+                        contacts = {
+                            body
+                            for pair in rows[-1]["tool_contacts_evaluator_only"]
+                            for body in pair
+                        }
+                        both_fingers &= {"left_finger", "right_finger"} <= contacts
+                    report["gap_brake"] = {
+                        "threshold_m": 0.002,
+                        "shrink_m": shrink,
+                        "trigger": trigger,
+                        "hold_seconds": 32,
+                        "max_joint_drift_rad": max_drift,
+                        "minimum_tool_height_m": min_height,
+                        "both_finger_contacts_retained": both_fingers,
+                        "final_gap_proxy": actor._grip_present(),
+                    }
                     break
                 if (
                     leg == 0
@@ -166,6 +211,46 @@ for ident in args.case_ids:
             }
             (folder / f"leg-{leg}-trace.json").write_text(json.dumps(rows) + "\n")
             report["legs"].append(summary)
+        if args.final_hold and actor.carrying and actor.outcome.status == "failed":
+            stopped = actor.robot.read().joints
+            tool_start = truth()[name].copy()
+            command = bench.data.ctrl[7]
+            drift = translation = 0.0
+            minimum = tool_start[2]
+            retained = both_contacts = True
+            for _ in range(1000):
+                bench.tick()
+                xyz = truth()[name]
+                drift = max(drift, float(np.max(np.abs(actor.robot.read().joints - stopped))))
+                translation = max(translation, float(np.linalg.norm(xyz - tool_start)))
+                minimum = min(minimum, xyz[2])
+                retained &= bench.data.ctrl[7] == command
+                contacts = {
+                    bench.model.body(bench.model.geom_bodyid[g]).name
+                    for contact in bench.data.contact[: bench.data.ncon]
+                    if target_body
+                    in (
+                        bench.model.geom_bodyid[contact.geom1],
+                        bench.model.geom_bodyid[contact.geom2],
+                    )
+                    for g in (contact.geom1, contact.geom2)
+                }
+                both_contacts &= {"left_finger", "right_finger"} <= contacts
+            report["final_refusal_hold"] = {
+                "simulation_seconds": 32,
+                "max_joint_drift_rad": drift,
+                "max_tool_translation_m": translation,
+                "minimum_tool_height_m": float(minimum),
+                "gripper_command_retained": bool(retained),
+                "both_finger_contacts_retained": both_contacts,
+                "passed": bool(
+                    drift < 0.02
+                    and translation < 0.01
+                    and minimum > 0.13
+                    and retained
+                    and both_contacts
+                ),
+            }
         reports.append(report)
         (args.output / "report.json").write_text(json.dumps(reports, indent=2) + "\n")
         print(
