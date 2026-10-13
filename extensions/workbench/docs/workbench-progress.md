@@ -1474,3 +1474,32 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
 - Public camera motion remains unpromoted. All-phase recovery, task-layer camera,
   responsive live voice and user demonstration remain incomplete; goal active.
   Details: camera-scene-pc.md and camera-scene-pc-evidence.json. Raw data local.
+
+## B21 — missing reorientation exposure collected; bounded fit rejected (2026-10-12)
+
+- Baselinec9771e9. Implemented frozen training-only cardinal-yaw curriculum,
+  defaultNone. Requested orientation must meet original scene/clearance/IK gates;
+  no alternate-orientation fallback. Seven new guards; physics/solver/forces/gains
+  unchanged. Pilot6 release states exact, fourth scene refused grip loss.
+- Full90 non-test scenes processed:127 states/1143 rows,873train/270val,
+  97 reorientation training states,74 commanded turns>.035rad.12 refused legs
+  retained. All127 normal/repeated zero integration states match exactly.
+- Historical validation audit fails(feature difference17.8435/label~19.986mm).
+  No tolerance lowered: current-PC no-curriculum validation baseline collected,
+  all270 rows feature/label maximum difference0. Splits disjoint, test0. Dataset
+  SHA f8af4801771bc06c7499890704e89891f132c061b8d928bc18887278311bbfb9.
+- Single remaining fixedCPUfit consumed:76features/3x9413params/300epochs/seeds
+  unchanged, training-only heading-dropout873->1746 rows,30 validation groups.
+  CPU Torch2.7.1 actual5.261s. No policy CPU fallback or new dependency.
+- **No predictor selected.** Neural coveredRMSE14.02mm/p9522.15mm,76/270withheld,
+  selectioncoverage60%,eligible gain-3.90mm. Same-coverage rigidRMSE13.85mm.
+  Batch9 median/p95 .174/.201ms doesn't rescue failed gates. Feature guard rejects0
+  rows; uncertainty withholding retained. Mean/linear also fail. No guard widening.
+- Remaining fit budget0, frozen originalprotocol preserves preregistration1.
+  Historical11.109mm vsnew22.145mm not causal due different validation trajectories.
+  Curriculum supplied cardinal experience but may omit inherited distribution;
+  no refit/sweep to test that within consumed budget. No deployed weights changed.
+- 264 regression tests pass,46 protected hashes,changed-file checks. Public camera
+  remains unpromoted. Next strategy: closed-loop grasp-state/motion evidence and
+  all-phase recovery; no more optical/outcome-fit sweeps. Full goal active.
+  Evidence/details: release-curriculum-pc.md/release-curriculum-pc-evidence.json.

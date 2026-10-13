@@ -64,6 +64,40 @@ def test_handoff_turn_uses_scene_poses_without_a_simulator():
     assert "bench" not in vars(actor)
 
 
+@pytest.mark.parametrize("yaw", [0.0, np.pi / 2, -np.pi / 2, np.pi])
+def test_curriculum_uses_only_requested_supported_orientation(yaw):
+    actor, predictions = scene()
+    actor.target = np.array([0.71, -0.26])  # Clear for each catalog orientation in this unit scene.
+    actor.preferred_body_yaw = yaw
+    orientation, evidence = choose_handoff(actor, SimpleNamespace(captured_s=4.0), predictions)
+    desired = np.array([[np.cos(yaw), -np.sin(yaw), 0], [np.sin(yaw), np.cos(yaw), 0], [0, 0, 1]])
+    np.testing.assert_allclose(orientation @ actor.body_rotation_local, desired, atol=1e-12)
+    assert evidence["mode"] == "tabletop_reorientation"
+    assert evidence["requested_body_yaw_rad"] == yaw and evidence["clearance_m"] >= 0.006
+
+
+def test_curriculum_cannot_fall_back_after_requested_orientation_is_unreachable():
+    actor, predictions = scene()
+    actor.preferred_body_yaw = np.pi / 2
+    actor.robot.solve = lambda *unused: (_ for _ in ()).throw(ValueError("Unreachable"))
+    with pytest.raises(ValueError, match="No observed clear"):
+        choose_handoff(actor, SimpleNamespace(captured_s=4.0), predictions)
+
+
+def test_curriculum_rejects_an_orientation_outside_the_frozen_catalog():
+    actor, predictions = scene()
+    actor.preferred_body_yaw = np.pi / 3
+    with pytest.raises(ValueError, match="unsupported"):
+        choose_handoff(actor, SimpleNamespace(captured_s=4.0), predictions)
+
+
+def test_curriculum_keeps_clearance_refusal_for_requested_orientation():
+    actor, predictions = scene()
+    actor.preferred_body_yaw = np.pi / 2
+    with pytest.raises(ValueError, match="No observed clear"):
+        choose_handoff(actor, SimpleNamespace(captured_s=4.0), predictions)
+
+
 def test_occluded_neighbor_prediction_is_labeled_and_bounded():
     actor, p = scene()
     p["screwdriver"] = {"status": "missing", "position_m": None, "fit_score": 0}

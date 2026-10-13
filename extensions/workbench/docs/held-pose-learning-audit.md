@@ -4,7 +4,9 @@
 model gate and training-exposure finding remain evidence. Subsequent PC camera
 cohorts are documented in [camera-scene-pc.md](camera-scene-pc.md); the old 24
 reserved layouts have since been evaluated and are not future unseen tests.
-The prepared training-only curriculum has not yet been collected or refitted.
+The prepared training-only curriculum has now been collected and its remaining
+bounded fit rejected on the PC; see [release-curriculum-pc.md](release-curriculum-pc.md).
+The remaining fit budget is zero. Statements below describe the earlier stage.
 
 Experimental, October 11, 2026. Public voice assistant and enabled controllers
 remain unchanged. No hardware or camera permissions were added. Full goal active.

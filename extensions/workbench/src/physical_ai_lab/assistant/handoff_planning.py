@@ -132,6 +132,14 @@ def choose_handoff(actor, sample, predictions):
     for yaw in [0.0, np.pi / 2, -np.pi / 2, np.pi]:
         desired = rotation_z(yaw)
         options.append(("tabletop_reorientation", desired, desired @ actor.body_rotation_local.T))
+    preferred = getattr(actor, "preferred_body_yaw", None)
+    if preferred is not None:
+        if not np.isfinite(preferred) or not any(
+            abs(preferred - yaw) < 1e-9 for yaw in (0.0, np.pi / 2, -np.pi / 2, np.pi)
+        ):
+            raise ValueError("Requested curriculum orientation is unsupported")
+        desired = rotation_z(preferred)
+        options = [("tabletop_reorientation", desired, desired @ actor.body_rotation_local.T)]
     candidates = []
     for kind, body, tcp in options:
         clearance = scene_clearance(
@@ -160,4 +168,5 @@ def choose_handoff(actor, sample, predictions):
         "planned geometry, not continuous measurement",
         "neighbor_sources": sources,
         "scene_prediction_uncertainty_m": uncertainty,
+        "requested_body_yaw_rad": preferred,
     }

@@ -22,6 +22,7 @@ args.output.mkdir(parents=True, exist_ok=False)
 fixture = json.loads(args.fixture.read_text())
 manifest = json.loads((args.dataset / "manifest.json").read_text())
 assert manifest["limited_pilot"] is None
+assert manifest.get("selected_split") is None
 assert manifest["feature_version"] == FEATURE_VERSION
 assert manifest["fixture_sha256"] == hashlib.sha256(args.fixture.read_bytes()).hexdigest()
 assert (
@@ -34,6 +35,7 @@ with np.load(args.dataset / "data.npz", allow_pickle=False) as data:
 assert f.shape[1] == FEATURE_COUNT and y.shape[1] == 5
 assert not np.any(splits == "test")
 train, validation = splits == "train", splits == "validation"
+assert train.any() and validation.any()
 assert not set(episodes[train]) & set(episodes[validation])
 config, criteria = fixture["training"], fixture["criteria"]
 dropout_hash = None
@@ -47,7 +49,7 @@ reoriented_train_legs = sum(
     if leg.get("rows", 0) > 0
 )
 recipe_version = int(
-    recipe == "D2d_verified_camera_recovery"
+    recipe in ("D2d_verified_camera_recovery", "D2e_training_reorientation_curriculum")
     and manifest.get("outcome_label_version") == 2
     and reoriented_train_legs > 0
 )
@@ -219,7 +221,7 @@ summary["selected_kind"] = (
 )
 summary["scope"] = (
     "Validation branches from zero-action baseline states; "
-    "not full-loop physical acceptance; test remains untouched"
+    "not full-loop physical acceptance; test labels excluded"
 )
 (args.output / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 print(

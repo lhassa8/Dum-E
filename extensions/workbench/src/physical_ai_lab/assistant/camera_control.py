@@ -131,6 +131,7 @@ class CameraDelivery:
         center_grasp=False,
         safe_handoff=False,
         alternate_view=False,
+        preferred_body_yaw=None,
     ):
         self.robot, self.camera, self.object = robot, camera, tool
         self.target = np.asarray(destination_xy, dtype=float).copy()
@@ -161,6 +162,7 @@ class CameraDelivery:
         self.center_grasp = center_grasp
         self.safe_handoff = safe_handoff
         self.alternate_view = alternate_view
+        self.preferred_body_yaw = preferred_body_yaw
         self.reoriented_carry = False
         self.planned_neighbors = None
         self.scene_history = {}

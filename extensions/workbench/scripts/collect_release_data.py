@@ -21,7 +21,9 @@ parser.add_argument("output", type=Path)
 parser.add_argument("--fixture", type=Path, default=Path("fixtures/release_model_cases.json"))
 parser.add_argument("--limit", type=int)
 parser.add_argument("--case", help="One non-test diagnostic case; never a training dataset")
+parser.add_argument("--split", choices=["train", "validation"], help="Diagnostic split subset")
 parser.add_argument("--recovery-profile", action="store_true")
+parser.add_argument("--reorientation-curriculum", type=Path)
 args = parser.parse_args()
 args.output.mkdir(parents=True, exist_ok=False)
 fixture = json.loads(args.fixture.read_text())
@@ -30,6 +32,8 @@ zero = int(np.flatnonzero(np.linalg.norm(actions, axis=1) == 0)[0])
 spec = mujoco.mjtState.mjSTATE_INTEGRATION
 xs, ys, episodes, splits, legs, action_ids, records = [], [], [], [], [], [], []
 cases = [c for c in fixture["cases"] if c["split"] != "test"]
+if args.split:
+    cases = [c for c in cases if c["split"] == args.split]
 if args.case:
     cases = [c for c in cases if c["id"] == args.case]
     if len(cases) != 1:
@@ -37,11 +41,32 @@ if args.case:
 if args.limit is not None:
     cases = cases[: args.limit]
 profile = {"verify_motion": True, "safe_handoff": True} if args.recovery_profile else {}
+curriculum = None
+curriculum_hash = None
+training_yaws = {}
+if args.reorientation_curriculum:
+    if not args.recovery_profile:
+        parser.error("Curriculum requires the existing recovery profile")
+    curriculum_bytes = args.reorientation_curriculum.read_bytes()
+    curriculum = json.loads(curriculum_bytes)
+    assert (
+        curriculum["base_fixture_sha256"] == hashlib.sha256(args.fixture.read_bytes()).hexdigest()
+    )
+    assert curriculum["split"] == "train"
+    assert curriculum["model_fit_budget_remaining"] == 1
+    for index, case in enumerate(c for c in fixture["cases"] if c["split"] == "train"):
+        training_yaws[case["id"]] = curriculum["preferred_body_yaws_rad"][index % 4]
+    curriculum_hash = hashlib.sha256(curriculum_bytes).hexdigest()
 
 
 def camera_actor(bench, sensor, tool, target):
     return CameraDelivery(
-        SimRobot(bench, recover_ik=args.recovery_profile), sensor, tool, target, **profile
+        SimRobot(bench, recover_ik=args.recovery_profile),
+        sensor,
+        tool,
+        target,
+        preferred_body_yaw=training_yaws.get(case["id"]),
+        **profile,
     )
 
 
@@ -49,7 +74,7 @@ for case in cases:
     b = ToolWorkbench(case["seed"], xml=camera_scene_xml(case))
     b.model.vis.headlight.diffuse[:] *= case["light"]
     sensor = CameraSensor(b)
-    record = {"case": case, "legs": []}
+    record = {"case": case, "legs": [], "requested_body_yaw_rad": training_yaws.get(case["id"])}
     first = camera_actor(b, sensor, case["tool"], HANDOFF["handoff"])
     try:
         for leg in range(2):
@@ -79,6 +104,14 @@ for case in cases:
                 record["legs"].append({"leg": leg, "status": actor.outcome.__dict__, "rows": 0})
                 break
             point = actor._place_point()
+            release_plan = next(
+                (
+                    e
+                    for e in reversed(actor.evidence)
+                    if e["kind"] == "camera_handoff_clearance_plan"
+                ),
+                None,
+            )
             # Unprivileged features are formed before snapshot/label truth reads.
             branch_features = [release_features(actor, point, action) for action in actions]
             state = np.empty(mujoco.mj_stateSize(b.model, spec))
@@ -187,6 +220,7 @@ for case in cases:
                     "repeat_max_state_error": repeat_error,
                     "normal_continuation_max_state_error": normal_error,
                     "deliberately_reoriented": bool(actor.reoriented_carry),
+                    "release_plan": release_plan,
                 }
             )
             print(
@@ -217,7 +251,16 @@ manifest = {
     "scope": "Future physical labels and full-state branching only in collector; tests excluded",
     "limited_pilot": 1 if args.case else args.limit,
     "selected_diagnostic_case": args.case,
-    "controller_recipe": "D2d_verified_camera_recovery" if args.recovery_profile else "C3_legacy",
+    "selected_split": args.split,
+    "controller_recipe": (
+        "D2e_training_reorientation_curriculum"
+        if curriculum
+        else "D2d_verified_camera_recovery"
+        if args.recovery_profile
+        else "C3_legacy"
+    ),
+    "curriculum_sha256": curriculum_hash,
+    "curriculum_scope": None if curriculum is None else curriculum["scope"],
     "outcome_label_version": 2 if args.recovery_profile else 1,
     "disturbance_label": "Maximum at every32ms release motion/hold frame"
     if args.recovery_profile

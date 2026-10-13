@@ -1,0 +1,395 @@
+{
+  "date": "2026-10-12",
+  "baseline": "c9771e9",
+  "scope": "Small CPU future-outcome predictor, not current pose measurement or full-loop policy",
+  "promoted": false,
+  "selected_kind": null,
+  "physics_profile": "tool_contacts_v2",
+  "curriculum": {
+    "version": 1,
+    "base_fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+    "scope": "Training-only supported handoff orientation curriculum; validation and test scenes untouched",
+    "split": "train",
+    "preferred_body_yaws_rad": [
+      0.0,
+      1.5707963267948966,
+      -1.5707963267948966,
+      3.141592653589793
+    ],
+    "selection": "Cycle by frozen training scene order; same requested orientation for both legs",
+    "guards": "Existing camera freshness, ambiguity, catalog clearance, IK, force caps and physical outcome checks; rejected trajectories retained",
+    "model_fit_budget_remaining": 1
+  },
+  "model_fit_budget": {
+    "predeclared": 1,
+    "used": 1,
+    "remaining": 0
+  },
+  "collection_audit": {
+    "passed": true,
+    "scope": "Collection audit, not fitted-model or full-loop acceptance",
+    "records": 90,
+    "release_states": 127,
+    "rows": 1143,
+    "split_rows": {
+      "train": 873,
+      "validation": 270
+    },
+    "training_reorientation_states": 97,
+    "training_turns_over_0_035_rad": 74,
+    "all_normal_and_repeat_checks_passed": true,
+    "validation_feature_max_error": 0.0,
+    "validation_label_max_error": 0.0,
+    "rejected_legs": [
+      {
+        "case": "train-003",
+        "leg": 0,
+        "status": {
+          "status": "failed",
+          "message": "Gripper no longer indicates a held handle; holding position",
+          "distance_m": null
+        }
+      },
+      {
+        "case": "train-009",
+        "leg": 0,
+        "status": {
+          "status": "failed",
+          "message": "No observed clear handoff orientation; holding for replanning",
+          "distance_m": null
+        }
+      },
+      {
+        "case": "train-014",
+        "leg": 0,
+        "status": {
+          "status": "failed",
+          "message": "Gripper no longer indicates a held handle; holding position",
+          "distance_m": null
+        }
+      },
+      {
+        "case": "train-021",
+        "leg": 0,
+        "status": {
+          "status": "failed",
+          "message": "Gripper no longer indicates a held handle; holding position",
+          "distance_m": null
+        }
+      },
+      {
+        "case": "train-027",
+        "leg": 0,
+        "status": {
+          "status": "failed",
+          "message": "Gripper no longer indicates a held handle; holding position",
+          "distance_m": null
+        }
+      },
+      {
+        "case": "train-029",
+        "leg": 0,
+        "status": {
+          "status": "failed",
+          "message": "Gripper no longer indicates a held handle; holding position",
+          "distance_m": null
+        }
+      },
+      {
+        "case": "train-036",
+        "leg": 0,
+        "status": {
+          "status": "failed",
+          "message": "Gripper no longer indicates a held handle; holding position",
+          "distance_m": null
+        }
+      },
+      {
+        "case": "train-041",
+        "leg": 0,
+        "status": {
+          "status": "failed",
+          "message": "Gripper no longer indicates a held handle; holding position",
+          "distance_m": null
+        }
+      },
+      {
+        "case": "train-048",
+        "leg": 1,
+        "status": {
+          "status": "failed",
+          "message": "No observed clear handoff orientation; holding for replanning",
+          "distance_m": null
+        }
+      },
+      {
+        "case": "train-054",
+        "leg": 0,
+        "status": {
+          "status": "failed",
+          "message": "Gripper no longer indicates a held handle; holding position",
+          "distance_m": null
+        }
+      },
+      {
+        "case": "train-062",
+        "leg": 0,
+        "status": {
+          "status": "failed",
+          "message": "Gripper no longer indicates a held handle; holding position",
+          "distance_m": null
+        }
+      },
+      {
+        "case": "train-065",
+        "leg": 0,
+        "status": {
+          "status": "failed",
+          "message": "Gripper no longer indicates a held handle; holding position",
+          "distance_m": null
+        }
+      }
+    ],
+    "dataset_sha256": "f8af4801771bc06c7499890704e89891f132c061b8d928bc18887278311bbfb9",
+    "curriculum_sha256": "17745ea0e79566ae481651f9b43ed6e8d6a2f51d42b2d999b6a188cce739e95c"
+  },
+  "metadata": {
+    "fixture_sha256": "7fda988b669f9ccd79e73ca469c499126e6fe5939ce351f20f4807fc47108197",
+    "dataset_sha256": "f8af4801771bc06c7499890704e89891f132c061b8d928bc18887278311bbfb9",
+    "model_sha256": "a86b494a7c5a60dcff1c219191529d7196405ce920a8af788eb0c7f473e73b71",
+    "config": {
+      "seeds": [
+        819731,
+        819732,
+        819733
+      ],
+      "hidden_width": 64,
+      "epochs": 300,
+      "batch_size": 128,
+      "learning_rate": 0.003,
+      "target": "final XY residual from desired destination minus proposed XY offset; final height and unrelated-tool disturbance, millimeters",
+      "split_unit": "scene ID; all action branches and both legs stay in same split"
+    },
+    "feature_version": 1,
+    "controller_recipe": "D2e_training_reorientation_curriculum",
+    "controller_recipe_version": 1,
+    "outcome_label_version": 2,
+    "reoriented_training_legs": 97,
+    "features": 76,
+    "train_rows": 1746,
+    "original_train_rows": 873,
+    "sensor_dropout_sha256": "155da94b8b738149992adaf615fab2ef172fbdfcd53249af58eb4eb4a84631ed",
+    "validation_rows": 270,
+    "train_episodes": 61,
+    "validation_episodes": 18,
+    "training_s": 5.261258526999882,
+    "torch_version": "2.7.1+cu126",
+    "device": "cpu",
+    "parameter_count_per_member": 9413,
+    "linear_ridge_penalty": 0.01,
+    "scope": "Future release outcome, not current state estimation"
+  },
+  "models": {
+    "constant": {
+      "rows": 270,
+      "withheld_rows": 0,
+      "xy_rmse_m": 0.012127224026030956,
+      "xy_p95_m": 0.0229173865331661,
+      "rigid_xy_rmse_on_coverage_m": 0.014633117726822277,
+      "inference_batch9_ms": {
+        "median": 0.042841998947551474,
+        "p95": 0.06362845051626208
+      },
+      "selection_coverage": 0.0,
+      "selection_mean_gain_m": null,
+      "selection_mean_error_m": null,
+      "offline_gate_passed": false
+    },
+    "linear": {
+      "rows": 270,
+      "withheld_rows": 0,
+      "xy_rmse_m": 0.04137734361845168,
+      "xy_p95_m": 0.07134858908568306,
+      "rigid_xy_rmse_on_coverage_m": 0.014633117726822277,
+      "inference_batch9_ms": {
+        "median": 0.06271050187933724,
+        "p95": 0.09005624906421866
+      },
+      "selection_coverage": 0.1,
+      "selection_mean_gain_m": 0.003917862937904825,
+      "selection_mean_error_m": 0.014300434779172718,
+      "offline_gate_passed": false
+    },
+    "ensemble": {
+      "rows": 270,
+      "withheld_rows": 76,
+      "xy_rmse_m": 0.014019825748692236,
+      "xy_p95_m": 0.022145171169591946,
+      "rigid_xy_rmse_on_coverage_m": 0.013852777169979605,
+      "inference_batch9_ms": {
+        "median": 0.17396099974575918,
+        "p95": 0.20122735058976104
+      },
+      "selection_coverage": 0.6,
+      "selection_mean_gain_m": -0.003898657169808327,
+      "selection_mean_error_m": 0.014728304920698824,
+      "offline_gate_passed": false
+    }
+  },
+  "historical_validation_comparison": {
+    "passed": false,
+    "reason": "Historical trajectories differ from current controller/runtime; current-PC no-curriculum baseline required",
+    "worst_feature_difference": 17.84347515714589,
+    "worst_label_difference_m": 0.01998578529121242
+  },
+  "current_pc_validation_comparison": {
+    "passed": true,
+    "feature_max_difference": 0.0,
+    "label_max_difference": 0.0,
+    "rows": 270
+  },
+  "rejected_collection_legs": [
+    {
+      "case": "train-003",
+      "leg": 0,
+      "status": {
+        "status": "failed",
+        "message": "Gripper no longer indicates a held handle; holding position",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "train-009",
+      "leg": 0,
+      "status": {
+        "status": "failed",
+        "message": "No observed clear handoff orientation; holding for replanning",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "train-014",
+      "leg": 0,
+      "status": {
+        "status": "failed",
+        "message": "Gripper no longer indicates a held handle; holding position",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "train-021",
+      "leg": 0,
+      "status": {
+        "status": "failed",
+        "message": "Gripper no longer indicates a held handle; holding position",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "train-027",
+      "leg": 0,
+      "status": {
+        "status": "failed",
+        "message": "Gripper no longer indicates a held handle; holding position",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "train-029",
+      "leg": 0,
+      "status": {
+        "status": "failed",
+        "message": "Gripper no longer indicates a held handle; holding position",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "train-036",
+      "leg": 0,
+      "status": {
+        "status": "failed",
+        "message": "Gripper no longer indicates a held handle; holding position",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "train-041",
+      "leg": 0,
+      "status": {
+        "status": "failed",
+        "message": "Gripper no longer indicates a held handle; holding position",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "train-048",
+      "leg": 1,
+      "status": {
+        "status": "failed",
+        "message": "No observed clear handoff orientation; holding for replanning",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "train-054",
+      "leg": 0,
+      "status": {
+        "status": "failed",
+        "message": "Gripper no longer indicates a held handle; holding position",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "train-062",
+      "leg": 0,
+      "status": {
+        "status": "failed",
+        "message": "Gripper no longer indicates a held handle; holding position",
+        "distance_m": null
+      }
+    },
+    {
+      "case": "train-065",
+      "leg": 0,
+      "status": {
+        "status": "failed",
+        "message": "Gripper no longer indicates a held handle; holding position",
+        "distance_m": null
+      }
+    }
+  ],
+  "validation_groups": 30,
+  "guards": {
+    "feature_limit": 8,
+    "xy_ensemble_std_max_m": 0.008,
+    "feature_guard_failures": 0,
+    "withheld_neural_rows": 76
+  },
+  "source_sha256": {
+    "src/physical_ai_lab/assistant/camera_control.py": "6626ad23cd384e4f2fab44cd9b1dc64a686d4abe3a949d1685c35c9a987e35cd",
+    "src/physical_ai_lab/assistant/handoff_planning.py": "a71813ef26461013afc62099a3e8c04ea265f9f1d39a2642c9ca681b7ba62c4d",
+    "scripts/collect_release_data.py": "a4eed820b3cfc01294f978194145ec58f585207d22cb9c2e80852ea53f0dc97a",
+    "scripts/train_release_model.py": "91572263a10d18e1886d2762ddecb953a606eb915991bf695cbef6221f764faf",
+    "scripts/audit_release_curriculum.py": "59d3c6959c68637d0200e3e750b84c6335ad46da040c844d1d0a942790b18350"
+  },
+  "regressions": {
+    "extension_tests": 264,
+    "new_orientation_guards": 7,
+    "protected_upstream_hashes": 46
+  },
+  "limitations": [
+    "Neural p95 is computed on covered rows only;76/270 withheld and60% group selection coverage fail full coverage gate",
+    "Eligible neural selections have negative mean gain; no live correction enabled",
+    "Historical11.109mm p95 and current22.145mm use differing validation trajectories; no causal curriculum comparison",
+    "Curriculum requests replace training orientation choices; inherited-pose operating distribution may still be underrepresented, but feature guard did not account for withheld rows",
+    "Controller recipe metadata indicates experience, never offline quality or physical success",
+    "Counterfactual state resets confined to offline collector; deployed actors never teleport/weld/freeze objects",
+    "Raw data/model/frames local; no weights copied into enabled application assets"
+  ],
+  "next_strategy": "Stop optical and outcome-fit sweeps; pursue closed-loop grasp-state/motion evidence and all-phase task recovery while preserving failed camera qualification and every physical gate",
+  "local_artifacts": {
+    "dataset": "runs/pc-release-curriculum-full-001",
+    "baseline": "runs/pc-release-validation-baseline-001",
+    "fit": "runs/pc-release-curriculum-fit-001"
+  }
+}
