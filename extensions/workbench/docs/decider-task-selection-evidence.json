@@ -1,0 +1,243 @@
+{
+  "date": "2026-10-13",
+  "decision": "Do not promote this Decider configuration to physical action selection; retain Bonsai. Further classifier work is lower priority than manipulation skills.",
+  "source_revision": "b9fc83626bcca822d00f822d6c2e151b8d244ee9",
+  "unique_cases": 31,
+  "repeats": 3,
+  "fixture_sha256": "aed016fa54905b47478d8181fadd701435dae51fa81a604933bf2ac7dedf4593",
+  "protocol_sha256": "1abca29d6eb328390a5c206881e304fb8b67cac969462ca74180eefda75809fe",
+  "original_fixtures": {
+    "dialogue_cases.json": "cff8e1f60ea825260e70639f7e8cd0399d0974e5dcf522c56575170ac51dd620",
+    "dialogue_context_cases.json": "2d0d2f01da212ab034c6610cbacfbda2dd7e45ce9eb3ed92c644bd0a6ae095fd",
+    "dialogue_quality_cases.json": "58a73dfe6999d373d6a5b85d83e5f37db4eaca9853349ad9f75674144c69a397"
+  },
+  "checkpoint": {
+    "revision": "216d1ccb46a9e9b036eb9187b248db98480f77d4",
+    "base_revision": "b1485b2fa6dfa1287294f269f5fb618e03d52d7c",
+    "provenance_note": "inferred: Hub main at training time; hosts did not pin it",
+    "base_lfs_hashes_verified": [
+      "model.safetensors-00001-of-00001.safetensors",
+      "tokenizer.json"
+    ],
+    "repo": "StrandsAgents/strands-decider-2B-qwen3.5-v1-2610",
+    "files": {
+      "checkpoint/LICENSE.md": {
+        "bytes": 12636,
+        "sha256": "c0d777a0fed01cceb107d91f1aef96d51737be04f2ed75b1b933286a170d7411"
+      },
+      "checkpoint/MANIFEST.sha256": {
+        "bytes": 2484,
+        "sha256": "874dfc3d47c22b5c50b387fabd1e549be483f6e29c127ec6f852125779fa3371"
+      },
+      "checkpoint/README.md": {
+        "bytes": 18036,
+        "sha256": "a5c93bdea3200566e89ec5055e2a4fbe5ce9928021b90c9b9f0f089e947bdb5d"
+      },
+      "checkpoint/chat_template.jinja": {
+        "bytes": 7755,
+        "sha256": "273d8e0e683b885071fb17e08d71e5f2a5ddfb5309756181681de4f5a1822d80"
+      },
+      "checkpoint/head.safetensors": {
+        "bytes": 12605928,
+        "sha256": "ace56742545b505e6fae34ada85c8edbeedb23ba8974d8680aebe0380d6083a1"
+      },
+      "checkpoint/lora/adapter_config.json": {
+        "bytes": 1271,
+        "sha256": "0ced130cefbad13b092425de87680347ce01d09c833cf8e3870e8156db18ffcc"
+      },
+      "checkpoint/lora/adapter_model.safetensors": {
+        "bytes": 201878888,
+        "sha256": "ae1d0cd1ac3edec6df0a519a3ad18f1c382099032d493f8f98c96a80cfebb4c7"
+      },
+      "checkpoint/provenance.json": {
+        "bytes": 967,
+        "sha256": "8713fedb4e67fb6c60f41dc73c937635377506671e09978f92a2d447ac5264bd"
+      },
+      "checkpoint/strands_decider_config.json": {
+        "bytes": 746,
+        "sha256": "1d9625055e88c254d50089116992d08b0567286c9d6fcefb3c025922058ee65a"
+      },
+      "checkpoint/tokenizer.json": {
+        "bytes": 19989592,
+        "sha256": "a2cdd2e108566b09079afa8d266e9e65e7c280f27b771218237a06de5ba9cd86"
+      },
+      "checkpoint/tokenizer_config.json": {
+        "bytes": 1128,
+        "sha256": "8671bed7c852ce9e661be94f179a7b4ffd091c2a65aea0363e5501c20318ee45"
+      },
+      "checkpoint/train_config.json": {
+        "bytes": 2232,
+        "sha256": "85e5dbda4fb646a5182dc5c9895b653837592cf1e685d0c67fa2747c9d6cd649"
+      },
+      "base/LICENSE": {
+        "bytes": 11343,
+        "sha256": "50cbab8a892c5f2993b8c7351a99182507472def3b1374558308605d99b86b32"
+      },
+      "base/README.md": {
+        "bytes": 3721,
+        "sha256": "50ca45b87d976d9850de95ad00e76fba77e105c2cdef1093b8e3bb261d9a1787"
+      },
+      "base/config.json": {
+        "bytes": 2908,
+        "sha256": "ed1c1723241f23f7f4e23430759cbd7dcfb4103cbdfe052bfe7626b57c2615b4"
+      },
+      "base/model.safetensors-00001-of-00001.safetensors": {
+        "bytes": 4548221488,
+        "sha256": "928acbf11878c32185bbd863514d191769285065ab9ea14fbfe431303f5fdf2d"
+      },
+      "base/model.safetensors.index.json": {
+        "bytes": 64460,
+        "sha256": "74d2ddfe79f10f35b27b498632f02b97b60dd9ec39b35d7c5a890c399284e319"
+      },
+      "base/preprocessor_config.json": {
+        "bytes": 390,
+        "sha256": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516"
+      },
+      "base/tokenizer.json": {
+        "bytes": 12807196,
+        "sha256": "fe000e3ed39ed12b8d2481d527d44f93c65d37e87645d2dcc80d1bf9d50d2927"
+      },
+      "base/tokenizer_config.json": {
+        "bytes": 16712,
+        "sha256": "e611fbccc7c29ef3b1cafb1cb7ea548d189968632901d678fd62be68c47885de"
+      },
+      "base/video_preprocessor_config.json": {
+        "bytes": 386,
+        "sha256": "d039cd7d88b3502a99edd455496b75b44ecf7dd3b3669748bafac37e6cecc085"
+      },
+      "base/vocab.json": {
+        "bytes": 6722759,
+        "sha256": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003"
+      }
+    },
+    "base_repo": "Qwen/Qwen3.5-2B-Base"
+  },
+  "candidate": {
+    "count": 93,
+    "incorrect": 33,
+    "load_ms": 2391.685476002749,
+    "first_request_ms": 6694.242792000296,
+    "warm_count": 92,
+    "warm_median_ms": 45.40333550176001,
+    "warm_p95_ms": 58.779136001248844,
+    "high_confidence_errors": 3,
+    "packages": {
+      "torch": "2.14.1+cu130",
+      "transformers": "5.19.0",
+      "peft": "0.21.2",
+      "strands-decider": "0.0.0+eval.b9fc8362"
+    },
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "cuda": "13.0",
+    "capability": [
+      12,
+      0
+    ],
+    "compiled_arches": [
+      "sm_75",
+      "sm_80",
+      "sm_86",
+      "sm_90",
+      "sm_100",
+      "sm_120"
+    ],
+    "bf16_matmul_result": 262144.0,
+    "parameter_devices": [
+      "cuda:0"
+    ],
+    "peak_cuda_allocated_bytes": 4080733696,
+    "prefix_cache": false
+  },
+  "baseline": {
+    "count": 93,
+    "incorrect": 0,
+    "median_ms": 591.0168319969671,
+    "p95_ms": 714.7862799974973,
+    "initial_job": "49fd23dd",
+    "final_job": "49fd23dd"
+  },
+  "candidate_unique_failures": [
+    {
+      "name": "dialogue_cases:ambiguous",
+      "selected_action": "fetch",
+      "selected_object": "screwdriver",
+      "confidence": 0.2575
+    },
+    {
+      "name": "dialogue_cases:multiple",
+      "selected_action": "fetch",
+      "selected_object": "screwdriver",
+      "confidence": 0.3993
+    },
+    {
+      "name": "dialogue_cases:negative",
+      "selected_action": "return",
+      "selected_object": "hammer",
+      "confidence": 0.5017
+    },
+    {
+      "name": "dialogue_cases:hypothetical",
+      "selected_action": "fetch",
+      "selected_object": "screwdriver",
+      "confidence": 0.5332
+    },
+    {
+      "name": "dialogue_cases:tool_question",
+      "selected_action": "fetch",
+      "selected_object": "wrench",
+      "confidence": 0.8705
+    },
+    {
+      "name": "dialogue_cases:impossible",
+      "selected_action": "fetch",
+      "selected_object": "screwdriver",
+      "confidence": 0.9217
+    },
+    {
+      "name": "dialogue_context_cases:question_screws_after_fetch",
+      "selected_action": "fetch",
+      "selected_object": "wrench",
+      "confidence": 0.8628
+    },
+    {
+      "name": "dialogue_context_cases:question_nuts_after_fetch",
+      "selected_action": "fetch",
+      "selected_object": "screwdriver",
+      "confidence": 0.8937
+    },
+    {
+      "name": "dialogue_context_cases:hypothetical_after_fetch",
+      "selected_action": "fetch",
+      "selected_object": "hammer",
+      "confidence": 0.6273
+    },
+    {
+      "name": "dialogue_quality_cases:hardware_truth",
+      "selected_action": "unsupported",
+      "selected_object": null,
+      "confidence": 0.4216
+    },
+    {
+      "name": "dialogue_quality_cases:impossible_skill",
+      "selected_action": "fetch",
+      "selected_object": "screwdriver",
+      "confidence": 0.735
+    }
+  ],
+  "limits": [
+    "31 known fixtures repeated three times; not 93 independent examples and not held-out manipulation qualification.",
+    "Bonsai HTTP understanding generates an intent and reply; Decider direct engine timing selects an action only.",
+    "First candidate request6.694s, separate checkpoint load2.392s; warm92request statistics exclude only first request.",
+    "Baseline includes loaded idle Gemma; candidate temporarily freed Gemma with Bonsai still resident. No deliberate simultaneous GPU workload; no broad contention qualification.",
+    "Reference PyTorch CUDA convolution and gated-delta implementation used; optimized causal-conv1d and flash-linear-attention absent. All model parameters and actual bf16 matmul ran on CUDA.",
+    "Three confidence>=0.9 errors are one unsupported assembly case repeated three times, not three independent errors. Confidence gate alone would not prevent that physical-action error.",
+    "Full voice capture, audible acknowledgment, physical actions and Stop were not exercised.",
+    "The documented base revision was inferred by publisher; our inference is pinned to that revision, original training identity remains limited by publisher provenance."
+  ],
+  "restoration": "Gemma restored to workbench-vision-gemma; both LM Studio models idle and main/camera assistant readiness rechecked.",
+  "sources": [
+    "https://github.com/strands-labs/strands-decider/tree/b9fc83626bcca822d00f822d6c2e151b8d244ee9",
+    "https://huggingface.co/StrandsAgents/strands-decider-2B-qwen3.5-v1-2610/tree/216d1ccb46a9e9b036eb9187b248db98480f77d4",
+    "https://pytorch.org/blog/pytorch-2-12-release-blog/"
+  ]
+}

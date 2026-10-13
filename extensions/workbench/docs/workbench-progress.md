@@ -1747,3 +1747,45 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   local Decider comparison and existing manipulation components behind our
   working voice/task interface, with original independent physical judges.
   Full assistant goal remains active.
+
+### B31 — Actual local Decider versus Bonsai (PC, 2026-10-13)
+
+- Previous goal turn is progress: 81fc8ce published a real Strands/Panda probe
+  and a measured physical holding failure, changing the integration strategy.
+- Freeze existing dialogue/context/quality fixtures before inference:31unique
+  cases,3repeats; merged SHA aed016fa54905b47478d8181fadd701435dae51fa81a604933bf2ac7dedf4593.
+  Question/options/0.9confidence threshold frozen in new protocol, no tuning
+  after failures. Judges preserve existing permitted action/object expectations.
+- Real read-only native Bonsai baseline93/93, median591.02ms,p95714.79ms;
+  native job49fd23dd unchanged. No motion or microphone. Includes intent/reply
+  generation and HTTP; candidate below only selects an action, direct engine.
+- Decider code b9fc8362, public adapter216d1ccb, Qwen2Bbase b1485b2f pinned.
+  Head/adapter match exported provenance SHA; base weights4,548,221,488bytes
+  and tokenizer match published LFS SHA. Publisher says base training revision
+  inferred, not pinned by training hosts; preserve that limitation.
+- Initial Xet transfer stayed at6.6MB while live; ordinary exact-file HTTP200
+  confirmed. Stop only owned inspected transfer; HF_HUB_DISABLE_XET=1 then
+  completes6m40s. Same immutable model/cache, anonymous download, no upload.
+- Separate Linux/tmp environment: Torch2.14.1+cu130,Transformers5.19.0,PEFT0.21.2.
+  Actual bf16 CUDA matmul passes; compiledsm120 and all model parameters CUDA.
+  This improves our prior Torch2.7.1cu126 GPU incompatibility evidence without
+  modifying the OpenPi JAX lab or public ASR/controller environments.
+- Offline actual checkpoint inference:60/93correct,33wrong (11unique failures).
+  Warm92median45.40ms,p9558.78ms; load2391.69ms,firstrequest6694.24ms.
+  Peakallocated4,080,733,696bytes. Reference PyTorch CUDA conv/gated-delta;
+  causal-conv1d/FLA absent and explicitly reported, no CPU inference fallback.
+- Errors include physical fetches for information/hypotheticals and unsupported
+  repair/assembly; negated fetch selects return. Unsupported assembly fetch has
+  confidence0.9217, repeated3times. A0.9confidence gate alone is insufficient.
+  Do not promote this configuration. No claim all Decider uses/models fail.
+- Vision briefly unloaded for measured candidate, Bonsai stays resident; vision
+  restored automatically. Both runtimes idle/ready, no robot requests sent.
+  Prefixcache disabled. Known fixtures/repeats, unequal reply/transport scopes
+  and GPU inventories disclosed; no end-to-end or contention-target claim.
+- Added immutable checkpoint preparation, frozen benchmark and Windows launcher
+  with finally restoration. Python lint and launcher syntax pass; raw identity,
+  rows/weights remain local. Curated: decider-task-selection-evidence.json.
+  Keep Bonsai; shift next work to existing manipulation components and pretrained
+  skills, preserving independent contact/lift/placement/Stop judges. Earlier
+  async-camera patch remains unpromoted. Full goal active; live camera user
+  feedback, prospective journeys and complete acoustic latency still outstanding.

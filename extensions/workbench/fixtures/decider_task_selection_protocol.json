@@ -1,0 +1,19 @@
+{
+  "fixtures": ["dialogue_cases.json", "dialogue_context_cases.json", "dialogue_quality_cases.json"],
+  "repeats": 3,
+  "confidence_threshold": 0.9,
+  "instruction": "Choose the response to the CURRENT user message. Use conversation history only to resolve references or a clarification, never to repeat an earlier command. This simulated assistant can fetch or return one screwdriver, wrench, or hammer, stop, resume, and converse. It cannot repair, assemble, or operate real hardware. An indirect request for a tool is a fetch. Questions about tools, hypothetical requests, jokes, and other conversation are answer. An ambiguous tool request or multiple tools requires clarify. Declining or negating a request must not trigger motion. Unsupported physical work is unsupported. Select exactly one option.",
+  "options": {
+    "fetch_screwdriver": "Fetch the screwdriver.",
+    "fetch_wrench": "Fetch the wrench.",
+    "fetch_hammer": "Fetch the hammer.",
+    "return_screwdriver": "Return the screwdriver.",
+    "return_wrench": "Return the wrench.",
+    "return_hammer": "Return the hammer.",
+    "stop": "Stop current physical motion.",
+    "resume": "Resume the paused task.",
+    "answer": "Respond conversationally without initiating physical action.",
+    "clarify": "Ask for clarification without initiating physical action.",
+    "unsupported": "Explain that the requested physical work is unavailable."
+  }
+}
