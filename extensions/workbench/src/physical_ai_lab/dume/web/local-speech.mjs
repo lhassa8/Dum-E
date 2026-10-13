@@ -6,14 +6,16 @@ export class LocalSpeech {
     this.onError=onError;
     this.Audio=Audio;this.audio=null;
     this.audioFinished=null;this.finishAudio=null;this.queuedReply=0;
+    this.audioIsAcknowledgment=false;
   }
   stop() {
     this.epoch++;this.queuedReply++;this.synthesis?.cancel();
     if(this.audio){this.audio.pause();this.audio=null;}
     this.finishAudio?.();this.finishAudio=null;this.audioFinished=null;
+    this.audioIsAcknowledgment=false;
   }
   async speak(text,{onStart,onEnd}={}) {
-    if(text!=='Let me check.'&&this.audioFinished){
+    if(text!=='Let me check.'&&this.audioIsAcknowledgment&&this.audioFinished){
       const epoch=this.epoch,reply=++this.queuedReply;
       let timer;await Promise.race([this.audioFinished,new Promise(resolve=>timer=setTimeout(resolve,2000))]);clearTimeout(timer);
       if(epoch!==this.epoch||reply!==this.queuedReply)return;
@@ -24,6 +26,7 @@ export class LocalSpeech {
     if(result.audio){
       if(!this.Audio)throw Error('Local audio playback is unavailable.');
       const audio=this.audio=new this.Audio(result.audio);let started=false;
+      this.audioIsAcknowledgment=result.audio==='/acknowledgment.wav';
       this.audioFinished=new Promise(resolve=>this.finishAudio=resolve);
       const settle=this.finishAudio;
       const finished=()=>this.post('/speech-finished/'+result.generation).catch(()=>{});
@@ -32,7 +35,7 @@ export class LocalSpeech {
         onStart?.();this.post('/speech-started/'+result.generation).catch(()=>{});
       };
       audio.onended=()=>{settle();if(epoch===this.epoch)onEnd?.();finished();};
-      audio.onerror=()=>{settle();finished();if(epoch===this.epoch)this.onError?.('Local acknowledgment audio failed.');};
+      audio.onerror=()=>{settle();finished();if(epoch===this.epoch)this.onError?.('Local speech audio failed.');};
       try{await audio.play();}catch(error){settle();finished();if(epoch===this.epoch)throw error;}
       return;
     }

@@ -43,3 +43,12 @@ await serial.speak('Let me check.');const beforeCancelled=played.length;
 const cancelledReply=serial.speak('Do not play after Stop');serial.stop();await cancelledReply;
 assert.equal(played.length,beforeCancelled);
 console.log('PASS: newest reply waits for acknowledgment completion; Stop cancels queued speech immediately.');
+const nativePlayers=[];
+class NativeAudio{constructor(url){this.url=url;nativePlayers.push(this);}pause(){this.paused=true;}async play(){}}
+let nativeGeneration=0;
+const nativeReplies=new LocalSpeech({Audio:NativeAudio,synthesis,
+ post:async()=>({audio:'/speech-audio/'+(++nativeGeneration),generation:nativeGeneration})});
+await nativeReplies.speak('First ordinary reply');await nativeReplies.speak('Second ordinary reply');
+assert.equal(nativePlayers.length,2);assert.ok(nativePlayers[0].paused);
+assert.equal(nativePlayers[1].url,'/speech-audio/2');nativeReplies.stop();
+console.log('PASS: ordinary native replies supersede earlier audio without the acknowledgment wait.');

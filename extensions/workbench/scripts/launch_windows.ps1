@@ -3,7 +3,7 @@ param([string]$Model = 'prism-ml/bonsai-27b', [string]$VisionModel = 'workbench-
       [ValidateRange(1024,65535)][int]$BrowserPort = 8876,
       [ValidateRange(1024,65535)][int]$SimPort = 8875,
       [ValidateRange(1024,65535)][int]$McpPort = 8801, [switch]$AsrEdgeTrim,
-      [switch]$CpuStop)
+      [switch]$CpuStop, [switch]$WindowsSpeech)
 $ErrorActionPreference = 'Stop'
 $extensionPath = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 if (-not (Test-Path -LiteralPath (Join-Path $extensionPath '.cache/local-speech/acknowledgment.wav'))) {
@@ -23,5 +23,6 @@ if ($CameraTools) {
 }
 $edgeArgument = if ($AsrEdgeTrim) { '1' } else { '0' }
 $stopArgument = if ($CpuStop) { '1' } else { '0' }
-& wsl -d Ubuntu -- bash "$linuxPath/scripts/launch_wsl.sh" $Model $visionArgument $AsrDevice $controllerArgument $BrowserPort $SimPort $McpPort $edgeArgument $stopArgument
+$outputArgument = if ($WindowsSpeech) { '1' } else { '0' }
+& wsl -d Ubuntu -- bash "$linuxPath/scripts/launch_wsl.sh" $Model $visionArgument $AsrDevice $controllerArgument $BrowserPort $SimPort $McpPort $edgeArgument $stopArgument $outputArgument
 exit $LASTEXITCODE

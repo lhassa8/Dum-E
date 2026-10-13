@@ -16,6 +16,7 @@ class Speech:
         self.generation = 0
         self.has_started = False
         self.acknowledgment_started_at = None
+        self.audio_duration = None
 
     def snapshot(self):
         return {
@@ -29,13 +30,19 @@ class Speech:
         if generation == self.generation:
             self.browser_deadline = 0
             self.finished_at = time.monotonic()
+            return True
+        return False
 
     def started(self, generation):
         if generation == self.generation:
             self.has_started = True
-            self.browser_deadline = time.monotonic() + 40
+            self.browser_deadline = time.monotonic() + (
+                self.audio_duration + 2 if self.audio_duration is not None else 40
+            )
             if self.last_text == "Let me check.":
                 self.acknowledgment_started_at = time.monotonic()
+            return True
+        return False
 
     def is_echo(self, text):
         normalized = " ".join(re.sub(r"[^a-z0-9\s]", " ", text.lower()).split())
@@ -69,6 +76,7 @@ class Speech:
 
     def speak(self, text):
         self.stop()
+        self.audio_duration = None
         self.last_text = text
         self.finished_at = None
         self.has_started = False

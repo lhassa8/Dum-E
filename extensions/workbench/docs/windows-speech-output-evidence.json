@@ -1,0 +1,14 @@
+{
+  "scope": "Actual installed Windows SAPI synthesis through WSL standard-input IPC, production speech API, local WAV serving and real Chrome HTMLAudio start/end; no microphone or robot task dispatch",
+  "backend": "windows-sapi",
+  "voice": "Microsoft David Desktop",
+  "explicit_option": "-WindowsSpeech",
+  "worker_probe": {"directory": "runs/windows-speech-worker-001", "count": 12, "startup_ms": 814.4838130101562, "minimum_roundtrip_ms_rounded": 18.2, "maximum_roundtrip_ms_rounded": 64.9},
+  "initial_browser_run": {"directory": "runs/windows-dialogue-001", "passed": true, "count": 12, "median_ms": 66.85000002384186, "p95_ms": 100.79999995231628},
+  "final_lifecycle_run": {"directory": "runs/windows-dialogue-002", "passed": true, "count": 12, "median_ms": 67.0, "p95_ms": 100.60000014305115, "whole_playback": true, "accepted_start_end_events_per_reply": 1, "cancelled_native_generation": 13, "cancelled_result_superseded": true, "cancelled_audio_url": false, "cancelled_wav_written": false, "late_browser_start": false, "evidence_mutation_checks": 6, "source_posthash": "passed"},
+  "content_readback": {"device": "cuda", "count": 12, "exact_matches": 10, "rejected_by_confidence_gates": 0, "differences": "Both clarification replies: stopped task transcribed as stop task", "tuned_or_relaxed": false},
+  "limits": {"characters": 500, "worker_synthesis_seconds": 10, "wave_bytes": 2000000, "audio_duration_seconds": 45, "response_characters": 3000000, "worker_queue_wait_seconds": 2},
+  "checks": {"python_tests": 350, "seconds": 214.74, "warnings": 1, "prior_full_run_tests": 349, "prior_full_seconds": 225.29, "native_api_stop_and_stale_and_failure": "passed", "shutdown_arm_before_speech_cleanup": "passed", "software_echo_readback_cases": 12, "software_echo_stop_return_new_tool_preserved": true, "js_recorder_and_output_contracts": "passed"},
+  "experimental_runtime": {"port": 8996, "directory": "runs/dume-4db6ecb8", "prior_directory": "runs/dume-d20e0c18", "native_output_ready": true, "general_asr_device": "cuda", "cpu_stop_explicit": true, "preparation_s": 3.547, "warmup_s": 2.312, "native_wave_served": true, "original_services_preserved": 4, "remaining_speech_workers": 1, "vision_instance_reloaded_and_local_identity_verified": "workbench-vision-gemma"},
+  "remaining": ["full speech-enabled robot journeys", "human audible reply confirmation", "acoustic onset timing", "room echo", "moving-conversation acknowledgment", "full sustained assistant objective"]
+}

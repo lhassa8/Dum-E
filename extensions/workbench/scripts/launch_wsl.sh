@@ -10,6 +10,11 @@ export MUJOCO_GL=egl
 export DUME_ASR_DEVICE=${3:-${DUME_ASR_DEVICE:-cuda}}
 export DUME_ASR_EDGE_TRIM=${8:-${DUME_ASR_EDGE_TRIM:-0}}
 export DUME_ASR_CPU_STOP=${9:-${DUME_ASR_CPU_STOP:-0}}
+export DUME_WINDOWS_SPEECH=${10:-0}
+if [[ $DUME_WINDOWS_SPEECH != 0 && $DUME_WINDOWS_SPEECH != 1 ]]; then
+  echo 'Windows speech output must be explicitly 0 or 1.'
+  exit 1
+fi
 if [[ $DUME_ASR_CPU_STOP != 0 && $DUME_ASR_CPU_STOP != 1 ]]; then
   echo 'CPU Stop recognizer must be explicitly 0 or 1.'
   exit 1

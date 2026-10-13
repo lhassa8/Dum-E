@@ -22,6 +22,11 @@ The [neutral acknowledgment measurement](docs/pc-acknowledgment-timing.md) adds
 “Let me check.” before interpretation. Local WAV playback starts in34ms median /
 49ms p95 across eight saved-voice trials with overlapping replies; output-device timing and echo remain
 unqualified. The Windows launcher prepares its fixed local voice asset.
+The [installed Windows reply backend](docs/windows-speech-output.md), explicitly
+enabled with `-WindowsSpeech`, generates ordinary replies locally and plays WAVs.
+Twelve complete browser/API replies pass at67ms median /101ms p95 after text
+readiness, with accepted playback events and cancelled-generation rejection.
+It is enabled at8996; human audible/echo and full robot-journey checks remain open.
 
 The optional [PC camera interface](docs/live-camera-interface-pc.md) uses
 `-CameraTools` and separate ports at http://127.0.0.1:8886. It has measured typed

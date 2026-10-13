@@ -74,13 +74,27 @@ async def prepare_voice_after_language(speech_input, controller):
     await speech_input.prepare()
 
 
-def make_api(agent, mcp_process, tools=False, speech_input=None):
+def make_api(agent, mcp_process, tools=False, speech_input=None, windows_speech=None):
     speech = Speech()
     speech_input = speech_input or SpeechInput()
+    windows_output = windows_speech is not None or os.environ.get("DUME_WINDOWS_SPEECH", "0") == "1"
+    if windows_output and windows_speech is None:
+        from physical_ai_lab.dume.windows_speech import WindowsSpeech
+
+        windows_speech = WindowsSpeech()
+    output_state = {"status": "preparing" if windows_output else "ready", "error": None}
+
+    async def prepare_output():
+        try:
+            await asyncio.to_thread(windows_speech.prepare)
+            output_state.update(status="ready", error=None, voice=windows_speech.voice)
+        except Exception as error:
+            output_state.update(status="unavailable", error=str(error))
 
     @asynccontextmanager
     async def lifespan(api):
         worker = asyncio.create_task(agent.worker())
+        output_loader = asyncio.create_task(prepare_output()) if windows_output else None
         voice_loader = (
             asyncio.create_task(prepare_voice_after_language(speech_input, agent.controller))
             if tools
@@ -103,6 +117,9 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
             worker.cancel()
             with contextlib.suppress(asyncio.CancelledError):
                 await worker
+            if output_loader:
+                await output_loader
+                await asyncio.to_thread(windows_speech.close)
             await agent.controller.client.aclose()
 
     api = FastAPI(lifespan=lifespan)
@@ -171,7 +188,8 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
             last_result=agent.last_result,
             upstream_revision="f09a96827ea60e4b18a55fa67e2acb97800dc46b",
             mcp_status="running" if mcp_process.poll() is None else "failed",
-            speech={**speech.snapshot(), "acknowledgment_audio": ACKNOWLEDGMENT_AUDIO.is_file()},
+            speech={**speech.snapshot(), "acknowledgment_audio": ACKNOWLEDGMENT_AUDIO.is_file(),
+                    **({"backend": "windows-sapi", **output_state} if windows_output else {})},
             speech_input=speech_input.snapshot(),
             interaction=agent.interaction.snapshot()
             if hasattr(agent, "interaction")
@@ -297,21 +315,51 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
             if (result.get("browser") and request.message == "Let me check."
                     and ACKNOWLEDGMENT_AUDIO.is_file()):
                 result["audio"] = "/acknowledgment.wav"
+            elif windows_output:
+                if output_state["status"] != "ready":
+                    raise RuntimeError(output_state.get("error") or "Local speech is preparing.")
+                pcm, metadata = await asyncio.to_thread(
+                    windows_speech.synthesize, request.message[:500]
+                )
+                if result["generation"] != speech.generation:
+                    stale = {"browser": False, "superseded": True,
+                             "generation": result["generation"]}
+                    with (agent.log_path.parent / "speech.jsonl").open("a") as file:
+                        file.write(json.dumps({"text": request.message[:500], **stale}) + "\n")
+                    return stale
+                audio_folder = agent.log_path.parent / "speech-audio"
+                audio_folder.mkdir(exist_ok=True)
+                (audio_folder / f"{result['generation']}.wav").write_bytes(pcm)
+                speech.audio_duration = metadata["duration_s"]
+                result.update(audio=f"/speech-audio/{result['generation']}", **metadata)
             with (agent.log_path.parent / "speech.jsonl").open("a") as file:
                 file.write(json.dumps({"text": request.message[:500], **result}) + "\n")
             return result
-        except OSError as error:
+        except (OSError, RuntimeError, ValueError) as error:
             raise HTTPException(503, "Local speech output is unavailable.") from error
+
+    @api.get("/speech-audio/{generation}")
+    async def speech_audio(generation: int):
+        audio = agent.log_path.parent / "speech-audio" / f"{generation}.wav"
+        if generation != speech.generation or not audio.is_file():
+            raise HTTPException(404, "Speech audio expired or unavailable.")
+        return FileResponse(audio, media_type="audio/wav")
 
     @api.post("/speech-finished/{generation}")
     async def speech_finished(generation: int):
-        speech.finished(generation)
-        return {"finished": True}
+        accepted = speech.finished(generation)
+        with (agent.log_path.parent / "speech-playback.jsonl").open("a") as file:
+            file.write(json.dumps({"kind": "finished", "generation": generation,
+                                   "accepted": accepted, "time": time.monotonic()}) + "\n")
+        return {"finished": accepted}
 
     @api.post("/speech-started/{generation}")
     async def speech_started(generation: int):
-        speech.started(generation)
-        return {"started": True}
+        accepted = speech.started(generation)
+        with (agent.log_path.parent / "speech-playback.jsonl").open("a") as file:
+            file.write(json.dumps({"kind": "started", "generation": generation,
+                                   "accepted": accepted, "time": time.monotonic()}) + "\n")
+        return {"started": accepted}
 
     @api.post("/speech-stop")
     async def speech_stop():

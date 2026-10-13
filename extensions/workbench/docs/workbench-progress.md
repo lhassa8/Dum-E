@@ -2025,3 +2025,36 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
 - Remaining: roomacoustic/ordinaryreply/echo checks, movingconversationack,
   fullcue-enabled physicaljourney andbroadutterances. Originalsremainrunning;
   no micactivation/hardware/rawuploads/externalmessages. Goalactive.
+
+### B39 — Real installed Windows reply output with cancellation-safe IPC (PC)
+
+- Previous5330039 qualifiesneutralcue softwareplayback; ordinarybrowser synthesis
+  failed tostart and humanacoustic/echo checks remain pending. Goalnotcomplete.
+- Verify persistentPS5/System.Speech worker fromWSL:12validWAVs,814.48mscold,
+  18.2–64.9ms roundtrips. InstalledMicrosoftDavidDesktop,stdinJSON only,no speakers.
+- Explicit-WindowsSpeech opt-in integrates actualworker throughasyncAPI/thread,
+  bounded500chars/10s/2MB/45s/3MBresponse. WarmbeforeoutputReady; configuredfailure
+  returns503,no browserfallback. PhysicalStopneverwaitsworkerlock; nativeaudio
+  gen/currentURI protectsstaleoutput. Duration-awareecho,acceptedstart/end logs.
+  Onlyneutralcuequeuesreply;ordinaryaudio canbesuperseded. TypedStoppausesaudio.
+- RealAPI/browser001 completes12/12,66.85/100.80ms med/p95textready-to-player.
+  Final002 completes12/12 withacceptedstart/end,67.00/100.60ms; lateNativegen13
+  discarded,no audioURI/WAV/browserstart. Source/WAV/wholeplayback checks pass.
+  Six altered-recordchecks rejectmissing/wrongvoice/incomplete/late/staleadvertising.
+- IndependentCUDAreadback10/12exact; bothothercasesstoppedtask→stoptask,12accepted.
+  Retainmismatches, no tuning/gaterelaxation orperfectspeechclaim. No acousticproof.
+- Full349tests pass225.29s,1dependencywarning; nativeAPI blocked-synthesis Stop,
+  lateoutput,expiredURI,nofallback regressions pass. ExistingJScontracts pass.
+- Reviewmoves activearm cancellation before potentiallyslow speechworkerclose;
+  orderingregression added,final350pass214.74s/1warning. All12actualreadbacks
+  rejected bysoftwareecho;Stop/return/newtoolpreserved, no microphone/roomclaim.
+- Updateidle8996,rundume-d20e0c18,actualnativeoutputReady/CUDAsmall/CPUStop/cue.
+  ASR4.468spreparation/2.416swarmup. Profilegenerates/servesnativeWAV. Gemmaabsent
+  fromloadedinventory: restorelistedlocalmodelkey,verifyQ4_K_M+alias+nullremoteID;
+  variantmetadatakeynotacceptedCLI, failedattemptretained. Originaldemospreserved.
+- Final350-tested deploymentdume-4db6ecb8 Ready; input3.547spreparation/2.312swarmup,
+  actualnativeWAVserved. Allspeechprobes/oldworkers gracefullyclosed; oneowned
+  worker remains with the liveexperimentalprofile. Originalfourservicespreserved.
+- Remaining:fullspeech-enabledarmjourneys, humanaudibility/acoustic/roomEcho,
+  movingconversationack andbroaderassistantgoals. No micactivation,hardware,
+  paidservices,rawupload or externalmessages. Sustainedgoalactive.

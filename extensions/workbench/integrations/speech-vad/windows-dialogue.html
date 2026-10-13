@@ -1,0 +1,40 @@
+<!doctype html><meta charset="utf-8"><title>Real Windows spoken replies</title>
+<style>body{font:16px system-ui;background:#172321;color:#e9eee9;padding:32px}button{padding:12px}td,th{padding:10px;text-align:left}tr{border-bottom:1px solid #53645b}table{border-collapse:collapse}</style>
+<h1>Real Windows spoken replies</h1><p>Installed SAPI voice → local WAV → real browser audio. No microphone or robot commands. Playback events do not establish room acoustics.</p>
+<button id="run">Run twelve spoken replies</button><p id="status">Not started.</p>
+<table><thead><tr><th>Reply</th><th>Text ready to playback</th><th>Complete playback</th></tr></thead><tbody id="rows"></tbody></table>
+<script type="module">
+import {LocalSpeech} from '/local-speech.mjs';
+const $=id=>document.getElementById(id),sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+let current=null;
+async function post(path,body={}){const response=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const result=await response.json();if(!response.ok)throw Error(result.detail||'API failure');if(path==='/speak')current=result;return result;}
+let error=null;const speech=new LocalSpeech({post,onError:message=>error=message}),rows=[];
+$('run').onclick=async()=>{
+ $('run').disabled=true;
+ try{
+  const manifest=await(await fetch('/dialogue-manifest')).json();
+  const readyDeadline=performance.now()+8000;let state;
+  do{state=await(await fetch('/state')).json();if(state.speech.status==='unavailable')throw Error(state.speech.error);if(state.speech.status!=='ready')await sleep(50);}while(state.speech.status!=='ready'&&performance.now()<readyDeadline);
+  if(state.speech.status!=='ready')throw Error('Windows voice not ready.');
+  for(const item of manifest.cases){
+   $('status').textContent='Playing '+item.id;error=null;let start=null,end=null;
+   const requested=performance.now();
+   await speech.speak(item.text,{onStart:()=>start=performance.now(),onEnd:()=>end=performance.now()});
+   const result=current,deadline=performance.now()+12000;
+   while(end===null&&!error&&performance.now()<deadline)await sleep(20);
+   if(error||start===null||end===null)throw Error(error||'Missing real playback event.');
+   const row={id:item.id,text:item.text,requested_ms:requested,playing_ms:start,ended_ms:end,
+    start_delay_ms:start-requested,playback_ms:end-start,result};rows.push(row);
+   const tr=document.createElement('tr');for(const value of [item.text,(start-requested).toFixed(1)+' ms',(end-start).toFixed(0)+' ms']){const td=document.createElement('td');td.textContent=value;tr.append(td);}$('rows').append(tr);
+   await post('/dialogue-report',{rows,in_progress:true});await sleep(50);
+  }
+  // Cancel while actual synthesis is pending. No late response may start audio.
+  let lateStarts=0;const stale=speech.speak('This old reply must not play after cancellation.',{onStart:()=>lateStarts++});
+  await sleep(10);speech.stop();await post('/speech-stop');await stale;await sleep(200);
+  const staleRejected=lateStarts===0;
+  await post('/dialogue-report',{rows,in_progress:false,stale_response_rejected:staleRejected,late_result:current});
+  $('status').textContent='Finished '+rows.length+'/12. Late playback rejected: '+staleRejected+'. Await independent verification.';
+ }catch(failure){speech.stop();$('status').textContent='Failed: '+failure.message;await post('/dialogue-report',{rows,failed:true,error:failure.message});}
+};
+window.addEventListener('pagehide',()=>speech.stop());
+</script>
