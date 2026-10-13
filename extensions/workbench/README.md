@@ -60,6 +60,10 @@ checkpoint inference in its supported simulator. Its stricter voice/interruption
 qualification is 2/3; failures remain documented. The pinned
 [OpenPi client](integrations/openpi-client/README.md) provides transport. The
 workbench's tool controller and optional camera profile remain separate from that policy.
+An [exact-action contact replay](docs/libero-contact-diagnosis-pc.md) explains
+the failed layout: the elevated bowl contacts one finger pad and the other
+finger body. Substep sampling still never meets the bilateral-pad lift gate;
+the original qualification remains unchanged.
 
 The [hardware adaptation plan](docs/hardware-adaptation-plan.md) documents what
 can be reused and what must be measured before choosing an arm. Our primitive

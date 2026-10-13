@@ -2086,3 +2086,23 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   Isolatedtestservicesgracefullyclosed. Humanmic/echo, broadutterances/layouts,
   learnedpolicy andwholegoal remainopen. No microphoneactivation,hardware,
   paidservices,rawuploads or externalmessages. Sustainedgoalactive.
+
+### C — Exact replay diagnoses the failed pretrained-policy grasp (PC)
+
+- Previous model-review turn provided verified advice but no implementation
+  change; resume the policy milestone rather than repeat a status summary.
+- New evaluator-only diagnostic replays task0/epoch1 from execution-boundary-010,
+  corresponding to failed live-voice-012. All103 actions, including inference
+  waits, are retained. No new inference, GPU-model change, microphone or hardware.
+- Original OSC, seed7/state0/ten initialization steps; all103 endpoint object and
+  joint positions, simulated times, grasp and success checks match exactly.
+- Observe2,678 native torque-callback/endpoint samples with unchanged torques.
+  All393 samples above80mm contact left pad and both finger bodies; right pad
+  never contacts. Maximum lift119.446mm, bilateral-pad maximum9.526mm.
+  Polling aliasing cannot explain the missing qualified grasp in this replay.
+- Native placement succeeds. Contact geometry alone does not establish unstable
+  grasp; retain original2/3 qualification and protected pad-contact/80mm gates.
+- Raw contact-diagnosis-001 preserves samples, comparisons, protocol, image and
+  frozen actor. Documentation records source/actor hashes and reproduction.
+  Next: separate frozen grasp-adaptation/recovery experiment, with this known
+  trace confined to diagnosis/development and independent held-out evaluation.
