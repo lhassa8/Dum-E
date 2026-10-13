@@ -1,0 +1,357 @@
+{
+  "date": "2026-10-12",
+  "scope": "Actual GPU pi0.5-LIBERO; saved synthetic voice, simulated Panda, no live microphone or hardware",
+  "baseline_commit": "e8e116d",
+  "qualified": false,
+  "qualified_smoke_episodes": 2,
+  "planned_smoke_episodes": 3,
+  "protocol_sha256": "c7b5e6155ccec8823c9a75b8c9a1cfce7e54d4ec183e39321aa259a50961f26b",
+  "protocol": {
+    "suite": "libero_spatial",
+    "task_ids": [
+      0,
+      1,
+      2
+    ],
+    "initial_state_index": 0,
+    "simulator_seed": 7,
+    "replan_steps": 5,
+    "max_active_steps": 220,
+    "pause_controller": "Native JointPositionController, kp300, damping ratio2; Stop observed inside each native torque callback; torque caps unchanged",
+    "inference_wait_controller": "Native OSC_POSE neutral displacement; same grip command",
+    "min_lift_m": 0.08,
+    "max_translation_m": 0.01,
+    "max_joint_range_rad": 0.02,
+    "min_hold_wall_seconds": 2,
+    "min_physics_seconds_exclusive": 1,
+    "hold_measurement_origin": "Evaluator snapshot captured at Stop; refreshed on native torque callbacks and completed steps",
+    "conversation_before_lift_trigger": true,
+    "policy_rng": "Continuous server stream, one discarded startup warmup draw; not reset on Stop/resume",
+    "scope": "Three fixed PC smoke episodes, not held-out generalization or hardware qualification"
+  },
+  "policy": {
+    "openpi_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "config": "pi05_libero",
+    "checkpoint_uri": "gs://openpi-assets/checkpoints/pi05_libero",
+    "checkpoint_objects_sha256": "450f2d7b90db37ff3db84074fd9a67ba49fba05c1c482c430b1d1c5de8772084",
+    "jax_version": "0.5.3",
+    "device": "cuda:0",
+    "load_wall_s": 19.25031765499989,
+    "action_contract": "LIBERO OSC_POSE, 7 inputs; not joint positions",
+    "warmup_wall_s": 12.055783302999771,
+    "warmup_input_sha256": "6c251c2fb6c86b010e47249b8158a2d8bab0d4f9edaf0337852e702db488e8ea",
+    "warmup_complete": true,
+    "discarded_warmup_actions": 10,
+    "startup_rng_draws": 1
+  },
+  "episodes": [
+    {
+      "task_id": 0,
+      "passed": false,
+      "error": "AssertionError('Placement finished before reaching the 80 mm lift qualification trigger')",
+      "max_observed_lift_m": 0.11943692295290331,
+      "local_report": "runs/policy-runtime/live-voice-012/report.json",
+      "original_native_success": true,
+      "max_contact_lift_m": 0.007732687061290933,
+      "voice": [
+        {
+          "text": "Pick up the black bowl between the plate and the ramekin and place it on the plate.",
+          "clip_ready_to_response_ms": 1316.3736410006095
+        }
+      ]
+    },
+    {
+      "task_id": 1,
+      "passed": true,
+      "max_translation_m": 0.0006614115963634571,
+      "max_joint_range_rad": 0.003584740427861721,
+      "min_lift_m": 0.09732573417126011,
+      "all_contact_grasps": true,
+      "physics_time_advanced_s": 1.035999999999886,
+      "measured_hold_wall_seconds": 2.3415921890009486,
+      "stop_sensor_age_ms": 0.4077480007254053,
+      "resumed_success": true,
+      "max_observed_lift_m": 0.17328718961209288,
+      "stale_action_rejected": true,
+      "local_report": "runs/policy-runtime/live-voice-013/report.json",
+      "original_native_success": true,
+      "max_contact_lift_m": 0.17328718961209288,
+      "voice": [
+        {
+          "text": "Pick up the black bowl next to the ramekin and place it on the plate.",
+          "clip_ready_to_response_ms": 1295.706203998634
+        },
+        {
+          "text": "Stop",
+          "clip_ready_to_response_ms": 235.3323140014254
+        }
+      ],
+      "policy_steps": 114,
+      "active_steps": 157,
+      "grip_command": 0.998921165866375
+    },
+    {
+      "task_id": 2,
+      "passed": true,
+      "max_translation_m": 0.001431655524465761,
+      "max_joint_range_rad": 0.01639080959782202,
+      "min_lift_m": 0.08792619642748922,
+      "all_contact_grasps": true,
+      "physics_time_advanced_s": 1.0119999999998885,
+      "measured_hold_wall_seconds": 2.3744938140007434,
+      "stop_sensor_age_ms": 0.5675699994753813,
+      "resumed_success": true,
+      "max_observed_lift_m": 0.1303293893084032,
+      "stale_action_rejected": true,
+      "local_report": "runs/policy-runtime/live-voice-014/report.json",
+      "original_native_success": true,
+      "max_contact_lift_m": 0.1303293893084032,
+      "voice": [
+        {
+          "text": "Pick up the black bowl from the table center and place it on the plate.",
+          "clip_ready_to_response_ms": 1269.0442640014226
+        },
+        {
+          "text": "Stop",
+          "clip_ready_to_response_ms": 227.93670899955032
+        }
+      ],
+      "policy_steps": 90,
+      "active_steps": 122,
+      "grip_command": 1.0023148540011646
+    }
+  ],
+  "real_cancellation_events": [
+    {
+      "wall_s": 10887.383795578,
+      "kind": "stop",
+      "physics": {
+        "epoch": 3,
+        "phase": "paused",
+        "task_id": 1,
+        "prompt": "pick up the black bowl next to the ramekin and place it on the plate",
+        "queued_actions": 0,
+        "grip_command": 0.9987482276952862,
+        "policy_steps": 75,
+        "hold_steps": 30,
+        "error": null,
+        "controller": "libero_osc_pose",
+        "hardware": false,
+        "physics_ready": true,
+        "inflight_epoch": null,
+        "active_steps": 105,
+        "hold_profile": "joint",
+        "pause_joint_kp": 300,
+        "pause_joint_damping_ratio": 2,
+        "stop_requested_wall_s": 10887.383219564
+      },
+      "cancellation_ms": 1.510111998868524
+    },
+    {
+      "wall_s": 10941.077324334,
+      "kind": "stop",
+      "physics": {
+        "epoch": 6,
+        "phase": "paused",
+        "task_id": 2,
+        "prompt": "pick up the black bowl from table center and place it on the plate",
+        "queued_actions": 0,
+        "grip_command": 0.9981774483008383,
+        "policy_steps": 60,
+        "hold_steps": 22,
+        "error": null,
+        "controller": "libero_osc_pose",
+        "hardware": false,
+        "physics_ready": true,
+        "inflight_epoch": null,
+        "active_steps": 82,
+        "hold_profile": "joint",
+        "pause_joint_kp": 300,
+        "pause_joint_damping_ratio": 2,
+        "stop_requested_wall_s": 10941.076656274
+      },
+      "cancellation_ms": 2.1988420012348797
+    },
+    {
+      "wall_s": 10941.077618696,
+      "kind": "stale_chunk_rejected"
+    },
+    {
+      "wall_s": 11191.721941125,
+      "kind": "stop",
+      "physics": {
+        "epoch": 9,
+        "phase": "paused",
+        "task_id": 1,
+        "prompt": "pick up the black bowl next to the ramekin and place it on the plate",
+        "queued_actions": 0,
+        "grip_command": 0.99577645625633,
+        "policy_steps": 70,
+        "hold_steps": 29,
+        "error": null,
+        "controller": "libero_osc_pose",
+        "hardware": false,
+        "physics_ready": true,
+        "inflight_epoch": 8,
+        "active_steps": 99,
+        "hold_profile": "joint",
+        "pause_joint_kp": 300,
+        "pause_joint_damping_ratio": 2,
+        "stop_requested_wall_s": 11191.721235561
+      },
+      "cancellation_ms": 1.1435760006861528
+    },
+    {
+      "wall_s": 11723.137067699,
+      "kind": "stop",
+      "physics": {
+        "epoch": 10,
+        "phase": "paused",
+        "task_id": 1,
+        "prompt": "pick up the black bowl next to the ramekin and place it on the plate",
+        "queued_actions": 0,
+        "grip_command": -1.0,
+        "policy_steps": 70,
+        "hold_steps": 5044,
+        "error": null,
+        "controller": "libero_osc_pose",
+        "hardware": false,
+        "physics_ready": true,
+        "inflight_epoch": null,
+        "active_steps": 99,
+        "hold_profile": "joint",
+        "pause_joint_kp": 300,
+        "pause_joint_damping_ratio": 2,
+        "stop_requested_wall_s": 11723.136816441
+      },
+      "cancellation_ms": 0.9753620015544584
+    }
+  ],
+  "release_witness": {
+    "passed": true,
+    "drop_m": 0.08070254980415636,
+    "contacts_before": true,
+    "contacts_after": false,
+    "before_sim_time": 5.445999999999622,
+    "after_sim_time": 6.495999999999507,
+    "local_report": "runs/policy-runtime/release-witness-001/report.json"
+  },
+  "development_trials": [
+    {
+      "run": "pause-replay-001",
+      "passed": false,
+      "max_translation_m": 0.03194076027695067,
+      "max_joint_range_rad": 0.13894454665983158,
+      "min_lift_m": 0.10584269770361732
+    },
+    {
+      "run": "pause-replay-002",
+      "passed": false,
+      "max_translation_m": 0.0161602214254022,
+      "max_joint_range_rad": 0.11434541513161034,
+      "min_lift_m": 0.10611311527226186
+    },
+    {
+      "run": "pause-replay-003",
+      "passed": false,
+      "max_translation_m": 0.01232160808946241,
+      "max_joint_range_rad": 0.044697813580369505,
+      "min_lift_m": 0.10589027986859456
+    },
+    {
+      "run": "pause-replay-004",
+      "passed": true,
+      "max_translation_m": 0.004803324543663519,
+      "max_joint_range_rad": 0.014374168933108056,
+      "min_lift_m": 0.10140983861431341
+    },
+    {
+      "run": "live-voice-001",
+      "passed": false
+    },
+    {
+      "run": "live-voice-002",
+      "passed": false
+    },
+    {
+      "run": "live-voice-003",
+      "passed": false,
+      "max_translation_m": 0.015184297404613245,
+      "max_joint_range_rad": 0.04222801761103878,
+      "min_lift_m": 0.0975164478431283
+    },
+    {
+      "run": "live-voice-004",
+      "passed": false,
+      "max_translation_m": 0.01871528044986247,
+      "max_joint_range_rad": 0.05038850063865519,
+      "min_lift_m": 0.04230799247152328
+    },
+    {
+      "run": "live-voice-005",
+      "passed": false,
+      "max_translation_m": 0.001329614868296615,
+      "max_joint_range_rad": 0.012693710487412524,
+      "min_lift_m": 0.09918007362043091
+    },
+    {
+      "run": "live-voice-006",
+      "passed": false
+    },
+    {
+      "run": "live-voice-009",
+      "passed": false,
+      "max_translation_m": 0.003970409672018911,
+      "max_joint_range_rad": 0.024300504972311066,
+      "min_lift_m": 0.10187878714465737,
+      "error": "AssertionError()"
+    },
+    {
+      "run": "live-voice-010",
+      "passed": false,
+      "max_translation_m": 0.0027820254708162268,
+      "max_joint_range_rad": 0.02933698602599044,
+      "min_lift_m": 0.10070978042013079,
+      "error": "AssertionError()"
+    },
+    {
+      "run": "live-voice-011",
+      "passed": false,
+      "max_translation_m": 0.0026197088311165915,
+      "max_joint_range_rad": 0.029589109539076563,
+      "min_lift_m": 0.08813921065167996,
+      "error": "AssertionError()"
+    }
+  ],
+  "validation": {
+    "extension_tests": 251,
+    "client_and_coordinator_tests": 22,
+    "protected_upstream_hashes": 46
+  },
+  "launcher_validation": {
+    "passed": true,
+    "exit_code": 0,
+    "policy_load_s": 18.454763415000343,
+    "discarded_warmup_s": 11.05322129399974,
+    "all_owned_lab_processes_closed": true,
+    "vision_alias_restored": true,
+    "local_log": "runs/policy-runtime/launcher-validation-001.log"
+  },
+  "restored_camera": {
+    "wall_ms": 2748.999367000579,
+    "models_ready": true,
+    "speech_ready": true,
+    "camera_model": "workbench-vision-gemma",
+    "tasks_unchanged": true
+  },
+  "limitations": [
+    "2/3 fixed smoke episodes does not meet a broad qualification gate",
+    "Task 0 reached native placement success but did not provide an 80 mm two-finger-contact Stop trigger",
+    "Native success was checked with grip still closed; release of the delivered object was not qualified",
+    "Continuous policy RNG stream; no reset on Stop/resume, one discarded startup warmup draw",
+    "Inference waiting counts toward original 220 active-step budget; explicit pauses do not",
+    "Stop latency excludes microphone capture, pause detection and audible reply onset",
+    "Camera motion remains unqualified at previous 22/24 held-out result",
+    "Human microphone and audible onset validation remains outstanding"
+  ]
+}

@@ -243,3 +243,9 @@ Sources: [faster-whisper](https://github.com/SYSTRAN/faster-whisper),
 [CTranslate2 release changes](https://github.com/OpenNMT/CTranslate2/blob/master/CHANGELOG.md),
 [official OpenPi](https://github.com/Physical-Intelligence/openpi),
 [official LIBERO example](https://github.com/Physical-Intelligence/openpi/blob/215abfb217dbac7d5f1273282331b9b1866c0479/examples/libero/README.md).
+
+The subsequent actual-policy voice/Stop/resume experiment is documented in
+[libero-live-pc.md](libero-live-pc.md), with a Windows launcher and curated
+evidence. Its stricter fixed smoke result is **2/3 qualified**, so the policy
+lab remains experimental. The earlier 3/3 native-success benchmark above does
+not imply that all three episodes passed physical interruption qualification.

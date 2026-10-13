@@ -1367,3 +1367,46 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   and measure physical holding/recovery. Then held-out workbench camera/adaptation
   gates and live user-controlled microphone demo. Full goal remains active.
   Reproduction/details: windows-migration.md and windows-migration-evidence.json.
+
+## B18 — PC actual-policy voice interruption, experimental (2026-10-12)
+
+- Baseline e8e116d. Hypothesis: existing cancellable OpenPi client plus local
+  voice/catalog selection, direct physics Stop, real gravity hold and new-camera
+  replan on resume. Gates fixed before trials; no main tool controller change.
+- Actual pinned GPU pi0.5-LIBERO prewarmed on a real saved observation before
+  readiness. Ten predictions discarded, one explicit RNG draw. Continuous RNG
+  across trials; none reset on Stop/resume. No CPU policy fallback.
+- Separate loopback Panda lab uses native OSC policy actions and original task
+  success predicate. Inference gaps use neutral native OSC. Explicit pauses use
+  native joint servo kp300/damping2 and unchanged torque caps, observed inside
+  the torque callback. No policy vector is interpreted as joint angles.
+- Preserved native/captured OSC, joint damping, timing and dialogue failures.
+  Strategy changed after repeated failures. Evaluator sensors now refresh at
+  native control rate; Stop captures the measurement origin and its age. No
+  object pose/velocity edits, welds, frozen objects or scene reset on resume.
+- Frozen tasks0/1/2: **2/3 complete live sequences qualify; lab not promoted**.
+  Task0 reached native success but lacked an observed >=80mm two-finger-contact
+  Stop trigger. Task1/2 hold drift .661/1.432mm, joint excursion .00358/.01639rad,
+  minimum lift97.3/87.9mm, contacts retained; physics advanced1.036/1.012s over
+  2.342/2.374wall seconds. Stale epochs rejected, same-episode real-policy resume
+  reached native success in114/90 actions,157/122 active steps (limit220).
+- Saved synthetic Stop235.3/227.9ms clip-available to response; direct cancel
+  1.51/2.20ms (two samples, excludes microphone/pause/audible onset). A real late
+  task2 inference chunk was rejected. Native success had grip still closed;
+  delivered-object release remains unqualified.
+- Separate gravity witness passed: finger opening caused80.70mm bowl drop and
+  loss of contact while paused, without advancing policy action count. This extra
+  episode is outside the fixed three-task denominator. Raw camera/audio/actions/
+  logs/models remain ignored and local.
+- Windows policy launcher verified actualGPU warmup/readiness, bounded shutdown
+  and automatic local vision restoration; only owned lab processes stopped.
+  Camera assistance is temporarily unavailable during this GPU lab. Workbench
+  voice/tools remain available. Restored actual camera answer functional,2.749s
+  HTTP wall; task state unchanged. Both LM Studio models Local again.
+- Validation:251 workbench tests +22 transport/coordinator tests;46/46 protected
+  upstream hashes; changed-file lint/format, browser module syntax, local speech
+  cancellation and shell/PowerShell syntax pass. Microphone never activated.
+- Continue task0 contact diagnostics/new explicit policy qualification, held-out
+  camera/adaptation work (previous22/24 still rejected), and user-controlled live
+  microphone verification. Goal remains active. Details: libero-live-pc.md and
+  libero-live-pc-evidence.json.

@@ -1,0 +1,19 @@
+{
+  "suite": "libero_spatial",
+  "task_ids": [0, 1, 2],
+  "initial_state_index": 0,
+  "simulator_seed": 7,
+  "replan_steps": 5,
+  "max_active_steps": 220,
+  "pause_controller": "Native JointPositionController, kp300, damping ratio2; Stop observed inside each native torque callback; torque caps unchanged",
+  "inference_wait_controller": "Native OSC_POSE neutral displacement; same grip command",
+  "min_lift_m": 0.08,
+  "max_translation_m": 0.01,
+  "max_joint_range_rad": 0.02,
+  "min_hold_wall_seconds": 2,
+  "min_physics_seconds_exclusive": 1,
+  "hold_measurement_origin": "Evaluator snapshot captured at Stop; refreshed on native torque callbacks and completed steps",
+  "conversation_before_lift_trigger": true,
+  "policy_rng": "Continuous server stream, one discarded startup warmup draw; not reset on Stop/resume",
+  "scope": "Three fixed PC smoke episodes, not held-out generalization or hardware qualification"
+}
