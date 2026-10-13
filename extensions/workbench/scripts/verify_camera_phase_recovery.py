@@ -15,6 +15,7 @@ from physical_ai_lab.assistant.tool_scene import HANDOFF, ToolWorkbench
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("output", type=Path)
 parser.add_argument("--phase-recovery", action="store_true")
+parser.add_argument("--refine-cartesian", action="store_true")
 args = parser.parse_args()
 root = Path(__file__).resolve().parents[1]
 protocol_bytes = (root / "fixtures/camera_phase_recovery_protocol.json").read_bytes()
@@ -31,7 +32,7 @@ for ident in protocol["cases"]:
         bench = ToolWorkbench(case["seed"], xml=camera_scene_xml(case, alternate_view=True))
         bench.model.vis.headlight.diffuse[:] *= case["light"]
         sensor = CameraSensor(bench)
-        robot = SimRobot(bench, recover_ik=True)
+        robot = SimRobot(bench, recover_ik=True, refine_cartesian=args.refine_cartesian)
         flags = {k: v for k, v in protocol["profile"].items() if k != "recover_ik"}
         if args.phase_recovery:
             flags["phase_recovery"] = True
@@ -120,6 +121,7 @@ for ident in protocol["cases"]:
                 unrelated_m=disturbance,
                 gripper_open=opened,
                 evidence=actor.evidence,
+                ik_events=robot.ik_events,
             )
             row["passed"] = bool(
                 held
@@ -144,6 +146,7 @@ summary = {
     "scope": protocol["scope"],
     "protocol_sha256": hashlib.sha256(protocol_bytes).hexdigest(),
     "phase_recovery": args.phase_recovery,
+    "refine_cartesian": args.refine_cartesian,
     "cases": len(rows),
     "passes": sum(r["passed"] for r in rows),
     "passed": all(r["passed"] for r in rows),

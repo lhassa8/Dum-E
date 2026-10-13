@@ -1528,3 +1528,24 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   outstanding. Next: continuity-aware motion planning with swept clearance
   and complete pickup/release evaluation, not more held-pose/network fits.
   Details/evidence: camera-phase-recovery-pc.md/camera-phase-recovery-pc-evidence.json.
+
+## B23 — finer lift sampling executes; physical placement still fails (2026-10-12)
+- Previous turn progress: published56a6adf 25/27 recovery. Read-only probe of
+  the two known hammer lift refusals confirms fixed2x sampling reduces maximum
+  joint steps to .059909/.044335rad under unchanged.075 guard, no state edits.
+- Optional robot refinement tries original/2x/4x only on solved-step discontinuity,
+  additional retries capped400waypoints. Other IK failure propagates. Actor
+  executes all finer waypoints over the longer duration; default remains off.
+- Same frozen nine-phase/three-known-layout full physical evaluation still25/27.
+  Exactly2 refinements double44/43 to88/86. Actor completion27/27 does not override
+  independent judge: two hammer placements36.334/35.601mm fail35mm, despite
+  physical lifts244.854/241.305mm, open hand, resting tool and unrelated stability.
+- Two similar placement failures prompt independent diagnosis: rigid estimated
+  center error8.2mm after lift,12mm after transport,~30mm during placing, despite
+  43.5mm gripper gap. Most error is pre-release; settling adds~1.1mm. No truth
+  fed to actor or learned correction. Model-fit budget remains0.
+- All277 regression tests pass, original long-hold6/6,46 protected hashes unchanged;
+  results/source hashes in cartesian-refinement-pc-evidence.json.
+  Public camera not promoted, full goal active. Next: supported-tabletop fresh
+  camera verification after withdrawal and bounded physical placement correction,
+  with prospective complete journeys. No more held-pose/outcome-fit sweeps.

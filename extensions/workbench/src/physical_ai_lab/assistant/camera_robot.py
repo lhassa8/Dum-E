@@ -9,11 +9,16 @@ from physical_ai_lab.assistant.camera_control import RobotReading
 from physical_ai_lab.assistant.scene import HOME
 
 
+class CartesianStepRefusal(ValueError):
+    """A solved waypoint exceeds the unchanged joint continuity limit."""
+
+
 class SimRobot:
-    def __init__(self, bench, recover_ik=False):
+    def __init__(self, bench, recover_ik=False, refine_cartesian=False):
         self._bench = bench
         self.ready_rotation = bench.orientation.copy()
         self.recover_ik = recover_ik
+        self.refine_cartesian = refine_cartesian
         self.ik_events = []
         self._kinematic_data = mujoco.MjData(bench.model) if recover_ik else None
 
@@ -52,6 +57,29 @@ class SimRobot:
     def cartesian_path(self, start, point, rotation, ticks):
         if not self.recover_ik:
             raise ValueError("Cartesian lift planning requires the robot recovery port")
+        original_ticks = ticks
+        for multiplier in [1, 2, 4] if self.refine_cartesian else [1]:
+            count = original_ticks * multiplier
+            if multiplier > 1 and count > 400:
+                break
+            try:
+                path = self._cartesian_path(start, point, rotation, count)
+                if multiplier > 1:
+                    self.ik_events.append(
+                        {
+                            "kind": "cartesian_sampling_refinement",
+                            "original_ticks": original_ticks,
+                            "executed_ticks": count,
+                            "joint_step_limit_rad": 0.075,
+                        }
+                    )
+                return path
+            except CartesianStepRefusal:
+                if not self.refine_cartesian:
+                    raise
+        raise CartesianStepRefusal("Bounded Cartesian refinement exhausted; holding")
+
+    def _cartesian_path(self, start, point, rotation, ticks):
         previous = self.read().joints
         path = []
         for index in range(1, ticks + 1):
@@ -60,7 +88,7 @@ class SimRobot:
             waypoint = start + (point - start) * a
             answer = self._seed_solution(waypoint, rotation, previous)
             if np.max(np.abs(answer - previous)) > 0.075:
-                raise ValueError("Cartesian lift would change robot IK branch; holding")
+                raise CartesianStepRefusal("Cartesian lift would change robot IK branch; holding")
             path.append(answer)
             previous = answer
         return np.asarray(path)

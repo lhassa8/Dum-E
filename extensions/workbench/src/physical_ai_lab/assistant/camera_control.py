@@ -254,6 +254,7 @@ class CameraDelivery:
                     path = self.robot.cartesian_path(
                         reading.tcp_m, np.asarray(point), self.orientation, ticks
                     )
+                    ticks = len(path)
                     end = path[-1]
                     self.evidence.append(
                         {"kind": "cartesian_lift_plan", "phase": phase, "waypoints": ticks}

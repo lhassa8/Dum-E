@@ -1,0 +1,145 @@
+{
+  "scope": "Offline simulation all-phase recovery on three known validation layouts; not held-out promotion or live speech",
+  "baseline_commit": "56a6adf",
+  "baseline": {
+    "scope": "Offline simulation all-phase recovery on three known validation layouts; not held-out promotion or live speech",
+    "protocol_sha256": "d0943fcce0799fe061b3874fcd18186573e0566c3c532b8fcb14c32e612c298e",
+    "phase_recovery": true,
+    "cases": 27,
+    "passes": 25,
+    "passed": false
+  },
+  "refined": {
+    "scope": "Offline simulation all-phase recovery on three known validation layouts; not held-out promotion or live speech",
+    "protocol_sha256": "d0943fcce0799fe061b3874fcd18186573e0566c3c532b8fcb14c32e612c298e",
+    "phase_recovery": true,
+    "refine_cartesian": true,
+    "cases": 27,
+    "passes": 25,
+    "passed": false
+  },
+  "source_hashes_lf": {
+    "src/physical_ai_lab/assistant/camera_robot.py": "8952a7c7f07e1aa9a03492c60ed87c10c0861f309d3b612cde7681bd96613d8f",
+    "src/physical_ai_lab/assistant/camera_control.py": "2165631b4fe54b5cfaac46d1de748a8ce6d760a283855864fd2fc2c57e6c503b",
+    "scripts/verify_camera_phase_recovery.py": "56ed8587ccf0acd9ee2eb72eeb691f9a133e44cf12dbebe1d32b8b0aa7f52eb1",
+    "scripts/diagnose_phase_retraction.py": "78fa9d1809e45640e3a560cf5c18841211a2e0d8ce1808ecfda79e598855e53c",
+    "tests/test_cartesian_refinement.py": "548ffa1a4aaf75c57427c263b0714ef78a8a0d67a0f5151f0b7c7daeb65d8669"
+  },
+  "runs": {
+    "probe": "runs/pc-camera-refinement-probe-001",
+    "refined": "runs/pc-camera-refined-phase-001",
+    "long_hold": "runs/pc-camera-refinement-longhold-001",
+    "baseline": "runs/pc-camera-phase-recovery-final-001",
+    "placement_diagnosis": "runs/pc-camera-refined-placement-diagnosis-001"
+  },
+  "actor_release_completion": 27,
+  "refinement_events": [
+    {
+      "kind": "cartesian_sampling_refinement",
+      "original_ticks": 44,
+      "executed_ticks": 88,
+      "joint_step_limit_rad": 0.075
+    },
+    {
+      "kind": "cartesian_sampling_refinement",
+      "original_ticks": 43,
+      "executed_ticks": 86,
+      "joint_step_limit_rad": 0.075
+    }
+  ],
+  "failed_journeys": [
+    {
+      "case": "validation-002",
+      "phase": "Lowering gripper",
+      "distance_m": 0.036333794281787034,
+      "height_m": 0.021727383580875802,
+      "speed_m_s": 2.6068750567945213E-11,
+      "lift_m": 0.24485377372827,
+      "unrelated_m": 1.510394912556473E-09,
+      "gripper_open": true,
+      "actor_status": "released_unverified"
+    },
+    {
+      "case": "validation-002",
+      "phase": "Grasping",
+      "distance_m": 0.035600762603760994,
+      "height_m": 0.02172738358091798,
+      "speed_m_s": 1.63816118101145E-11,
+      "lift_m": 0.24130478711717812,
+      "unrelated_m": 1.5129640465677232E-09,
+      "gripper_open": true,
+      "actor_status": "released_unverified"
+    }
+  ],
+  "read_only_probes": [
+    {
+      "phase": "Lowering gripper",
+      "fixed_refinement_probe": [
+        {
+          "ticks": 88,
+          "passed": true,
+          "max_joint_step_rad": 0.059909350612325454
+        },
+        {
+          "ticks": 176,
+          "passed": true,
+          "max_joint_step_rad": 0.028648085695511565
+        }
+      ],
+      "refinement_state_unchanged": true
+    },
+    {
+      "phase": "Grasping",
+      "fixed_refinement_probe": [
+        {
+          "ticks": 86,
+          "passed": true,
+          "max_joint_step_rad": 0.044334899402535974
+        },
+        {
+          "ticks": 172,
+          "passed": true,
+          "max_joint_step_rad": 0.02217988973004731
+        }
+      ],
+      "refinement_state_unchanged": true
+    }
+  ],
+  "placement_diagnostic": [
+    {
+      "phase": "Lowering gripper",
+      "last_lift_estimate_error_m": 0.008190549533111742,
+      "last_transport_estimate_error_m": 0.012232581379153373,
+      "last_placing_estimate_error_m": 0.030178287118160542,
+      "last_placing_actual_target_error_m": 0.03519178690893703,
+      "last_placing_gap_m": 0.04349849008549474
+    },
+    {
+      "phase": "Grasping",
+      "last_lift_estimate_error_m": 0.008229789359170063,
+      "last_transport_estimate_error_m": 0.01195843482528909,
+      "last_placing_estimate_error_m": 0.029476212443207195,
+      "last_placing_actual_target_error_m": 0.03446356183852038,
+      "last_placing_gap_m": 0.043482428763154904
+    }
+  ],
+  "long_hold": {
+    "passed": true,
+    "cases": 6,
+    "passes": 6
+  },
+  "verification": {
+    "fit_budget_remaining": 0,
+    "protected_upstream_files": 46,
+    "elapsed_seconds": 132.38,
+    "warnings": 20,
+    "changed_file_ruff": "passed",
+    "regression_passed": 277
+  },
+  "promotion": {
+    "held_out_qualification": false,
+    "public_camera_promoted": false,
+    "goal_complete": false,
+    "refine_cartesian_default": false
+  }
+}
