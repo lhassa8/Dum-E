@@ -1,0 +1,146 @@
+{
+  "date": "2026-10-13",
+  "decision": "Maintained Mink IK is a viable experimental replacement behind existing task/physics interfaces on known layouts; retain baseline and require prospective qualification before promotion.",
+  "reference_revision": "296cc6f",
+  "protocol_sha256": "3e3a3dee07027c05b2e9e4e400b9236d7462c007cd8df78a46f84515826b56eb",
+  "reference_source_hashes": {
+    "language.py": "554aaa1f6e4017bd8df3344cc5c3a417fdacc45c8cfb6a2ff2d1bd998aec7f12",
+    "tasks.py": "387a01a58933b645099ef584ba8cc159dbd02ae65ddcda7cd01d16018e6d0a1c",
+    "held_perception.py": "05c112ae07a9a146cbed76d8e0e074d0852d2b1758eb276bca28ec2af8089e33",
+    "entities.py": "e914fa84a925d4c91705496d91015a23f386c79a85a1261148e75caaeff6fcad",
+    "perception.py": "ad47c3e9bb1f80730903427e95b9bcf0f421b5c8a1441d91970cbbd0afd7e32f",
+    "camera_control.py": "61ccf0b438c22dfa08be2f3613792bf2f9ffb498f98475facf8497da348ad08b",
+    "lmstudio.py": "186318a4989b9abb3eba5b296e3b7d8f1c41721a06f42f6b7f3223f14f11a4df",
+    "tool_language.py": "14e15dc9e796958a5dfd8c1283f9c26f9b1fa8221d54082e9b9631e89ddcbe39",
+    "scene.py": "80fcafad82ea4376ad298e078c63e8df889bc0c15ffabacaf3bfa799f5a0185f",
+    "perception_scene.py": "f9488fd8fbdd4cfec82018372177d42c011753171e60e4fd7d9fc6d01ce4d23c",
+    "carry_model.py": "42c76c71d49af4751882994c1bd820c595d9b3f54fecb91a865e44f92f54eafa",
+    "tool_control.py": "0ba26ed05a249c485eed9db6a5274f23282f4e1894ac50ab7899933d81462349",
+    "tool_scene.py": "8203ae26f9af020fa0037fb93ea96540256feddcdd538794040a6ccf10d3dad3",
+    "handoff_planning.py": "a71813ef26461013afc62099a3e8c04ea265f9f1d39a2642c9ca681b7ba62c4d",
+    "residency.py": "23b6dc8ca076c04f06aa0585090018adf73c30ad5767d0e829d56f204213923d",
+    "subscription_session.py": "6e07a3fbc7fa8c6eb7593b0c148e15a9efb659ae015e29a25321229b2ee6277a",
+    "vision_language.py": "2a94cc6bd7a4ab80f9a708907d27a9273144792120cb33d3d06d096d854d28c1",
+    "camera_tasks.py": "32fb2f0c3836981f5f6232ce36cc3e6ec923970786aa94b3de04af8cd47af8f9",
+    "tool_routing.py": "f1a02488589a42bad8a91cdb7fc7a64997a1794ec9dd4a1e15e9b38fcf358b63",
+    "camera_robot.py": "2876bdbff642993b32acde94875f4e65ff106dff2f058b9d5966889b5b0c0913",
+    "tool_geometry.py": "ebb9b514c2ae1112f4603699aa4cadd3be05fd4bdf36477cc3941dfcbf4766b7",
+    "__init__.py": "82b8bd80daeb465e026195ab468dc9776c7db9b889229558cabab53221427293",
+    "release_model.py": "f2f9cf18466f76dc519800dbdb354d5c1c420b378110be856c4949ef333afdeb",
+    "codex_language.py": "238d37d9695f0ea1f6ef499c7c475580abce31c6a2e25388648e5a3a8ad1e26c",
+    "app.py": "29b8b5868bacd03b4b248744225e0699c3404ff8068ebf1d649594bc5dce968f",
+    "control.py": "af25bdef75b2d8c67683da17c1e955d537057484fa7bdf07d4e3681a305b2b20"
+  },
+  "packages": {
+    "mink": "1.3.0",
+    "mujoco": "3.15.0",
+    "qpsolvers": "4.13.0",
+    "daqp": "0.10.3",
+    "numpy": "2.5.4"
+  },
+  "baseline": {
+    "planned_legs": 12,
+    "recorded_rows": 12,
+    "passed_legs": 12
+  },
+  "mink": {
+    "planned_legs": 12,
+    "recorded_rows": 12,
+    "passed_legs": 12
+  },
+  "independent_bounds": {
+    "max_held_joint_drift_rad": 0.00025130188347452856,
+    "max_unrelated_m": 3.0163218986244807E-11,
+    "min_hold_sim_s": 32.000000000002665,
+    "min_lift_m": 0.19581785591521986,
+    "holds_passed": 6,
+    "hold_count": 6,
+    "max_placement_m": 0.021845369076627798,
+    "max_held_tool_drift_m": 0.00033053162274528645
+  },
+  "interface_sequence": {
+    "scope": "Typed requests through original Dum-E bus; no speech/acoustic timing qualification",
+    "tasks": [
+      {
+        "object": "screwdriver",
+        "destination": "handoff",
+        "outcome": "success",
+        "mink_pose_solves": 170
+      },
+      {
+        "object": "screwdriver",
+        "destination": "rack",
+        "outcome": "success",
+        "mink_pose_solves": 132
+      },
+      {
+        "object": "wrench",
+        "destination": "handoff",
+        "outcome": "success",
+        "mink_pose_solves": 132
+      },
+      {
+        "object": "wrench",
+        "destination": "rack",
+        "outcome": "success",
+        "mink_pose_solves": 131
+      }
+    ],
+    "requests": [
+      {
+        "request": "Bring me the screwdriver"
+      },
+      {
+        "request": "What are you doing?"
+      },
+      {
+        "request": "Resume"
+      },
+      {
+        "request": "Actually bring me the wrench instead"
+      },
+      {
+        "request": "Put it back"
+      }
+    ],
+    "url": "http://127.0.0.1:8896",
+    "stop_http_to_observed_hold_ms": 23.27796700410545,
+    "successes": 4,
+    "placement_count": 4
+  },
+  "fresh_session": {
+    "directory": "runs/mink-live-28944f90",
+    "phase": "Ready",
+    "busy": false,
+    "speech_input": {
+      "status": "ready",
+      "error": null,
+      "busy": false,
+      "model": "Systran/faster-whisper-small.en",
+      "revision": "d1d751a5f8271d482d14ca55d9e2deeebbae577f",
+      "backend": "faster-whisper",
+      "device": "cpu",
+      "compute_type": "int8",
+      "local": true,
+      "preparation_seconds": 2.963,
+      "warmup_seconds": 1.935
+    },
+    "frozen_launcher_sha256": "5cf3e2844071630bcb9504fe61bc2374fcf42607bba1ff244a0cd09fedc7552f",
+    "cleanup_verified": "Frozen-copy session897cf930 ended with exit0, owned native/frontend process IDs terminal. Immediate-restart probe initially rejected TIME_WAIT despite no listeners; fixed SO_REUSEADDR to match original application. Fresh28944f90 ready."
+  },
+  "limits": [
+    "Two default-layout seeds, six journeys/12 legs per backend, not a prospective varied-layout or unseen-grip-loss rate.",
+    "Mink joint/velocity constraints enabled; scene collision constraints not enabled.",
+    "Virtual IK integration0.01s and12rad/s preserve prior0.12rad iteration cap; not hardware velocity certification.",
+    "DofFreezingTask only constrains irrelevant degrees of freedom inside private IK data; real free-body tool physics remains unchanged.",
+    "Original35mm placement,80mm lift,4mm unrelated motion,0.02rad/10mm hold judges unchanged. No object pose/velocity manipulation, welds, force/contact changes or model fits.",
+    "Some camera release checks end placement-unverified; independent simulator truth verifies outcomes. This is not sensor-only hardware readiness.",
+    "No inference speed or general reliability improvement claim over baseline; no full voice-latency claim.",
+    "Initial live shell was edited while running, causing a shutdown parser error after owned cleanup. Fresh launcher now executes a frozen session-local copy.",
+    "Unpublished async-camera cancellation edits were excluded using frozen296cc6f source; they remain incomplete and unpromoted."
+  ],
+  "sources": [
+    "https://github.com/kevinzakka/mink",
+    "https://github.com/strands-labs/robots/tree/a6f2e776b5b8a7d4ab96feccbc9ceac82bef1702"
+  ]
+}

@@ -1789,3 +1789,45 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   skills, preserving independent contact/lift/placement/Stop judges. Earlier
   async-camera patch remains unpromoted. Full goal active; live camera user
   feedback, prospective journeys and complete acoustic latency still outstanding.
+
+### B32 — Maintained motion backend in complete journeys (PC, 2026-10-13)
+
+- Previous goal turn is progress: actual Decider inference33/93errors retained,
+  high-confidence unsupported-work fetch rejects promotion. Shift from further
+  classifier tuning toward existing manipulation components, per user steering.
+- Mink1.3.0/QP/DAQP adapter uses robot readings only, independent IK data and
+  zero-velocity constraints on irrelevant DOFs. Real tools retain their original
+  free-body/contact dynamics. Original residual/iteration/joint-continuity and
+  Cartesian refinement caps remain. No fits, poses/velocities, welds, contact or
+  force changes. Scene collision constraints not enabled in this first adapter.
+- Freeze protocol before inference: seeds42/77, three tools, original/mink paired
+  fetch32sStop/resume/return journeys. Use published296cc6f source archive to
+  exclude unfinished async-camera patch. Planner cannot access bench.observe or
+  tool_support_height. Independent evaluator samples every actual physics tick.
+- Original12/12legs; Mink12/12legs. Mink6/6holds each32simseconds; maximum
+  joint drift0.00025130rad,tool drift0.00033053m. Original35mm/80mm/rest/open/
+  unrelated4mm and hold0.02rad/10mm judges unchanged. Known default layouts,
+  no prospective rate or superior speed/reliability claim. Raw:mink-motion-001.
+- Launch separate native8895/Dum-E8896/MCP8803 with pinned isolated numerical
+  components and frozen original app/task/bus. ExplicitCPU/int8ASR preserves
+  existing GPU services. No microphone activation; main8876/camera8886 preserved.
+- Actual typed interface sequence passes conversation,Stop/resume,tool change
+  with prior return,and contextual return. Four successful independent placements;
+  all four tasks confirm actualMink solves170/132/132/131. HTTPStop23.28ms n1,
+  no acoustic or physical settling latency claim. Raw:mink-live-6e93d0bc.
+- Initial live launcher edited while running, causing a shutdown parsing error
+  after owned cleanup. Processes confirmed terminal. Fix executes frozen shell
+  copy per session; freshmink-live-897cf930Ready,CPUASRready,renderedJPEG inspected.
+  Frozen-copy cleanup exits0, owned process IDs terminal. Immediate restart probe
+  initially rejects TCP TIME_WAIT despite no listeners; use original app's
+  SO_REUSEADDR setting. Finalmink-live-28944f90Ready. Occupied live ports refused
+  before starting services. Do not edit live launcher copies.
+- Reusable standalone adapter/comparison and PC launcher added. Python lint,
+  shell syntax and PowerShell syntax checked. Full public-controller suite not
+  rerun: no production imports/defaults changed; unfinished source patch remains
+  unpromoted. Some camera releases remain unverified by actor; original independent
+  simulation judge confirms placement. Details:mink-motion-pc.md/evidenceJSON.
+- Next: prospective varied-layout journeys for maintained backend, planning-time
+  cancellation and measured full speech/acknowledgment. Main policy lab3/3native
+  success and2/3strictqualification remains separate; no trained-policy replacement
+  or hardware readiness claim. Full goal active, live human feedback outstanding.

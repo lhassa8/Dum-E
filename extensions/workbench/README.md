@@ -13,6 +13,12 @@ voice timing and broad live-layout qualification remain outstanding. The
 interface sequences and a natural saved-speech delivery/return after retaining
 the original failure; the profile remains experimental.
 
+The separate [maintained IK experiment](docs/mink-motion-pc.md) at
+http://127.0.0.1:8896 uses Mink behind the same camera/task interface. It passes
+12/12 known-layout physical legs and six 32-second simulated holds, plus a typed
+interface sequence. Broad layout, planning-interruption and voice timing gates
+remain outstanding; it preserves the original assistants.
+
 An additive Mac extension for Dum-E: ask for a screwdriver, wrench or hammer,
 watch a MuJoCo Panda grasp and deliver it to a green handoff tray, and hear the
 assistant respond. Hello/thanks can produce an actual wave/nod. The original
