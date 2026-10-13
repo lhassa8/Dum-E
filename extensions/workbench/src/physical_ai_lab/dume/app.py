@@ -36,6 +36,9 @@ from shared.task_manager import SharedMemoryTaskManager  # noqa: E402
 
 WEB = Path(__file__).parent / "web"
 SPEECH_VAD = Path(__file__).resolve().parents[3] / ".cache/speech-vad"
+ACKNOWLEDGMENT_AUDIO = (
+    Path(__file__).resolve().parents[3] / ".cache/local-speech/acknowledgment.wav"
+)
 SPEECH_VAD_FILES = {
     "bundle.min.js",
     "vad.worklet.bundle.min.js",
@@ -124,6 +127,12 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
     async def local_speech_script():
         return FileResponse(WEB / "local-speech.mjs", media_type="application/javascript")
 
+    @api.get("/acknowledgment.wav")
+    async def acknowledgment_audio():
+        if not ACKNOWLEDGMENT_AUDIO.is_file():
+            raise HTTPException(404, "Local acknowledgment audio is not prepared.")
+        return FileResponse(ACKNOWLEDGMENT_AUDIO, media_type="audio/wav")
+
     @api.get("/speech-detector.mjs")
     async def speech_detector_script():
         return FileResponse(WEB / "speech-detector.mjs", media_type="application/javascript")
@@ -162,7 +171,7 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
             last_result=agent.last_result,
             upstream_revision="f09a96827ea60e4b18a55fa67e2acb97800dc46b",
             mcp_status="running" if mcp_process.poll() is None else "failed",
-            speech=speech.snapshot(),
+            speech={**speech.snapshot(), "acknowledgment_audio": ACKNOWLEDGMENT_AUDIO.is_file()},
             speech_input=speech_input.snapshot(),
             interaction=agent.interaction.snapshot()
             if hasattr(agent, "interaction")
@@ -285,6 +294,9 @@ def make_api(agent, mcp_process, tools=False, speech_input=None):
     async def speak(request: ChatRequest):
         try:
             result = speech.speak(request.message[:500])
+            if (result.get("browser") and request.message == "Let me check."
+                    and ACKNOWLEDGMENT_AUDIO.is_file()):
+                result["audio"] = "/acknowledgment.wav"
             with (agent.log_path.parent / "speech.jsonl").open("a") as file:
                 file.write(json.dumps({"text": request.message[:500], **result}) + "\n")
             return result

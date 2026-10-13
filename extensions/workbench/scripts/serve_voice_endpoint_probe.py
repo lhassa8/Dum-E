@@ -27,7 +27,11 @@ def main():
     )
     parser.add_argument("--local-asr", action="store_true",
                         help="Use this probe's warmed SpeechInput, avoiding the extra relay decode")
+    parser.add_argument("--speech-checks", action="store_true",
+                        help="Enable isolated browser-local speech output; never controls an arm")
     args = parser.parse_args()
+    from physical_ai_lab.dume.speech import Speech
+    speech = Speech() if args.speech_checks else None
     voice = None
     voice_lock = threading.Lock()
     if args.local_asr:
@@ -41,6 +45,10 @@ def main():
     routes = {
         "/": ROOT / "integrations/speech-vad/benchmark.html",
         "/physical": ROOT / "integrations/speech-vad/physical-stop.html",
+        "/acknowledgment": ROOT / "integrations/speech-vad/acknowledgment.html",
+        "/tts-diagnostic": ROOT / "integrations/speech-vad/tts-diagnostic.html",
+        "/local-speech.mjs": ROOT / "src/physical_ai_lab/dume/web/local-speech.mjs",
+        "/acknowledgment.wav": ROOT / ".cache/local-speech/acknowledgment.wav",
         "/voice-input.mjs": ROOT / "src/physical_ai_lab/dume/web/voice-input.mjs",
         "/speech-detector.mjs": ROOT / "src/physical_ai_lab/dume/web/speech-detector.mjs",
     }
@@ -109,6 +117,45 @@ def main():
             self.wfile.write(selected.read_bytes())
 
         def do_POST(self):
+            if speech and self.path in {"/speak", "/speech-stop"}:
+                size = int(self.headers.get("Content-Length", "0"))
+                if not 0 < size < 2000:
+                    self.send_error(413)
+                    return
+                body = json.loads(self.rfile.read(size))
+                result = (
+                    speech.speak(body["message"][:500]) if self.path == "/speak" else speech.stop()
+                )
+                if (result and body.get("message") == "Let me check."
+                        and routes["/acknowledgment.wav"].is_file()):
+                    result["audio"] = "/acknowledgment.wav"
+                with (args.clips / "speech-events.jsonl").open("a") as file:
+                    file.write(json.dumps({"time": time.time(), "route": self.path,
+                                           "result": result}) + "\n")
+                data = json.dumps(result or {}).encode()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
+                self.wfile.write(data)
+                return
+            if speech and self.path.startswith(("/speech-started/", "/speech-finished/")):
+                size = int(self.headers.get("Content-Length", "0"))
+                if size:
+                    self.rfile.read(size)
+                generation = int(self.path.rsplit("/", 1)[1])
+                if self.path.startswith("/speech-started/"):
+                    speech.started(generation)
+                else:
+                    speech.finished(generation)
+                with (args.clips / "speech-events.jsonl").open("a") as file:
+                    file.write(json.dumps({"time": time.time(), "route": self.path,
+                                           "generation": generation}) + "\n")
+                self.send_response(200)
+                self.send_header("Content-Length", "2")
+                self.end_headers()
+                self.wfile.write(b"{}")
+                return
             if args.physical_checks and self.path in {"/api/interact", "/api/stop", "/api/reset"}:
                 size = int(self.headers.get("Content-Length", "0"))
                 if not 0 < size < 10_000:
@@ -196,6 +243,8 @@ def main():
                 "stream": "silero-stream.json",
                 "asr-stream": "silero-asr-stream.json",
                 "physical-stop": "physical-stop-browser.json",
+                "acknowledgment": "acknowledgment-browser.json",
+                "tts-diagnostic": "tts-diagnostic-browser.json",
             }.get(data.get("kind"), "silero-browser.json")
             (args.clips / name).write_text(json.dumps(data, indent=2) + "\n")
             self.send_response(200)

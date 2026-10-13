@@ -1,0 +1,14 @@
+{
+  "scope": "Idle-request acknowledgment through generated speech capture, actual CUDA ASR, locally generated Windows SAPI WAV and real Chrome HTMLAudio playback events; no acoustic, moving-question or full robot-journey qualification",
+  "phrase": "Let me check.",
+  "earlier_serial_server_stage_lower_bound_ms": {"count": 6, "median": 588.9934050085722, "p95": 1094.90065500536, "excludes_transport_polling_playback": true},
+  "browser_synthesis_failures": ["pc-acknowledgment-001", "pc-acknowledgment-002"],
+  "direct_synthesis_diagnostic": {"directory": "pc-tts-diagnostic-001", "active_click": true, "direct_end_without_start_ms": 10.099999904632568, "root_cause_proven": false},
+  "waveform": {"voice": "Microsoft David Desktop", "rate_hz": 22050, "channels": 1, "sample_bytes": 2, "frames": 36257, "duration_s": 1.6443083900226758, "first_voiced_frame_end_ms": 120, "frame_ms": 20, "rms_threshold": 0.008, "sha256": "242f8c3fb568d812db18e71a876c772db4bd85307e43d21e3a7099caca7c1724"},
+  "first_cache_retry": {"directory": "pc-acknowledgment-003", "passed": true, "count": 8, "completion_to_player_median_ms": 37.75, "completion_to_player_p95_ms": 56.60000014305115},
+  "final_queued_reply_trial": {"directory": "pc-acknowledgment-004", "passed": true, "count": 8, "completion_to_player_median_ms": 33.800000071525574, "completion_to_player_p95_ms": 49.299999952316284, "word_end_to_player_median_ms": 1063.1000000238419, "word_end_to_player_p95_ms": 1123.5, "voiced_frame_reference_median_ms": 153.80000007152557, "voiced_frame_reference_p95_ms": 169.29999995231628, "minimum_complete_playback_ms": 1682, "maximum_complete_playback_ms": 1720.2000000476837, "all_reply_requests_overlap_cue": true, "registered_generation_and_posthash_checks": "passed"},
+  "actual_player_cancellation": {"directory": "pc-acknowledgment-003", "passed": true, "player_paused": true, "before_s": 0.172356, "after_s": 0.17242, "observation_ms": 250, "native_arm_stop_qualification": false},
+  "checks": {"full_python_tests": 346, "full_seconds": 219.03, "warnings": 1, "final_api_tests": 15, "final_api_seconds": 4.86, "js_recorder_and_speech_and_vad": "passed", "evidence_mutation_checks": 6, "mutation_runtime": "WSL after Windows temporary-directory permission errors", "upstream_files_unchanged": 46},
+  "experimental_runtime": {"port": 8996, "directory": "runs/dume-7ccb657d", "ready": true, "acknowledgment_audio": true, "exact_prepared_wav_served": true, "general_asr_device": "cuda", "cpu_stop_explicit": true, "preparation_s": 3.619, "warmup_s": 2.368},
+  "remaining": ["human acoustic acknowledgment timing", "ordinary audible replies", "microphone echo", "early acknowledgment during moving conversation", "complete voice/robot journey with cue", "broader representative utterances", "full sustained assistant goal"]
+}

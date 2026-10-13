@@ -1,0 +1,62 @@
+<!doctype html><meta charset="utf-8"><title>Local acknowledgment timing</title>
+<style>body{font:16px system-ui;background:#172321;color:#e9eee9;padding:32px}button{padding:12px}td,th{padding:10px;text-align:left}table{border-collapse:collapse}tr{border-bottom:1px solid #53645b}</style>
+<h1>Detected completion to local voice start</h1>
+<p>Saved generated speech only. No microphone access or robot commands. This test plays “Let me check.” through an installed local voice. Browser playback events do not establish acoustic latency or echo performance.</p>
+<button id="run">Run eight acknowledgment trials</button><p id="status">Not started.</p>
+<pre id="diagnostic"></pre>
+<table><thead><tr><th>Clip</th><th>Completion to voice start</th><th>Recognition</th></tr></thead><tbody id="rows"></tbody></table>
+<script src="/speech-vad/ort.wasm.min.js"></script><script src="/speech-vad/bundle.min.js"></script>
+<script type="module">
+import {MicrophoneInput} from '/voice-input.mjs';
+import {LocalSpeech} from '/local-speech.mjs';
+import {createSpeechMonitor} from '/speech-detector.mjs';
+const $=id=>document.getElementById(id),sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+let latestSpeech=null;
+async function post(path,body={}){const response=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const text=await response.text();if(!response.ok)throw Error(text);const result=text?JSON.parse(text):{};if(path==='/speak')latestSpeech=result;return result;}
+const monitor=createSpeechMonitor(),rows=[];
+let playbackError=null;
+const speech=new LocalSpeech({post,onError:message=>{playbackError=message;}});
+$('run').onclick=async()=>{
+ $('run').disabled=true;let mic,context,source,trial=null;
+ try{
+  const manifest=await(await fetch('/clips/acknowledgment-manifest.json')).json();await monitor.prepare();
+  const voices=()=>speech.synthesis.getVoices().filter(voice=>voice.localService&&voice.lang.startsWith('en'));
+  const voiceDeadline=performance.now()+5000;while(!voices().length&&performance.now()<voiceDeadline)await sleep(50);
+  if(!voices().length)throw Error('No installed local English voice.');
+  for(const item of manifest.cases){
+   playbackError=null;trial={id:item.id,acknowledgment_requested:false,speech_enqueued:false};
+   $('status').textContent='Running '+item.id;
+   const pcm=new Float32Array(await(await fetch('/clips/'+item.file)).arrayBuffer());
+   context=new AudioContext({sampleRate:16000});const destination=context.createMediaStreamDestination();
+   const buffer=context.createBuffer(1,pcm.length,16000);buffer.copyToChannel(pcm,0);
+   source=context.createBufferSource();source.buffer=buffer;source.connect(destination);
+   const element=()=>({textContent:'',hidden:false,disabled:false,setAttribute(){}});
+   let endpoint=null,voiceStart=null,voiceEnd=null,recognized=null,done=false,error=null,sourceStart=null,ackSpeech=null,replyRequested=null;
+   mic=new MicrophoneInput({button:element(),cancel:element(),note:element(),heard:element(),
+    mediaDevices:{getUserMedia:async()=>destination.stream},stopSpeech:async()=>speech.stop(),
+    monitor:async(stream,detector,onPause,signal,onFailure)=>{
+     const cleanup=await monitor.monitor(stream,detector,onPause,signal,onFailure);await context.resume();sourceStart=performance.now();source.start();return cleanup;
+    },onEndpoint:({completedAtMs})=>{endpoint=completedAtMs;trial.acknowledgment_requested=true;return speech.speak('Let me check.',{onStart:()=>{voiceStart=performance.now();},onEnd:()=>{voiceEnd=performance.now();}}).then(()=>{trial.speech_enqueued=true;ackSpeech=latestSpeech;}).catch(e=>error=e.message);},
+    fetchAudio:async(path,options)=>{const response=await fetch(path,options);if(response.ok)recognized=await response.clone().json();return response;},
+    onText:async()=>{replyRequested=performance.now();done=true;speech.speak('Request recognized.').catch(e=>trial.reply_error=e.message);},onStop:async()=>{done=true;},onError:message=>{if(message)error=message;}});
+   mic.setReady(true);await mic.start('request');
+   const deadline=performance.now()+15000;
+   while(!error&&!playbackError&&!(done&&voiceStart!==null&&voiceEnd!==null)&&performance.now()<deadline)await sleep(20);
+   Object.assign(trial,{endpoint_ms:endpoint,voice_start_ms:voiceStart,voice_end_ms:voiceEnd,recognized,
+    synthesis:{speaking:speech.synthesis.speaking,pending:speech.synthesis.pending,paused:speech.synthesis.paused},
+    voice:voices()[0]?.name,done,error:error||playbackError});
+   mic.close();source.stop();await context.close();mic=null;context=null;source=null;
+   if(error||playbackError||!done||voiceStart===null||voiceEnd===null)throw Error(error||playbackError||'Acknowledgment/recognition deadline exceeded.');
+   const row={id:item.id,endpoint_ms:endpoint,voice_start_ms:voiceStart,voice_end_ms:voiceEnd,source_start_ms:sourceStart,
+    completion_to_voice_start_ms:voiceStart-endpoint,word_end_to_voice_start_ms:voiceStart-sourceStart-item.last_clean_voiced_ms,
+    recognized,tracks_ended:destination.stream.getTracks().every(track=>track.readyState==='ended'),
+    local_voice:manifest.recorded_voice||voices()[0].name,speech_generation:ackSpeech.generation,
+    reply_requested_ms:replyRequested,playback_backend:ackSpeech.audio?'local_wav_html_audio':'browser_synthesis'};rows.push(row);
+   const tr=document.createElement('tr');for(const value of [row.id,(voiceStart-endpoint).toFixed(1)+' ms',recognized.text]){const td=document.createElement('td');td.textContent=value;tr.append(td);}$('rows').append(tr);
+   await post('/report',{kind:'acknowledgment',rows,in_progress:true});await sleep(100);
+  }
+  await post('/report',{kind:'acknowledgment',rows,in_progress:false});$('status').textContent='Finished '+rows.length+'/8. Await independent timing verification.';
+ }catch(error){speech.stop();mic?.close();source?.stop();await context?.close();$('status').textContent='Failed: '+error.message;$('diagnostic').textContent=JSON.stringify(trial,null,2);await post('/report',{kind:'acknowledgment',rows,failed:true,error:error.message,failed_trial:trial});}
+};
+window.addEventListener('pagehide',()=>{speech.stop();monitor.close().catch(()=>{});});
+</script>

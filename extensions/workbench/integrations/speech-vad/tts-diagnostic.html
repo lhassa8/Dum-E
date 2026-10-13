@@ -1,0 +1,33 @@
+<!doctype html><html lang="en-US"><meta charset="utf-8"><title>Installed local voice diagnosis</title>
+<style>body{font:16px system-ui;background:#172321;color:#e9eee9;padding:32px}button{padding:12px;margin:8px}pre{white-space:pre-wrap}</style>
+<h1>Installed local voice diagnosis</h1><p>No microphone or robot commands. Each button speaks “Let me check.” through the installed English voice.</p>
+<button id="direct">Direct local playback</button><button id="wrapped">Playback through LocalSpeech</button><button id="cancel-test">Verify cancellation during playback</button><button id="save">Save diagnostic events</button><pre id="events">Waiting for installed voices.</pre>
+<script type="module">
+import {LocalSpeech} from '/local-speech.mjs';
+const events=[],out=document.getElementById('events');let retained;
+const record=(kind,detail={})=>{events.push({kind,at_ms:performance.now(),...detail});out.textContent=JSON.stringify(events,null,2);};
+async function post(path,body={}){const response=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const text=await response.text();if(!response.ok)throw Error(text);return text?JSON.parse(text):{};}
+const voice=()=>speechSynthesis.getVoices().find(value=>value.localService&&value.lang.startsWith('en'));
+const info=()=>{out.textContent=JSON.stringify({voices:speechSynthesis.getVoices().filter(value=>value.localService).map(value=>({name:value.name,lang:value.lang})),userAgent:navigator.userAgent},null,2);};
+speechSynthesis.addEventListener('voiceschanged',info);info();
+document.getElementById('direct').onclick=()=>{
+ speechSynthesis.cancel();const selected=voice();if(!selected){record('no_voice');return;}
+ retained=new SpeechSynthesisUtterance('Let me check.');retained.voice=selected;retained.lang=selected.lang;
+ for(const kind of ['start','end','error','boundary'])retained.addEventListener(kind,event=>record('direct_'+kind,{error:event.error,charIndex:event.charIndex}));
+ record('direct_requested',{voice:selected.name,active:navigator.userActivation.isActive,everActive:navigator.userActivation.hasBeenActive});speechSynthesis.speak(retained);
+};
+const local=new LocalSpeech({post,onError:message=>record('wrapped_error',{message})});
+document.getElementById('wrapped').onclick=()=>{record('wrapped_requested',{active:navigator.userActivation.isActive,everActive:navigator.userActivation.hasBeenActive});local.speak('Let me check.',{onStart:()=>record('wrapped_start'),onEnd:()=>record('wrapped_end')}).catch(error=>record('wrapped_failure',{message:error.message}));};
+document.getElementById('cancel-test').onclick=()=>{
+ record('cancellation_requested');local.speak('Let me check.',{onStart:()=>{
+  record('audio_started');setTimeout(()=>{
+   const player=local.audio;if(!player){record('missing_audio');return;}
+   const before=player.currentTime;const started=performance.now();local.stop();const elapsed=performance.now()-started;
+   setTimeout(()=>record('audio_cancelled',{pause_call_ms:elapsed,paused:player.paused,
+    before_s:before,after_s:player.currentTime,passed:player.paused&&Math.abs(player.currentTime-before)<.01}),250);
+  },200);
+ },onEnd:()=>record('unexpected_early_end')}).catch(error=>record('cancellation_failed',{message:error.message}));
+};
+document.getElementById('save').onclick=async()=>{await post('/report',{kind:'tts-diagnostic',events});record('saved');};
+window.addEventListener('pagehide',()=>local.stop());
+</script></html>

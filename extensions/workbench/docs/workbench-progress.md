@@ -1992,3 +1992,36 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
 - Experimental8996Ready, originaldemospreserved. Next: human-controlled fastStop/
   stateawareProceed demonstration, acoustic/ack/echo measurement, broadcontention.
   No micactivation, hardware, rawupload or externalmessages. Sustainedgoal active.
+
+### B38 — Neutral acknowledgment before interpretation; real playback lifecycle (PC)
+
+- Previous13793e7 turn verifies6complete savedvoice journeys under intendedGemma,
+  Stopupper861/980ms med/p95. Livehumanfeedback remains pending; goalnotcomplete.
+- SerialASR+decision in6retained naturalfetch cases has589/1095ms lowerbounds,
+  excludingtransport,polling/playback. Addneutral idle-request cue aftercapture
+  closes,neverawaited byASR/Stop. Movinginterrupt recordings remain silent.
+- Browser-synthesis trials001/002fail;002showsenqueue/end11ms,no start despite
+  ASRsuccess. Directactive-click/retainedutterance/English diagnostic ends10ms
+  withoutstart too. Preservebothfailures; no browser/OSrootcause asserted.
+- Changeplaybackstrategy: precompute fixedWindowsSAPI WAV, playwithHTMLAudio;
+  ordinaryreplypath retained. Launcherpreparesmissingcue,failedpreparationdoes
+  notblocktypedassistant. Backendcapability gatescue, preservingolderdemos.
+  Echoexactphraseguard requiresactualstart,expires3s, survivesnewerreply;
+  Stop/toolcommands independent. Playbackgenerationsrejectlate/staleevents.
+- Frozen8cache trials003pass37.75/56.60ms med/p95 completion-to-playerstart.
+  Actualmidplay cancellation pauses at.172s;64usadvanceover250ms. CuePCM first
+  voicedframeends120ms (20ms,RMS.008), waveform1.644s; no acousticonsetclaim.
+- Fastreplycouldtruncatecue: outputonlywaituntilcueend,latestreplywins;Stop/
+  mute/newutterance cancelsqueue,2sboundedwait. Final8overlap trials004pass
+  33.80/49.30ms playerstart;153.80/169.30ms includingvoicedframereference;
+  wholecue1682–1720ms. Wordend-to-player1063.10/1123.50ms includessame900mspause.
+  Source/code/asset andregisteredgeneration checks pass, no robotcommands sent.
+- Six alteredrecord checks pass inWSL; missingcase,expandedtarget,unregistered
+  start,truncatedcue,latecue rejected. WindowsTmp permissions preventedthatcheck,
+  no originaldata orpermissionchanges; useprivateWSLtemporary storage instead.
+- Full346tests pass219.03s,1warning; finalAPIcapability15pass4.86s; JScontracts,
+  Ruff,PowerShellparsers,46upstreamfiles pass. Updated8996Ready,primaryactualCUDA,
+  explicitCPUStop, exactpreparedWAVserved;3.619spreparation/2.368swarmup beforemic.
+- Remaining: roomacoustic/ordinaryreply/echo checks, movingconversationack,
+  fullcue-enabled physicaljourney andbroadutterances. Originalsremainrunning;
+  no micactivation/hardware/rawuploads/externalmessages. Goalactive.

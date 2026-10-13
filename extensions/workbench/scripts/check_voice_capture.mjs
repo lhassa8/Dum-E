@@ -146,3 +146,19 @@ try{
  resolveSlow(()=>{});await slowStart;slow.mic.close();
 }finally{globalThis.setTimeout=realTimeout;}
 console.log('PASS: stalled detector initialization releases the owned microphone at its startup deadline.');
+
+// An unresolved acknowledgment must not delay ASR or commands. Capture has
+// already released its track, and interruption recordings never acknowledge.
+let endpointCalls=0;
+const acknowledgment=setup();await acknowledgment.mic.start();
+acknowledgment.mic.detector.speechMs=120;
+acknowledgment.mic.onEndpoint=()=>{assert.equal(acknowledgment.releases(),1);endpointCalls++;return new Promise(()=>{});};
+acknowledgment.mic.finish();await tick();
+assert.equal(endpointCalls,1);assert.equal(acknowledgment.submitted.length,1);acknowledgment.mic.close();
+const interruptAck=setup({text:'Stop.'});interruptAck.mic.onEndpoint=()=>endpointCalls++;
+interruptAck.mic.setWorking(true);await tick();interruptAck.mic.detector.speechMs=120;
+interruptAck.pause();await tick();assert.equal(interruptAck.stops(),1);assert.equal(endpointCalls,1);interruptAck.mic.close();
+const cancelledAck=setup();await cancelledAck.mic.start();cancelledAck.mic.detector.speechMs=120;
+cancelledAck.mic.onEndpoint=()=>endpointCalls++;cancelledAck.mic.finish();cancelledAck.mic.abort();await tick();
+assert.equal(endpointCalls,1);cancelledAck.mic.close();
+console.log('PASS: neutral endpoint acknowledgment releases capture, never blocks ASR/Stop, and rejects stale completion.');

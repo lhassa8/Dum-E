@@ -18,6 +18,10 @@ also passes all six one-second Stop bounds:861ms median,980ms samplep95/max.
 Earlier timing and camera-workload failures remain recorded; live acoustic
 timing, audible acknowledgment and echo remain unqualified. The
 experimental demo is at http://127.0.0.1:8996 with listening off by default.
+The [neutral acknowledgment measurement](docs/pc-acknowledgment-timing.md) adds
+“Let me check.” before interpretation. Local WAV playback starts in34ms median /
+49ms p95 across eight saved-voice trials with overlapping replies; output-device timing and echo remain
+unqualified. The Windows launcher prepares its fixed local voice asset.
 
 The optional [PC camera interface](docs/live-camera-interface-pc.md) uses
 `-CameraTools` and separate ports at http://127.0.0.1:8886. It has measured typed

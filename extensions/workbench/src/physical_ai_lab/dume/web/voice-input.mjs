@@ -39,10 +39,10 @@ export function monitorMicrophone(stream,detector,onPause) {
 }
 
 export class MicrophoneInput {
-  constructor({button,cancel,note,heard,onText,onStop,onDuringWork,onError,stopSpeech,
+  constructor({button,cancel,note,heard,onText,onStop,onDuringWork,onError,stopSpeech,onEndpoint,
                mediaDevices=navigator.mediaDevices,Recorder=globalThis.MediaRecorder,
                fetchAudio=(...args)=>globalThis.fetch(...args),monitor=monitorMicrophone}) {
-    Object.assign(this,{button,cancel,note,heard,onText,onStop,onDuringWork,onError,stopSpeech,
+    Object.assign(this,{button,cancel,note,heard,onText,onStop,onDuringWork,onError,stopSpeech,onEndpoint,
                        mediaDevices,Recorder,fetchAudio,monitor});
     this.mode='idle';this.ready=false;this.generation=0;this.working=false;
     this.interruptEnabled=true;this.held=false;this.closed=false;this.kind='request';
@@ -158,10 +158,19 @@ export class MicrophoneInput {
   }
   finish() {
     if(this.mode!=='recording')return;
+    const completedAtMs=performance.now();
     this.captureMetrics={capture_ms:performance.now()-this.captureStartedMs,
       endpoint_pause_ms:this.detector.pauseMs,...this.detector.processingMetrics};
     this.mode='transcribing';this.note.textContent='Recognizing your words locally…';
     this.paint();this.recorder.stop();this.release();
+    // Capture is already closed. A neutral acknowledgment must never hold up
+    // transcription or the independent Stop route, or claim interpretation.
+    if(this.kind==='request'&&this.detector.heardSpeech&&this.onEndpoint){
+      const generation=this.generation;
+      Promise.resolve().then(()=>{
+        if(generation===this.generation&&!this.closed&&this.mode==='transcribing')return this.onEndpoint({completedAtMs});
+      }).catch(()=>{});
+    }
   }
   dispatchDuringWork(callback,text) {
     // Waiting for a model reply must not hold the recorder in transcribing mode.

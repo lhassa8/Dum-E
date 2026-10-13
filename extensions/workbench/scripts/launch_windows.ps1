@@ -6,6 +6,12 @@ param([string]$Model = 'prism-ml/bonsai-27b', [string]$VisionModel = 'workbench-
       [switch]$CpuStop)
 $ErrorActionPreference = 'Stop'
 $extensionPath = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+if (-not (Test-Path -LiteralPath (Join-Path $extensionPath '.cache/local-speech/acknowledgment.wav'))) {
+    & powershell.exe -NoProfile -File (Join-Path $PSScriptRoot 'prepare_acknowledgment.ps1')
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning 'Local acknowledgment is unavailable. The assistant will start with its existing speech path.'
+    }
+}
 $linuxPath = (& wsl -d Ubuntu -- wslpath -a $extensionPath).Trim()
 if ($LASTEXITCODE -ne 0) { throw 'Cannot access Ubuntu. Check wsl --list --verbose.' }
 $visionArgument = if ([string]::IsNullOrWhiteSpace($VisionModel)) { 'none' } else { $VisionModel }
