@@ -31,6 +31,9 @@ parser.add_argument("--linear-lifts", action="store_true")
 parser.add_argument("--center-grasp", action="store_true")
 parser.add_argument("--safe-handoff", action="store_true")
 parser.add_argument("--alternate-view", action="store_true")
+parser.add_argument("--phase-recovery", action="store_true")
+parser.add_argument("--refine-cartesian", action="store_true")
+parser.add_argument("--verify-release", action="store_true")
 parser.add_argument(
     "--release-kind", choices=["ensemble", "linear", "constant"], default="ensemble"
 )
@@ -48,11 +51,17 @@ for case in fixture["cases"]:
     b = ToolWorkbench(case["seed"], xml=camera_scene_xml(case, alternate_view=args.alternate_view))
     b.model.vis.headlight.diffuse[:] *= case.get("light", 1)
     sensor = CameraSensor(b)
-    start_truth = b.observe()
+    truth = b.observe
+
+    def denied(*unused):
+        raise AssertionError("Actor accessed privileged object state")
+
+    b.observe = b.tool_support_height = denied
+    start_truth = truth()
     initial = start_truth[case["tool"]]
     target = HANDOFF["handoff"] if case["journey"] != "redirect" else initial[:2]
     controller = CameraDelivery(
-        SimRobot(b, recover_ik=args.recover_ik),
+        SimRobot(b, recover_ik=args.recover_ik, refine_cartesian=args.refine_cartesian),
         sensor,
         case["tool"],
         HANDOFF["handoff"],
@@ -65,6 +74,8 @@ for case in fixture["cases"]:
         center_grasp=args.center_grasp,
         safe_handoff=args.safe_handoff,
         alternate_view=args.alternate_view,
+        phase_recovery=args.phase_recovery,
+        verify_release=args.verify_release,
     )
     images = args.output / case["id"]
     images.mkdir()
@@ -75,7 +86,7 @@ for case in fixture["cases"]:
 
     def measured_disturbance():
         return max(
-            float(np.linalg.norm(b.observe()[n] - xyz))
+            float(np.linalg.norm(truth()[n] - xyz))
             for n, xyz in start_truth.items()
             if n != case["tool"]
         )
@@ -84,7 +95,7 @@ for case in fixture["cases"]:
         for tick in range(3000):
             if not controller.advance():
                 break
-            actual = b.observe()[case["tool"]]
+            actual = truth()[case["tool"]]
             maximum_disturbance = max(maximum_disturbance, measured_disturbance())
             max_height = max(max_height, float(actual[2]))
             if controller.phase != previous:
@@ -105,7 +116,7 @@ for case in fixture["cases"]:
                     "duration_s": 19 * 0.032,
                     "joint_drift_rad": float(np.max(np.abs(b.data.qpos[:7] - stopped))),
                     "grip_retained": bool(b.data.ctrl[7] == grip_command),
-                    "actual_tool_height_m": float(b.observe()[case["tool"]][2]),
+                    "actual_tool_height_m": float(truth()[case["tool"]][2]),
                 }
                 if case["journey"] == "redirect":
                     controller.return_to_rack()
@@ -114,7 +125,7 @@ for case in fixture["cases"]:
                 paused = True
         else:
             raise RuntimeError("Controller exceeded the fixed 3000-frame limit")
-        final = b.observe()[case["tool"]]
+        final = truth()[case["tool"]]
         address = b.model.joint(f"{case['tool']}_joint").dofadr[0]
         speed = float(np.linalg.norm(b.data.qvel[address : address + 3]))
         distance = float(np.linalg.norm(final[:2] - target))
@@ -123,7 +134,7 @@ for case in fixture["cases"]:
         gripper_open = bool(b.data.qpos[7:9].sum() > 0.07)
         released = controller.outcome.status == "released_unverified" and gripper_open
         disturbance = max(
-            float(np.linalg.norm(b.observe()[n] - xyz))
+            float(np.linalg.norm(truth()[n] - xyz))
             for n, xyz in start_truth.items()
             if n != case["tool"]
         )
@@ -136,7 +147,7 @@ for case in fixture["cases"]:
             and released
         ):
             returned = CameraDelivery(
-                SimRobot(b, recover_ik=args.recover_ik),
+                SimRobot(b, recover_ik=args.recover_ik, refine_cartesian=args.refine_cartesian),
                 sensor,
                 case["tool"],
                 controller.rack_xy,
@@ -149,17 +160,19 @@ for case in fixture["cases"]:
                 center_grasp=args.center_grasp,
                 safe_handoff=args.safe_handoff,
                 alternate_view=args.alternate_view,
+                phase_recovery=args.phase_recovery,
+                verify_release=args.verify_release,
             )
-            return_initial = b.observe()[case["tool"]].copy()
+            return_initial = truth()[case["tool"]].copy()
             return_max = float(return_initial[2])
             for _ in range(3000):
                 if not returned.advance():
                     break
                 maximum_disturbance = max(maximum_disturbance, measured_disturbance())
-                return_max = max(return_max, float(b.observe()[case["tool"]][2]))
+                return_max = max(return_max, float(truth()[case["tool"]][2]))
             else:
                 raise RuntimeError("Return exceeded the fixed 3000-frame limit")
-            actual_return = b.observe()[case["tool"]]
+            actual_return = truth()[case["tool"]]
             return_distance = float(np.linalg.norm(actual_return[:2] - initial[:2]))
             return_speed = float(np.linalg.norm(b.data.qvel[address : address + 3]))
             return_result = {
@@ -179,7 +192,7 @@ for case in fixture["cases"]:
             disturbance = max(
                 disturbance,
                 max(
-                    float(np.linalg.norm(b.observe()[n] - xyz))
+                    float(np.linalg.norm(truth()[n] - xyz))
                     for n, xyz in start_truth.items()
                     if n != case["tool"]
                 ),
@@ -269,6 +282,9 @@ summary = {
     "center_grasp": args.center_grasp,
     "safe_handoff": args.safe_handoff,
     "alternate_view": args.alternate_view,
+    "phase_recovery": args.phase_recovery,
+    "refine_cartesian": args.refine_cartesian,
+    "verify_release": args.verify_release,
     "return_after_delivery": args.return_after_delivery,
     "selected_alternate_scene_views": sum(
         e.get("kind") == "camera_scene_view" and e.get("view") == "alternate"

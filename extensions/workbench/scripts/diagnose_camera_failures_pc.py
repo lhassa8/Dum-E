@@ -15,6 +15,14 @@ from physical_ai_lab.assistant.tool_scene import HANDOFF, ToolWorkbench
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("output", type=Path)
 parser.add_argument("--fixture", type=Path, required=True)
+parser.add_argument(
+    "--case-ids",
+    nargs="+",
+    default=["pc-reserved-000", "pc-reserved-009", "pc-reserved-014", "pc-reserved-029"],
+)
+parser.add_argument("--phase-recovery", action="store_true")
+parser.add_argument("--refine-cartesian", action="store_true")
+parser.add_argument("--verify-release", action="store_true")
 args = parser.parse_args()
 args.output.mkdir(parents=True, exist_ok=False)
 fixture = json.loads(args.fixture.read_text())
@@ -27,7 +35,7 @@ class Traced(CameraDelivery):
         yield from super()._motion(point, phase, grip)
 
 
-for ident in ("pc-reserved-000", "pc-reserved-009", "pc-reserved-014", "pc-reserved-029"):
+for ident in args.case_ids:
     case = next(c for c in fixture["cases"] if c["id"] == ident)
     bench = ToolWorkbench(case["seed"], xml=camera_scene_xml(case, alternate_view=True))
     bench.model.vis.headlight.diffuse[:] *= case["light"]
@@ -43,7 +51,7 @@ for ident in ("pc-reserved-000", "pc-reserved-009", "pc-reserved-014", "pc-reser
     target_body = bench.model.body(name).id
     address = bench.model.joint(f"{name}_joint").dofadr[0]
     first = Traced(
-        SimRobot(bench, recover_ik=True),
+        SimRobot(bench, recover_ik=True, refine_cartesian=args.refine_cartesian),
         sensor,
         name,
         HANDOFF["handoff"],
@@ -53,6 +61,8 @@ for ident in ("pc-reserved-000", "pc-reserved-009", "pc-reserved-014", "pc-reser
         safe_handoff=True,
         release_fallback=True,
         alternate_view=True,
+        phase_recovery=args.phase_recovery,
+        verify_release=args.verify_release,
     )
     folder = args.output / ident
     folder.mkdir()
@@ -69,7 +79,7 @@ for ident in ("pc-reserved-000", "pc-reserved-009", "pc-reserved-014", "pc-reser
                 if case["journey"] == "redirect" or first.outcome.status != "released_unverified":
                     break
                 actor = Traced(
-                    SimRobot(bench, recover_ik=True),
+                    SimRobot(bench, recover_ik=True, refine_cartesian=args.refine_cartesian),
                     sensor,
                     name,
                     first.rack_xy,
@@ -79,6 +89,8 @@ for ident in ("pc-reserved-000", "pc-reserved-009", "pc-reserved-014", "pc-reser
                     safe_handoff=True,
                     release_fallback=True,
                     alternate_view=True,
+                    phase_recovery=args.phase_recovery,
+                    verify_release=args.verify_release,
                 )
             rows = []
             paused = False

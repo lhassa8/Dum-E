@@ -133,6 +133,7 @@ class CameraDelivery:
         alternate_view=False,
         preferred_body_yaw=None,
         phase_recovery=False,
+        verify_release=False,
     ):
         self.robot, self.camera, self.object = robot, camera, tool
         self.target = np.asarray(destination_xy, dtype=float).copy()
@@ -165,6 +166,10 @@ class CameraDelivery:
         self.alternate_view = alternate_view
         self.phase_recovery = phase_recovery
         self.paused_phase = None
+        self.verify_release = verify_release
+        self.correction_attempts = 0
+        if verify_release and not (safe_handoff and verify_motion):
+            raise ValueError("Visual release recovery requires safe handoff and verified motion")
         self.preferred_body_yaw = preferred_body_yaw
         self.reoriented_carry = False
         self.planned_neighbors = None
@@ -543,6 +548,30 @@ class CameraDelivery:
         yield from self._wait(28, 255, "Releasing")
         yield from self._motion(np.array([*self.target, 0.24]), "Withdrawing gripper", 255)
         yield from self._wait(30, 255, "Awaiting independent placement check")
+        if self.verify_release:
+            self.phase = "Checking released tool with camera"
+            observed = self._observe()
+            distance = float(np.linalg.norm(observed.position_m[:2] - self.target))
+            self.evidence.append(
+                {
+                    "kind": "postrelease_camera_check",
+                    "distance_m": distance,
+                    "visual_margin_m": 0.025,
+                    "correction_attempts": self.correction_attempts,
+                    "passed": distance <= 0.025,
+                }
+            )
+            if distance > 0.025:
+                if distance > 0.080 or self.correction_attempts >= 1:
+                    raise ValueError(
+                        "Visual placement outside recovery margin; bounded correction refused"
+                    )
+                self.correction_attempts += 1
+                self.initial_scene_estimates = None
+                self.scene_history = {}
+                self.planned_neighbors = None
+                yield from self._run()
+                return
         self.phase = "Released; placement unverified"
         self.outcome = Outcome(
             "released_unverified", "Released the tool; placement needs checking."

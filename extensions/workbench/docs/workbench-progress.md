@@ -1549,3 +1549,29 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   Public camera not promoted, full goal active. Next: supported-tabletop fresh
   camera verification after withdrawal and bounded physical placement correction,
   with prospective complete journeys. No more held-pose/outcome-fit sweeps.
+
+## B24 — camera checks/corrects resting placement; prospective qualification fails (2026-10-12)
+- Previous8f371bc progress: two formerly refused pickups now release but miss
+  placement35mm. Read-only fresh postrelease RGB-D probe errors.0565/.0937mm,
+  scores.9989/.9923, simulator state unchanged.
+- Optional verify_release requires existing safehandoff/verifiedmotion: after
+  withdrawal reobserve,<=25mm visual margin,25–80mm permits one fresh physical
+  pickup to unchanged target, otherwise refuse. Fresh observation after second
+  release mandatory; no second correction. Original rack preserved, defaults off.
+  No pose edits/models; actor still released_unverified, physical judge separate.
+- Same nine-phase/three-known-layout32sec protocol now27/27 (baseline25/27);
+  only two hammer corrections, final9.590/9.720mm. Validation, not unseen/livevoice.
+- Freeze before new seed2026101303 all54 cohort: full51/54=94.44% FAIL95;
+  first-leg physical52/54,34returns,9side-scene views,0alternate target views;
+  one return correction,0first-leg corrections. Independent54/54 reconstruction
+  matches; Wilson84.89–98.09%. Snapshot unchanged after run. Different seeds
+  mean no causal comparison against earlier50/54 or51/54. All failures retained.
+- 005hammer rests within30.254mm but both camera views reject, no false verification.
+ 025/046wrench loses grip high/.840 or1.217m/s. Independent contact traces show
+  no contact while gap proxy stillpasses, then guard trips up to96ms later.
+  No privileged contact data fed to actor. Investigate temporal proprioceptive
+  grasp monitoring next; do not simply weaken guards or repeat network fits.
+- All280 tests pass,46 upstream hashes, originallonghold6/6; stale/missingcamera
+  real-physics tests refuse additional pickup without advancing physics.
+  Public camera still unpromoted, model fit budget0, full goal remains active.
+  Details/evidence: camera-release-correction-pc.md/camera-release-correction-pc-evidence.json.

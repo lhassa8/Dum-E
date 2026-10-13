@@ -130,6 +130,29 @@ for phase in ["Lowering gripper", "Grasping"]:
         row["final_actual_m"] = truth()[case["tool"]].tolist()
         row["refine_cartesian"] = args.refine_cartesian
         row["actor_message"] = actor.outcome.message if actor.outcome else None
+        if actor.outcome and actor.outcome.status == "released_unverified":
+            before = bench.data.qpos.copy(), bench.data.qvel.copy(), bench.data.ctrl.copy()
+            actor.phase = "Post-release camera diagnostic"
+            try:
+                observed = actor._observe()
+                actual = truth()[case["tool"]]
+                row["postrelease_camera"] = {
+                    "accepted": True,
+                    "fit_score": observed.fit_score,
+                    "observed_target_error_m": float(
+                        np.linalg.norm(observed.position_m[:2] - actor.target)
+                    ),
+                    "actual_target_error_m": float(np.linalg.norm(actual[:2] - actor.target)),
+                    "position_error_m": float(np.linalg.norm(observed.position_m - actual)),
+                }
+            except ValueError as error:
+                row["postrelease_camera"] = {"accepted": False, "refusal": str(error)}
+            row["postrelease_camera"]["state_unchanged"] = all(
+                np.array_equal(a, b)
+                for a, b in zip(
+                    before, [bench.data.qpos, bench.data.qvel, bench.data.ctrl], strict=True
+                )
+            )
     finally:
         camera.close()
         bench.close()

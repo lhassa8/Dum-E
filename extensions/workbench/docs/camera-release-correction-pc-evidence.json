@@ -1,0 +1,183 @@
+{
+  "scope": "Experimental resting-tool camera verification and bounded physical correction; public profile unpromoted",
+  "baseline_commit": "8f371bc",
+  "phase_validation": {
+    "scope": "Offline simulation all-phase recovery on three known validation layouts; not held-out promotion or live speech",
+    "protocol_sha256": "d0943fcce0799fe061b3874fcd18186573e0566c3c532b8fcb14c32e612c298e",
+    "phase_recovery": true,
+    "refine_cartesian": true,
+    "verify_release": true,
+    "cases": 27,
+    "passes": 27,
+    "passed": true
+  },
+  "phase_corrected": [
+    {
+      "case": "validation-002",
+      "phase": "Lowering gripper",
+      "distance_m": 0.009589913512054809
+    },
+    {
+      "case": "validation-002",
+      "phase": "Grasping",
+      "distance_m": 0.009719902020837765
+    }
+  ],
+  "postrelease_probe": [
+    {
+      "phase": "Lowering gripper",
+      "postrelease_camera": {
+        "accepted": true,
+        "fit_score": 0.9989024734739579,
+        "observed_target_error_m": 0.03632303419014863,
+        "actual_target_error_m": 0.036333794281787034,
+        "position_error_m": 5.649447611016871E-05,
+        "state_unchanged": true
+      }
+    },
+    {
+      "phase": "Grasping",
+      "postrelease_camera": {
+        "accepted": true,
+        "fit_score": 0.9922683829789685,
+        "observed_target_error_m": 0.035560278012705664,
+        "actual_target_error_m": 0.035600762603760994,
+        "position_error_m": 9.371674850584258E-05,
+        "state_unchanged": true
+      }
+    }
+  ],
+  "frozen_candidate": {
+    "source_sha256": {
+      "src/physical_ai_lab/assistant/camera_control.py": "79bb0415d84ca633763414b21cc151f8c07c7641ef2a775c633a653d6e9a442b",
+      "src/physical_ai_lab/assistant/camera_robot.py": "8952a7c7f07e1aa9a03492c60ed87c10c0861f309d3b612cde7681bd96613d8f",
+      "src/physical_ai_lab/assistant/perception.py": "c0ad627b244ae032b2c6abf98c87bc19ae5d0a657746d8b18e839ca689718408",
+      "src/physical_ai_lab/assistant/perception_scene.py": "f9488fd8fbdd4cfec82018372177d42c011753171e60e4fd7d9fc6d01ce4d23c",
+      "src/physical_ai_lab/assistant/handoff_planning.py": "a71813ef26461013afc62099a3e8c04ea265f9f1d39a2642c9ca681b7ba62c4d",
+      "src/physical_ai_lab/assistant/tool_scene.py": "8203ae26f9af020fa0037fb93ea96540256feddcdd538794040a6ccf10d3dad3",
+      "src/physical_ai_lab/assistant/tool_geometry.py": "ebb9b514c2ae1112f4603699aa4cadd3be05fd4bdf36477cc3941dfcbf4766b7",
+      "src/physical_ai_lab/assistant/scene.py": "80fcafad82ea4376ad298e078c63e8df889bc0c15ffabacaf3bfa799f5a0185f",
+      "scripts/verify_camera_delivery.py": "ad233da6005d7bedb88c74634731b209c4d457ced9c477ae64ef35836fde3ab1",
+      "scripts/generate_camera_reserved.py": "9754bc340156dd8f7d970e449b3962f03cda79be6ec4f303929bff530e650fdd",
+      "upstream-source.json": "b91de65566fb2da48264d5a19cea1e513748a0208700d7ea4f9b31722864fd32",
+      "uv.lock": "84abb32165bf8f819e3b3f5993aa85c40d035f925d571312912ddc99e2e902c0",
+      "fixtures/camera_release_correction_protocol.json": "01fa31b183cd131370209109503bc67a8f6395104d48af24f97fa129738afc4d"
+    },
+    "runtime": {
+      "python": "3.12.3",
+      "numpy": "2.5.4",
+      "mujoco": "3.15.0"
+    },
+    "hash_encoding": "LF text; upstream binaries separately verified"
+  },
+  "source_snapshot_unchanged_after_evaluation": true,
+  "prospective": {
+    "fixture_sha256": "cb2a45805efad6018e04850d5da897b83f19ea9a19f82d9590d88a09665e7a2c",
+    "split": "heldout",
+    "cases": 54,
+    "physical_successes": 52,
+    "all_criteria_successes": 51,
+    "fresh_camera_return_count": 34,
+    "passed": false,
+    "carry_model_sha256": null,
+    "carry_policy": "rigid",
+    "release_model_sha256": null,
+    "release_kind": null,
+    "recover_ik": true,
+    "verify_motion": true,
+    "release_fallback": true,
+    "linear_lifts": true,
+    "center_grasp": true,
+    "safe_handoff": true,
+    "alternate_view": true,
+    "phase_recovery": true,
+    "refine_cartesian": true,
+    "verify_release": true,
+    "return_after_delivery": true,
+    "selected_alternate_scene_views": 9,
+    "accepted_alternate_views": 0,
+    "disturbance_judge": "Maximum across motion/hold frames, not just final position",
+    "release_judge": "Actor finished release/withdrawal and independently measured open gripper; resting placement still required"
+  },
+  "audit_summary": {
+    "qualified": false,
+    "full_journey_passes": 51,
+    "wilson_95_interval": [
+      0.8489278568183386,
+      0.9809267315453091
+    ],
+    "all_stored_verdicts_reconstructed": true,
+    "fraction": 0.9444444444444444,
+    "sample_size": 54
+  },
+  "diagnosed_failures": [
+    {
+      "id": "pc-reserved-005",
+      "leg": 0,
+      "status": "failed",
+      "phase": "Vision task failed",
+      "gap_m": 0.07999999485570207,
+      "tool_z_m": 0.03339930655984529,
+      "tool_speed_m_s": 0.0001979147323789037,
+      "max_rigid_error_m": 0.024398780124785375,
+      "max_joint_speed_rad_s": 1.1158818256755272,
+      "message": "Handle is missing, ambiguous or a weak geometric fit; no motion planned"
+    },
+    {
+      "id": "pc-reserved-025",
+      "leg": 0,
+      "status": "failed",
+      "phase": "Lifting for return",
+      "gap_m": 0.01390070903820357,
+      "tool_z_m": 0.265926523074008,
+      "tool_speed_m_s": 0.8402452227411158,
+      "max_rigid_error_m": 0.07286916409371454,
+      "max_joint_speed_rad_s": 1.6981142707972254,
+      "message": "Gripper no longer indicates a held handle; holding position"
+    },
+    {
+      "id": "pc-reserved-046",
+      "leg": 0,
+      "status": "failed",
+      "phase": "Vision task failed",
+      "gap_m": 0.009139172887361907,
+      "tool_z_m": 0.13241135011642735,
+      "tool_speed_m_s": 1.21666637457906,
+      "max_rigid_error_m": 0.10113250265746417,
+      "max_joint_speed_rad_s": 1.1182813244459346,
+      "message": "Gripper no longer indicates a held handle; holding position"
+    }
+  ],
+  "correction_counts": {
+    "prospective_first_leg": 0,
+    "phase_validation": 2,
+    "prospective_return_leg": 1
+  },
+  "long_hold": {
+    "passed": true,
+    "passes": 6,
+    "cases": 6
+  },
+  "verification": {
+    "fit_budget_remaining": 0,
+    "warnings": 20,
+    "elapsed_seconds": 136.54,
+    "changed_file_ruff": "passed",
+    "regression_passed": 280,
+    "protected_upstream_files": 46
+  },
+  "promotion": {
+    "public_camera_promoted": false,
+    "goal_complete": false,
+    "verify_release_default": false,
+    "human_demo_complete": false
+  },
+  "runs": {
+    "diagnostic": "runs/pc-camera-release-failure-diagnosis-001",
+    "prospective": "runs/pc-camera-release-reserved-001",
+    "long_hold": "runs/pc-camera-release-longhold-001",
+    "read_only_probe": "runs/pc-postrelease-camera-probe-001",
+    "phase_validation": "runs/pc-camera-release-correction-001",
+    "candidate": "runs/pc-camera-release-candidate-001"
+  }
+}
