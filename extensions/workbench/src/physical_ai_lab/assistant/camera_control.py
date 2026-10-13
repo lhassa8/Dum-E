@@ -685,7 +685,33 @@ class CameraDelivery:
             reading = self.robot.read()
             open_hand = not reading.closing_command and reading.gap_m >= 0.075
             route = "continue held motion"
-            if self.carrying:
+            if (
+                self.recover_grip
+                and self.grip_recovery_attempts == 1
+                and phase
+                in {
+                    "Holding after unstable grip",
+                    "Opening confirmed empty hand",
+                    "Retracting empty hand for rescan",
+                    "Surveying workbench with an empty hand",
+                }
+            ):
+                if phase == "Holding after unstable grip":
+                    if not (
+                        self.carrying
+                        and reading.closing_command
+                        and np.isfinite(reading.gap_m)
+                        and 0 <= reading.gap_m <= 0.080
+                    ):
+                        raise ValueError("Interrupted grip settling has inconsistent hand state")
+                elif self.carrying or not np.isfinite(reading.gap_m) or (
+                    reading.closing_command
+                    if phase == "Opening confirmed empty hand"
+                    else not open_hand
+                ):
+                    raise ValueError("Interrupted empty-hand recovery has inconsistent hand state")
+                route = "continue bounded grip recovery"
+            elif self.carrying:
                 if not self._grip_present():
                     raise ValueError("Resume needs a supported held handle; rescan required.")
             elif phase in {

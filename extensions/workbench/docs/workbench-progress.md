@@ -1620,3 +1620,24 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   subphases, then wire opt-in camera interaction and measure actual user journeys.
   Goal active, fit budgets0, no mic/cloud/hardware actions. Details/evidence:
   camera-grip-recovery-pc.md/camera-grip-recovery-pc-evidence.json.
+
+## B27 — interrupted grip recovery preserves its existing sequence (2026-10-13)
+- Previous81d44bd progress: prospective camera53/54, new recovery subphase Stop
+  incomplete. Frozen known025loss/redirect four-phase protocol baseline1/4;
+  settling incorrectly demands a held grip, opening/retraction unsupported.
+- Bounded resume route recognizes owned counter1 recovery, retains original
+  generator/rack/target/budget. Settling finite closed-command gap, opening
+  finite/open-command/noncarrying, retraction/survey confirmed open hand required.
+  Review adds nonfinite opening refusal. Ordinary held-grip gate unchanged.
+- Final-source four32s Stop/physical return journeys4/4, rack22.15–22.45mm,
+  maxjointdrift<.000140rad, grippercommand retained, reacquisitions always1.
+  Lost tool may fall naturally; no claim of supported-tool retention or freeze.
+  Fresh tabletop camera before pickup;80mm/35mm/resting/open/unrelated limits intact.
+- Final294 regressions,46 protected hashes. Earlier original27 phases27/27 and
+  longhold6/6 remain; final four cases and already evaluated54cohort repeated after
+  finite guard:53/54, independent54/54 verdict matches. No fresh unseen claim.
+- Inspected actual application contract: adapter needs controller metadata,
+  separate evaluator, camera-only routing/context and cancellation before motion.
+  Next wire opt-in live camera interaction and measure full natural journeys;
+  defaults off, voice/human demonstration outstanding, goal active, fitbudgets0.
+  Details/evidence: grip-recovery-interruptions-pc.md/grip-recovery-interruptions-pc-evidence.json.

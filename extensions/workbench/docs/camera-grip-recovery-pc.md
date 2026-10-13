@@ -3,7 +3,7 @@
 The frozen camera candidate meets the observed95% gate on a new cohort:
 **53/54 complete journeys (98.15%)**. One screwdriver return refuses an ambiguous
 neighboring wrench. This qualifies one offline candidate cohort; public operation
-remains unpromoted, and live voice, new recovery-phase interruption and human
+remains unpromoted, and live voice, integration and human
 demonstration work remain outstanding.
 
 ## Baseline and failed assumptions
@@ -96,9 +96,10 @@ gate during tabletop settling. No model fit; exhausted fit budgets stay0.
 
 ## Remaining work and reproduction
 
-The original nine-phase protocol does not cover Stop/resume inside the new
-settling/opening recovery subphases. Current resume can refuse after an empty
-gap during recovery. Test and resolve those states before live integration.
+The original nine-phase protocol does not cover the new recovery subphases.
+The later [recovery-interruption validation](grip-recovery-interruptions-pc.md)
+addresses settling/opening/retraction/survey with4/4 known-case complete journeys.
+Live assistant integration and acoustic/human-demo validation remain.
 The candidate also does not establish hardware drop safety, collision clearance
 for arbitrary obstacles or95% population reliability from one small cohort.
 
