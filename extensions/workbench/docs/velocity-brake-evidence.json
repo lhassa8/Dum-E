@@ -1,0 +1,431 @@
+{
+  "decision": "Reject; no runtime/public controller enabling",
+  "protocol": {
+    "scope": "Known-window physical replay; no inference, voice or live wall-time qualification",
+    "physics_sha256": "149236dfc8af6c88defba68ef5cdffc7ad85e181750eab3be1b725ce773ee29a",
+    "source_report_sha256": "f0e5f7cf5fb43f29105b1149715c2e4c5a46a73e73a0d33b0c55a2a70cabac25",
+    "actor_sha256": "f1f4d3749ba49971895cf4db4a4906a12e9f1ae1dd20a522ced2c0cf6033bc3c",
+    "profiles": [
+      {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      {
+        "name": "velocity-brake",
+        "kp": 300,
+        "damping_ratio": 2
+      }
+    ],
+    "cases": [
+      "task0-seed101-baseline",
+      "task0-seed202-baseline",
+      "task0-seed202-x+3mm",
+      "task1-seed101-baseline",
+      "task1-seed101-x+3mm",
+      "task1-seed202-x+3mm",
+      "task2-seed101-baseline",
+      "task2-seed101-x+3mm",
+      "task2-seed202-baseline",
+      "task2-seed202-x+3mm"
+    ],
+    "source_episodes_without_trigger": 2,
+    "simulator_seed": 7,
+    "initial_state_index": 0,
+    "min_lift_m": 0.08,
+    "max_translation_m": 0.01,
+    "max_joint_range_rad": 0.02,
+    "max_reference_error": 1e-06,
+    "measurement_window": "Original Stop sensor timestamp through original last held timestamp",
+    "sampling": "Every native torque callback and completed step in that fixed physical window",
+    "pause_entry": "Exact recorded native torque-callback sim time; same measured joint target",
+    "camera": "Automatic image observations off for replay; physics equivalence must be verified",
+    "attempt_budget": "One frozen two-profile diagnostic; no retuning",
+    "saturation_diagnostic_case": null,
+    "torque_allocation": false,
+    "carry_governor": false,
+    "velocity_brake": true,
+    "velocity_brake_window_s": 0.05,
+    "velocity_brake_inputs": "Joint velocity, inertia, bias and native limits",
+    "velocity_brake_limit": "Local model omits contact and changing dynamics",
+    "velocity_brake_sha256": "21ec43dc5c94b388e69eb2f5275697b9ed983759562c893f94785c92a006119a"
+  },
+  "audit": {
+    "audit": "pass",
+    "trials": 20,
+    "physical_passes": {
+      "baseline": 4,
+      "velocity-brake": 4
+    },
+    "brake_decisions": 250,
+    "source_no_trigger_episodes": 2,
+    "brake_rate_s_inv": {
+      "n": 250,
+      "minimum": 12.141311588984111,
+      "median": 33.23361237159759,
+      "maximum": 500.0
+    },
+    "brake_extra_ms": {
+      "n": 250,
+      "median": 0.048355499999999996,
+      "p95": 0.103368,
+      "maximum": 0.701757
+    },
+    "local_model_next_velocity_max_joint_error_rad_s": {
+      "n": 240,
+      "median": 0.00031940485422193854,
+      "p95": 0.0010115032362256887,
+      "maximum": 0.0014544136950584985
+    },
+    "scope": "Known-window replay and bounded-torque audit; no live policy/voice claim"
+  },
+  "trials": [
+    {
+      "case": "task0-seed101-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08689944426683593,
+      "max_translation_m": 0.00299103960686217,
+      "max_joint_range_rad": 0.012714828460108851,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task0-seed101-baseline",
+      "profile": {
+        "name": "velocity-brake",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08689944426683593,
+      "max_translation_m": 0.005980726012082458,
+      "max_joint_range_rad": 0.015049269971677326,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task0-seed202-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08150367139965342,
+      "max_translation_m": 0.0027853864118968135,
+      "max_joint_range_rad": 0.012100839644953787,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task0-seed202-baseline",
+      "profile": {
+        "name": "velocity-brake",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08150367139965342,
+      "max_translation_m": 0.005698463777576641,
+      "max_joint_range_rad": 0.014322017577328872,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task0-seed202-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08301124730990794,
+      "max_translation_m": 0.0019075415336168875,
+      "max_joint_range_rad": 0.021112809063904336,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task0-seed202-x+3mm",
+      "profile": {
+        "name": "velocity-brake",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08301124730990794,
+      "max_translation_m": 0.006269231524428857,
+      "max_joint_range_rad": 0.02529162046849054,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task1-seed101-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08286410698974966,
+      "max_translation_m": 0.003228476205556374,
+      "max_joint_range_rad": 0.008547941295744987,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task1-seed101-baseline",
+      "profile": {
+        "name": "velocity-brake",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08286410698974966,
+      "max_translation_m": 0.004689142104511813,
+      "max_joint_range_rad": 0.009284869665427742,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task1-seed101-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08354962344841588,
+      "max_translation_m": 0.00323325982728613,
+      "max_joint_range_rad": 0.008942763805674936,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task1-seed101-x+3mm",
+      "profile": {
+        "name": "velocity-brake",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08354962344841588,
+      "max_translation_m": 0.004843892182152772,
+      "max_joint_range_rad": 0.009826466805800571,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task1-seed202-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.17222664376840258,
+      "max_translation_m": 0.013991461620890797,
+      "max_joint_range_rad": 0.00901183489407864,
+      "all_grasp_contacts": false,
+      "physical_window_passed": false,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task1-seed202-x+3mm",
+      "profile": {
+        "name": "velocity-brake",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.17235253294513653,
+      "max_translation_m": 0.014155440983998034,
+      "max_joint_range_rad": 0.009191972831792405,
+      "all_grasp_contacts": false,
+      "physical_window_passed": false,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task2-seed101-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08304076602972765,
+      "max_translation_m": 0.0023904434898578634,
+      "max_joint_range_rad": 0.03140975792446721,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task2-seed101-baseline",
+      "profile": {
+        "name": "velocity-brake",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08310100381109808,
+      "max_translation_m": 0.009140577050357465,
+      "max_joint_range_rad": 0.03850671910299619,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task2-seed101-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08204296666513256,
+      "max_translation_m": 0.0022935159249716014,
+      "max_joint_range_rad": 0.025224385455916654,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task2-seed101-x+3mm",
+      "profile": {
+        "name": "velocity-brake",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08211494996512003,
+      "max_translation_m": 0.007939998888826358,
+      "max_joint_range_rad": 0.030813297627908742,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task2-seed202-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.0803179339933322,
+      "max_translation_m": 0.0021764408982954194,
+      "max_joint_range_rad": 0.02030920767940758,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task2-seed202-baseline",
+      "profile": {
+        "name": "velocity-brake",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08036765095045162,
+      "max_translation_m": 0.006922372815304638,
+      "max_joint_range_rad": 0.02475531942534781,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task2-seed202-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08139327302556598,
+      "max_translation_m": 0.002094290239231151,
+      "max_joint_range_rad": 0.021536045567022377,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false,
+      "sample_count": 526,
+      "physical_window_s": 1.007999999999889,
+      "max_prebrake_reference_error": 0.0
+    },
+    {
+      "case": "task2-seed202-x+3mm",
+      "profile": {
+        "name": "velocity-brake",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "min_lift_m": 0.08144082986295642,
+      "max_translation_m": 0.00693827832922988,
+      "max_joint_range_rad": 0.026129763805822215,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false,
+      "sample_count": 526,
+      "physical_window_s": 1.007999999999889,
+      "max_prebrake_reference_error": 0.0
+    }
+  ],
+  "report_sha256": "b66e240da9452ed4583a158a66c6806f74c36cdd5deffcdcfc267c71e6456658",
+  "limits": [
+    "Known replay, no fresh policy inference or voice timing",
+    "Two no-trigger episodes remain source cohort failures",
+    "Local inertia model excludes contact and changing dynamics",
+    "No changes to original protected physical criteria or torque bounds"
+  ]
+}

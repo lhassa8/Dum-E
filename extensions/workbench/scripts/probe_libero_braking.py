@@ -19,9 +19,12 @@ parser.add_argument("--torque-allocation", action="store_true",
                     help="Separate baseline versus bounded acceleration-allocation experiment")
 parser.add_argument("--carry-governor", action="store_true",
                     help="Separate known-window pre-Stop OSC command-limiter diagnostic")
+parser.add_argument("--velocity-brake", action="store_true",
+                    help="Measured-velocity torque brake for the first50ms after Stop")
 args = parser.parse_args()
-assert sum(bool(v) for v in (args.saturation_case, args.torque_allocation,
-                            args.carry_governor)) <= 1, "Use one diagnostic mode"
+diagnostics = (args.saturation_case, args.torque_allocation,
+               args.carry_governor, args.velocity_brake)
+assert sum(bool(v) for v in diagnostics) <= 1, "Use one diagnostic mode"
 source_report = json.loads((args.source_run / "report.json").read_text())
 physics = [json.loads(line) for line in args.physics.open()]
 cases = []
@@ -56,6 +59,8 @@ if args.torque_allocation:
     profiles = profiles[:1] + [{"name": "allocation", "kp": 300, "damping_ratio": 2}]
 if args.carry_governor:
     profiles = profiles[:1] + [{"name": "carry-governor", "kp": 300, "damping_ratio": 2}]
+if args.velocity_brake:
+    profiles = profiles[:1] + [{"name": "velocity-brake", "kp": 300, "damping_ratio": 2}]
 if args.saturation_case:
     cases = [c for c in cases if c["name"] == args.saturation_case]
     assert len(cases) == 1, "Unknown saturation diagnostic case"
@@ -79,7 +84,16 @@ protocol = {
     "saturation_diagnostic_case": args.saturation_case,
     "torque_allocation": args.torque_allocation,
     "carry_governor": args.carry_governor,
+    "velocity_brake": args.velocity_brake,
 }
+if args.velocity_brake:
+    protocol.update(attempt_budget="One frozen two-profile diagnostic; no retuning",
+                    velocity_brake_window_s=.05,
+                    velocity_brake_inputs="Joint velocity, inertia, bias and native limits",
+                    velocity_brake_limit="Local model omits contact and changing dynamics")
+    helper = Path(__file__).with_name("libero_velocity_brake.py")
+    protocol["velocity_brake_sha256"] = hashlib.sha256(helper.read_bytes()).hexdigest()
+    (args.output / helper.name).write_bytes(helper.read_bytes())
 if args.carry_governor:
     protocol.update(attempt_budget="One frozen two-profile diagnostic; no retuning",
                     pause_entry="Recorded callback time; each variant captures measured joints",
@@ -116,6 +130,9 @@ from robosuite.controllers.joint_pos import JointPositionController  # noqa: E40
 
 if args.carry_governor:
     from libero_carry_governor import limit_carry_delta
+
+if args.velocity_brake:
+    from libero_velocity_brake import velocity_brake
 
 if args.torque_allocation:
     from scipy.optimize import lsq_linear
@@ -233,13 +250,19 @@ for case in cases:
                         assert np.all(allocated >= low-1e-9) and np.all(allocated <= high+1e-9)
                         optimized = True
                     allocation_ns = time.perf_counter_ns() - started
-                    if args.saturation_case or args.torque_allocation:
+                    brake_record = None
+                    if (profile["name"] == "velocity-brake"
+                            and native.sim.data.time < brake_time+.05-1e-10):
+                        allocated, brake_record = velocity_brake(
+                            joint, step_s=float(native.sim.model.opt.timestep))
+                    if args.saturation_case or args.torque_allocation or args.velocity_brake:
                         torque_records.append({
                             "sim_time": float(native.sim.data.time),
                             "command": np.asarray(command).tolist(),
                             "clipped": np.clip(command, low, high).tolist(),
                             "allocated": np.asarray(allocated).tolist(),
                             "optimized": optimized, "allocation_ns": allocation_ns,
+                            "velocity_brake": brake_record,
                         })
                     return allocated
                 return torques
@@ -311,7 +334,7 @@ for case in cases:
             if env is not None:
                 env.close()
         (trial / "samples.json").write_text(json.dumps(samples, indent=2))
-        if args.saturation_case or args.torque_allocation:
+        if args.saturation_case or args.torque_allocation or args.velocity_brake:
             (trial / "torques.json").write_text(json.dumps(torque_records, indent=2))
         if args.carry_governor:
             (trial / "governor.json").write_text(json.dumps(governor_records, indent=2))

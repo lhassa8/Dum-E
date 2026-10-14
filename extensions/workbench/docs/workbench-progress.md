@@ -2274,3 +2274,21 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   three tools, epoch0, no microphone. Full audit/evidence: carry-governor-audit.md.
 - Next: measured-velocity, grasp-sensitive control hypothesis; no retuning this
   cohort, no lowered gates, no promotion or new publicvoice claim.
+
+### C — Measured-velocity short Stop brake rejected (PC, 2026-10-14)
+
+- Change strategy from pre-Stop command limiting to first50ms measured-velocity
+  braking; preserve all policy/grasp/prefix motion and captured joint goals.
+- Torque b-rMv, largest common feasible rate capped1/dt, original80/12Nm bounds;
+  25 native2ms callbacks, then originalkp300/d2 PD. No actor objecttruth input.
+- All20 known-window trials complete; baseline4/10, candidate4/10, same failures.
+  All maintain80mm lift; worstjoint range31.410→38.507mrad, grasp-loss unresolved.
+  Reject, no runtime/publiccontroller enabling and no retuning/freshcohort.
+- Independent audit recomputes20 physical gates, baseline within1e-6 and250
+  feasible torques. Initial rate bitwise comparison corrected to1e-12 arithmetic
+  tolerance across NumPyversions; no data or physicalthreshold changes.
+- Addedcompute.048/.103/.702ms median/p95/max.240 transitions localmodel maxjoint
+  next-velocity errors.000319/.001012/.001454rad/s. Prediction matches short
+  transitions, but shared braking rate and omitted position control are poor.
+- Next: independent dissipative joint braking/position correction or grasp
+  adaptation; no further common-rate/window sweep. Fullaudit velocity-brake-audit.md.
