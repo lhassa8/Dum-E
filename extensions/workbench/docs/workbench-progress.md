@@ -2158,3 +2158,27 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   native physics goals and freshpost-resume calls; raw actors/hashes retained.
   Ruff/46upstreamchecks pass. No public controller edits. Next: bounded native
   braking experiment using failed velocity/hold windows, then prospective cohort.
+
+### C — Dense native braking replay and torque saturation (PC, 2026-10-14)
+
+- Previous44d5eb7 is progress: real12-episode policy comparison rejects offset.
+  Freeze kp300/d2 baseline, kp300/d4 and kp600/d2 on all10 lifted stop windows.
+- Match source reset via active_step1/running; match brake diagnostics to exact
+  Stop request because old diagnostics can persist and state tags race scene
+  reset. Clear old diagnostics on actual initialization; no physics change.
+- Retain two setup failures: initial reference after controller construction,
+  then timestamp dictionary overwrote one MuJoCo cache phase. Third run preserves
+  both phases for reference matching and all samples for physical scores.
+- All30 pre-brake trajectories/entry targets match exactly; baseline held samples
+  within1e-6. Dense callback/endpoint checks: baseline4/10, each higher-gain5/10.
+  No profiles enabled, no threshold changes. Two source no-trigger failures remain
+  in original12 denominator. Known replay is not fresh/voice/held-out qualification.
+- Dense sampling exposes20.309mrad excursion where source polling saw19.978;
+  original4/6 baseline is historical captured-snapshot result, not continuoushold.
+- Worstjoint6 reaches31.410mrad; higher gains still>30mrad. Separate baseline
+  torqueaudit002 confirms57.333N·m request versus12N·m cap,39/504 clipped callbacks.
+  Audit001 recorder-name collision retained; no failed run supplies passing data.
+- Raw braking-replay-003 and braking-saturation-002 keep samples, actors, profiles,
+  matches and rendered images. Independent audit verifiesall30, bounds, snapshot
+  matches and clipping. Standard plot inspected. Next: constrained torque allocation
+  within original actuator limits, then prospective fresh-policy qualification.

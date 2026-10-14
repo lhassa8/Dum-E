@@ -181,6 +181,7 @@ class Runtime:
             self.grip = -1.0
             self.policy_steps = self.hold_steps = 0
             self.active_steps = 0
+            self.hold_diagnostics = None
             self.goal_override = None
             self.hold_mode = None
             controller = self.env.env.robots[0].controller

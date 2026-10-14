@@ -1,0 +1,1402 @@
+{
+  "date": "2026-10-14",
+  "scope": "Known-window physical replay; no inference, voice or live wall-time qualification",
+  "protocol": {
+    "scope": "Known-window physical replay; no inference, voice or live wall-time qualification",
+    "physics_sha256": "149236dfc8af6c88defba68ef5cdffc7ad85e181750eab3be1b725ce773ee29a",
+    "source_report_sha256": "f0e5f7cf5fb43f29105b1149715c2e4c5a46a73e73a0d33b0c55a2a70cabac25",
+    "actor_sha256": "9bd8880fcdf1e7c1888b4dff532ee08a4a81a1ca08d77f70a8016701ec13bf53",
+    "profiles": [
+      {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      {
+        "name": "damping4",
+        "kp": 300,
+        "damping_ratio": 4
+      },
+      {
+        "name": "kp600",
+        "kp": 600,
+        "damping_ratio": 2
+      }
+    ],
+    "cases": [
+      "task0-seed101-baseline",
+      "task0-seed202-baseline",
+      "task0-seed202-x+3mm",
+      "task1-seed101-baseline",
+      "task1-seed101-x+3mm",
+      "task1-seed202-x+3mm",
+      "task2-seed101-baseline",
+      "task2-seed101-x+3mm",
+      "task2-seed202-baseline",
+      "task2-seed202-x+3mm"
+    ],
+    "source_episodes_without_trigger": 2,
+    "simulator_seed": 7,
+    "initial_state_index": 0,
+    "min_lift_m": 0.08,
+    "max_translation_m": 0.01,
+    "max_joint_range_rad": 0.02,
+    "max_reference_error": 1e-06,
+    "measurement_window": "Original Stop sensor timestamp through original last held timestamp",
+    "sampling": "Every native torque callback and completed step in that fixed physical window",
+    "pause_entry": "Exact recorded native torque-callback sim time; same measured joint target",
+    "camera": "Automatic image observations off for replay; physics equivalence must be verified",
+    "attempt_budget": "One frozen three-profile grid; retain every case; no retuning"
+  },
+  "trials": [
+    {
+      "case": "task0-seed101-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08689944426683593,
+      "max_translation_m": 0.00299103960686217,
+      "max_joint_range_rad": 0.012714828460108851,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task0-seed101-baseline",
+      "profile": {
+        "name": "damping4",
+        "kp": 300,
+        "damping_ratio": 4
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08689944426683593,
+      "max_translation_m": 0.0019105591252067716,
+      "max_joint_range_rad": 0.011608370078043162,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task0-seed101-baseline",
+      "profile": {
+        "name": "kp600",
+        "kp": 600,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08689944426683593,
+      "max_translation_m": 0.0022017687880638436,
+      "max_joint_range_rad": 0.011805416384908618,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task0-seed202-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 2.463156308918357e-07,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "min_lift_m": 0.08150367139965342,
+      "max_translation_m": 0.0027853864118968135,
+      "max_joint_range_rad": 0.012100839644953787,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task0-seed202-baseline",
+      "profile": {
+        "name": "damping4",
+        "kp": 300,
+        "damping_ratio": 4
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "min_lift_m": 0.08150367139965342,
+      "max_translation_m": 0.0018376632675952207,
+      "max_joint_range_rad": 0.010986671277459337,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task0-seed202-baseline",
+      "profile": {
+        "name": "kp600",
+        "kp": 600,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "min_lift_m": 0.08150367139965342,
+      "max_translation_m": 0.002074882850255728,
+      "max_joint_range_rad": 0.011186144366606587,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task0-seed202-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "min_lift_m": 0.08301124730990794,
+      "max_translation_m": 0.0019075415336168875,
+      "max_joint_range_rad": 0.021112809063904336,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task0-seed202-x+3mm",
+      "profile": {
+        "name": "damping4",
+        "kp": 300,
+        "damping_ratio": 4
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "min_lift_m": 0.08301124730990794,
+      "max_translation_m": 0.0016884468074038828,
+      "max_joint_range_rad": 0.02005534548921517,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task0-seed202-x+3mm",
+      "profile": {
+        "name": "kp600",
+        "kp": 600,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "min_lift_m": 0.08301124730990794,
+      "max_translation_m": 0.0016650586501999814,
+      "max_joint_range_rad": 0.020238231695431708,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task1-seed101-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "min_lift_m": 0.08286410698974966,
+      "max_translation_m": 0.003228476205556374,
+      "max_joint_range_rad": 0.008547941295744987,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed101-baseline",
+      "profile": {
+        "name": "damping4",
+        "kp": 300,
+        "damping_ratio": 4
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "min_lift_m": 0.08286410698974966,
+      "max_translation_m": 0.0022515547680037073,
+      "max_joint_range_rad": 0.007542079167115023,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed101-baseline",
+      "profile": {
+        "name": "kp600",
+        "kp": 600,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "min_lift_m": 0.08286410698974966,
+      "max_translation_m": 0.0025057711662794884,
+      "max_joint_range_rad": 0.007768819534025084,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed101-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08354962344841588,
+      "max_translation_m": 0.00323325982728613,
+      "max_joint_range_rad": 0.008942763805674936,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed101-x+3mm",
+      "profile": {
+        "name": "damping4",
+        "kp": 300,
+        "damping_ratio": 4
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08354962344841588,
+      "max_translation_m": 0.002180016536463886,
+      "max_joint_range_rad": 0.007924211551760596,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed101-x+3mm",
+      "profile": {
+        "name": "kp600",
+        "kp": 600,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08354962344841588,
+      "max_translation_m": 0.0024469497098712654,
+      "max_joint_range_rad": 0.008127612513041171,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed202-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "min_lift_m": 0.17222664376840258,
+      "max_translation_m": 0.013991461620890797,
+      "max_joint_range_rad": 0.00901183489407864,
+      "all_grasp_contacts": false,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task1-seed202-x+3mm",
+      "profile": {
+        "name": "damping4",
+        "kp": 300,
+        "damping_ratio": 4
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "min_lift_m": 0.1719336825820601,
+      "max_translation_m": 0.014233967181421187,
+      "max_joint_range_rad": 0.008082679352221067,
+      "all_grasp_contacts": false,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task1-seed202-x+3mm",
+      "profile": {
+        "name": "kp600",
+        "kp": 600,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "min_lift_m": 0.1722182366180407,
+      "max_translation_m": 0.013583244971697694,
+      "max_joint_range_rad": 0.008257634995991747,
+      "all_grasp_contacts": false,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08304076602972765,
+      "max_translation_m": 0.0023904434898578634,
+      "max_joint_range_rad": 0.03140975792446721,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-baseline",
+      "profile": {
+        "name": "damping4",
+        "kp": 300,
+        "damping_ratio": 4
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08312475377021988,
+      "max_translation_m": 0.0022880640171147703,
+      "max_joint_range_rad": 0.03023661491416041,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-baseline",
+      "profile": {
+        "name": "kp600",
+        "kp": 600,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08300676713424926,
+      "max_translation_m": 0.0023540607626667165,
+      "max_joint_range_rad": 0.03028170804740027,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "min_lift_m": 0.08204296666513256,
+      "max_translation_m": 0.0022935159249716014,
+      "max_joint_range_rad": 0.025224385455916654,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-x+3mm",
+      "profile": {
+        "name": "damping4",
+        "kp": 300,
+        "damping_ratio": 4
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "min_lift_m": 0.08210722603574305,
+      "max_translation_m": 0.0017919879009980844,
+      "max_joint_range_rad": 0.024056630628682463,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-x+3mm",
+      "profile": {
+        "name": "kp600",
+        "kp": 600,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "min_lift_m": 0.08201033714614614,
+      "max_translation_m": 0.0018181895140453024,
+      "max_joint_range_rad": 0.024192629130866283,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed202-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "min_lift_m": 0.0803179339933322,
+      "max_translation_m": 0.0021764408982954194,
+      "max_joint_range_rad": 0.02030920767940758,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed202-baseline",
+      "profile": {
+        "name": "damping4",
+        "kp": 300,
+        "damping_ratio": 4
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "min_lift_m": 0.08037137022353802,
+      "max_translation_m": 0.0013215938051904348,
+      "max_joint_range_rad": 0.019135670396623894,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task2-seed202-baseline",
+      "profile": {
+        "name": "kp600",
+        "kp": 600,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "min_lift_m": 0.08028911026097796,
+      "max_translation_m": 0.0015482315845318957,
+      "max_joint_range_rad": 0.019338955830572768,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task2-seed202-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 526,
+      "physical_window_s": 1.007999999999889,
+      "min_lift_m": 0.08139327302556598,
+      "max_translation_m": 0.002094290239231151,
+      "max_joint_range_rad": 0.021536045567022377,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed202-x+3mm",
+      "profile": {
+        "name": "damping4",
+        "kp": 300,
+        "damping_ratio": 4
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 526,
+      "physical_window_s": 1.007999999999889,
+      "min_lift_m": 0.08145047916221215,
+      "max_translation_m": 0.0014122013070309832,
+      "max_joint_range_rad": 0.020420784779718648,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed202-x+3mm",
+      "profile": {
+        "name": "kp600",
+        "kp": 600,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 526,
+      "physical_window_s": 1.007999999999889,
+      "min_lift_m": 0.08136274434458834,
+      "max_translation_m": 0.0015023443708229226,
+      "max_joint_range_rad": 0.020600125705743988,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    }
+  ],
+  "pass_counts_out_of_10": {
+    "baseline": 4,
+    "damping4": 5,
+    "kp600": 5
+  },
+  "independent_raw_audit": "passed",
+  "saturation": {
+    "scope": "Separate unchanged worst-case baseline audit",
+    "samples": 504,
+    "joint6_clipped_samples": 39,
+    "joint6_max_command_Nm": 57.33264961132758,
+    "joint6_torque_cap_Nm": 12,
+    "run": "runs/policy-runtime/braking-saturation-002",
+    "raw_sha256": {
+      "probe_libero_braking.py": "cc43e897df8e32d548126d7a13459432062b2439a46660c45d86dc931432ba89",
+      "protocol.json": "ab7364a0bf4930ef5f45324eb4a8ebec8b1a6f9c6592248073c07f740fe879a7",
+      "report.json": "dd7bb621a9199313b9a798d937ae0c40977e6a31d8ce0f81bbe7b67287fb17de",
+      "task2-seed101-baseline-baseline\\held-end.png": "b15e86cb47411d50a67af0658df14459aa6a1c5f58be1030e6cd3c6cba9a791d",
+      "task2-seed101-baseline-baseline\\reference-matches.json": "30d2e1ba0b18186490872ec84f7b2af672e65ab1fb08c6ca66b8c8da258f2e5a",
+      "task2-seed101-baseline-baseline\\result.json": "6491290ca0b7f2ae8666ead8e1ce97c878747fc9087545516b8402fbe4958005",
+      "task2-seed101-baseline-baseline\\samples.json": "d8c76cf8fd966e6d10bfbfc04673fce90c1c733a20ec6e0c3b94a836ce1387ca",
+      "task2-seed101-baseline-baseline\\torques.json": "651bc9fd41bfa48d76b7fb2aca99bb3581eee72051577b84aa9527bac0454bfd"
+    }
+  },
+  "raw_sha256": {
+    "probe_libero_braking.py": "9bd8880fcdf1e7c1888b4dff532ee08a4a81a1ca08d77f70a8016701ec13bf53",
+    "protocol.json": "45d4d909fc07daf54fa3d23a111d3b8ef25a187b6d7293bd494acfa340d57d7c",
+    "report.json": "232d85b0fe3739d8d6a998fff733d89f41dc439d9bbea8a17bd3d29b07ced57d",
+    "task0-seed101-baseline-baseline\\held-end.png": "f4839c81f659527e54b43c91e2ff7ebb8e3036512d24e7403b801e4be67fff60",
+    "task0-seed101-baseline-baseline\\reference-matches.json": "671beebea5c5e15a394490db7ad844bba40f0408400c925baf4fd11e238f1222",
+    "task0-seed101-baseline-baseline\\result.json": "c38fa98457bf1c75ae5edacfb82f9542859812291c9ecc2ead05b75b80ff6138",
+    "task0-seed101-baseline-baseline\\samples.json": "5657b791dc2f6e7da40337d3c790d0f407b404ad51cd6ca010b81327c54cb188",
+    "task0-seed101-baseline-damping4\\held-end.png": "1acb3b00629a3f6be5a56a7c13664632870ebe82893830d2b0812d8f2f629a05",
+    "task0-seed101-baseline-damping4\\result.json": "72d8a77f28127f6bc77983f09180fdba6ce62e730d1ca09da3ecf614e122b984",
+    "task0-seed101-baseline-damping4\\samples.json": "7e9cb69812508c9960abaa4583df826be0fb80f66bc6beee9e470e778a12755e",
+    "task0-seed101-baseline-kp600\\held-end.png": "fcc66e1a254b2bbf0a213bdd3fc3de009ef239f41bff7e344471900cd3821f08",
+    "task0-seed101-baseline-kp600\\result.json": "95fc5691b2436fe0317b69c6ea18db4f6317eb1d4670e695a775b687b6efbb55",
+    "task0-seed101-baseline-kp600\\samples.json": "5a6f1671516d6d7f494cac31f8237a173eb3df6871630b3e0042b8801104e313",
+    "task0-seed202-baseline-baseline\\held-end.png": "42660692e9ef405c12cf781708cd6b472b48f76d19b251c0a1eece87bc9719a4",
+    "task0-seed202-baseline-baseline\\reference-matches.json": "c33dda7fd7f255b9360c88c7d83aeae5a48ad6c9ef05cbadc49f6bf723576976",
+    "task0-seed202-baseline-baseline\\result.json": "1732b059e1d57a35d22ec13d76f251c12018057d08dccd904968bcea4f809b74",
+    "task0-seed202-baseline-baseline\\samples.json": "5096de0e513933f18b78cfc05d2445c8df822c08a184c1f8b83e51b5302ded00",
+    "task0-seed202-baseline-damping4\\held-end.png": "1b8ed033c10a295ce0710a9cd8c9b5a6b22206b1607d2113864802e66e45c8df",
+    "task0-seed202-baseline-damping4\\result.json": "56ad590139ccef367dfe0abf964857fc2fdc3a19e256f3a3a657b782a92f1136",
+    "task0-seed202-baseline-damping4\\samples.json": "709ae89129c61422a56f206496dcfcdec6ff3196f49efa4986bf4cc0f7fe052e",
+    "task0-seed202-baseline-kp600\\held-end.png": "bef898287cba4572011214332cb54b93840c506eec5f8817742c3ca85b8e0a7a",
+    "task0-seed202-baseline-kp600\\result.json": "4ac78457d9e426eb81738d90a1fe5965559e765ad30bb6db18a134277b0eb86f",
+    "task0-seed202-baseline-kp600\\samples.json": "c264ac1298fc64d221336d70770fac07a148760ad9518168c37e407e53edeeb9",
+    "task0-seed202-x+3mm-baseline\\held-end.png": "8ab4720637d5e5a1b89f13734e21fd5b3e90bcf26747736884dac00c7e3167f1",
+    "task0-seed202-x+3mm-baseline\\reference-matches.json": "f9302bf1cf29e9a612209b9174cd1fdb3e2c96b37605b20c9e85574e28b31a05",
+    "task0-seed202-x+3mm-baseline\\result.json": "d92ea2f281fc0ff85717e83e567099e0150611c869e4f1e1337de938bcc67e5d",
+    "task0-seed202-x+3mm-baseline\\samples.json": "23560312f016ef73d5bda4d12eeae339c37564d7ee014340b2735b14c8772761",
+    "task0-seed202-x+3mm-damping4\\held-end.png": "a42ffda91d98f61b3ad45dccca2cd5609211e78a2b65fa60552041498a3fb09d",
+    "task0-seed202-x+3mm-damping4\\result.json": "4d5350b07f027c65435fd56e07c624c458422659381323a6723fe3c8ad92f2a1",
+    "task0-seed202-x+3mm-damping4\\samples.json": "913328203b136a446302d33a606346b86e13c82c44d7599bbf340a78f1e62a26",
+    "task0-seed202-x+3mm-kp600\\held-end.png": "05296401bf26a7efc15f9e57ca5fc5913ab0cd1a59ea920622db287f9c453a0d",
+    "task0-seed202-x+3mm-kp600\\result.json": "ba53cc71a8583f44a6039f9bdde64b3769813a187e941e49e6968ab68b97db24",
+    "task0-seed202-x+3mm-kp600\\samples.json": "47770e3418c67e77563cdf39dd6c5dc4952368eb48de1892d713d5cd3169cc11",
+    "task1-seed101-baseline-baseline\\held-end.png": "e908f4cb494bbc393b3f348e0b3f6a050bba77362fb1d4d48daf4c2060e8ad6d",
+    "task1-seed101-baseline-baseline\\reference-matches.json": "18d67a51c19a4f7285773960a53e558445bafd07c4244645e8b7344fb35d915c",
+    "task1-seed101-baseline-baseline\\result.json": "6ff2199cb5b852e608dd6bee3ae0f327398eff47b30b6ff35a0c69717e9c6b22",
+    "task1-seed101-baseline-baseline\\samples.json": "6fe062d10c0262d1c364391bf7d2954174cb91f640605b7c8caa788a8cec0ad8",
+    "task1-seed101-baseline-damping4\\held-end.png": "ce1e7fc4dde12d74cb636eac92626cd948638bb0ed457ca793314a7cd897a5fb",
+    "task1-seed101-baseline-damping4\\result.json": "194a42a04b96580cdb48a0ba221f9ec04aed6575349e979dccf539d52883ed1e",
+    "task1-seed101-baseline-damping4\\samples.json": "f0ed483e1872eee5d71847fcde8118b4e20b0c85ec3e4c364ad223dd7c7fb978",
+    "task1-seed101-baseline-kp600\\held-end.png": "612e697ea5eaceb296a5234fc09846082f2caf33cbfe33c7f293373554a384e0",
+    "task1-seed101-baseline-kp600\\result.json": "a59071850db9f9b54a95cc682670551deab435c5e49f57c3649113eef70bef24",
+    "task1-seed101-baseline-kp600\\samples.json": "e54c375458c0de8d4a79fd5a0e077254a806426975a50ae2a4e67b91b559a3bd",
+    "task1-seed101-x+3mm-baseline\\held-end.png": "ba57643f9e9d2d4a46a9d145f71be7c069f9765ea83e3cc5944982705ec66888",
+    "task1-seed101-x+3mm-baseline\\reference-matches.json": "cf0111db4e9e97392d8a0ea0b518854f0a5daeb3352773cfa4e7dd0b620f182e",
+    "task1-seed101-x+3mm-baseline\\result.json": "82bafabf5a9fd494959e75052b81278afcfcfe13a0ab44acf34b3fe351f3a148",
+    "task1-seed101-x+3mm-baseline\\samples.json": "48e29ad559a3f04cdf80a573859273302912aa559b398ca5c64108bfafde1e92",
+    "task1-seed101-x+3mm-damping4\\held-end.png": "0274017a230f16162314574c234640f2916b4f1b1813244cec8041e56d803993",
+    "task1-seed101-x+3mm-damping4\\result.json": "a2b7fae89032a01975f467fcf202c9cfb23a8c1d25cc87bf6e0deb2e089a09cc",
+    "task1-seed101-x+3mm-damping4\\samples.json": "6e5ed195defc78404c2d296aaadacff3da0f6253b48102c25ba091c159fd402c",
+    "task1-seed101-x+3mm-kp600\\held-end.png": "07159bbc6b6576885353e1ed5a3282195dc73bdeceb2fc485575ee7f95063374",
+    "task1-seed101-x+3mm-kp600\\result.json": "f5a0f6a30d09a8bacb48e82d8e101d24298eff1565bffd09e1cd54f3764a9410",
+    "task1-seed101-x+3mm-kp600\\samples.json": "a86d6f2f3d7ada5aae2976e180172cd21338731935a1b3ad00ada87f912be99a",
+    "task1-seed202-x+3mm-baseline\\held-end.png": "1d15a4ad246b231d28579129331eac64c3b4e0841bd074b1e920ec3f1ea650a1",
+    "task1-seed202-x+3mm-baseline\\reference-matches.json": "2cb28b2fef29afec7013530a330f7527e380bba1e6141354c0094d0992cbcb56",
+    "task1-seed202-x+3mm-baseline\\result.json": "aabaa7630be7571795ef45515033fce974f0e53998f2928f111930d201ce6e11",
+    "task1-seed202-x+3mm-baseline\\samples.json": "a8d1902b98f4f119f8922a733ef16c33da8a6b961b108f4239f3205116ecca74",
+    "task1-seed202-x+3mm-damping4\\held-end.png": "d29d8f00954d3f55762e19686ca8e86e420295e87ec4dcc904864df85ebd679a",
+    "task1-seed202-x+3mm-damping4\\result.json": "ab3a222abc1f28d3247de40a8d36f0455a25313c3a75ec0cd0ee21d74b3f821b",
+    "task1-seed202-x+3mm-damping4\\samples.json": "7cf57d29730666a1a6902ffad64ca5209213022382e6c09f6e4e1447d104f232",
+    "task1-seed202-x+3mm-kp600\\held-end.png": "c1b1307ac40ef3402110b1b0c2bf22541ea972c46193f12b0462f0fd87f73911",
+    "task1-seed202-x+3mm-kp600\\result.json": "404c801f8ec89e953ff7f01f991187eff8bb57065c24f32b9a350daf3a3e31c0",
+    "task1-seed202-x+3mm-kp600\\samples.json": "fa951a8ac3f569255157f1efbdf4842c45aa6f20c5c25f36eca2fcd30da5425e",
+    "task2-seed101-baseline-baseline\\held-end.png": "b15e86cb47411d50a67af0658df14459aa6a1c5f58be1030e6cd3c6cba9a791d",
+    "task2-seed101-baseline-baseline\\reference-matches.json": "30d2e1ba0b18186490872ec84f7b2af672e65ab1fb08c6ca66b8c8da258f2e5a",
+    "task2-seed101-baseline-baseline\\result.json": "6491290ca0b7f2ae8666ead8e1ce97c878747fc9087545516b8402fbe4958005",
+    "task2-seed101-baseline-baseline\\samples.json": "d8c76cf8fd966e6d10bfbfc04673fce90c1c733a20ec6e0c3b94a836ce1387ca",
+    "task2-seed101-baseline-damping4\\held-end.png": "ae71c5193c7d3e704e76a2e90f02dd43094ed19d5455fdbe7013bcc27d27ef75",
+    "task2-seed101-baseline-damping4\\result.json": "a7e7996c6d364788bc6ca3e59a647a2d03bbc919540bc0f39ecf51a91b3d97b7",
+    "task2-seed101-baseline-damping4\\samples.json": "9d84032e1e735fe70c6a3ed9553f61e53398b0a2c00ec4d78fcb785f7cad666d",
+    "task2-seed101-baseline-kp600\\held-end.png": "9ab334104fe4563629dc4ec5047c198b3157c34d3c6a2ef1424a75a422bab1f8",
+    "task2-seed101-baseline-kp600\\result.json": "38fec18679958587687437c13366266cd8b2fa3c1986fdf44389157050369919",
+    "task2-seed101-baseline-kp600\\samples.json": "f361cadbe24e4d30fa2d711c3c51b3e0a5873ad0cd1f8b2a99c4559bf5b0a09a",
+    "task2-seed101-x+3mm-baseline\\held-end.png": "52a4a5ab4953050720288dffbb3181f538fb4194f134d3dd1ca8dd319c9ccd41",
+    "task2-seed101-x+3mm-baseline\\reference-matches.json": "a6e05fe294974f19f8bb695242518903ffc05506e9062fd1f60425210ddcc811",
+    "task2-seed101-x+3mm-baseline\\result.json": "83505e65a65a9c95127adf2168ebeb1cd6d14a4cc70476ee822e23a9f2525cba",
+    "task2-seed101-x+3mm-baseline\\samples.json": "d511d3c5ec90e06860cc621b8e3eb4b43de07389d3868945d53a18393c93b085",
+    "task2-seed101-x+3mm-damping4\\held-end.png": "88c5a8314c17908fb22de7e7a7ff7fa1da5715950ae2d80ae976127ec9559d8a",
+    "task2-seed101-x+3mm-damping4\\result.json": "e8185be52b043e65d5c0c79f81d4653246dbaeeca841ea0070f6a55335bbacc3",
+    "task2-seed101-x+3mm-damping4\\samples.json": "c4928d88569c95116743cdf35e50dcf2a3c44afa4ea50e92bd2036239f624704",
+    "task2-seed101-x+3mm-kp600\\held-end.png": "36a0f681d3b03c88f237a807406bf9f76a48b8fcbb65d8e94ccd8a5dbedd989f",
+    "task2-seed101-x+3mm-kp600\\result.json": "290317822d7f024ac34b954faafb18beb26f2f87f4e4ef7f4bbbae10ab0af7af",
+    "task2-seed101-x+3mm-kp600\\samples.json": "468fe1d7bab9e64f667d52b64f7c2ae2b43f659400a85a730b7d50967decf219",
+    "task2-seed202-baseline-baseline\\held-end.png": "af3669435f93c9438cec884984c700c277f87896ada348c736dabde55d031fd3",
+    "task2-seed202-baseline-baseline\\reference-matches.json": "afe89f1664d2dc910577f617d3710c2f59f769d7ccdbf73277e6c61c08486fae",
+    "task2-seed202-baseline-baseline\\result.json": "99cd05e904b8ebfe0e91cdfd21e05eba2e9c654c727a3149a1654ca5ec5af811",
+    "task2-seed202-baseline-baseline\\samples.json": "87d99650e59f0dc2aea867082e17d835607969bf8e18ab33430296b24f3c14a7",
+    "task2-seed202-baseline-damping4\\held-end.png": "242498210095f3100539e41eb400883f6be301b64d26a14406290ab0eb4d1a37",
+    "task2-seed202-baseline-damping4\\result.json": "c81b55ae0d2cfe7dcffb51ec462728b990ec302776fb3d56dfac02c38b1cfd60",
+    "task2-seed202-baseline-damping4\\samples.json": "c0c4d313710fce99429c5f1c6678fde4a76271d61c70018566de616c80511369",
+    "task2-seed202-baseline-kp600\\held-end.png": "244a67630405f4aa9ce69e0428238dd4d2cbc243795a621b26b4d4d8915021f2",
+    "task2-seed202-baseline-kp600\\result.json": "0a49b2bf1c310600f4680c93c59cfc1abbe7ceb814228a34f6b2155bcc2af097",
+    "task2-seed202-baseline-kp600\\samples.json": "6aa870807356d16b1f765f7abe894334006a8bd229414c96198c84b0ccf0ddaa",
+    "task2-seed202-x+3mm-baseline\\held-end.png": "d11893a7f685f45caeb609ffb3b70b184697e7584a2eeda6cac7aff6819bfc65",
+    "task2-seed202-x+3mm-baseline\\reference-matches.json": "1ea5a8ed11507119df129f1bb090de8e4454ec5ca2bc52064c89b7d10c2219fd",
+    "task2-seed202-x+3mm-baseline\\result.json": "50748a23fb87df50861f05989a2cccfc823b07c2f0921cc2bcdf007ebea1a0a4",
+    "task2-seed202-x+3mm-baseline\\samples.json": "a656a5b4e583be1f2b5e8487fd2c735aac4293d6ef388600d82de6d34676f395",
+    "task2-seed202-x+3mm-damping4\\held-end.png": "df0dde2c8bf860c5fe33e45c69929e8c7254ba766bc18fa6068e768c18d23a88",
+    "task2-seed202-x+3mm-damping4\\result.json": "a578f196ab8d86d152f4ed7d3d7c72eb0d763f986e8a5abb79ee017b1b081647",
+    "task2-seed202-x+3mm-damping4\\samples.json": "92f84c20135dcd37b074b2c9425a007a92023b299f9a6ebefd77278d0ecfecd9",
+    "task2-seed202-x+3mm-kp600\\held-end.png": "d8682243fb239eee87cd70b86b1176d8e239496c8dd00dce0baad3ab15702d13",
+    "task2-seed202-x+3mm-kp600\\result.json": "a72962243a5bbdb02d650691e5bc31bb2149759abfb836f5e20c06d9b9d92bf5",
+    "task2-seed202-x+3mm-kp600\\samples.json": "41c8ec498c5ad15c0f1f82d18d5b08818b6afa870d08183771181dec6ca2c2b5",
+    "braking-range.png": "e0fbf766eeea6ad648a6c5dab53663966e33b77cb046b1985fcb6481a5dafd08",
+    "plot_braking.py": "6feaad7ba063a60d7eae3d17ac2cbb826f0ed007e9b1a04163c5467f1c3a85eb"
+  },
+  "retained_setup_failures": [
+    "braking-replay-001: reference read after controller initialization",
+    "braking-replay-002: timestamp map overwrote cache phase",
+    "braking-saturation-001: recorder variable shadowing"
+  ],
+  "decision": "Neither gain profile qualified; next evaluate torque-aware braking allocation without increasing actuator limits",
+  "original_voice_qualification": "2/3; unchanged",
+  "promotion": "none"
+}

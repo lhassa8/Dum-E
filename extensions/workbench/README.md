@@ -70,6 +70,9 @@ with both failed variants retained. Fresh-policy adaptation remains unqualified.
 The [fresh-policy comparison](docs/libero-fresh-alignment-pc.md) rejects the online
 offset candidate:4/6 baselines versus1/6 corrections pass grasp/hold/resume,
 despite12/12 native goal successes. Braking and grasp recovery remain open.
+The [dense braking audit](docs/libero-braking-pc.md) finds a missed joint excursion
+and wrist torque saturation. Higher gains pass only5/10 known holding windows;
+they remain unqualified.
 
 The [hardware adaptation plan](docs/hardware-adaptation-plan.md) documents what
 can be reused and what must be measured before choosing an arm. Our primitive

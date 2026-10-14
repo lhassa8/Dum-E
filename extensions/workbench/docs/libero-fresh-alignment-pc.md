@@ -5,6 +5,10 @@ native placement success, but the combined grasp/hold/fresh-resume gate passes
 only 4/6 baselines and 1/6 corrected episodes. The original saved-voice
 qualification remains **2/3**; no adapter or controller is promoted.
 
+The subsequent [dense braking audit](libero-braking-pc.md) detects a brief
+20.309mrad excursion missed by polling in task2/seed202/baseline. The4/6 result
+above describes the captured snapshots and does not establish continuous holding.
+
 ## Scope and fixed comparison
 
 The [earlier replay](libero-grasp-alignment-pc.md) established alignment
