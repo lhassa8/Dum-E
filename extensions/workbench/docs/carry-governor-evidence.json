@@ -1,0 +1,693 @@
+{
+  "decision": "Reject carrying limiter; retain scene-cache generation repair",
+  "fresh_audit": {
+    "audit": "pass",
+    "episodes": 12,
+    "outcomes": {
+      "baseline": {
+        "attempted": 6,
+        "triggered": 5,
+        "hold_passed": 3,
+        "native_success": 5,
+        "full_passed": 2
+      },
+      "carry-governor": {
+        "attempted": 6,
+        "triggered": 4,
+        "hold_passed": 4,
+        "native_success": 0,
+        "full_passed": 0
+      }
+    },
+    "client_inference_ms": {
+      "n": 375,
+      "median": 111.67692900016846,
+      "p95": 127.6802989996213,
+      "maximum": 295.81359700023313
+    },
+    "governor_alpha": {
+      "n": 918,
+      "median": 0.09747692528609503,
+      "p95": 1.0,
+      "maximum": 1.0
+    },
+    "governor_extra_ms": {
+      "n": 918,
+      "median": 0.1519335,
+      "p95": 0.260927,
+      "maximum": 0.544461
+    },
+    "scope": "Dense physics and saved command audit; no voice/hardware qualification"
+  },
+  "replay_audit": {
+    "audit": "pass",
+    "trials": 20,
+    "physical_passes": {
+      "baseline": 4,
+      "carry-governor": 0
+    },
+    "governor_decisions": 40,
+    "source_no_trigger_episodes": 2,
+    "scope": "Recorded-state/command audit; modeled range is not a physical guarantee"
+  },
+  "metadata": {
+    "openpi_commit": "215abfb217dbac7d5f1273282331b9b1866c0479",
+    "config": "pi05_libero",
+    "checkpoint_uri": "gs://openpi-assets/checkpoints/pi05_libero",
+    "checkpoint_objects_sha256": "450f2d7b90db37ff3db84074fd9a67ba49fba05c1c482c430b1d1c5de8772084",
+    "jax_version": "0.5.3",
+    "device": "cuda:0",
+    "load_wall_s": 17.792091797000012,
+    "action_contract": "LIBERO OSC_POSE, 7 inputs; not joint positions",
+    "warmup_wall_s": 11.070672530000138,
+    "warmup_input_sha256": "6c251c2fb6c86b010e47249b8158a2d8bab0d4f9edaf0337852e702db488e8ea",
+    "warmup_complete": true,
+    "discarded_warmup_actions": 10,
+    "startup_rng_draws": 1,
+    "paired_experiment_rng": "fold_in(key(seed),draw), then native infer split"
+  },
+  "fresh_protocol": {
+    "scope": "Fresh checkpoint inference and native physics; no voice or hardware",
+    "episodes": [
+      {
+        "task_id": 0,
+        "seed": 303,
+        "variant": "baseline"
+      },
+      {
+        "task_id": 0,
+        "seed": 303,
+        "variant": "carry-governor"
+      },
+      {
+        "task_id": 0,
+        "seed": 404,
+        "variant": "baseline"
+      },
+      {
+        "task_id": 0,
+        "seed": 404,
+        "variant": "carry-governor"
+      },
+      {
+        "task_id": 1,
+        "seed": 303,
+        "variant": "baseline"
+      },
+      {
+        "task_id": 1,
+        "seed": 303,
+        "variant": "carry-governor"
+      },
+      {
+        "task_id": 1,
+        "seed": 404,
+        "variant": "baseline"
+      },
+      {
+        "task_id": 1,
+        "seed": 404,
+        "variant": "carry-governor"
+      },
+      {
+        "task_id": 2,
+        "seed": 303,
+        "variant": "baseline"
+      },
+      {
+        "task_id": 2,
+        "seed": 303,
+        "variant": "carry-governor"
+      },
+      {
+        "task_id": 2,
+        "seed": 404,
+        "variant": "baseline"
+      },
+      {
+        "task_id": 2,
+        "seed": 404,
+        "variant": "carry-governor"
+      }
+    ],
+    "suite": "libero_spatial",
+    "simulator_seed": 7,
+    "initial_state_index": 0,
+    "replan_steps": 5,
+    "max_active_steps": 220,
+    "governor": {
+      "budget_rad": 0.01,
+      "reserve_fraction": 0.5,
+      "activation": "Every positive grip command while running; no Stop-time input"
+    },
+    "difference_from_replay": "All closing/carrying motion; evaluator Stops at native grasp/80mm",
+    "rng": "Seed/draw folded per inference; draw continues across Stop/resume",
+    "pairing_limit": "Same RNG schedule; wall-time inference waits can change pre-intervention physics",
+    "min_lift_m": 0.08,
+    "max_translation_m": 0.01,
+    "max_joint_range_rad": 0.02,
+    "min_hold_wall_s": 2,
+    "min_hold_sim_s_exclusive": 1,
+    "stop": "Evaluator-triggered HTTP Stop, independent of inference; no speech timing claim",
+    "resume": "Clear old action chunk; request fresh camera/proprioception observation",
+    "actor_sha256": "8519bebcaed74c8d8853a38ab5d6ce2d4b08e9ff7397a6b9a37c5dc436484a93",
+    "runtime_sha256": "327f9da0b8e76736a49d6fcdeb1dcda23f9933b993ef8759608bdd3243db80ba",
+    "governor_sha256": "b2c7168c72adeb7cc4dd072099a200de2494048286d8d898d5307ba72dd2f53c",
+    "holding_sampling": "Every native callback plus polling samples within original hold window",
+    "attempt_budget": "One 12-episode cohort; failures and slow/no-trigger episodes count"
+  },
+  "episodes": [
+    {
+      "task_id": 0,
+      "seed": 303,
+      "variant": "baseline",
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": true,
+      "native_success": true,
+      "fresh_resume_inference": true,
+      "hold_wall_s": 2.185232390999772,
+      "min_hold_lift_m": 0.08093470283470472,
+      "max_hold_translation_m": 0.003065704035676282,
+      "max_hold_joint_range_rad": 0.013339334289203197,
+      "all_hold_grasp_contacts": true,
+      "native_hold_samples": 521,
+      "hold_sim_s": 1.0399999999998855,
+      "resume_wall_s": 5196.409211301,
+      "resume_epoch": 5,
+      "development_passed": true,
+      "active_steps": 109,
+      "terminal_phase": "success"
+    },
+    {
+      "task_id": 0,
+      "seed": 303,
+      "variant": "carry-governor",
+      "error": null,
+      "trigger_reached": false,
+      "hold_passed": false,
+      "native_success": false,
+      "fresh_resume_inference": false,
+      "development_passed": false,
+      "active_steps": 220,
+      "terminal_phase": "failed"
+    },
+    {
+      "task_id": 0,
+      "seed": 404,
+      "variant": "baseline",
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": false,
+      "native_success": true,
+      "fresh_resume_inference": true,
+      "hold_wall_s": 2.1523541420001493,
+      "min_hold_lift_m": 0.08748014423483652,
+      "max_hold_translation_m": 0.03911041078611433,
+      "max_hold_joint_range_rad": 0.010575882633785838,
+      "all_hold_grasp_contacts": false,
+      "native_hold_samples": 505,
+      "hold_sim_s": 1.007999999999889,
+      "resume_wall_s": 5237.656723735,
+      "resume_epoch": 9,
+      "development_passed": false,
+      "active_steps": 101,
+      "terminal_phase": "success"
+    },
+    {
+      "task_id": 0,
+      "seed": 404,
+      "variant": "carry-governor",
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": true,
+      "native_success": false,
+      "fresh_resume_inference": true,
+      "hold_wall_s": 2.102531903000454,
+      "min_hold_lift_m": 0.08006987179924574,
+      "max_hold_translation_m": 0.00022619693368949864,
+      "max_hold_joint_range_rad": 0.0007100175197249925,
+      "all_hold_grasp_contacts": true,
+      "native_hold_samples": 501,
+      "hold_sim_s": 1.000000000000334,
+      "resume_wall_s": 5265.584054083,
+      "resume_epoch": 12,
+      "development_passed": false,
+      "active_steps": 220,
+      "terminal_phase": "failed"
+    },
+    {
+      "task_id": 1,
+      "seed": 303,
+      "variant": "baseline",
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": true,
+      "native_success": false,
+      "fresh_resume_inference": true,
+      "hold_wall_s": 2.212321047999467,
+      "min_hold_lift_m": 0.08293825153679968,
+      "max_hold_translation_m": 0.00319930797974132,
+      "max_hold_joint_range_rad": 0.0062581856402532665,
+      "all_hold_grasp_contacts": true,
+      "native_hold_samples": 503,
+      "hold_sim_s": 1.0039999999998894,
+      "resume_wall_s": 5280.528563785,
+      "resume_epoch": 15,
+      "development_passed": false,
+      "active_steps": 220,
+      "terminal_phase": "failed"
+    },
+    {
+      "task_id": 1,
+      "seed": 303,
+      "variant": "carry-governor",
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": true,
+      "native_success": false,
+      "fresh_resume_inference": true,
+      "hold_wall_s": 2.1304326130002664,
+      "min_hold_lift_m": 0.08047373679938619,
+      "max_hold_translation_m": 0.00032077687914837166,
+      "max_hold_joint_range_rad": 0.0006494200296316421,
+      "all_hold_grasp_contacts": true,
+      "native_hold_samples": 508,
+      "hold_sim_s": 1.0140000000003386,
+      "resume_wall_s": 5315.363260929,
+      "resume_epoch": 18,
+      "development_passed": false,
+      "active_steps": 220,
+      "terminal_phase": "failed"
+    },
+    {
+      "task_id": 1,
+      "seed": 404,
+      "variant": "baseline",
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": true,
+      "native_success": true,
+      "fresh_resume_inference": true,
+      "hold_wall_s": 2.3958878740004366,
+      "min_hold_lift_m": 0.1650056680969736,
+      "max_hold_translation_m": 0.003584928263986919,
+      "max_hold_joint_range_rad": 0.01689091217691785,
+      "all_hold_grasp_contacts": true,
+      "native_hold_samples": 519,
+      "hold_sim_s": 1.035999999999886,
+      "resume_wall_s": 5335.488749809,
+      "resume_epoch": 21,
+      "development_passed": true,
+      "active_steps": 154,
+      "terminal_phase": "success"
+    },
+    {
+      "task_id": 1,
+      "seed": 404,
+      "variant": "carry-governor",
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": true,
+      "native_success": false,
+      "fresh_resume_inference": true,
+      "hold_wall_s": 2.1093081659992095,
+      "min_hold_lift_m": 0.08011482776862078,
+      "max_hold_translation_m": 0.0003300960506807527,
+      "max_hold_joint_range_rad": 0.0007173950709007393,
+      "all_hold_grasp_contacts": true,
+      "native_hold_samples": 501,
+      "hold_sim_s": 1.000000000000334,
+      "resume_wall_s": 5365.256333257,
+      "resume_epoch": 24,
+      "development_passed": false,
+      "active_steps": 220,
+      "terminal_phase": "failed"
+    },
+    {
+      "task_id": 2,
+      "seed": 303,
+      "variant": "baseline",
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": false,
+      "native_success": true,
+      "fresh_resume_inference": true,
+      "hold_wall_s": 2.3035293729999466,
+      "min_hold_lift_m": 0.042677984646723455,
+      "max_hold_translation_m": 0.04876614485653962,
+      "max_hold_joint_range_rad": 0.005542738714900075,
+      "all_hold_grasp_contacts": false,
+      "native_hold_samples": 507,
+      "hold_sim_s": 1.0119999999998885,
+      "resume_wall_s": 5384.095802384,
+      "resume_epoch": 27,
+      "development_passed": false,
+      "active_steps": 149,
+      "terminal_phase": "success"
+    },
+    {
+      "task_id": 2,
+      "seed": 303,
+      "variant": "carry-governor",
+      "error": null,
+      "trigger_reached": false,
+      "hold_passed": false,
+      "native_success": false,
+      "fresh_resume_inference": false,
+      "development_passed": false,
+      "active_steps": 220,
+      "terminal_phase": "failed"
+    },
+    {
+      "task_id": 2,
+      "seed": 404,
+      "variant": "baseline",
+      "error": null,
+      "trigger_reached": false,
+      "hold_passed": false,
+      "native_success": true,
+      "fresh_resume_inference": false,
+      "development_passed": false,
+      "active_steps": 159,
+      "terminal_phase": "success"
+    },
+    {
+      "task_id": 2,
+      "seed": 404,
+      "variant": "carry-governor",
+      "error": null,
+      "trigger_reached": true,
+      "hold_passed": true,
+      "native_success": false,
+      "fresh_resume_inference": true,
+      "hold_wall_s": 2.184087966000334,
+      "min_hold_lift_m": 0.08016602984263166,
+      "max_hold_translation_m": 0.0002436994102728123,
+      "max_hold_joint_range_rad": 0.0005762008414325059,
+      "all_hold_grasp_contacts": true,
+      "native_hold_samples": 501,
+      "hold_sim_s": 1.000000000000334,
+      "resume_wall_s": 5460.342146059,
+      "resume_epoch": 32,
+      "development_passed": false,
+      "active_steps": 220,
+      "terminal_phase": "failed"
+    }
+  ],
+  "replay_outcomes": [
+    {
+      "case": "task0-seed101-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.08689944426683593,
+      "max_translation_m": 0.00299103960686217,
+      "max_joint_range_rad": 0.012714828460108851,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task0-seed101-baseline",
+      "profile": {
+        "name": "carry-governor",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.06549472803446821,
+      "max_translation_m": 0.0005121237501037502,
+      "max_joint_range_rad": 0.002831529910237496,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task0-seed202-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.08150367139965342,
+      "max_translation_m": 0.0027853864118968135,
+      "max_joint_range_rad": 0.012100839644953787,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task0-seed202-baseline",
+      "profile": {
+        "name": "carry-governor",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.051772726578215966,
+      "max_translation_m": 0.0005242313891045511,
+      "max_joint_range_rad": 0.0025983595389047487,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task0-seed202-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.08301124730990794,
+      "max_translation_m": 0.0019075415336168875,
+      "max_joint_range_rad": 0.021112809063904336,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task0-seed202-x+3mm",
+      "profile": {
+        "name": "carry-governor",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.06605226514369189,
+      "max_translation_m": 0.0004428385067093376,
+      "max_joint_range_rad": 0.004142769049240602,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task1-seed101-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.08286410698974966,
+      "max_translation_m": 0.003228476205556374,
+      "max_joint_range_rad": 0.008547941295744987,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed101-baseline",
+      "profile": {
+        "name": "carry-governor",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.059064526715528975,
+      "max_translation_m": 0.0003805615587857298,
+      "max_joint_range_rad": 0.0011906413309015207,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task1-seed101-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.08354962344841588,
+      "max_translation_m": 0.00323325982728613,
+      "max_joint_range_rad": 0.008942763805674936,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed101-x+3mm",
+      "profile": {
+        "name": "carry-governor",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.06109570236859818,
+      "max_translation_m": 0.0004463746076857431,
+      "max_joint_range_rad": 0.0014706939322985946,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task1-seed202-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.17222664376840258,
+      "max_translation_m": 0.013991461620890797,
+      "max_joint_range_rad": 0.00901183489407864,
+      "all_grasp_contacts": false,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task1-seed202-x+3mm",
+      "profile": {
+        "name": "carry-governor",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.1716499805665901,
+      "max_translation_m": 0.013598243557187688,
+      "max_joint_range_rad": 0.0020758036759394027,
+      "all_grasp_contacts": false,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.08304076602972765,
+      "max_translation_m": 0.0023904434898578634,
+      "max_joint_range_rad": 0.03140975792446721,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-baseline",
+      "profile": {
+        "name": "carry-governor",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.06148448260729167,
+      "max_translation_m": 0.0008406209867108822,
+      "max_joint_range_rad": 0.0043146674103478055,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.08204296666513256,
+      "max_translation_m": 0.0022935159249716014,
+      "max_joint_range_rad": 0.025224385455916654,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-x+3mm",
+      "profile": {
+        "name": "carry-governor",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.059029488583401735,
+      "max_translation_m": 0.001579270859305355,
+      "max_joint_range_rad": 0.002647734405567981,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed202-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.0803179339933322,
+      "max_translation_m": 0.0021764408982954194,
+      "max_joint_range_rad": 0.02030920767940758,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed202-baseline",
+      "profile": {
+        "name": "carry-governor",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.05792566640060637,
+      "max_translation_m": 0.0013192358636453091,
+      "max_joint_range_rad": 0.002254962378228864,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed202-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.08139327302556598,
+      "max_translation_m": 0.002094290239231151,
+      "max_joint_range_rad": 0.021536045567022377,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed202-x+3mm",
+      "profile": {
+        "name": "carry-governor",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "min_lift_m": 0.06608843475690329,
+      "max_translation_m": 0.0011896421201883281,
+      "max_joint_range_rad": 0.0034247572561834083,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    }
+  ],
+  "incomplete_first_attempt": {
+    "planned": 12,
+    "attempted": 7,
+    "not_run": 5,
+    "error": "AssertionError('Physics stalled during hold')",
+    "interpretation": "Scene cache contamination; not a clean comparative cohort"
+  },
+  "scene_reset_probes": {
+    "scene-reset-before-001": {
+      "samples": 847,
+      "stale_ready_samples": 0,
+      "stale_ready_seen": false
+    },
+    "scene-reset-after-001": {
+      "samples": 836,
+      "stale_ready_samples": 0,
+      "stale_ready_seen": false
+    }
+  },
+  "raw_report_hashes": {
+    "carry-governor-001": "c71ea61491b7f3513a023206760abb438e574f591b55a8537050ef1e332e1e14",
+    "fresh-carry-governor-001": "c1042ea534388f80d94478a1f4edd36fb14263a14db53356e02d103ac9235878",
+    "fresh-carry-governor-002": "b79ed1a456a630f6f622a237bb12b2a0b52a43ef82a90b71e9cef8eb2d79d684",
+    "scene-reset-before-001": "1c49b2c1e772ba0ce8921a72cdac464c8d1369ce2868adb13f71174dd98fb163",
+    "scene-reset-after-001": "e1229a1604c1bb3d860affa15f1f2e6afde41719aeef886630a3affa8fd24873"
+  },
+  "limits": [
+    "Known recorded replay onset uses future Stop time",
+    "Fresh limiter activates on every positive grip, unlike replay",
+    "Sequential wall-time physics is not exact causal pairing",
+    "No speech, microphone, hardware or public-controller qualification",
+    "Original criteria and active220 budget preserved; no retuning"
+  ]
+}

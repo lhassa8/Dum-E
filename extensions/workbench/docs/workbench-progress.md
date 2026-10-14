@@ -2248,3 +2248,29 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
 - No running controller changed; original2/3 voicequalification unchanged.
   Next: different hypothesis, constrain carrying speed before Stop under torque
   and grasp/EEF requirements; preserve220budget and prospective full episodes.
+
+### C — Carrying limiter rejected; scene-reset cache guarded (PC, 2026-10-14)
+
+- Freeze robot-only OSC scalar limiter at10mrad modeled budget/50% torque reserve;
+  original80/12Nm caps, joint hold, grasp/lift/motion gates and220 active steps stay.
+- Known replay20 trials: baseline4/10, limiter0/10. Contacts retained and wrist
+  range reduced, but all candidates fall below80mm at the original Stop time.
+  Offline200ms onset uses future Stop time; not deployable qualification.
+- Fresh attempt001 retains7/12 attempted,5 not run; wrong-scene hold timeline
+  exposes old-step cache publication. Treat entire cohort as contaminated.
+- Guard scene generation independently of command generation, callback and
+  post-step/encoded-cache publication. Archived/current controlled race regression
+  reproduces leak only before repair. Natural before/after reset probes see zero
+  stale Ready samples (847/836); do not claim natural reproduction.
+- Repaired same-parameter fresh002 completes12 episodes, actualGPU checkpoint.
+  Baseline3/6 holds,5/6 native goals,2/6 combined; candidate4/6 holds,0/6 goals,
+  0/6 combined. All6 candidates exhaust original220 budget. Reject limiter.
+- 375 warmed calls111.68/127.68/295.81ms median/p95/max.918 limiter decisions:
+  median scalar.0975, added computation.152/.261/.544ms. Not whole-loop timing.
+- Independent raw audits pass20 replay/12 fresh, dense2ms coverage and hashes;
+  11 coordinator regressions, Ruff and46 protected upstream bytes pass.
+- Owned8900/8901 services closed; public8996 stillReady. Restore localGemma
+  Q4_K_M/4096/1slot/noTTL; Bonsai unchanged. Fresh read-onlycamera1.362s correct
+  three tools, epoch0, no microphone. Full audit/evidence: carry-governor-audit.md.
+- Next: measured-velocity, grasp-sensitive control hypothesis; no retuning this
+  cohort, no lowered gates, no promotion or new publicvoice claim.

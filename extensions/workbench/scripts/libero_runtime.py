@@ -17,7 +17,11 @@ parser.add_argument("--config-dir", type=Path, required=True)
 parser.add_argument("--output", type=Path, required=True)
 parser.add_argument("--port", type=int, default=8901)
 parser.add_argument("--hold-profile", choices=("native", "captured", "joint"), default="joint")
+parser.add_argument("--carry-governor-experiment", action="store_true",
+                    help="Allow explicit experimental motion profiles and dense hold capture")
 args = parser.parse_args()
+if args.carry_governor_experiment and args.hold_profile != "joint":
+    parser.error("Carry governor experiment requires the original joint hold")
 args.output.mkdir(parents=True, exist_ok=False)
 source = args.openpi.resolve()
 os.environ["LIBERO_CONFIG_PATH"] = str(args.config_dir.resolve())
@@ -31,6 +35,9 @@ from examples.libero.main import LIBERO_DUMMY_ACTION, _get_libero_env  # noqa: E
 from libero.libero import benchmark  # noqa: E402
 from PIL import Image  # noqa: E402
 from robosuite.controllers.joint_pos import JointPositionController  # noqa: E402
+
+if args.carry_governor_experiment:
+    from libero_carry_governor import limit_carry_delta
 
 
 class Runtime:
@@ -62,6 +69,12 @@ class Runtime:
         self.stop_requested_wall_s = None
         self.stop_judge_snapshot = None
         self.trace = (args.output / "physics.jsonl").open("w", buffering=1)
+        self.motion_profile = "baseline"
+        self.scene_request_epoch = None
+        self.native_init_epoch = None
+        self.dense_samples = collections.deque(maxlen=2500)
+        self.governor_trace = ((args.output / "governor.jsonl").open("w", buffering=1)
+                               if args.carry_governor_experiment else None)
         self.suite = benchmark.get_benchmark_dict()["libero_spatial"]()
 
     def state(self):
@@ -77,29 +90,41 @@ class Runtime:
             "error": self.error,
             "controller": "libero_osc_pose",
             "hardware": False,
-            "physics_ready": self.observation_bytes is not None,
+            "physics_ready": (self.observation_bytes is not None
+                              and self.native_init_epoch == self.scene_request_epoch),
             "inflight_epoch": self.inflight_epoch,
             "active_steps": self.active_steps,
             "hold_profile": args.hold_profile,
             "pause_joint_kp": 300 if args.hold_profile == "joint" else None,
             "pause_joint_damping_ratio": 2 if args.hold_profile == "joint" else None,
             "stop_requested_wall_s": self.stop_requested_wall_s,
+            "motion_profile": self.motion_profile,
+            "carry_governor_experiment": args.carry_governor_experiment,
+            "scene_request_epoch": self.scene_request_epoch,
+            "native_init_epoch": self.native_init_epoch,
         }
 
-    def initialize(self, task_id, expected_epoch=None):
+    def initialize(self, task_id, expected_epoch=None, motion_profile="baseline"):
         if expected_epoch is not None and expected_epoch != self.epoch:
             raise ValueError("Scene decision discarded after an intervening command")
         if type(task_id) is not int or task_id not in (0, 1, 2):
             raise ValueError("Only frozen supported tasks 0, 1 and 2 are available")
         if self.phase not in ("idle", "success", "failed"):
             raise ValueError("Finish or resume this episode before choosing a new layout")
+        if motion_profile not in ("baseline", "carry-governor"):
+            raise ValueError("Unknown motion profile")
+        if motion_profile != "baseline" and not args.carry_governor_experiment:
+            raise ValueError("Experimental motion profile is not enabled")
+        self.motion_profile = motion_profile
         self.epoch += 1
+        self.scene_request_epoch = self.epoch
         self.queue.clear()
         self.phase = "initializing"
         self.error = None
         self.stop_requested_wall_s = None
         self.task_id = task_id
         self.observation_bytes = None
+        self.frame = b""
         self.judge_snapshot = self.stop_judge_snapshot = None
         self.pending_init = (task_id, self.epoch)
         return self.state()
@@ -181,6 +206,7 @@ class Runtime:
             self.grip = -1.0
             self.policy_steps = self.hold_steps = 0
             self.active_steps = 0
+            self.native_init_epoch = init_epoch
             self.hold_diagnostics = None
             self.goal_override = None
             self.hold_mode = None
@@ -189,6 +215,24 @@ class Runtime:
             original_set_goal = controller.set_goal
             original_run_controller = controller.run_controller
             self.joint_hold_active = False
+            self.dense_samples.clear()
+            if args.carry_governor_experiment:
+                original_scale = controller.scale_action
+                assert controller.use_delta and controller.impedance_mode == "fixed"
+                assert controller.control_freq == 20
+
+                def scale_action(action):
+                    delta = original_scale(action)
+                    if (self.motion_profile == "carry-governor" and self.grip > 0
+                            and self.phase == "running"):
+                        delta, record = limit_carry_delta(delta, controller)
+                        record.update(native_init_epoch=init_epoch, epoch=self.epoch,
+                                      sim_time=float(self.env.env.sim.data.time),
+                                      grip_command=self.grip)
+                        self.governor_trace.write(json.dumps(record)+"\n")
+                    return delta
+
+                controller.scale_action = scale_action
 
             def set_goal(action, set_pos=None, set_ori=None):
                 if self.goal_override is not None:
@@ -218,8 +262,11 @@ class Runtime:
                     # This stays on the sole physics-owning thread.
                     sensor = self.judge()
                     with self.lock:
-                        self.judge_snapshot = sensor
+                        if init_epoch == self.scene_request_epoch:
+                            self.judge_snapshot = {**sensor, "native_init_epoch": init_epoch}
                         paused = self.phase == "paused"
+                        if args.carry_governor_experiment:
+                            self.dense_samples.append({**sensor, "native_init_epoch": init_epoch})
                     if paused and not self.joint_hold_active:
                         self.enter_joint_hold()
                     elif not paused:
@@ -245,6 +292,7 @@ class Runtime:
                 else "osc_hold"
             )
             selected_epoch = self.epoch
+            selected_native_init_epoch = self.native_init_epoch
             selected_at = time.monotonic()
             selected_phase = self.phase
             if selected_phase == "running":
@@ -278,6 +326,11 @@ class Runtime:
                 self.hold_mode = hold_mode
         self.obs, _, done, _ = self.env.step(action.tolist())
         with self.lock:
+            if selected_native_init_epoch != self.scene_request_epoch:
+                self.trace.write(json.dumps({"source": "discarded_old_scene_step",
+                                             "native_init_epoch": selected_native_init_epoch,
+                                             "scene_request_epoch": self.scene_request_epoch})+"\n")
+                return
             self.inflight_epoch = None
             if self.phase == "running" and done:
                 if not self.env.env._check_success():
@@ -302,9 +355,11 @@ class Runtime:
         np.savez(observation, **{key: self.obs[key] for key in keys})
         judge = self.judge()
         with self.lock:
+            if selected_native_init_epoch != self.scene_request_epoch:
+                return
             self.frame = output.getvalue()
             self.observation_bytes = observation.getvalue()
-            self.judge_snapshot = judge
+            self.judge_snapshot = {**judge, "native_init_epoch": selected_native_init_epoch}
             state = self.state()
         self.trace.write(
             json.dumps(
@@ -366,6 +421,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.reply(runtime.judge_snapshot)
             if self.path == "/stop-judge":
                 return self.reply(runtime.stop_judge_snapshot)
+            if self.path == "/dense-hold" and args.carry_governor_experiment:
+                return self.reply(list(runtime.dense_samples))
             if self.path == "/frame.jpg":
                 return self.reply(runtime.frame, kind="image/jpeg")
             if self.path == "/observation" and runtime.observation_bytes is not None:
@@ -380,7 +437,8 @@ class Handler(BaseHTTPRequestHandler):
             body = json.loads(self.rfile.read(size) or b"{}")
             with runtime.lock:
                 if self.path == "/initialize":
-                    result = runtime.initialize(body["task_id"], body.get("expected_epoch"))
+                    result = runtime.initialize(body["task_id"], body.get("expected_epoch"),
+                                                body.get("motion_profile", "baseline"))
                 elif self.path == "/stop":
                     result = runtime.stop()
                 elif self.path == "/resume":
@@ -422,3 +480,5 @@ finally:
     if runtime.env is not None:
         runtime.env.close()
     runtime.trace.close()
+    if runtime.governor_trace is not None:
+        runtime.governor_trace.close()

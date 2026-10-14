@@ -17,7 +17,11 @@ parser.add_argument("--config-dir", type=Path, required=True)
 parser.add_argument("--saturation-case", help="Audit torques on one named baseline window only")
 parser.add_argument("--torque-allocation", action="store_true",
                     help="Separate baseline versus bounded acceleration-allocation experiment")
+parser.add_argument("--carry-governor", action="store_true",
+                    help="Separate known-window pre-Stop OSC command-limiter diagnostic")
 args = parser.parse_args()
+assert sum(bool(v) for v in (args.saturation_case, args.torque_allocation,
+                            args.carry_governor)) <= 1, "Use one diagnostic mode"
 source_report = json.loads((args.source_run / "report.json").read_text())
 physics = [json.loads(line) for line in args.physics.open()]
 cases = []
@@ -50,6 +54,8 @@ profiles = [{"name": "baseline", "kp": 300, "damping_ratio": 2},
 if args.torque_allocation:
     assert not args.saturation_case, "Allocation and single-case diagnostics are separate"
     profiles = profiles[:1] + [{"name": "allocation", "kp": 300, "damping_ratio": 2}]
+if args.carry_governor:
+    profiles = profiles[:1] + [{"name": "carry-governor", "kp": 300, "damping_ratio": 2}]
 if args.saturation_case:
     cases = [c for c in cases if c["name"] == args.saturation_case]
     assert len(cases) == 1, "Unknown saturation diagnostic case"
@@ -72,7 +78,20 @@ protocol = {
     "attempt_budget": "One frozen three-profile grid; retain every case; no retuning",
     "saturation_diagnostic_case": args.saturation_case,
     "torque_allocation": args.torque_allocation,
+    "carry_governor": args.carry_governor,
 }
+if args.carry_governor:
+    protocol.update(attempt_budget="One frozen two-profile diagnostic; no retuning",
+                    pause_entry="Recorded callback time; each variant captures measured joints",
+                    governor={"budget_rad": .01, "reserve_fraction": .5,
+                              "activation": "Positive grip, last0.2sim seconds before brake",
+                              "inputs": "Decoded OSC delta, arm Jacobian/inertia/bias/limits",
+                              "limitations": (
+                                  "Offline onset uses recorded Stop time; not deployable or "
+                                  "fresh-policy qualification")})
+    helper = Path(__file__).with_name("libero_carry_governor.py")
+    protocol["governor_sha256"] = hashlib.sha256(helper.read_bytes()).hexdigest()
+    (args.output / helper.name).write_bytes(helper.read_bytes())
 if args.torque_allocation:
     protocol["attempt_budget"] = "One frozen two-profile allocation grid; no gain retuning"
     protocol["allocation"] = (
@@ -95,6 +114,9 @@ from libero.libero.envs import OffScreenRenderEnv  # noqa: E402
 from PIL import Image  # noqa: E402
 from robosuite.controllers.joint_pos import JointPositionController  # noqa: E402
 
+if args.carry_governor:
+    from libero_carry_governor import limit_carry_delta
+
 if args.torque_allocation:
     from scipy.optimize import lsq_linear
 
@@ -110,7 +132,7 @@ for case in cases:
         trial.mkdir()
         outcome = {"case": case["name"], "profile": profile, "error": None,
                    "source_captured_hold_passed": case["source_captured_hold_passed"]}
-        samples, comparisons, torque_records = [], [], []
+        samples, comparisons, torque_records, governor_records = [], [], [], []
         env = None
         try:
             task = suite.get_task(case["task_id"])
@@ -148,6 +170,24 @@ for case in cases:
             start, end = case["held"][0]["sim_time"], case["held"][-1]["sim_time"]
             brake_time = case["brake"]["brake_started_sim_time"]
             original = osc.run_controller
+            original_scale = osc.scale_action
+            command_context = {"grip": -1.0, "index": None, "action": None}
+
+            def scale_action(action):
+                delta = original_scale(action)
+                if (profile["name"] == "carry-governor" and command_context["grip"] > 0
+                        and brake_time-.2-1e-10 <= native.sim.data.time < brake_time-1e-10):
+                    delta, record = limit_carry_delta(delta, osc)
+                    record.update(sim_time=float(native.sim.data.time),
+                                  grip_command=command_context["grip"],
+                                  source_index=command_context["index"],
+                                  source_action=command_context["action"])
+                    governor_records.append(record)
+                return delta
+
+            if args.carry_governor:
+                assert osc.use_delta and osc.impedance_mode == "fixed" and osc.control_freq == 20
+                osc.scale_action = scale_action
 
             def measure():
                 return {"sim_time": float(native.sim.data.time),
@@ -171,6 +211,11 @@ for case in cases:
                         outcome["entry_joint_error_rad"] = float(np.max(np.abs(
                             joint.goal_qpos - case["brake"]["goal_joints"])))
                         run_controller.paused = True
+                        outcome["entry_velocity"] = joint.joint_vel.tolist()
+                        outcome["captured_goal_joints"] = joint.goal_qpos.tolist()
+                        outcome["goal_capture_error_rad"] = float(np.max(np.abs(
+                            joint.goal_qpos-joint.joint_pos)))
+                        assert outcome["goal_capture_error_rad"] < 1e-12
                     command = joint.run_controller()
                     low, high = robot.torque_limits
                     allocated = command
@@ -201,11 +246,15 @@ for case in cases:
 
             run_controller.paused = False
             osc.run_controller = run_controller
-            for row in case["rows"]:
+            for source_index, row in enumerate(case["rows"]):
+                command_context["grip"] = float(row["action"][6])
+                command_context.update(index=source_index, action=row["action"])
                 env.step(row["action"])
                 measured = measure()
                 capture("step_end")
-                if measured["sim_time"] < brake_time - 1e-10:
+                unchanged_until = (brake_time-.2 if profile["name"] == "carry-governor"
+                                   else brake_time)
+                if measured["sim_time"] < unchanged_until - 1e-10:
                     expected = row["judge"]
                     comparisons.append(float(max(
                         np.max(np.abs(np.array(measured["xyz"]) - expected["xyz"])),
@@ -215,8 +264,10 @@ for case in cases:
             assert samples and abs(samples[0]["sim_time"] - start) < 1e-9, "Origin not sampled"
             assert abs(samples[-1]["sim_time"] - end) < 1e-9, "Window end not sampled"
             outcome["max_prebrake_reference_error"] = max(comparisons)
+            outcome["reference_prefix_end_s"] = unchanged_until
             assert outcome["max_prebrake_reference_error"] <= 1e-6, "Prebrake mismatch"
-            assert outcome["entry_joint_error_rad"] <= 1e-6, "Brake-entry mismatch"
+            if profile["name"] != "carry-governor":
+                assert outcome["entry_joint_error_rad"] <= 1e-6, "Brake-entry mismatch"
             if profile["name"] == "baseline":
                 bytime = {}
                 for index, sample in enumerate(samples):
@@ -262,6 +313,8 @@ for case in cases:
         (trial / "samples.json").write_text(json.dumps(samples, indent=2))
         if args.saturation_case or args.torque_allocation:
             (trial / "torques.json").write_text(json.dumps(torque_records, indent=2))
+        if args.carry_governor:
+            (trial / "governor.json").write_text(json.dumps(governor_records, indent=2))
         (trial / "result.json").write_text(json.dumps(outcome, indent=2))
         report["trials"].append(outcome)
         (args.output / "report.json").write_text(json.dumps(report, indent=2))
