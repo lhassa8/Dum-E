@@ -26,7 +26,7 @@ for name, source in (("archived", args.before),
                           and node.name == "Runtime")
         isolated = ast.Module(body=[definition], type_ignores=[])
         env = {"args": SimpleNamespace(output=Path(directory), hold_profile="native",
-                                        carry_governor_experiment=False),
+                                        carry_governor_experiment=False, dense_hold_capture=False),
                "np": np, "json": json, "time": time, "io": io, "Image": Image,
                "collections": collections, "threading": threading,
                "benchmark": SimpleNamespace(get_benchmark_dict=lambda: {

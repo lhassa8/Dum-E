@@ -2292,3 +2292,45 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   transitions, but shared braking rate and omitted position control are poor.
 - Next: independent dissipative joint braking/position correction or grasp
   adaptation; no further common-rate/window sweep. Fullaudit velocity-brake-audit.md.
+
+### C — Alternative pretrained grasp policy preparation (PC, in progress)
+
+- Change strategy after rejected braking experiments: evaluate official OpenVLA-OFT
+  spatial checkpoint in the same supported LIBERO simulator before grasp adaptation.
+- Pin source e4287e9 and custom Transformers bc339d9; checkpoint revision
+  6d0231af0e48c5985f1ff86908f4674b84bc049b, public/ungated, MIT metadata.
+  Downloaded files checked against publisher LFS SHA256 or Git blob identity.
+  Whole checkpoint remains unverified while three large shards are downloading.
+- Existing Torch2.7.1cu126 detects5090 but lacks sm120 kernels. Create separate
+  Python3.10.20/openvla-oft-cu128 environment; preserve assistant/pi0.5 environments.
+  Official CUDA12.8 Torch/vision install still live; no new GPU kernel claim yet.
+- NVIDIA-hosted dependency transfers timed out; use same versions from official
+  PyPI while Torch comes from cu128 index. Custom fork wheel built from pinned
+  shallow clone; abort redundant full-history fetch.87-package inference lock
+  resolves, but remaining dependencies are not installed yet.
+- First checkpoint downloader intentionally replaced with bounded curl requests;
+  it had made progress before stopping. Preserve/reuse partials and archived helper.
+  Full-file identity must pass before model loading; no raw/model upload.
+- Adapter matches publisher action conversion on128 chunks, preserves six OSC
+  inputs, rejects3 malformed outputs. Not joint-target mapping or model execution.
+- Prepare real BF16 kernel/checkpoint probes and inference-only bootstrap using
+  original modules and identical enum, skipping unrelated training exports.
+  These probes have not executed; no policy/controller promoted or motion triggered.
+- Exact live sessions/provenance/next commands in local runs/openvla-oft/continuation.json.
+  Keep existing downloads/install jobs; poll same handles. Public8996 and both local
+  models preserved. Run kernels, install locked dependencies, then full checkpoint
+  inference before physical comparison. Gemma stays loaded until that load needs GPU.
+
+- Current continuation: original curl transfer completed shards2/3 but exited1
+  on shard1 curl timeout28. It is terminal; preserve its first1.208GB prefix.
+  Repair shard1 separately under checkpoint-repair-001, live session44517; do not
+  overwrite root files until original transfer terminal (now confirmed).
+  CUDA installer78021 remains live and writing library files; not a stopped job.
+- Freeze six-case prospective protocol in openvla-prospective-protocol.json before
+  model outcomes: three known layouts×two deterministic repetitions, original220
+  budget including inference waits, eight-action publisher chunk and fullhold gates.
+- Add independent --dense-hold-capture flag, leaving rejected motion profiles off.
+  Real native smoke records524 samples at2ms intervals over1.046sim seconds;
+  experimental profile initialize is rejected409. This is infrastructure evidence,
+  not a lifted-object or pretrained-policy pass. Owned smoke simulator exits0;
+  scene-generation regression and11 coordinator checks pass. Public8996 stillReady.

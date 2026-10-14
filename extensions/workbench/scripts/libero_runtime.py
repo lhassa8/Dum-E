@@ -19,9 +19,11 @@ parser.add_argument("--port", type=int, default=8901)
 parser.add_argument("--hold-profile", choices=("native", "captured", "joint"), default="joint")
 parser.add_argument("--carry-governor-experiment", action="store_true",
                     help="Allow explicit experimental motion profiles and dense hold capture")
+parser.add_argument("--dense-hold-capture", action="store_true",
+                    help="Record native hold samples without enabling experimental motion profiles")
 args = parser.parse_args()
-if args.carry_governor_experiment and args.hold_profile != "joint":
-    parser.error("Carry governor experiment requires the original joint hold")
+if (args.carry_governor_experiment or args.dense_hold_capture) and args.hold_profile != "joint":
+    parser.error("Dense hold capture requires the original joint hold")
 args.output.mkdir(parents=True, exist_ok=False)
 source = args.openpi.resolve()
 os.environ["LIBERO_CONFIG_PATH"] = str(args.config_dir.resolve())
@@ -73,6 +75,7 @@ class Runtime:
         self.scene_request_epoch = None
         self.native_init_epoch = None
         self.dense_samples = collections.deque(maxlen=2500)
+        self.dense_hold_capture = args.carry_governor_experiment or args.dense_hold_capture
         self.governor_trace = ((args.output / "governor.jsonl").open("w", buffering=1)
                                if args.carry_governor_experiment else None)
         self.suite = benchmark.get_benchmark_dict()["libero_spatial"]()
@@ -100,6 +103,7 @@ class Runtime:
             "stop_requested_wall_s": self.stop_requested_wall_s,
             "motion_profile": self.motion_profile,
             "carry_governor_experiment": args.carry_governor_experiment,
+            "dense_hold_capture": self.dense_hold_capture,
             "scene_request_epoch": self.scene_request_epoch,
             "native_init_epoch": self.native_init_epoch,
         }
@@ -265,7 +269,7 @@ class Runtime:
                         if init_epoch == self.scene_request_epoch:
                             self.judge_snapshot = {**sensor, "native_init_epoch": init_epoch}
                         paused = self.phase == "paused"
-                        if args.carry_governor_experiment:
+                        if self.dense_hold_capture:
                             self.dense_samples.append({**sensor, "native_init_epoch": init_epoch})
                     if paused and not self.joint_hold_active:
                         self.enter_joint_hold()
@@ -421,7 +425,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self.reply(runtime.judge_snapshot)
             if self.path == "/stop-judge":
                 return self.reply(runtime.stop_judge_snapshot)
-            if self.path == "/dense-hold" and args.carry_governor_experiment:
+            if self.path == "/dense-hold" and runtime.dense_hold_capture:
                 return self.reply(list(runtime.dense_samples))
             if self.path == "/frame.jpg":
                 return self.reply(runtime.frame, kind="image/jpeg")

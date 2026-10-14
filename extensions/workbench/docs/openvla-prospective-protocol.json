@@ -1,0 +1,47 @@
+{
+  "status": "Frozen before checkpoint inference; not execution evidence",
+  "policy": "moojink/openvla-7b-oft-finetuned-libero-spatial",
+  "checkpoint_revision": "6d0231af0e48c5985f1ff86908f4674b84bc049b",
+  "source_commit": "e4287e94541f459edc4feabc4e181f537cd569a8",
+  "transformers_commit": "bc339d9ad707454c0c115970db43c260067c61ab",
+  "suite": "libero_spatial",
+  "tasks": [0, 1, 2],
+  "repetitions_per_task": 2,
+  "planned_episodes": 6,
+  "simulator_seed": 7,
+  "initial_state_index": 0,
+  "policy_decode": "L1 head; do_sample false; no diffusion or FiLM",
+  "observations": "Native 256px RGB front/wrist rotated180; publisher TF resize and90% center crop; 8D proprioception",
+  "actions": "8 native LIBERO OSC inputs per replan chunk; publisher gripper binarization/sign conversion; never joint targets",
+  "max_active_steps": 220,
+  "inference_waits": "Count within active budget; explicit pauses excluded",
+  "stop_trigger": "Independent evaluator native bilateral grasp and lift>=80mm",
+  "hold": {
+    "controller": "Original captured joint goal, kp300/damping2, native torque clipping",
+    "minimum_wall_s": 2,
+    "minimum_sim_s_exclusive": 1,
+    "minimum_lift_m": 0.08,
+    "maximum_translation_m": 0.01,
+    "maximum_joint_range_rad": 0.02,
+    "native_grasp_contacts": "Required for every dense and polled sample",
+    "sampling": "Every native callback plus polling within original window"
+  },
+  "resume": "Discard pending inference and all old chunks; reject stale generation with409; request fresh camera/proprioception",
+  "combined_pass": "Qualified Stop and complete physical hold and fresh resumed inference and native task success",
+  "accounting": "All six episodes count; no-trigger/timeout/task failures count; infrastructure error retained and remaining episodes not run",
+  "limitations": [
+    "Three known layouts repeated, not six independent unseen tasks",
+    "Policy deterministic; repetitions are not different policy RNG seeds",
+    "Not a paired causal comparison with historical pi0.5 results",
+    "Eight-action schedule differs from pi0.5 five-action replanning",
+    "Simulator seed7 differs from publisher seed0",
+    "No speech latency, real hardware, workshop-tool or generalization qualification"
+  ],
+  "gates_before_run": [
+    "Full checkpoint publisher hashes verified",
+    "Real BF16 GPU kernels pass on actual RTX5090",
+    "Actual checkpoint inference yields finite8x7 outputs on GPU",
+    "Explicit publisher action adapter contract passes"
+  ],
+  "retuning": "No parameter, step-budget, controller or threshold changes after outcomes"
+}
