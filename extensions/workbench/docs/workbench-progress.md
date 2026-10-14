@@ -1,5 +1,23 @@
 # Workbench goal progress
 
+October 14 — local LFM2.5 comparison:
+- Verified the official QAD Q4_0 GGUF and its independent LM Studio import copy
+  against pinned publisher bytes/SHA-256. Actual inference used the CUDA12 2.57.0
+  engine, context4096/one slot; no microphone, motion or hardware calls.
+- Four read-only runs each attempted all31 fixed requests three times. Bonsai
+  existing/native profiles score93/93 and78/93; LFM scores38/93 and81/93.
+  The LFM larger budget has six unwanted fetches on unsupported tasks, three
+  missed contextual wrench requests and three capability truncations. Rejected
+  as current interpreter replacement; no prompt retuning or failure relabeling.
+- Correct-only median485ms Bonsai existing versus1,322ms LFM native. Sequential
+  runs with other desktop GPU applications active; no isolated latency or camera
+  contention claim. Full raw source/fixture/row audit passes allfour runs.
+- Candidate unloaded by its own identifier; checkpoint/cache/reports kept local,
+  Bonsai remains resident. WSL restarted since prior turns: previous simulator
+  demo processes were absent, so no present Ready/demo/microphone claim.
+- New evaluation/preparation/audit helpers lint clean;46 upstream files remain
+  byte-identical. See [the evaluation](lfm-local-evaluation.md) and evidence JSON.
+
 October12,B13 — pretrained vision and read-only camera questions:
 - Previous goal turn was progress: stable placements published at lab13d6d2e /
   fork8fb6ec4. Revalidated unchanged running main Ready/Bonsai/contactsv2.

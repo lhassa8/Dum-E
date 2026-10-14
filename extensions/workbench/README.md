@@ -98,6 +98,10 @@ MLX backend remains the portable default.
 The [load-settings experiment](docs/bonsai-load-tuning-audit.md) reduces matched
 Bonsai text latency from 2.061 s to 0.686 s median with explicit GPU offload and
 one prediction slot, while keeping model selection interchangeable.
+The [local LFM2.5 trial](docs/lfm-local-evaluation.md) verifies the official QAD
+checkpoint and compares two frozen dialogue profiles. The larger budget reaches
+81/93 but selects six unwanted fetches for unsupported tasks; Bonsai remains the
+current interpreter. This is text inference, not a new arm-control policy.
 
 The [tool contact fix](docs/idle-contact-audit.md) preserves Stop holds and keeps
 returned tools stable through 30 simulated minutes, followed by physical re-pickup.

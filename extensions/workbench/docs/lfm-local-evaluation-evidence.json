@@ -1,0 +1,366 @@
+{
+  "date": "2026-10-14",
+  "scope": "Frozen synthetic read-only dialogue; actual local inference/parser. No microphone, camera inference, motion or hardware. Sequential runs with other desktop GPU applications active.",
+  "decision": "Do not replace the current Bonsai command interpreter with this LFM configuration.",
+  "checkpoint": {
+    "repo": "LiquidAI/LFM2.5-24B-A2B-GGUF",
+    "revision": "0912d33141f77e10705345a6732bfd83f0252fdc",
+    "filename": "LFM2.5-24B-A2B-QAD-Q4_0.gguf",
+    "expected_bytes": 13578190880,
+    "expected_sha256": "d1c03f73ecaf61017d70419eec9e5dc0b05d50ae26c23d522829b934fbabf8a5",
+    "license_sha256": "30adf9d6478191fb87f2424f63ba0728598335aaf99cd2848ef17e8e545fe94b",
+    "verified": true
+  },
+  "runtime": {
+    "client_python": "3.12.3",
+    "cli_commit": "dcefd5a",
+    "actual_candidate_engine": "llama.cpp-win-x86_64-nvidia-cuda12-avx2@2.57.0",
+    "gpu": "RTX 5090",
+    "driver": "616.92",
+    "gpu_memory_total_mib": 32607,
+    "context": 4096,
+    "parallel": 1,
+    "offload_requested": "max",
+    "offload_layers_profiled": false,
+    "candidate_load_seconds": 8.24,
+    "candidate_cleanup": "Unloaded only workbench-lfm-eval; cached weights preserved."
+  },
+  "runs": [
+    {
+      "name": "bonsai-existing-001",
+      "protocol": {
+        "scope": "Read-only complete intent/reply; excludes speech, motion and camera inference",
+        "model": "prism-ml/bonsai-27b",
+        "unique_cases": 31,
+        "repeats": 3,
+        "planned_cases": 93,
+        "fixture_sha256": "aed016fa54905b47478d8181fadd701435dae51fa81a604933bf2ac7dedf4593",
+        "fixture_hashes": {
+          "dialogue_cases.json": "cff8e1f60ea825260e70639f7e8cd0399d0974e5dcf522c56575170ac51dd620",
+          "dialogue_context_cases.json": "2d0d2f01da212ab034c6610cbacfbda2dd7e45ce9eb3ed92c644bd0a6ae095fd",
+          "dialogue_quality_cases.json": "58a73dfe6999d373d6a5b85d83e5f37db4eaca9853349ad9f75674144c69a397"
+        },
+        "profile": "existing320-none",
+        "temperature": 0,
+        "max_tokens": 320,
+        "reasoning_effort": "none",
+        "json_schema": "Existing strict workbench intent schema",
+        "deadline_s": 30,
+        "criterion": "Original allowed action/object plus actual ToolIntent.parse",
+        "reply_quality": "Original review descriptions retained for separate qualitative review",
+        "actor_sha256": "6ca29be83cfeea549265ab0151c6c598aca25a637b66d1e89f7838310b13eff4",
+        "backend_sha256": "ad0083a3fe9a5efc144d7982951ca5a9966937ad7fb4bdfc4d558d11de52cfa3",
+        "parser_sha256": "925ecc264edd8ca32a8c67d13203608dd1507bf6bc3ebd91e01b7d0e8c1f217e"
+      },
+      "attempted": 93,
+      "correct": 93,
+      "not_run": 0,
+      "startup_warmup_ms": 1502.0957190000672,
+      "all_attempts_ms": {
+        "median_ms": 485.42179399998986,
+        "p95_ms": 628.7035010000182,
+        "max_ms": 719.7786579999956
+      },
+      "correct_replies_only_ms": {
+        "median_ms": 485.42179399998986,
+        "p95_ms": 628.7035010000182,
+        "max_ms": 719.7786579999956
+      },
+      "truncated": 0,
+      "completed_wrong": 0,
+      "unexpected_fetches": 0,
+      "wrong_intents": [],
+      "source_sha256": {
+        "summary.json": "4695a21bf53bc359ecb2f06795e91d48a65fbcb36c5d6d92b0cf6589cd038cce",
+        "protocol.json": "c4998477f01cf891306bf8ee8a7a701bacd50ffdff4d656d83fc097502faf0b9",
+        "rows.jsonl": "54fc7c1b61232fa4145290472b09bccc2d8b450151570b9d356cf680542aaad8",
+        "audit.json": "b76ff3c82c8c5b319bc00934c5ef281836af9e899e61512375947168b02de31f"
+      },
+      "audit": "pass"
+    },
+    {
+      "name": "bonsai-native-001",
+      "protocol": {
+        "scope": "Read-only complete intent/reply; excludes speech, motion and camera inference",
+        "model": "prism-ml/bonsai-27b",
+        "unique_cases": 31,
+        "repeats": 3,
+        "planned_cases": 93,
+        "fixture_sha256": "aed016fa54905b47478d8181fadd701435dae51fa81a604933bf2ac7dedf4593",
+        "fixture_hashes": {
+          "dialogue_cases.json": "cff8e1f60ea825260e70639f7e8cd0399d0974e5dcf522c56575170ac51dd620",
+          "dialogue_context_cases.json": "2d0d2f01da212ab034c6610cbacfbda2dd7e45ce9eb3ed92c644bd0a6ae095fd",
+          "dialogue_quality_cases.json": "58a73dfe6999d373d6a5b85d83e5f37db4eaca9853349ad9f75674144c69a397"
+        },
+        "profile": "native2048",
+        "temperature": 0,
+        "max_tokens": 2048,
+        "reasoning_effort": "omitted",
+        "json_schema": "Existing strict workbench intent schema",
+        "deadline_s": 30,
+        "criterion": "Original allowed action/object plus actual ToolIntent.parse",
+        "reply_quality": "Original review descriptions retained for separate qualitative review",
+        "actor_sha256": "319cdfdda0248368ebbdbfa8e6a833161a19a07a0af7ed859aa9f4e30b334f8e",
+        "backend_sha256": "ad0083a3fe9a5efc144d7982951ca5a9966937ad7fb4bdfc4d558d11de52cfa3",
+        "parser_sha256": "925ecc264edd8ca32a8c67d13203608dd1507bf6bc3ebd91e01b7d0e8c1f217e"
+      },
+      "attempted": 93,
+      "correct": 78,
+      "not_run": 0,
+      "startup_warmup_ms": 3688.3988780000436,
+      "all_attempts_ms": {
+        "median_ms": 5304.700013999991,
+        "p95_ms": 16324.128102000032,
+        "max_ms": 17830.33242700003
+      },
+      "correct_replies_only_ms": {
+        "median_ms": 4358.4415519999875,
+        "p95_ms": 10238.760778999904,
+        "max_ms": 10676.936718999968
+      },
+      "truncated": 15,
+      "completed_wrong": 0,
+      "unexpected_fetches": 0,
+      "wrong_intents": [],
+      "source_sha256": {
+        "summary.json": "567c132b12b407faee9756a2db327092e4a151154f7ae807f7f493d471ae1790",
+        "protocol.json": "820ebe16f61d46e778781ec2b0c0d95e83cb665184b223a66536ce87c75ec48b",
+        "rows.jsonl": "667c0ea3fcbf5a472b4654bb60b396ab985340633acfb2d993e4aaaa20cbec20",
+        "audit.json": "1955c28bd0b6b19fb5ea6ed533dccac98cacd63f15cda00655da55343de996b8"
+      },
+      "audit": "pass"
+    },
+    {
+      "name": "lfm-existing-001",
+      "protocol": {
+        "scope": "Read-only complete intent/reply; excludes speech, motion and camera inference",
+        "model": "workbench-lfm-eval",
+        "unique_cases": 31,
+        "repeats": 3,
+        "planned_cases": 93,
+        "fixture_sha256": "aed016fa54905b47478d8181fadd701435dae51fa81a604933bf2ac7dedf4593",
+        "fixture_hashes": {
+          "dialogue_cases.json": "cff8e1f60ea825260e70639f7e8cd0399d0974e5dcf522c56575170ac51dd620",
+          "dialogue_context_cases.json": "2d0d2f01da212ab034c6610cbacfbda2dd7e45ce9eb3ed92c644bd0a6ae095fd",
+          "dialogue_quality_cases.json": "58a73dfe6999d373d6a5b85d83e5f37db4eaca9853349ad9f75674144c69a397"
+        },
+        "profile": "existing320-none",
+        "temperature": 0,
+        "max_tokens": 320,
+        "reasoning_effort": "none",
+        "json_schema": "Existing strict workbench intent schema",
+        "deadline_s": 30,
+        "criterion": "Original allowed action/object plus actual ToolIntent.parse",
+        "reply_quality": "Original review descriptions retained for separate qualitative review",
+        "actor_sha256": "319cdfdda0248368ebbdbfa8e6a833161a19a07a0af7ed859aa9f4e30b334f8e",
+        "backend_sha256": "ad0083a3fe9a5efc144d7982951ca5a9966937ad7fb4bdfc4d558d11de52cfa3",
+        "parser_sha256": "925ecc264edd8ca32a8c67d13203608dd1507bf6bc3ebd91e01b7d0e8c1f217e"
+      },
+      "attempted": 93,
+      "correct": 38,
+      "not_run": 0,
+      "startup_warmup_ms": 2164.351525000029,
+      "all_attempts_ms": {
+        "median_ms": 1070.025305999934,
+        "p95_ms": 1246.3555439999254,
+        "max_ms": 1257.0423310000933
+      },
+      "correct_replies_only_ms": {
+        "median_ms": 736.4439789998869,
+        "p95_ms": 1099.7611390000657,
+        "max_ms": 1110.2844219999497
+      },
+      "truncated": 52,
+      "completed_wrong": 3,
+      "unexpected_fetches": 0,
+      "wrong_intents": [
+        {
+          "repeat": 0,
+          "case": "dialogue_context_cases:need_nuts_after_information",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "A wrench (spanner) is the tool for tightening nuts. It's designed to grip and turn nuts securely."
+          }
+        },
+        {
+          "repeat": 1,
+          "case": "dialogue_context_cases:need_nuts_after_information",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "A wrench (spanner) is the tool for tightening nuts. It's designed to grip and turn nuts securely."
+          }
+        },
+        {
+          "repeat": 2,
+          "case": "dialogue_context_cases:need_nuts_after_information",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "A wrench (spanner) is the tool for tightening nuts. It's designed to grip and turn nuts securely."
+          }
+        }
+      ],
+      "source_sha256": {
+        "summary.json": "f4fbc754d7289712e7f4d34cca07c153d06103e9bf7d7a05ad99f25df4ee253e",
+        "protocol.json": "ac796661275058f6d857b93793da844c00c1a7457b2deff726c30bf8f4728615",
+        "rows.jsonl": "6c834841560e124d054c0ccf0d4dc142631e0e9aae9deddb992f6bf38a940213",
+        "audit.json": "bc71e76e2688e3089709743db4177d496164b19447e13ee7958fe52aeebb1f19"
+      },
+      "audit": "pass"
+    },
+    {
+      "name": "lfm-native-001",
+      "protocol": {
+        "scope": "Read-only complete intent/reply; excludes speech, motion and camera inference",
+        "model": "workbench-lfm-eval",
+        "unique_cases": 31,
+        "repeats": 3,
+        "planned_cases": 93,
+        "fixture_sha256": "aed016fa54905b47478d8181fadd701435dae51fa81a604933bf2ac7dedf4593",
+        "fixture_hashes": {
+          "dialogue_cases.json": "cff8e1f60ea825260e70639f7e8cd0399d0974e5dcf522c56575170ac51dd620",
+          "dialogue_context_cases.json": "2d0d2f01da212ab034c6610cbacfbda2dd7e45ce9eb3ed92c644bd0a6ae095fd",
+          "dialogue_quality_cases.json": "58a73dfe6999d373d6a5b85d83e5f37db4eaca9853349ad9f75674144c69a397"
+        },
+        "profile": "native2048",
+        "temperature": 0,
+        "max_tokens": 2048,
+        "reasoning_effort": "omitted",
+        "json_schema": "Existing strict workbench intent schema",
+        "deadline_s": 30,
+        "criterion": "Original allowed action/object plus actual ToolIntent.parse",
+        "reply_quality": "Original review descriptions retained for separate qualitative review",
+        "actor_sha256": "319cdfdda0248368ebbdbfa8e6a833161a19a07a0af7ed859aa9f4e30b334f8e",
+        "backend_sha256": "ad0083a3fe9a5efc144d7982951ca5a9966937ad7fb4bdfc4d558d11de52cfa3",
+        "parser_sha256": "925ecc264edd8ca32a8c67d13203608dd1507bf6bc3ebd91e01b7d0e8c1f217e"
+      },
+      "attempted": 93,
+      "correct": 81,
+      "not_run": 0,
+      "startup_warmup_ms": 896.0737129996232,
+      "all_attempts_ms": {
+        "median_ms": 1391.6012069998942,
+        "p95_ms": 4797.887890999846,
+        "max_ms": 6525.176122000175
+      },
+      "correct_replies_only_ms": {
+        "median_ms": 1321.6321330000937,
+        "p95_ms": 3922.2452779999912,
+        "max_ms": 5077.505815000222
+      },
+      "truncated": 3,
+      "completed_wrong": 9,
+      "unexpected_fetches": 6,
+      "wrong_intents": [
+        {
+          "repeat": 0,
+          "case": "dialogue_cases:impossible",
+          "intent": {
+            "action": "fetch",
+            "object": "screwdriver",
+            "destination": "handoff",
+            "message": ""
+          }
+        },
+        {
+          "repeat": 0,
+          "case": "dialogue_context_cases:need_nuts_after_information",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "A wrench (spanner) is the tool for tightening nuts. It's designed to grip and turn nuts securely."
+          }
+        },
+        {
+          "repeat": 0,
+          "case": "dialogue_quality_cases:impossible_skill",
+          "intent": {
+            "action": "fetch",
+            "object": "screwdriver",
+            "destination": "handoff",
+            "message": "I'll bring you a screwdriver. However, I'm not able to repair laptops \u2014 I can only help with fetching tools or chatting while working."
+          }
+        },
+        {
+          "repeat": 1,
+          "case": "dialogue_cases:impossible",
+          "intent": {
+            "action": "fetch",
+            "object": "screwdriver",
+            "destination": "handoff",
+            "message": ""
+          }
+        },
+        {
+          "repeat": 1,
+          "case": "dialogue_context_cases:need_nuts_after_information",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "A wrench (spanner) is the tool for tightening nuts. It's designed to grip and turn nuts securely."
+          }
+        },
+        {
+          "repeat": 1,
+          "case": "dialogue_quality_cases:impossible_skill",
+          "intent": {
+            "action": "fetch",
+            "object": "screwdriver",
+            "destination": "handoff",
+            "message": "I'll bring you a screwdriver. However, I'm not able to repair laptops \u2014 I can only help with fetching tools or chatting while working."
+          }
+        },
+        {
+          "repeat": 2,
+          "case": "dialogue_cases:impossible",
+          "intent": {
+            "action": "fetch",
+            "object": "screwdriver",
+            "destination": "handoff",
+            "message": ""
+          }
+        },
+        {
+          "repeat": 2,
+          "case": "dialogue_context_cases:need_nuts_after_information",
+          "intent": {
+            "action": "answer",
+            "object": null,
+            "destination": null,
+            "message": "A wrench (spanner) is the tool for tightening nuts. It's designed to grip and turn nuts securely."
+          }
+        },
+        {
+          "repeat": 2,
+          "case": "dialogue_quality_cases:impossible_skill",
+          "intent": {
+            "action": "fetch",
+            "object": "screwdriver",
+            "destination": "handoff",
+            "message": "I'll bring you a screwdriver. However, I'm not able to repair laptops \u2014 I can only help with fetching tools or chatting while working."
+          }
+        }
+      ],
+      "source_sha256": {
+        "summary.json": "4e66d96ac47d56e2fd6a77a20acafee5f20243b723ab6195dbb14303e56fa31b",
+        "protocol.json": "e0a4186794fc26907365aac59c3f41a66a2252ae1e3b5b86505dbab1da520ca2",
+        "rows.jsonl": "e078aae2695ed51d0d29d5b63b8106facb6ecf3e7f9b06783b72059416025a77",
+        "audit.json": "5cd2c5ccf15998d806465ea2248aab14894d11c76d43fec4381d2bf4de1ab02f"
+      },
+      "audit": "pass"
+    }
+  ],
+  "limitations": [
+    "31 known requests repeated three times; not 93 independent unseen tasks.",
+    "No real microphone, acoustic echo, spoken Stop or stateful physical journey qualification.",
+    "No planner benchmark or pretrained robot policy claim.",
+    "Raw reports and weights remain local."
+  ]
+}
