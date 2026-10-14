@@ -71,4 +71,4 @@ def late_ack(report):
 
 check("late acknowledgment rejected", late_ack, False)
 (folder / "speech-evidence-checks.json").write_text(json.dumps(checks, indent=2) + "\n")
-print(f"PASS: {len(checks)} altered speech records checked; original evidence unchanged.")
+print(f"PASS: {len(checks)} speech evidence checks; original evidence unchanged.")

@@ -1,5 +1,31 @@
 # Workbench goal progress
 
+October 14 — post-restart whole-assistant requalification:
+- Baseline25201a1, no WSL assistant/native/MCP services alive. Restore camera
+  voice profile at8996 with local Bonsai/Gemma, CUDA general ASR, CPU Stop, SAPI.
+  Select local Gemma explicitly from duplicate-key menu; deviceIdentifier=null.
+- Current typed full Stop/resume/tool-change/return sequence passes. Retained
+  natural saved speech also delivers/returns from continued scene without reset:
+  recognition174.86ms, native decision517.82ms, lift214.3mm, handofferror22.8mm.
+- With1.5GB freeGPU, close only ownedidle8996 while isolated9036 runs original
+  six frozen full saved-stream journeys. Actual browser VAD/ASR/models/taskbus/
+  native camera physics/Windows output: independent6/6, all12 placements pass,
+  minlift201.35mm,maxerror8.47mm,sampled settleddrift0.000057rad/heldmotion0.071mm.
+- Conservative browser-clock nativeStop upper bounds761.85/846.90ms med/p95,max
+  n6. Five native-verified pendingcamera replies superseded. No relaxed judges.
+  All24 requiredacks/42 replies finish;ack51.35/91.90ms n24,APIplayer76.20/129ms
+  n67. One additional begun utterance cancelled intentionally; no acoustic proof.
+- Evidence checker has six TOTAL records: positive control plus five negatives;
+  correct old "six altered" label/prose, keep logic/rawdata unchanged.38 targeted
+  Python regressions and recorder/output/observer contracts pass;46 upstream hashes.
+- Close ownedtestservices, restore8996 cb993cb1 Ready. Both models now manual
+  no-TTL residency, context4096/one slot. Two fresh camera probes1.474/1.024s see
+  allthree tools without motion; n2 is not broad/longidle/heldout qualification.
+- Human-owned microphone check requested again after actual restoration; no
+  microphone activated by agent. Rawdata/renderframes local. See
+  [restart report](pc-restart-requalification.md). Goal remains active: human room
+  timing/echo, broader camera recovery and pretrained-policy Stop/holding open.
+
 October 14 — local LFM2.5 comparison:
 - Verified the official QAD Q4_0 GGUF and its independent LM Studio import copy
   against pinned publisher bytes/SHA-256. Actual inference used the CUDA12 2.57.0

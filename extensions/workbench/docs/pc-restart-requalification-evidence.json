@@ -1,0 +1,124 @@
+{
+  "date": "2026-10-14",
+  "baseline_commit": "25201a1",
+  "scope": "Post-WSL-restart requalification. Six fixed synthetic saved-stream journeys, actual VAD/ASR/models/task bus/camera-controlled physics/native Windows audio. No microphone or acoustic timing proof; no hardware. Other desktop GPU applications active.",
+  "protocol_sha256": "b3bd58dd3d97bf68c7f8259e6aa2f492e0c888da0ca8424593e586c63a32e6a1",
+  "protected_criteria": {
+    "maximum_end_to_native_stop_ms": 1000,
+    "maximum_settled_joint_drift_rad": 0.02,
+    "settling_observation_ms": 600,
+    "minimum_pre_stop_joint_motion_rad": 0.001,
+    "minimum_tool_height_m": 0.13,
+    "all_tasks_cancelled": true,
+    "no_remaining_queued_work": true,
+    "retain_gripper_command": true,
+    "all_captured_tracks_ended": true,
+    "minimum_verified_pending_reply_interruptions": 1,
+    "pending_replies_must_be_superseded": true,
+    "maximum_held_tool_translation_m": 0.01,
+    "maximum_unrelated_displacement_m": 0.004,
+    "maximum_placement_distance_m": 0.035,
+    "minimum_lift_m": 0.08
+  },
+  "isolated_native": "dume-b32b82b7",
+  "restored_native": "dume-cb993cb1",
+  "public_port": 8996,
+  "physical": {
+    "passed": true,
+    "journeys": 6,
+    "placements": 12,
+    "stop_upper_bound_ms": {
+      "count": 6,
+      "median": 761.8498802185059,
+      "p95": 846.8999862670898
+    },
+    "maximum_stop_upper_bound_ms": 846.8999862670898,
+    "pending_camera_replies_superseded": 5,
+    "minimum_native_verified_lift_m": 0.20134801337432753,
+    "maximum_placement_error_m": 0.008471606091862606,
+    "maximum_sampled_settled_joint_drift_rad": 5.67387007923692e-05,
+    "maximum_sampled_held_translation_m": 7.05534121710844e-05
+  },
+  "speech": {
+    "passed": true,
+    "complete_acknowledgments": 24,
+    "complete_required_replies": 42,
+    "acknowledgment": {
+      "count": 24,
+      "median_ms": 51.350000001490116,
+      "p95_ms": 91.90000000596046
+    },
+    "api_to_player": {
+      "count": 67,
+      "median_ms": 76.19999998807907,
+      "p95_ms": 129.0
+    },
+    "mutation_controls": {
+      "unaltered_passes": 1,
+      "altered_negatives_rejected": 5
+    }
+  },
+  "continued_scene_saved_voice": {
+    "recognition_ms": 174.8636139999462,
+    "native_responsiveness": {
+      "job_id": "ad048711",
+      "route": "model",
+      "interpretation_started_ms": 7.736,
+      "interpretation_ms": 511.344,
+      "decision_ms": 517.824,
+      "pickup_started_ms": 2493.906,
+      "task_finished_ms": 22055.644
+    },
+    "observed_lift_m": 0.21427726667786826,
+    "placement_error_m": 0.02284138839128002,
+    "returned": true,
+    "audio_sha256": "521aba2b35357f6137be8d59abc715f4400b622eca032fb510e17a3cfa85f52e"
+  },
+  "restored_camera": {
+    "read_only_queries": 2,
+    "http_ms": [
+      1473.9757219999915,
+      1024.3258510000005
+    ],
+    "visible_tools": [
+      "screwdriver",
+      "wrench",
+      "hammer"
+    ],
+    "frame_sha256": "4b94d72fb567ff047556d42cc1adb7177920517c55395dd56c14be9b699c555a",
+    "scope": "RGB-only conversational image estimates; no motion targets or broad qualification."
+  },
+  "models": {
+    "local_only": true,
+    "identifiers": [
+      "prism-ml/bonsai-27b",
+      "workbench-vision-gemma"
+    ],
+    "restored_context_length": 4096,
+    "parallel": 1,
+    "restored_ttl_ms": null,
+    "offload_requested": "max",
+    "general_asr_device": "cuda",
+    "stop_asr_device": "cpu",
+    "speech": "windows-sapi"
+  },
+  "verification": {
+    "targeted_python_tests": 38,
+    "upstream_files_byte_identical": 46,
+    "recorder_local_output_observer_contracts": "pass"
+  },
+  "source_sha256": {
+    "physical-manifest.json": "a548aa9e8f941e325d5492b141f69696dc972d97f27378b7c19fc734641ab652",
+    "physical-stop-browser.json": "2a19308b6826880e60326c1c2a7aa4630c78b066d6a25da1c0a77bd60a6857b1",
+    "physical-stop-judged.json": "97e678745544ef341b129ad1ffcfef15ec855c6e470c59949121cfc43a13d579",
+    "physical-speech-judged.json": "0ff7bc5ae6d8d08061435f16e317453ed357785ebae190abfc175ecbf0f62d23",
+    "speech-evidence-checks.json": "6805fe350a7699a0c1b52bf4844045b20ce704b3dfdc3422cf076412230e8231",
+    "restored-camera.json": "6065ab07a44cd6344efc06c3b2636271949d9ed46ee3e86ceabf00ebd7a46e1b",
+    "restored-models.json": "67aae11f5e190ba50f999154094bae9a0483d594ce2f3928426cb058f1b671e1"
+  },
+  "remaining": [
+    "Human microphone/acoustic echo and word-end timing qualification.",
+    "Broader supported camera-layout reliability and recovery.",
+    "Pretrained-policy Stop/holding qualification and adaptation."
+  ]
+}

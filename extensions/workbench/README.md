@@ -1,5 +1,9 @@
 # Dum-E workbench: local voice and physical simulation
 
+The [post-restart requalification](docs/pc-restart-requalification.md) restores
+the native-speech camera demo at 8996 and independently passes six complete saved
+voice/Stop/Proceed/return journeys. Human microphone/echo verification remains open.
+
 **Windows 11 / RTX 5090:** start with the [current PC migration guide](docs/windows-migration.md).
 The Mac instructions and measurements below are historical. The PC launcher is
 `powershell.exe -NoProfile -File .\extensions\workbench\scripts\launch_windows.ps1`

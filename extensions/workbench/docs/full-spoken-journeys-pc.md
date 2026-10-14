@@ -47,7 +47,7 @@ uses a monotonic count, as the public page does, and records this supersession.
 Failure telemetry and media-clock positions were added. Both race checks pass;
 the failed run, native logs, rendered screenshot and source snapshot remain local.
 
-Six altered-record checks retain the real pass and reject missing speech,
+Six evidence checks include the unaltered positive control and reject missing speech,
 truncated acknowledgment, missing complete Stop confirmation, output failure,
 and late acknowledgment. The combined judge first runs the unchanged physical
 judge. No source, case, timing target or uncertainty gate was tuned to pass.
