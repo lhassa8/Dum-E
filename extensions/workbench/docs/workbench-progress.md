@@ -2182,3 +2182,25 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   matches and rendered images. Independent audit verifiesall30, bounds, snapshot
   matches and clipping. Standard plot inspected. Next: constrained torque allocation
   within original actuator limits, then prospective fresh-policy qualification.
+
+### C — Native torque allocation improves replay but remains unqualified (PC)
+
+- Publish dense braking audit be2108a, then change strategy from higher gains
+  to constrained allocation of native PD acceleration error. Freeze baseline
+  and allocator kp300/d2 onall10 known stops; no profile or weight retuning.
+- Native M inverse least squares, BVLS1e-9/50iter, SciPy1.10.1 already installed;
+  import/startup check before callbacks. Original torque caps and robot clipping
+  remain. In-bound native commands unchanged; solver failure has no fallback.
+- Twenty actual replays complete; baseline reproduces dense prior exactly;
+  pre-brake and entry states exact. Known physical gate improves4/10 to6/10.
+  Retain grip/motion failure, two joint-range failures and two lift-minimum
+  failures (overlapping one case). Worst range31.410→25.141mrad stillfails.
+- All5144 extra-callback costs median/p95/max0.008/0.021/10.732ms;227 optimized
+  callbacks0.130/0.397/10.732ms. Maximum violates2ms real-time suitability; no
+  hardware or whole-callback timing claim. Livewall/voice criteria not measured.
+- Independent raw audit checks20denominator, original dense baseline metrics,
+  all physical gates and every candidate torque bound. Raw torque-allocation-001
+  preserves actors, samples, command/allocation vectors, timings andrenders.
+- No running controller changed; original2/3 voicequalification unchanged.
+  Next: different hypothesis, constrain carrying speed before Stop under torque
+  and grasp/EEF requirements; preserve220budget and prospective full episodes.

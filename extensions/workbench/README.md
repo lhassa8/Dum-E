@@ -73,6 +73,9 @@ despite12/12 native goal successes. Braking and grasp recovery remain open.
 The [dense braking audit](docs/libero-braking-pc.md) finds a missed joint excursion
 and wrist torque saturation. Higher gains pass only5/10 known holding windows;
 they remain unqualified.
+The [bounded torque allocator](docs/libero-torque-allocation-pc.md) improves
+known holding replays from4/10 to6/10 within the original actuator limits, but
+remaining motion, lift and contact failures prevent promotion.
 
 The [hardware adaptation plan](docs/hardware-adaptation-plan.md) documents what
 can be reused and what must be measured before choosing an arm. Our primitive

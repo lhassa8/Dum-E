@@ -1,0 +1,980 @@
+{
+  "date": "2026-10-14",
+  "decision": "Allocation unqualified:6/10; no deployment",
+  "scope": "Known-window physical replay; no inference, voice or live wall-time qualification",
+  "protocol": {
+    "scope": "Known-window physical replay; no inference, voice or live wall-time qualification",
+    "physics_sha256": "149236dfc8af6c88defba68ef5cdffc7ad85e181750eab3be1b725ce773ee29a",
+    "source_report_sha256": "f0e5f7cf5fb43f29105b1149715c2e4c5a46a73e73a0d33b0c55a2a70cabac25",
+    "actor_sha256": "184dde2c08a3fb2cf8c5523031eb1e40756ff7f0281f8d7ec2bc15e4e14ef50c",
+    "profiles": [
+      {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      {
+        "name": "allocation",
+        "kp": 300,
+        "damping_ratio": 2
+      }
+    ],
+    "cases": [
+      "task0-seed101-baseline",
+      "task0-seed202-baseline",
+      "task0-seed202-x+3mm",
+      "task1-seed101-baseline",
+      "task1-seed101-x+3mm",
+      "task1-seed202-x+3mm",
+      "task2-seed101-baseline",
+      "task2-seed101-x+3mm",
+      "task2-seed202-baseline",
+      "task2-seed202-x+3mm"
+    ],
+    "source_episodes_without_trigger": 2,
+    "simulator_seed": 7,
+    "initial_state_index": 0,
+    "min_lift_m": 0.08,
+    "max_translation_m": 0.01,
+    "max_joint_range_rad": 0.02,
+    "max_reference_error": 1e-06,
+    "measurement_window": "Original Stop sensor timestamp through original last held timestamp",
+    "sampling": "Every native torque callback and completed step in that fixed physical window",
+    "pause_entry": "Exact recorded native torque-callback sim time; same measured joint target",
+    "camera": "Automatic image observations off for replay; physics equivalence must be verified",
+    "attempt_budget": "One frozen two-profile allocation grid; no gain retuning",
+    "saturation_diagnostic_case": null,
+    "torque_allocation": true,
+    "allocation": "minimize ||inverse(M)*(tau-native_PD_command)||2 with unchanged native torque bounds; BVLS tol1e-9 max_iter50; identical native command if already within bounds"
+  },
+  "trials": [
+    {
+      "case": "task0-seed101-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08689944426683593,
+      "max_translation_m": 0.00299103960686217,
+      "max_joint_range_rad": 0.012714828460108851,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task0-seed101-baseline",
+      "profile": {
+        "name": "allocation",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08689944426683593,
+      "max_translation_m": 0.0019653633816622117,
+      "max_joint_range_rad": 0.011356463667446803,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task0-seed202-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 2.463156308918357e-07,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "min_lift_m": 0.08150367139965342,
+      "max_translation_m": 0.0027853864118968135,
+      "max_joint_range_rad": 0.012100839644953787,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task0-seed202-baseline",
+      "profile": {
+        "name": "allocation",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "min_lift_m": 0.08150367139965342,
+      "max_translation_m": 0.0019814648571785947,
+      "max_joint_range_rad": 0.010921070415911505,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task0-seed202-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "min_lift_m": 0.08301124730990794,
+      "max_translation_m": 0.0019075415336168875,
+      "max_joint_range_rad": 0.021112809063904336,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task0-seed202-x+3mm",
+      "profile": {
+        "name": "allocation",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "min_lift_m": 0.08082098600355958,
+      "max_translation_m": 0.003886392911172331,
+      "max_joint_range_rad": 0.017556622607857175,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed101-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "min_lift_m": 0.08286410698974966,
+      "max_translation_m": 0.003228476205556374,
+      "max_joint_range_rad": 0.008547941295744987,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed101-baseline",
+      "profile": {
+        "name": "allocation",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "min_lift_m": 0.08286410698974966,
+      "max_translation_m": 0.002782401860912568,
+      "max_joint_range_rad": 0.008000294786921991,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed101-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08354962344841588,
+      "max_translation_m": 0.00323325982728613,
+      "max_joint_range_rad": 0.008942763805674936,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed101-x+3mm",
+      "profile": {
+        "name": "allocation",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08354962344841588,
+      "max_translation_m": 0.0026791552773393,
+      "max_joint_range_rad": 0.008299169624423453,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    },
+    {
+      "case": "task1-seed202-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "min_lift_m": 0.17222664376840258,
+      "max_translation_m": 0.013991461620890797,
+      "max_joint_range_rad": 0.00901183489407864,
+      "all_grasp_contacts": false,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task1-seed202-x+3mm",
+      "profile": {
+        "name": "allocation",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 527,
+      "physical_window_s": 1.0099999999998888,
+      "min_lift_m": 0.1721460902747347,
+      "max_translation_m": 0.013929512671445229,
+      "max_joint_range_rad": 0.00885728203190106,
+      "all_grasp_contacts": false,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.08304076602972765,
+      "max_translation_m": 0.0023904434898578634,
+      "max_joint_range_rad": 0.03140975792446721,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-baseline",
+      "profile": {
+        "name": "allocation",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 524,
+      "physical_window_s": 1.0059999999998892,
+      "min_lift_m": 0.07986399500823238,
+      "max_translation_m": 0.006429828248954544,
+      "max_joint_range_rad": 0.02514096545493505,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "min_lift_m": 0.08204296666513256,
+      "max_translation_m": 0.0022935159249716014,
+      "max_joint_range_rad": 0.025224385455916654,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed101-x+3mm",
+      "profile": {
+        "name": "allocation",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 528,
+      "physical_window_s": 1.0119999999998885,
+      "min_lift_m": 0.08023358415517035,
+      "max_translation_m": 0.0046235872079735596,
+      "max_joint_range_rad": 0.020521908970398517,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed202-baseline",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "min_lift_m": 0.0803179339933322,
+      "max_translation_m": 0.0021764408982954194,
+      "max_joint_range_rad": 0.02030920767940758,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed202-baseline",
+      "profile": {
+        "name": "allocation",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": true,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 523,
+      "physical_window_s": 1.0039999999998894,
+      "min_lift_m": 0.0794155801081301,
+      "max_translation_m": 0.0030100828521653395,
+      "max_joint_range_rad": 0.01689123125721048,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed202-x+3mm",
+      "profile": {
+        "name": "baseline",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "max_hold_reference_error": 0.0,
+      "sample_count": 526,
+      "physical_window_s": 1.007999999999889,
+      "min_lift_m": 0.08139327302556598,
+      "max_translation_m": 0.002094290239231151,
+      "max_joint_range_rad": 0.021536045567022377,
+      "all_grasp_contacts": true,
+      "physical_window_passed": false
+    },
+    {
+      "case": "task2-seed202-x+3mm",
+      "profile": {
+        "name": "allocation",
+        "kp": 300,
+        "damping_ratio": 2
+      },
+      "error": null,
+      "source_captured_hold_passed": false,
+      "initial_reference_error_m": 0.0,
+      "torque_limits": [
+        [
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -80.0,
+          -12.0,
+          -12.0
+        ],
+        [
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          80.0,
+          12.0,
+          12.0
+        ]
+      ],
+      "entry_joint_error_rad": 0.0,
+      "max_prebrake_reference_error": 0.0,
+      "sample_count": 526,
+      "physical_window_s": 1.007999999999889,
+      "min_lift_m": 0.08021031414982671,
+      "max_translation_m": 0.0033610496768093105,
+      "max_joint_range_rad": 0.01782198130293189,
+      "all_grasp_contacts": true,
+      "physical_window_passed": true
+    }
+  ],
+  "independent_raw_audit": "passed",
+  "pass_counts_out_of_10": {
+    "baseline": 4,
+    "allocation": 6
+  },
+  "extra_allocation_timing": {
+    "scope": "After native PD calculation; startup import/preparation excluded; not whole control callback or hardware qualification",
+    "all_candidate_callbacks": {
+      "n": 5144,
+      "median_ms": 0.008143,
+      "p95_ms": 0.02070874999999996,
+      "max_ms": 10.731538
+    },
+    "optimized_callbacks": {
+      "n": 227,
+      "median_ms": 0.13003,
+      "p95_ms": 0.39737699999999965,
+      "max_ms": 10.731538
+    }
+  },
+  "raw_run": "runs/policy-runtime/torque-allocation-001",
+  "raw_sha256": {
+    "probe_libero_braking.py": "184dde2c08a3fb2cf8c5523031eb1e40756ff7f0281f8d7ec2bc15e4e14ef50c",
+    "protocol.json": "a7942dcd9108c29fd33cd6f0d4a01a5996cd0f29df78e39462d6c7e9dc4b9598",
+    "report.json": "d943b1af54ecbcea7c3f7689d745b4535dd3e93fb7e8f7de56521b3bf9761370",
+    "task0-seed101-baseline-allocation\\held-end.png": "2104e61dc0e9b4a7155dc5730be9005eafd31c7abda37253376fe57506aaed94",
+    "task0-seed101-baseline-allocation\\result.json": "8e9e1d4ba0cb72dfc2538b7ca6cc59c99c3c1e17cac7d28d821501ef385ea1e4",
+    "task0-seed101-baseline-allocation\\samples.json": "ec7e0dc3d837a4294e4353869ba90dc0f3a1a9c3c805bc40ec0ec4a2d8c6139f",
+    "task0-seed101-baseline-allocation\\torques.json": "5ebaf80cffd6430ced5580ff813ab1ddafc8aed1e89c40dc7d3ef22e8135d146",
+    "task0-seed101-baseline-baseline\\held-end.png": "f4839c81f659527e54b43c91e2ff7ebb8e3036512d24e7403b801e4be67fff60",
+    "task0-seed101-baseline-baseline\\reference-matches.json": "671beebea5c5e15a394490db7ad844bba40f0408400c925baf4fd11e238f1222",
+    "task0-seed101-baseline-baseline\\result.json": "c38fa98457bf1c75ae5edacfb82f9542859812291c9ecc2ead05b75b80ff6138",
+    "task0-seed101-baseline-baseline\\samples.json": "5657b791dc2f6e7da40337d3c790d0f407b404ad51cd6ca010b81327c54cb188",
+    "task0-seed101-baseline-baseline\\torques.json": "b6cc81f35bd37d28e2543744f5c5c5391b941233f5ef2193747641b300a75731",
+    "task0-seed202-baseline-allocation\\held-end.png": "7cab61548589b5b72e567724ff82a820ad6ec3527702ffe3112489ecbbb7f13e",
+    "task0-seed202-baseline-allocation\\result.json": "b26622edcf9e4706b1aec4b00ff0cb8348b69780fc31139c3dc694e97a14b825",
+    "task0-seed202-baseline-allocation\\samples.json": "9a900b221cbdd064680f59b0cf781785f0e0bea02a8ee60c572a72a4f329d31d",
+    "task0-seed202-baseline-allocation\\torques.json": "3f28c917565d8585c125f4eeada6834227d0799137f46f5826c3acf2db4eb97e",
+    "task0-seed202-baseline-baseline\\held-end.png": "42660692e9ef405c12cf781708cd6b472b48f76d19b251c0a1eece87bc9719a4",
+    "task0-seed202-baseline-baseline\\reference-matches.json": "c33dda7fd7f255b9360c88c7d83aeae5a48ad6c9ef05cbadc49f6bf723576976",
+    "task0-seed202-baseline-baseline\\result.json": "1732b059e1d57a35d22ec13d76f251c12018057d08dccd904968bcea4f809b74",
+    "task0-seed202-baseline-baseline\\samples.json": "5096de0e513933f18b78cfc05d2445c8df822c08a184c1f8b83e51b5302ded00",
+    "task0-seed202-baseline-baseline\\torques.json": "3ecc0ba5f411d13c070d70b4dacd8e1165777ea1af876963d3b72b64842be415",
+    "task0-seed202-x+3mm-allocation\\held-end.png": "f1ce323a4b7866b81bd272d727812685aae6eeb54a642ed0eb519c875698686f",
+    "task0-seed202-x+3mm-allocation\\result.json": "c7c11793512b7a4e32c6fdff2879918a280693d0e16bf8690bab36599c44dae0",
+    "task0-seed202-x+3mm-allocation\\samples.json": "892ed7eceb188cbdc140d3f2a2bc19efad0b80196ae6edb616b59aa238ce5fc4",
+    "task0-seed202-x+3mm-allocation\\torques.json": "34c0f244754dad70de83129e4842616e16f25ce06da02bc7b3bcb73efb3f9c39",
+    "task0-seed202-x+3mm-baseline\\held-end.png": "8ab4720637d5e5a1b89f13734e21fd5b3e90bcf26747736884dac00c7e3167f1",
+    "task0-seed202-x+3mm-baseline\\reference-matches.json": "f9302bf1cf29e9a612209b9174cd1fdb3e2c96b37605b20c9e85574e28b31a05",
+    "task0-seed202-x+3mm-baseline\\result.json": "d92ea2f281fc0ff85717e83e567099e0150611c869e4f1e1337de938bcc67e5d",
+    "task0-seed202-x+3mm-baseline\\samples.json": "23560312f016ef73d5bda4d12eeae339c37564d7ee014340b2735b14c8772761",
+    "task0-seed202-x+3mm-baseline\\torques.json": "69ab37c6461ee2536ad2415d0385f00321fb63b9ca8f4cdec030d0131da80fbe",
+    "task1-seed101-baseline-allocation\\held-end.png": "7f453beabe11aeefb8e59c8063f86dc53c0d30a3133222e8df8802bed6f2c240",
+    "task1-seed101-baseline-allocation\\result.json": "5ceeba90db731147bc3df764504f99fcca304de00d357556dc6d503594add7d4",
+    "task1-seed101-baseline-allocation\\samples.json": "cfe67f8432e3cbd31a1886f1ef37fcb211ac8dc2dd63888f3ff6db18c772c0d8",
+    "task1-seed101-baseline-allocation\\torques.json": "fa676bd08841aa1e865d0c60cf80b786936b71917330909165ba882d780d01aa",
+    "task1-seed101-baseline-baseline\\held-end.png": "e908f4cb494bbc393b3f348e0b3f6a050bba77362fb1d4d48daf4c2060e8ad6d",
+    "task1-seed101-baseline-baseline\\reference-matches.json": "18d67a51c19a4f7285773960a53e558445bafd07c4244645e8b7344fb35d915c",
+    "task1-seed101-baseline-baseline\\result.json": "6ff2199cb5b852e608dd6bee3ae0f327398eff47b30b6ff35a0c69717e9c6b22",
+    "task1-seed101-baseline-baseline\\samples.json": "6fe062d10c0262d1c364391bf7d2954174cb91f640605b7c8caa788a8cec0ad8",
+    "task1-seed101-baseline-baseline\\torques.json": "ac7e78394707657334d1e2dd80635dcb8927f5c09845f76e3ee5456c9f8fa12b",
+    "task1-seed101-x+3mm-allocation\\held-end.png": "574b607ca88fc1d1165ab69f3737f4efd55c593fc395f0d49a884171aa419f60",
+    "task1-seed101-x+3mm-allocation\\result.json": "9fc6f187e27346944b00ec85edefc14c8cecfcecad3fe23a494a621479de920f",
+    "task1-seed101-x+3mm-allocation\\samples.json": "7cad612a6a40eaf2a74a80e3397ecd2c1f00d530e18fedd54b947ddecab6e10c",
+    "task1-seed101-x+3mm-allocation\\torques.json": "a71484ee15adeebf47ee901bc729b9f8b6620931ee4021768b2af41768be7b71",
+    "task1-seed101-x+3mm-baseline\\held-end.png": "ba57643f9e9d2d4a46a9d145f71be7c069f9765ea83e3cc5944982705ec66888",
+    "task1-seed101-x+3mm-baseline\\reference-matches.json": "cf0111db4e9e97392d8a0ea0b518854f0a5daeb3352773cfa4e7dd0b620f182e",
+    "task1-seed101-x+3mm-baseline\\result.json": "82bafabf5a9fd494959e75052b81278afcfcfe13a0ab44acf34b3fe351f3a148",
+    "task1-seed101-x+3mm-baseline\\samples.json": "48e29ad559a3f04cdf80a573859273302912aa559b398ca5c64108bfafde1e92",
+    "task1-seed101-x+3mm-baseline\\torques.json": "c2aaceb5e0a4c54374d0b01c33bb60fdab13bf7d292a7ce67cfe8d4de4145418",
+    "task1-seed202-x+3mm-allocation\\held-end.png": "0095e0856d44d6522fe35ead6456e67f3ebc46b2e3c6248fa24d3eaa78791a7e",
+    "task1-seed202-x+3mm-allocation\\result.json": "00f6e09949d0dc73bb3870ca490a49156bb466ca4cd836e6a41dc2c23f61eefa",
+    "task1-seed202-x+3mm-allocation\\samples.json": "5778f15a8d269d7881b49f13db41b67833cf8a4f3239792649d679a41ee9912f",
+    "task1-seed202-x+3mm-allocation\\torques.json": "d42d1606b6945aff3d2abcee426fbd67e1c335af4d5f11150b091994a06c5df6",
+    "task1-seed202-x+3mm-baseline\\held-end.png": "1d15a4ad246b231d28579129331eac64c3b4e0841bd074b1e920ec3f1ea650a1",
+    "task1-seed202-x+3mm-baseline\\reference-matches.json": "2cb28b2fef29afec7013530a330f7527e380bba1e6141354c0094d0992cbcb56",
+    "task1-seed202-x+3mm-baseline\\result.json": "aabaa7630be7571795ef45515033fce974f0e53998f2928f111930d201ce6e11",
+    "task1-seed202-x+3mm-baseline\\samples.json": "a8d1902b98f4f119f8922a733ef16c33da8a6b961b108f4239f3205116ecca74",
+    "task1-seed202-x+3mm-baseline\\torques.json": "cd760e1f7f391bdcb365ae3e25cbf50cee46b3395fdc1ebe1457f9bf837b84dc",
+    "task2-seed101-baseline-allocation\\held-end.png": "b04a2fd31f369fef74452a4ee60b40b030df61452ed174c6e8a5fceba0c2ed29",
+    "task2-seed101-baseline-allocation\\result.json": "bb85790b30864f9a3216bdfbd37b5ec2ceaf7ce90bfa49ccb4372e86b4758bb1",
+    "task2-seed101-baseline-allocation\\samples.json": "eb374630d2b072faee9c382f9804b2b1371c1174efc80205d7d44ad3df97910e",
+    "task2-seed101-baseline-allocation\\torques.json": "c6c1f35260dfa425b65b430e727831e38957db9d56c25344951b2b7f53428341",
+    "task2-seed101-baseline-baseline\\held-end.png": "b15e86cb47411d50a67af0658df14459aa6a1c5f58be1030e6cd3c6cba9a791d",
+    "task2-seed101-baseline-baseline\\reference-matches.json": "30d2e1ba0b18186490872ec84f7b2af672e65ab1fb08c6ca66b8c8da258f2e5a",
+    "task2-seed101-baseline-baseline\\result.json": "6491290ca0b7f2ae8666ead8e1ce97c878747fc9087545516b8402fbe4958005",
+    "task2-seed101-baseline-baseline\\samples.json": "d8c76cf8fd966e6d10bfbfc04673fce90c1c733a20ec6e0c3b94a836ce1387ca",
+    "task2-seed101-baseline-baseline\\torques.json": "11f4ddbc9495e2ed8a5a608dc99e5f5978e249e77f922e34b3bb5cd06096a254",
+    "task2-seed101-x+3mm-allocation\\held-end.png": "55833e60961ccd558904ee581755d37e621f3008640fe336992f02e2dcc508e9",
+    "task2-seed101-x+3mm-allocation\\result.json": "df12cd6534b03c6af9f4164e9b14aa441ceeca02962a15b0909d31c51d1042a9",
+    "task2-seed101-x+3mm-allocation\\samples.json": "8a24acfcbd212e8ff0edd02a4ae84122f86d755de7679098ce9905ef85252230",
+    "task2-seed101-x+3mm-allocation\\torques.json": "0dc61461657b362b6b41c756e0e192d403b0d262a1d9bd06f1174f23cfe2843d",
+    "task2-seed101-x+3mm-baseline\\held-end.png": "52a4a5ab4953050720288dffbb3181f538fb4194f134d3dd1ca8dd319c9ccd41",
+    "task2-seed101-x+3mm-baseline\\reference-matches.json": "a6e05fe294974f19f8bb695242518903ffc05506e9062fd1f60425210ddcc811",
+    "task2-seed101-x+3mm-baseline\\result.json": "83505e65a65a9c95127adf2168ebeb1cd6d14a4cc70476ee822e23a9f2525cba",
+    "task2-seed101-x+3mm-baseline\\samples.json": "d511d3c5ec90e06860cc621b8e3eb4b43de07389d3868945d53a18393c93b085",
+    "task2-seed101-x+3mm-baseline\\torques.json": "b670ad7587af8f1df92ae7eb23d12b56d9a131d51f5748a65d5d1afff492b94b",
+    "task2-seed202-baseline-allocation\\held-end.png": "bd88000727e48bc2f71d088b54aedef6a7256b0a7dd7172c307d7606a1d52ac1",
+    "task2-seed202-baseline-allocation\\result.json": "34eb6e4917dee118fb84f0b2cad8f3b43f4223f349bad2b888ee116c9a12734e",
+    "task2-seed202-baseline-allocation\\samples.json": "2604355f652151af98c1da2917f124cd51b76149aeacb23bcb176fb67ff4da06",
+    "task2-seed202-baseline-allocation\\torques.json": "fee43e107257ba501b7d171f9fd4fdbcbc99de1d290b80b9198958ad05d95638",
+    "task2-seed202-baseline-baseline\\held-end.png": "af3669435f93c9438cec884984c700c277f87896ada348c736dabde55d031fd3",
+    "task2-seed202-baseline-baseline\\reference-matches.json": "afe89f1664d2dc910577f617d3710c2f59f769d7ccdbf73277e6c61c08486fae",
+    "task2-seed202-baseline-baseline\\result.json": "99cd05e904b8ebfe0e91cdfd21e05eba2e9c654c727a3149a1654ca5ec5af811",
+    "task2-seed202-baseline-baseline\\samples.json": "87d99650e59f0dc2aea867082e17d835607969bf8e18ab33430296b24f3c14a7",
+    "task2-seed202-baseline-baseline\\torques.json": "4056ec44eb34f681f731f9e15611048064f0e224b641ae29bf1872329331b3bf",
+    "task2-seed202-x+3mm-allocation\\held-end.png": "51c0897e412b18c6e105b0324edc86901333dd39fc052eb20799fb44fa454ac3",
+    "task2-seed202-x+3mm-allocation\\result.json": "7d84af79d457520c5ce757e25d85eb784e65b55373d13fe0fc6fb21589023bf7",
+    "task2-seed202-x+3mm-allocation\\samples.json": "10467bd06b246da674a97ee635ef007ccbbc1d0220eb851d87c422b36a580e04",
+    "task2-seed202-x+3mm-allocation\\torques.json": "989df25a1ed383660a18b9dbc47dff21b17ea520ac04594190055a7d4211c259",
+    "task2-seed202-x+3mm-baseline\\held-end.png": "d11893a7f685f45caeb609ffb3b70b184697e7584a2eeda6cac7aff6819bfc65",
+    "task2-seed202-x+3mm-baseline\\reference-matches.json": "1ea5a8ed11507119df129f1bb090de8e4454ec5ca2bc52064c89b7d10c2219fd",
+    "task2-seed202-x+3mm-baseline\\result.json": "50748a23fb87df50861f05989a2cccfc823b07c2f0921cc2bcdf007ebea1a0a4",
+    "task2-seed202-x+3mm-baseline\\samples.json": "a656a5b4e583be1f2b5e8487fd2c735aac4293d6ef388600d82de6d34676f395",
+    "task2-seed202-x+3mm-baseline\\torques.json": "e334be56a52a5b42912714a24386a5e973b1d60f504761d8da882d203727023c"
+  },
+  "original_voice_qualification": "2/3; unchanged",
+  "promotion": "none"
+}

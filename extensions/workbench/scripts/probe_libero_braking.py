@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import sys
+import time
 from pathlib import Path
 
 parser = argparse.ArgumentParser(description=__doc__)
@@ -14,6 +15,8 @@ parser.add_argument("--physics", type=Path, required=True)
 parser.add_argument("--openpi", type=Path, required=True)
 parser.add_argument("--config-dir", type=Path, required=True)
 parser.add_argument("--saturation-case", help="Audit torques on one named baseline window only")
+parser.add_argument("--torque-allocation", action="store_true",
+                    help="Separate baseline versus bounded acceleration-allocation experiment")
 args = parser.parse_args()
 source_report = json.loads((args.source_run / "report.json").read_text())
 physics = [json.loads(line) for line in args.physics.open()]
@@ -44,6 +47,9 @@ assert len(cases) == 10
 profiles = [{"name": "baseline", "kp": 300, "damping_ratio": 2},
             {"name": "damping4", "kp": 300, "damping_ratio": 4},
             {"name": "kp600", "kp": 600, "damping_ratio": 2}]
+if args.torque_allocation:
+    assert not args.saturation_case, "Allocation and single-case diagnostics are separate"
+    profiles = profiles[:1] + [{"name": "allocation", "kp": 300, "damping_ratio": 2}]
 if args.saturation_case:
     cases = [c for c in cases if c["name"] == args.saturation_case]
     assert len(cases) == 1, "Unknown saturation diagnostic case"
@@ -65,7 +71,14 @@ protocol = {
     "camera": "Automatic image observations off for replay; physics equivalence must be verified",
     "attempt_budget": "One frozen three-profile grid; retain every case; no retuning",
     "saturation_diagnostic_case": args.saturation_case,
+    "torque_allocation": args.torque_allocation,
 }
+if args.torque_allocation:
+    protocol["attempt_budget"] = "One frozen two-profile allocation grid; no gain retuning"
+    protocol["allocation"] = (
+        "minimize ||inverse(M)*(tau-native_PD_command)||2 with unchanged native torque bounds; "
+        "BVLS tol1e-9 max_iter50; identical native command if already within bounds"
+    )
 (args.output / "protocol.json").write_text(json.dumps(protocol, indent=2))
 (args.output / Path(__file__).name).write_bytes(Path(__file__).read_bytes())
 source = args.openpi.resolve()
@@ -81,6 +94,13 @@ from libero.libero import benchmark, get_libero_path  # noqa: E402
 from libero.libero.envs import OffScreenRenderEnv  # noqa: E402
 from PIL import Image  # noqa: E402
 from robosuite.controllers.joint_pos import JointPositionController  # noqa: E402
+
+if args.torque_allocation:
+    from scipy.optimize import lsq_linear
+
+    prepared = lsq_linear(np.eye(7), np.ones(7)*2, bounds=(-1, 1),
+                          method="bvls", tol=1e-9, max_iter=50)
+    assert prepared.success and np.allclose(prepared.x, 1), "Allocator startup check failed"
 
 suite = benchmark.get_benchmark_dict()["libero_spatial"]()
 report = {"protocol": protocol, "trials": []}
@@ -152,13 +172,31 @@ for case in cases:
                             joint.goal_qpos - case["brake"]["goal_joints"])))
                         run_controller.paused = True
                     command = joint.run_controller()
-                    if args.saturation_case:
+                    low, high = robot.torque_limits
+                    allocated = command
+                    optimized = False
+                    started = time.perf_counter_ns()
+                    if profile["name"] == "allocation" and (
+                        np.any(command < low) or np.any(command > high)
+                    ):
+                        inverse = np.linalg.inv(joint.mass_matrix)
+                        solution = lsq_linear(inverse, inverse @ command, bounds=(low, high),
+                                              method="bvls", tol=1e-9, max_iter=50)
+                        if not solution.success or not np.isfinite(solution.x).all():
+                            raise RuntimeError("Bounded torque allocation failed; no fallback")
+                        allocated = solution.x
+                        assert np.all(allocated >= low-1e-9) and np.all(allocated <= high+1e-9)
+                        optimized = True
+                    allocation_ns = time.perf_counter_ns() - started
+                    if args.saturation_case or args.torque_allocation:
                         torque_records.append({
                             "sim_time": float(native.sim.data.time),
                             "command": np.asarray(command).tolist(),
-                            "clipped": np.clip(command, *robot.torque_limits).tolist(),
+                            "clipped": np.clip(command, low, high).tolist(),
+                            "allocated": np.asarray(allocated).tolist(),
+                            "optimized": optimized, "allocation_ns": allocation_ns,
                         })
-                    return command
+                    return allocated
                 return torques
 
             run_controller.paused = False
@@ -222,7 +260,7 @@ for case in cases:
             if env is not None:
                 env.close()
         (trial / "samples.json").write_text(json.dumps(samples, indent=2))
-        if args.saturation_case:
+        if args.saturation_case or args.torque_allocation:
             (trial / "torques.json").write_text(json.dumps(torque_records, indent=2))
         (trial / "result.json").write_text(json.dumps(outcome, indent=2))
         report["trials"].append(outcome)
