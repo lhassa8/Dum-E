@@ -1,0 +1,167 @@
+{
+  "verified_download": {
+    "repo": "yifengzhu-hf/LIBERO-datasets",
+    "revision": "f13aa24a3da8c43c7225569f28c562979fa0e35a",
+    "license": "apache-2.0",
+    "files": [
+      {
+        "name": "libero_spatial/pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo.hdf5",
+        "bytes": 508779600,
+        "sha256": "ff6f26121653c77280eb40a38773a74141c11a8509f3466058cb56dd2cc60ead"
+      },
+      {
+        "name": "libero_spatial/pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate_demo.hdf5",
+        "bytes": 589630943,
+        "sha256": "75ede0cf5fbfc925093671b55032ad80f1b1f1cf35442ec6c663460d37d3e0b3"
+      },
+      {
+        "name": "libero_spatial/pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate_demo.hdf5",
+        "bytes": 671583385,
+        "sha256": "bf1090dd4826eacb49eb052f17d04798e2a1eb2f74f8d024bc3b9c5d234c25f9"
+      }
+    ],
+    "verified": true
+  },
+  "identity_rule": {
+    "all_free_objects_xy_m": 0.01,
+    "all_free_objects_rotation_rad": 0.05
+  },
+  "tasks": [
+    {
+      "task_id": 0,
+      "episodes": 50,
+      "steps_min": 75,
+      "steps_median": 95.0,
+      "steps_max": 168,
+      "episodes_within220_raw_steps": 50,
+      "near_excluded_layout_overlap": 0,
+      "min_closest_free_xy_error_m": 0.009412595135522027,
+      "max_action_magnitude": 1.0,
+      "observation_shapes": {
+        "agentview_rgb": [
+          98,
+          128,
+          128,
+          3
+        ],
+        "ee_ori": [
+          98,
+          3
+        ],
+        "ee_pos": [
+          98,
+          3
+        ],
+        "ee_states": [
+          98,
+          6
+        ],
+        "eye_in_hand_rgb": [
+          98,
+          128,
+          128,
+          3
+        ],
+        "gripper_states": [
+          98,
+          2
+        ],
+        "joint_states": [
+          98,
+          7
+        ]
+      }
+    },
+    {
+      "task_id": 1,
+      "episodes": 50,
+      "steps_min": 109,
+      "steps_median": 132.5,
+      "steps_max": 189,
+      "episodes_within220_raw_steps": 50,
+      "near_excluded_layout_overlap": 0,
+      "min_closest_free_xy_error_m": 0.009205868936750903,
+      "max_action_magnitude": 1.0,
+      "observation_shapes": {
+        "agentview_rgb": [
+          152,
+          128,
+          128,
+          3
+        ],
+        "ee_ori": [
+          152,
+          3
+        ],
+        "ee_pos": [
+          152,
+          3
+        ],
+        "ee_states": [
+          152,
+          6
+        ],
+        "eye_in_hand_rgb": [
+          152,
+          128,
+          128,
+          3
+        ],
+        "gripper_states": [
+          152,
+          2
+        ],
+        "joint_states": [
+          152,
+          7
+        ]
+      }
+    },
+    {
+      "task_id": 2,
+      "episodes": 50,
+      "steps_min": 93,
+      "steps_median": 117.0,
+      "steps_max": 164,
+      "episodes_within220_raw_steps": 50,
+      "near_excluded_layout_overlap": 0,
+      "min_closest_free_xy_error_m": 0.006201204826816786,
+      "max_action_magnitude": 1.0,
+      "observation_shapes": {
+        "agentview_rgb": [
+          103,
+          128,
+          128,
+          3
+        ],
+        "ee_ori": [
+          103,
+          3
+        ],
+        "ee_pos": [
+          103,
+          3
+        ],
+        "ee_states": [
+          103,
+          6
+        ],
+        "eye_in_hand_rgb": [
+          103,
+          128,
+          128,
+          3
+        ],
+        "gripper_states": [
+          103,
+          2
+        ],
+        "joint_states": [
+          103,
+          7
+        ]
+      }
+    }
+  ],
+  "scope": "Structure and identity inspection only; no demonstration actions, training or physical qualification"
+}

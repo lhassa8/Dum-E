@@ -1,5 +1,21 @@
 # Workbench goal progress
 
+October14 — verified published human demonstrations:
+- Download only three pinned LIBERO task HDF5s, total1,769,993,928bytes; complete
+  publisher SHA256/length checks and independent inspection rehash pass. No
+  recording, upload, inference or demonstration action. Rawfiles ignored/local.
+- Inspect150episodes: finite native7D actions≤1; steps task0min75/median95/max168,
+  task1 109/132.5/189, task2 93/117/164. Allwithin220raw steps, notphysicalpasses.
+  AllXMLjoint orders match installedmodels; storedimages128RGB plusproprio.
+- Correct scene fingerprint interpretation: fullstate sharedoffset masksidentity;
+  initialcabinet explanation premature, freeobjectZ differences dominate too.
+  Final004XY/orientation rule avoids calling settling a newlayout. No complete
+  nearoverlap withreserved0/5–8 under10mm/50mrad rule; notbroadnovelty proof.
+- Source conversion records postactionimages with preactionstates/action rows;
+  alignment unresolved. Next freeze bounded replayset across3tasks, verify
+  nativefidelity/observationtiming/physicalcontacts/release before adaptation.
+  No learnedweights changed. See [inspection](published-demonstration-inspection.md).
+
 October14 — broader teacher rejected as general adaptation source:
 - Complete frozen12training cases:task0states1–4 pass4/4; task1three unilateral
   grasp failures/one descentbudget; task2four retreatbudget failures. Total4/12.
