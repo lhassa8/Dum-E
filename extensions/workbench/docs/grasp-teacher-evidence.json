@@ -1,0 +1,34 @@
+{
+  "passed": true,
+  "episodes": [
+    {
+      "task_id": 0,
+      "initial_state_index": 1,
+      "min_hold_lift_m": 0.1157989002392048,
+      "max_hold_translation_m": 0.0013107224828788945,
+      "max_hold_joint_range_rad": 0.0005196483585683254,
+      "all_hold_grasp_contacts": true,
+      "active_steps": 102,
+      "dense_hold_samples": 547,
+      "frame_count": 124,
+      "observation_sha256": "02f6e4fd769678dba733cece4a861c3d513b9e37bea3c0dc565b924f2d931448",
+      "video_sha256": "63f3708823709655b370370aed6415beef11ccacbfe594ef1ac1712a31ddbb90",
+      "video_scope": "Recorded front/wrist at simulation20Hz; privileged teacher"
+    },
+    {
+      "task_id": 0,
+      "initial_state_index": 2,
+      "min_hold_lift_m": 0.110925268700524,
+      "max_hold_translation_m": 0.005227349575921808,
+      "max_hold_joint_range_rad": 0.0005777772653416946,
+      "all_hold_grasp_contacts": true,
+      "active_steps": 91,
+      "dense_hold_samples": 547,
+      "frame_count": 113,
+      "observation_sha256": "6672899bf5efb88e65e65328b9f9a53f7e31ec5e09a7b019d62fd48307d6da71",
+      "video_sha256": "fd2e020885fc491ec40f4cd0c373f7ea87487d3265e6f70eb6c92a3d80bb98ab",
+      "video_scope": "Recorded front/wrist at simulation20Hz; privileged teacher"
+    }
+  ],
+  "scope": "Recorded physics/source/input audit; no learned-policy or release qualification"
+}

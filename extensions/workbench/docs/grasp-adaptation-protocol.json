@@ -1,0 +1,32 @@
+{
+  "status": "Prospective training protocol; no learned adaptation or qualification yet",
+  "hypothesis": "Calibrated rim-grasp demonstrations can teach the pretrained action head secure pad placement and release, instead of applying a universal pose offset",
+  "base_policy": "moojink/openvla-7b-oft-finetuned-libero-spatial",
+  "base_revision": "6d0231af0e48c5985f1ff86908f4674b84bc049b",
+  "tasks": [0, 1, 2],
+  "simulator_seed": 7,
+  "state_split": {
+    "excluded_previous_evaluation": [0],
+    "training_and_teacher_calibration": [1, 2, 3, 4],
+    "model_selection_validation": [5, 6],
+    "reserved_final_evaluation": [7, 8]
+  },
+  "first_teacher_assay": [{"task_id": 0, "initial_state_index": 1}, {"task_id": 0, "initial_state_index": 2}],
+  "teacher": {
+    "scope": "Training data generator; privileged object geometry/contact truth allowed only here and in independent evaluators",
+    "motion": "Original native OSC actions and torque caps; no object edits, welds or pose freezing",
+    "target": "Bowl rim and calibrated pad centers, with object/robot collision geometry determining metric targets",
+    "lift_target_m": 0.12,
+    "approach_clearance_m": 0.08,
+    "max_command_translation_m": {"above": 0.03, "descend": 0.02, "lift": 0.02},
+    "trajectory_revision": "Assay001 bilateral pad contact but both220-step budgets exhausted; test a shorter clearance approach and bounded larger commands, not a changed grasp target or judge",
+    "max_active_steps": 220,
+    "success": "Native bilateral pad grasp, at least80mm lift, original joint hold and unchanged10mm/20mrad physical limits for more than1sim second",
+    "failure_policy": "Preserve failures. After two similar failures investigate the assumption; do not sweep offsets on the frozen evaluation"
+  },
+  "learned_actor_inputs": ["RGB front image", "RGB wrist image", "8D robot proprioception", "task prompt"],
+  "forbidden_actor_inputs": ["simulator object pose", "native object identity/contact judge", "future Stop timing", "reserved evaluation outcomes"],
+  "learning_plan": "Start by adapting the existing L1 action head from original pretrained visual/language features; retain original checkpoint and frozen unadapted baseline",
+  "selection": "Episode/state-level split, select using validation only; evaluate base and adapted policies on reserved states with complete failure accounting",
+  "promotion": "Requires original grasp/lift/hold/budget/stale-action/fresh-resume checks plus released/resting placement evidence; no public controller promotion from training loss"
+}

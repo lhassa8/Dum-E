@@ -1,5 +1,21 @@
 # Workbench goal progress
 
+October14 — training-only calibrated grasp teacher:
+- Prospective state split excludes prior evaluation0; training1–4,
+  validation5–6, final7–8. Access only task0 training1/2. No weights trained.
+- Correct native box-vs-mesh calibration; preserve invalidsurvey001. Teacher001
+  gets bilateral pad contact but both220-step budgets expire in lift. Diagnose
+  conservative travel; shorten approach and increase bounded native commands.
+- Teacher002 passes2/2 but lacks saved initial height. Repeat003 with initial
+  truth and actual hold frames:2/2,102/91active steps, minlift115.799/110.925mm,
+  translation1.311/5.227mm, jointrange0.520/0.578mrad,547dense samples each.
+  Independent raw-record/source/input audit passes; local front/wrist videos.
+- Same two training states repeated, not broader generalization. Privileged
+  teacher only; no learned-policy or placement/release claim. Full-task prompt
+  currently exceeds demonstrated prefix. Next extend through verified release
+  and resting placement before complete action-chunk adaptation. Public actor
+  unchanged;46upstream bytes preserved. See [teacher audit](grasp-teacher-audit.md).
+
 October 14 — post-restart whole-assistant requalification:
 - Baseline25201a1, no WSL assistant/native/MCP services alive. Restore camera
   voice profile at8996 with local Bonsai/Gemma, CUDA general ASR, CPU Stop, SAPI.
