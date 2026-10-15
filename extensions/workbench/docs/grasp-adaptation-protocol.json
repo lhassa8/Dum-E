@@ -12,6 +12,17 @@
     "reserved_final_evaluation": [7, 8]
   },
   "first_teacher_assay": [{"task_id": 0, "initial_state_index": 1}, {"task_id": 0, "initial_state_index": 2}],
+  "placement_teacher": {
+    "scope": "Same task0 training states only; full placement extension, not learned policy",
+    "target": "Initial plate center and collision top; measured held bowl-to-EEF offset",
+    "max_translation_m": 0.02,
+    "release_steps": 12,
+    "settle_steps": 21,
+    "rest_window_sim_s": 0.5,
+    "placement_xy_limit_m": 0.035,
+    "rest_translation_limit_m": 0.005,
+    "success": "Original grasp/hold plus native task goal, physical bowl/plate contact and zero gripper/object contact throughout final0.5sim seconds, center within35mm and motion within5mm"
+  },
   "teacher": {
     "scope": "Training data generator; privileged object geometry/contact truth allowed only here and in independent evaluators",
     "motion": "Original native OSC actions and torque caps; no object edits, welds or pose freezing",

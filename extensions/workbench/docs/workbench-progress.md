@@ -1,5 +1,22 @@
 # Workbench goal progress
 
+October14 — complete placement teacher and action labels:
+- Extend onlytask0 training1/2 through carry/lower/release/retreat/settle using
+  prospective initial plate geometry and bounded nativeOSC. Preserve original
+  grasp/hold and220active-step budget; explicit pause excluded.
+- Both complete demonstrations pass214/211steps, placement3.729/7.433mm within
+  original35mm. Final0.5sim seconds nativegoalTrue, physicalplate contactTrue,
+  anygripper contactFalse. Original holds still547dense samples each.
+- Independent full audit passes; three altered release/contact/goal witnesses
+  reject. Actual ordered front/wrist videos local; finalrenders inspected.
+  Rawdata remains ignored. Budget margin6/9steps is narrow; no broader claim.
+- Prepare397unpadded8x7chunks from425nativeactions; independently match allraw
+  labels. Exclude pause/hold windows, evaluatortruth and allreserved states.
+  Twoepisodes only; no learnedweight/trainingloss/policy qualification yet.
+  Next broaden training episodes, frozenfeature extraction and actionhead
+  adaptation with state-level validation/final split.46upstream bytes retained.
+  See [placement audit](placement-teacher-audit.md).
+
 October14 — training-only calibrated grasp teacher:
 - Prospective state split excludes prior evaluation0; training1–4,
   validation5–6, final7–8. Access only task0 training1/2. No weights trained.

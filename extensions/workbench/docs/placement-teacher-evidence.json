@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "episodes": [
+    {
+      "task_id": 0,
+      "initial_state_index": 1,
+      "min_hold_lift_m": 0.1157989002392048,
+      "max_hold_translation_m": 0.0013107224828788945,
+      "max_hold_joint_range_rad": 0.0005196483585683254,
+      "all_hold_grasp_contacts": true,
+      "placement_xy_error_m": 0.0037290988718516613,
+      "rest_translation_m": 1.8661301323316183e-09,
+      "active_steps": 214,
+      "dense_hold_samples": 547,
+      "frame_count": 236,
+      "observation_sha256": "3def6e9bb25af8a631ea01d3770d04a85061ca06d4aac94d7d2f5d9b474b8da5",
+      "video_sha256": "e3bf43146bc472b36aa248de80e9af38efa8e82ad3371a617e9597e4b172246c",
+      "video_scope": "Recorded front/wrist at simulation20Hz; privileged teacher"
+    },
+    {
+      "task_id": 0,
+      "initial_state_index": 2,
+      "min_hold_lift_m": 0.110925268700524,
+      "max_hold_translation_m": 0.005227349575921808,
+      "max_hold_joint_range_rad": 0.0005777772653416946,
+      "all_hold_grasp_contacts": true,
+      "placement_xy_error_m": 0.007433354886694816,
+      "rest_translation_m": 8.966584842809382e-08,
+      "active_steps": 211,
+      "dense_hold_samples": 547,
+      "frame_count": 233,
+      "observation_sha256": "c356c257e88b09f3d0a7b58f78d1ab6a08b0cd99b12edad48437365fd4d4517a",
+      "video_sha256": "35f44d313c32eeaa58ada89801fbc03af2ce6b69cf068a04b42190926e5ef98b",
+      "video_scope": "Recorded front/wrist at simulation20Hz; privileged teacher"
+    }
+  ],
+  "complete_placement": true,
+  "scope": "Recorded teacher physics/source/input audit; no learned-policy qualification"
+}
