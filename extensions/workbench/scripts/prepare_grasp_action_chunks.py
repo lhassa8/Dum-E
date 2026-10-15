@@ -14,13 +14,18 @@ args = parser.parse_args()
 assert not args.output.exists(), "Use a fresh dataset directory"
 report = json.loads((args.run/"report.json").read_text())
 audit = json.loads((args.run/"audit.json").read_text())
-assert audit["passed"] and audit["complete_placement"]
+assert audit.get("audit_completed", audit["passed"]) and audit["complete_placement"]
 assert report["complete_placement_requested"]
 assert len(report["episodes"]) == len(audit["episodes"])
-chunks, windows, sources = [], [], []
+chunks, windows, sources, excluded = [], [], [], []
 for episode, verified in zip(report["episodes"], audit["episodes"]):
     for key in ("task_id", "initial_state_index"):
         assert episode[key] == verified[key]
+    if not verified.get("passed", audit["passed"]):
+        excluded.append({"task_id": episode["task_id"],
+                         "initial_state_index": episode["initial_state_index"],
+                         "error": episode["error"]})
+        continue
     assert episode["complete_teacher_passed"] and episode["error"] is None
     assert episode["initial_state_index"] in report["protocol"]["state_split"][
         "training_and_teacher_calibration"]
@@ -66,7 +71,7 @@ manifest = {"status": "Prepared training-only labels; no learned weights or qual
             "source_audit_sha256": hashlib.sha256((args.run/"audit.json").read_bytes()).hexdigest(),
             "target_sha256": hashlib.sha256(targets.read_bytes()).hexdigest(),
             "preparation_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-            "episode_sources": sources, "windows": windows}
+            "episode_sources": sources, "excluded_episodes": excluded, "windows": windows}
 (args.output/"manifest.json").write_text(json.dumps(manifest, indent=2)+"\n")
-print(json.dumps({"episodes": len(sources), "chunks": len(chunks),
+print(json.dumps({"episodes": len(sources), "excluded": len(excluded), "chunks": len(chunks),
                   "shape": list(np.stack(chunks).shape), "trained": False}))

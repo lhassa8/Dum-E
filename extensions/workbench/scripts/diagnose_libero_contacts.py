@@ -14,23 +14,39 @@ from pathlib import Path
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("output", type=Path)
-parser.add_argument("--physics", type=Path, required=True)
-parser.add_argument("--epoch", type=int, required=True)
+inputs = parser.add_mutually_exclusive_group(required=True)
+inputs.add_argument("--physics", type=Path)
+inputs.add_argument("--teacher", type=Path, help="Unpaused failed teacher episode directory")
+parser.add_argument("--epoch", type=int, default=1)
 parser.add_argument("--task-id", type=int, choices=(0, 1, 2), required=True)
 parser.add_argument("--openpi", type=Path, required=True)
 parser.add_argument("--config-dir", type=Path, required=True)
 args = parser.parse_args()
 rows = []
-with args.physics.open() as stream:
-    for line in stream:
-        row = json.loads(line)
-        if row["epoch"] == args.epoch and row["task_id"] == args.task_id:
-            if row["source"] not in ("policy", "osc_hold"):
-                raise ValueError("This diagnostic only replays unpaused episodes")
-            rows.append(row)
-            if row["phase"] == "success":
-                break
-assert rows and rows[-1]["phase"] == "success", "Complete successful source required"
+initial_state_index = 0
+if args.teacher:
+    result = json.loads((args.teacher/"result.json").read_text())
+    assert result["task_id"] == args.task_id and result["error"] is not None
+    assert not json.loads((args.teacher/"hold.json").read_text()), "Paused replay not supported"
+    initial_state_index = result["initial_state_index"]
+    source_path = args.teacher/"actions.json"
+    for original_row in json.loads(source_path.read_text()):
+        judge = {**original_row["judge"], "initial_xyz": result["initial_body_xyz"],
+                 "success": original_row["judge"]["native_goal"]}
+        rows.append({**original_row, "active_steps": original_row["index"]+1, "judge": judge})
+else:
+    source_path = args.physics
+    with source_path.open() as stream:
+        for line in stream:
+            row = json.loads(line)
+            if row["epoch"] == args.epoch and row["task_id"] == args.task_id:
+                if row["source"] not in ("policy", "osc_hold"):
+                    raise ValueError("This diagnostic only replays unpaused episodes")
+                rows.append(row)
+                if row["phase"] == "success":
+                    break
+    assert rows and rows[-1]["phase"] == "success", "Complete successful source required"
+assert rows
 assert [r["active_steps"] for r in rows] == list(range(1, len(rows) + 1))
 args.output.mkdir(parents=True, exist_ok=False)
 source = args.openpi.resolve()
@@ -47,12 +63,13 @@ from PIL import Image  # noqa: E402
 
 protocol = {
     "scope": "Exact applied-action replay, evaluator-only contacts; no fresh policy inference",
-    "source_sha256": hashlib.sha256(args.physics.read_bytes()).hexdigest(),
+    "source_sha256": hashlib.sha256(source_path.read_bytes()).hexdigest(),
+    "source_kind": "Failed geometric teacher" if args.teacher else "Recorded policy",
     "actor_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
     "epoch": args.epoch,
     "task_id": args.task_id,
     "seed": 7,
-    "initial_state_index": 0,
+    "initial_state_index": initial_state_index,
     "steps": len(rows),
     "min_lift_m": 0.08,
     "max_replay_position_error_m": 1e-6,
@@ -66,7 +83,7 @@ samples, checks = [], []
 try:
     env.env.ignore_done = True
     env.reset()
-    env.set_init_state(suite.get_task_init_states(args.task_id)[0])
+    env.set_init_state(suite.get_task_init_states(args.task_id)[initial_state_index])
     for _ in range(10):
         env.step(LIBERO_DUMMY_ACTION)
     native = env.env
@@ -117,6 +134,10 @@ try:
     robot.controller.run_controller = observe_controller
     peak = -float("inf")
     for row in rows:
+        if args.teacher:
+            # The teacher refreshed its native OSC cache before each command.
+            # Replay that boundary as well as its exact recorded action vector.
+            robot.controller.update(force=True)
         obs, _, _, _ = env.step(row["action"])
         measured = sample("step_end")
         judge = row["judge"]

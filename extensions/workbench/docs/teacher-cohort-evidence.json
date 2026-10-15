@@ -1,0 +1,142 @@
+{
+  "passed": false,
+  "audit_completed": true,
+  "planned": 12,
+  "qualified": 4,
+  "episodes": [
+    {
+      "task_id": 0,
+      "initial_state_index": 1,
+      "min_hold_lift_m": 0.1157989002392048,
+      "max_hold_translation_m": 0.0013107224828788945,
+      "max_hold_joint_range_rad": 0.0005196483585683254,
+      "all_hold_grasp_contacts": true,
+      "placement_xy_error_m": 0.0037290988718516613,
+      "rest_translation_m": 1.8661301323316183e-09,
+      "passed": true,
+      "active_steps": 214,
+      "dense_hold_samples": 547,
+      "frame_count": 236,
+      "observation_sha256": "3def6e9bb25af8a631ea01d3770d04a85061ca06d4aac94d7d2f5d9b474b8da5",
+      "video_sha256": "e3bf43146bc472b36aa248de80e9af38efa8e82ad3371a617e9597e4b172246c",
+      "video_scope": "Recorded front/wrist at simulation20Hz; privileged teacher"
+    },
+    {
+      "task_id": 0,
+      "initial_state_index": 2,
+      "min_hold_lift_m": 0.110925268700524,
+      "max_hold_translation_m": 0.005227349575921808,
+      "max_hold_joint_range_rad": 0.0005777772653416946,
+      "all_hold_grasp_contacts": true,
+      "placement_xy_error_m": 0.007433354886694816,
+      "rest_translation_m": 8.966584842809382e-08,
+      "passed": true,
+      "active_steps": 211,
+      "dense_hold_samples": 547,
+      "frame_count": 233,
+      "observation_sha256": "c356c257e88b09f3d0a7b58f78d1ab6a08b0cd99b12edad48437365fd4d4517a",
+      "video_sha256": "35f44d313c32eeaa58ada89801fbc03af2ce6b69cf068a04b42190926e5ef98b",
+      "video_scope": "Recorded front/wrist at simulation20Hz; privileged teacher"
+    },
+    {
+      "task_id": 0,
+      "initial_state_index": 3,
+      "min_hold_lift_m": 0.1153977249544037,
+      "max_hold_translation_m": 0.0014111657665389862,
+      "max_hold_joint_range_rad": 0.00048596153059632385,
+      "all_hold_grasp_contacts": true,
+      "placement_xy_error_m": 0.009949425448447239,
+      "rest_translation_m": 7.813085542328869e-08,
+      "passed": true,
+      "active_steps": 213,
+      "dense_hold_samples": 547,
+      "frame_count": 235,
+      "observation_sha256": "a0d1f75ee3ba989a259b0420daebb740bdd30dad6cb8b307fa24ef347edd8b8d",
+      "video_sha256": "19f449364ce3a99669ecc6c09d702af81b6ebbcb60c9a0e823e5d680f1f881c8",
+      "video_scope": "Recorded front/wrist at simulation20Hz; privileged teacher"
+    },
+    {
+      "task_id": 0,
+      "initial_state_index": 4,
+      "min_hold_lift_m": 0.1159138017062098,
+      "max_hold_translation_m": 0.0012756301579021293,
+      "max_hold_joint_range_rad": 0.0004955926140381983,
+      "all_hold_grasp_contacts": true,
+      "placement_xy_error_m": 0.005584170522566218,
+      "rest_translation_m": 1.867708967656306e-09,
+      "passed": true,
+      "active_steps": 211,
+      "dense_hold_samples": 547,
+      "frame_count": 233,
+      "observation_sha256": "a727c679b9a77ba4fb1d2167d128d1ba7da77945e2c399f83e16d25f52d7710f",
+      "video_sha256": "63a97a9ebefbfaef616a097f537e93772f703b7adf76693e5ac299f2d45bd0cd",
+      "video_scope": "Recorded front/wrist at simulation20Hz; privileged teacher"
+    },
+    {
+      "task_id": 1,
+      "initial_state_index": 1,
+      "passed": false,
+      "active_steps": 98,
+      "error": "AssertionError('Teacher did not achieve original qualified grasp/lift')",
+      "excluded_from_training": true
+    },
+    {
+      "task_id": 1,
+      "initial_state_index": 2,
+      "passed": false,
+      "active_steps": 100,
+      "error": "AssertionError('Teacher did not achieve original qualified grasp/lift')",
+      "excluded_from_training": true
+    },
+    {
+      "task_id": 1,
+      "initial_state_index": 3,
+      "passed": false,
+      "active_steps": 99,
+      "error": "AssertionError('Teacher did not achieve original qualified grasp/lift')",
+      "excluded_from_training": true
+    },
+    {
+      "task_id": 1,
+      "initial_state_index": 4,
+      "passed": false,
+      "active_steps": 220,
+      "error": "AssertionError('Original220 active-step budget exceeded')",
+      "excluded_from_training": true
+    },
+    {
+      "task_id": 2,
+      "initial_state_index": 1,
+      "passed": false,
+      "active_steps": 220,
+      "error": "AssertionError('Original220 active-step budget exceeded')",
+      "excluded_from_training": true
+    },
+    {
+      "task_id": 2,
+      "initial_state_index": 2,
+      "passed": false,
+      "active_steps": 220,
+      "error": "AssertionError('Original220 active-step budget exceeded')",
+      "excluded_from_training": true
+    },
+    {
+      "task_id": 2,
+      "initial_state_index": 3,
+      "passed": false,
+      "active_steps": 220,
+      "error": "AssertionError('Original220 active-step budget exceeded')",
+      "excluded_from_training": true
+    },
+    {
+      "task_id": 2,
+      "initial_state_index": 4,
+      "passed": false,
+      "active_steps": 220,
+      "error": "AssertionError('Original220 active-step budget exceeded')",
+      "excluded_from_training": true
+    }
+  ],
+  "complete_placement": true,
+  "scope": "Recorded teacher physics/source/input audit; no learned-policy qualification"
+}

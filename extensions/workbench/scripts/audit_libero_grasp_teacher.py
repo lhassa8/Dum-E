@@ -13,25 +13,33 @@ parser.add_argument("run", type=Path)
 args = parser.parse_args()
 report = json.loads((args.run/"report.json").read_text())
 protocol = report["protocol"]
-assert report["episodes"] and len(report["episodes"]) == len(protocol["first_teacher_assay"])
+planned = report.get("planned_cases", protocol["first_teacher_assay"])
+assert report["episodes"] and len(report["episodes"]) == len(planned)
 for name in ("collect_libero_grasp_teacher.py", "libero_grasp_teacher.py"):
     assert hashlib.sha256((args.run/name).read_bytes()).hexdigest() == protocol[name+"_sha256"]
 audited = []
-for expected, result in zip(protocol["first_teacher_assay"], report["episodes"]):
+for expected, result in zip(planned, report["episodes"]):
     assert all(result[k] == v for k, v in expected.items())
     training_states = protocol["state_split"]["training_and_teacher_calibration"]
     assert result["initial_state_index"] in training_states
     directory = args.run/f"task{result['task_id']}-state{result['initial_state_index']}"
     actions = json.loads((directory/"actions.json").read_text())
     hold = json.loads((directory/"hold.json").read_text())
-    assert 0 < len(actions) <= protocol["teacher"]["max_active_steps"]
+    assert len(actions) <= protocol["teacher"]["max_active_steps"]
     observations = sorted((directory/"observations").glob("*.npz"))
     assert len(observations) == len(actions)
     for index, action in enumerate(actions):
         assert action["index"] == index and action["privileged_teacher"] is True
         vector = np.asarray(action["action"])
         assert vector.shape == (7,) and np.isfinite(vector).all() and np.abs(vector).max() <= 1+1e-9
-    assert result["error"] is None and hold, "Failed teacher remains excluded from training"
+    qualified = (result["error"] is None and result["teacher_passed"]
+                 and (not report.get("complete_placement_requested")
+                      or result.get("complete_teacher_passed", False)))
+    if not qualified:
+        audited.append({**expected, "passed": False, "active_steps": len(actions),
+                        "error": result["error"], "excluded_from_training": True})
+        continue
+    assert hold and len(actions) > 0
     xyz = np.asarray([row["xyz"] for row in hold])
     joints = np.asarray([row["joints"] for row in hold])
     times = np.asarray([row["sim_time"] for row in hold])
@@ -109,12 +117,15 @@ for expected, result in zip(protocol["first_teacher_assay"], report["episodes"])
                 writer.send(np.ascontiguousarray(np.concatenate(images, axis=1)))
     finally:
         writer.close()
-    audited.append({**expected, **measured, **placement_measured, "active_steps": len(actions),
+    audited.append({**expected, **measured, **placement_measured, "passed": True,
+                    "active_steps": len(actions),
                     "dense_hold_samples": len(hold), "frame_count": len(frames),
                     "observation_sha256": digest.hexdigest(),
                     "video_sha256": hashlib.sha256(video.read_bytes()).hexdigest(),
                     "video_scope": "Recorded front/wrist at simulation20Hz; privileged teacher"})
-audit = {"passed": True, "episodes": audited,
+audit = {"passed": all(s["passed"] for s in audited), "audit_completed": True,
+         "planned": len(planned), "qualified": sum(s["passed"] for s in audited),
+         "episodes": audited,
          "complete_placement": report.get("complete_placement_requested", False),
          "scope": "Recorded teacher physics/source/input audit; no learned-policy qualification"}
 (args.run/"audit.json").write_text(json.dumps(audit, indent=2)+"\n")

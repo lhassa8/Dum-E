@@ -1,5 +1,20 @@
 # Workbench goal progress
 
+October14 — broader teacher rejected as general adaptation source:
+- Complete frozen12training cases:task0states1–4 pass4/4; task1three unilateral
+  grasp failures/one descentbudget; task2four retreatbudget failures. Total4/12.
+  Preserve all outcomes and original gates; no validation/final state access.
+- Exact98step task1/state1 replay has0reference error;282lifted samples have
+  rightpad282,leftpad0,bilateral0 and neighboringramekin contact. Raw auditpasses.
+- Independent cohort audit completeTrue/passFalse; eight failures explicitly
+  excluded,793unpaddedchunks fromfourtask0episodes. No weights trained. Original
+  checkpoint normalization clips656zrotation labels; maxnative difference.0157021.
+- Change supervision strategy: inspect published LIBERO human demos before more
+  geometric tuning. OldBox404; official downloader namesHFpublisher mirror.
+  Pin revisionf13aa24a3da8c43c7225569f28c562979fa0e35a/threefiles1.77GB, no
+  data downloaded yet. Next verifyfiles and episode/state split before native
+  replay/training. See [cohort audit](teacher-cohort-audit.md).
+
 October14 — complete placement teacher and action labels:
 - Extend onlytask0 training1/2 through carry/lower/release/retreat/settle using
   prospective initial plate geometry and bounded nativeOSC. Preserve original

@@ -13,7 +13,7 @@
   },
   "first_teacher_assay": [{"task_id": 0, "initial_state_index": 1}, {"task_id": 0, "initial_state_index": 2}],
   "placement_teacher": {
-    "scope": "Same task0 training states only; full placement extension, not learned policy",
+    "scope": "Protocol training states only, tasks0/1/2; full placement extension, not learned policy",
     "target": "Initial plate center and collision top; measured held bowl-to-EEF offset",
     "max_translation_m": 0.02,
     "release_steps": 12,

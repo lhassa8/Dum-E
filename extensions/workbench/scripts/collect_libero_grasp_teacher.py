@@ -1,4 +1,4 @@
-"""Two new training-state teacher assays; no learned adaptation or evaluation-state access."""
+"""Training-state teacher collection; no learned adaptation or evaluation-state access."""
 
 import argparse
 import hashlib
@@ -14,6 +14,7 @@ parser.add_argument("output", type=Path)
 parser.add_argument("--openpi", type=Path, required=True)
 parser.add_argument("--config-dir", type=Path, required=True)
 parser.add_argument("--complete-placement", action="store_true")
+parser.add_argument("--training-cohort", action="store_true")
 args = parser.parse_args()
 args.output.mkdir(parents=True, exist_ok=False)
 source = args.openpi.resolve()
@@ -38,7 +39,13 @@ for name in (Path(__file__).name, "libero_grasp_teacher.py"):
 suite = benchmark.get_benchmark_dict()["libero_spatial"]()
 report = {"protocol": protocol, "episodes": []}
 report["complete_placement_requested"] = args.complete_placement
-for spec in protocol["first_teacher_assay"]:
+planned = ([{"task_id": task, "initial_state_index": state}
+            for task in protocol["tasks"]
+            for state in protocol["state_split"]["training_and_teacher_calibration"]]
+           if args.training_cohort else protocol["first_teacher_assay"])
+report["planned_cases"] = planned
+(args.output/"planned-cases.json").write_text(json.dumps(planned, indent=2)+"\n")
+for spec in planned:
     directory = args.output/f"task{spec['task_id']}-state{spec['initial_state_index']}"
     directory.mkdir()
     (directory/"observations").mkdir()
