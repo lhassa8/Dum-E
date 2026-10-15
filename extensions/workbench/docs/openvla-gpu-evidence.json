@@ -1,0 +1,142 @@
+{
+  "decision": "Local GPU checkpoint inference qualified; physical controller remains unqualified",
+  "gpu": {
+    "passed": true,
+    "torch": "2.7.1+cu128",
+    "cuda_build": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "capability": [
+      12,
+      0
+    ],
+    "compiled_architectures": [
+      "sm_75",
+      "sm_80",
+      "sm_86",
+      "sm_90",
+      "sm_100",
+      "sm_120",
+      "compute_120"
+    ],
+    "kernels": [
+      {
+        "kernel": "matmul",
+        "dtype": "torch.bfloat16",
+        "device": "cuda:0",
+        "max_absolute_error": 0.0,
+        "tolerance": 0,
+        "first_call_including_transfer_ms": 195.0364169988461
+      },
+      {
+        "kernel": "convolution",
+        "dtype": "torch.bfloat16",
+        "device": "cuda:0",
+        "max_absolute_error": 0.0,
+        "tolerance": 0,
+        "first_call_including_transfer_ms": 720.1889640000445
+      },
+      {
+        "kernel": "layer_norm",
+        "dtype": "torch.bfloat16",
+        "device": "cuda:0",
+        "max_absolute_error": 0.003168821334838867,
+        "tolerance": 0.02,
+        "first_call_including_transfer_ms": 59.99150999923586
+      },
+      {
+        "kernel": "attention",
+        "dtype": "torch.bfloat16",
+        "device": "cuda:0",
+        "max_absolute_error": 0.004886507987976074,
+        "tolerance": 0.02,
+        "first_call_including_transfer_ms": 212.18423000027542
+      }
+    ],
+    "scope": "Real GPU preflight; does not prove policy inference or performance"
+  },
+  "preprocessing": {
+    "passed": true,
+    "source_commit": "e4287e94541f459edc4feabc4e181f537cd569a8",
+    "helpers_sha256": "eed754d7c5f9821aae2fe0531dbe01df8c11df0d5c79b4aeeb9bb4452124bdf5",
+    "geometry_sha256": "489c16dc8220845b2936ddb81aafd7469061d2009b0edddb2f85703bc51a204f",
+    "compatibility": "Training exports skipped; identical normalization enum imported directly",
+    "image_sizes": [
+      [
+        224,
+        224
+      ],
+      [
+        224,
+        224
+      ]
+    ],
+    "proprio_shape": [
+      8
+    ],
+    "pixel_shape": [
+      1,
+      6,
+      224,
+      224
+    ],
+    "scope": "Real publisher preprocessing/tokenizer and class imports; no model forward"
+  },
+  "inference": {
+    "passed": true,
+    "source_commit": "e4287e94541f459edc4feabc4e181f537cd569a8",
+    "helpers_sha256": "eed754d7c5f9821aae2fe0531dbe01df8c11df0d5c79b4aeeb9bb4452124bdf5",
+    "geometry_sha256": "489c16dc8220845b2936ddb81aafd7469061d2009b0edddb2f85703bc51a204f",
+    "compatibility": "Training exports skipped; identical normalization enum imported directly",
+    "checkpoint_revision": "6d0231af0e48c5985f1ff86908f4674b84bc049b",
+    "preparation_sha256": "dbe036e78456f5ab6d3495d138a4df61dd64857f8fb0154301f2c7bd9431d4d4",
+    "observation_sha256": "a7280284bc86fab8ee8d2d7503699ec0dfefdb8f6c5eab0a5ba369060f5aad36",
+    "device": "cuda:0",
+    "dtype": "torch.bfloat16",
+    "torch": "2.7.1+cu128",
+    "cuda_build": "12.8",
+    "load_s": 68.01416813400101,
+    "discarded_warmup_ms": 14197.075345000485,
+    "warmed_calls_ms": [
+      108.50720500093303,
+      95.34911999980977,
+      99.5481629997812,
+      95.7138310004666,
+      105.24927899859904
+    ],
+    "repeat_max_action_difference": 0.0,
+    "action_contract": "8x7 LIBERO OSC inputs; publisher gripper sign conversion",
+    "scope": "Six real GPU calls on one saved observation; no closed-loop, voice or hardware"
+  },
+  "audit": {
+    "audit": "pass",
+    "checkpoint_files": 21,
+    "checkpoint_bytes": 15454694095,
+    "device": "cuda:0",
+    "dtype": "torch.bfloat16",
+    "warmed_calls": {
+      "n": 5,
+      "median_ms": 99.5481629997812,
+      "p95_sample_ms": 108.50720500093303,
+      "maximum_ms": 108.50720500093303
+    },
+    "cold_load_s": 68.01416813400101,
+    "warmup_ms": 14197.075345000485,
+    "repeat_max_action_difference": 0,
+    "actor_sha256": "26bad6f9731263ef5a6c5903d8fd62561cc0f9c377633d721326a76b3088586d",
+    "bootstrap_sha256": "bccf453268aa6f59f5736a6dd98c66feee1cf13c2e07f0ba110f3cdf2bb1d65a",
+    "scope": "Real GPU checkpoint inference on one repeated saved observation; no policy rollout or speech claim"
+  },
+  "source": {
+    "openvla_source": "https://github.com/moojink/openvla-oft.git",
+    "openvla_commit": "e4287e94541f459edc4feabc4e181f537cd569a8",
+    "transformers_source": "https://github.com/moojink/transformers-openvla-oft.git",
+    "transformers_commit": "bc339d9ad707454c0c115970db43c260067c61ab",
+    "transformers_version": "4.40.1",
+    "observed_local_wheel_sha256": "d0d1064794b34d3484c7fd4f7bd2155b35284dd3b483b824170bd4f9f3d6f670",
+    "wheel_note": "Archive hash describes tested build; rebuild metadata may differ. Pin source tree and record new wheel hash.",
+    "checkpoint_repo": "moojink/openvla-7b-oft-finetuned-libero-spatial",
+    "checkpoint_revision": "6d0231af0e48c5985f1ff86908f4674b84bc049b",
+    "requirements_sha256": "02af496f76350c67519538dd8f4479d1e56dfe9e109e1274c01ef4d7831c1666"
+  },
+  "raw_actions_sha256": "8fa3b08e92ae7b35cb2aef77cf8b80366b748407fda92a1d590c07cc7f5bc8aa"
+}

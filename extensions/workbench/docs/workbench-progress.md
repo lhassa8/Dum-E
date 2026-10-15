@@ -2334,3 +2334,23 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
   experimental profile initialize is rejected409. This is infrastructure evidence,
   not a lifted-object or pretrained-policy pass. Owned smoke simulator exits0;
   scene-generation regression and11 coordinator checks pass. Public8996 stillReady.
+
+### C — Alternative pretrained GPU execution qualified (PC, 2026-10-14)
+
+- Repair completes, publisher SHA matches; full21-file/15,454,694,095B checkpoint
+  reverified. CUDA installation exits0; separate87-package inference setup passes
+  dependency consistency. Existing assistant/pi0.5 environments unchanged.
+- Real BF16 matmul/conv/layernorm/noncausal attention pass on cuda0, sm120 compiled.
+  Not just GPU visibility. New Torch2.7.1+cu128/vision0.22.1, TFCPU2.15.1/NumPy1.26.
+- Inference-only bootstrap initially hits another training-data initializer;
+  exclude VLA package exports while retaining original model/preprocessing/mask
+  code and identical normalization enum. Actual tokenizer/two224px images/8D
+  proprioception and model-class imports then pass.
+- Real checkpoint inference6 calls produces finite8×7 nativeOSC chunks onGPU BF16.
+  Five warmed repeats99.55/108.51ms median/samplep95, identical outputs; load68.014s,
+  discarded first warmup14.197s. One savedknownobservation; no physical/voice claim.
+- Raw output/hash/actor audit passes. Restore localGemma Q4_K_M/4096/1slot/noTTL;
+  Bonsai unchanged. Fresh read-onlycamera identifies3 tools; no microphone/motion.
+- Publish reproducible sources/dependency pins/helpers and aggregate evidence;
+  rawweights/observations/wheels staylocal. Next frozen6-case physical cohort,
+  no prospective controller promotion. Audit: openvla-gpu-qualification.md.
