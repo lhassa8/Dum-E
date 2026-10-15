@@ -1,6 +1,7 @@
 """Local warmed OpenVLA-OFT HTTP inference boundary; no simulator or hardware access."""
 
 import argparse
+import copy
 import hashlib
 import io
 import json
@@ -18,6 +19,8 @@ parser.add_argument("--source", type=Path, required=True)
 parser.add_argument("--preparation", type=Path, required=True)
 parser.add_argument("--observation", type=Path, required=True)
 parser.add_argument("--port", type=int, default=8900)
+parser.add_argument("--adaptation", type=Path,
+                    help="Local pilot directory with saved step50/200 heads")
 args = parser.parse_args()
 manifest = json.loads((args.preparation/"preparation.json").read_text())
 assert manifest.get("verified") and torch.cuda.is_available()
@@ -63,24 +66,44 @@ processor = PrismaticProcessor.from_pretrained(checkpoint, local_files_only=True
                                                trust_remote_code=False)
 head = helpers.get_action_head(cfg, model.llm_dim)
 proprio = helpers.get_proprio_projector(cfg, model.llm_dim, PROPRIO_DIM)
+head_spec = next(s for s in manifest["verified_files"] if s["name"].startswith("action_head"))
+heads = {"original": head}
+head_identity = {"original": {"step": 0, "sha256": head_spec["local_sha256"]}}
+if args.adaptation:
+    adaptation = json.loads((args.adaptation/"report.json").read_text())
+    assert adaptation["base_revision"] == manifest["revision"]
+    for step in (50, 200):
+        spec = next(s for s in adaptation["checkpoints"] if s["step"] == step)
+        path = args.adaptation/f"action-head-step{step:04d}.pt"
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == spec["sha256"]
+        candidate = copy.deepcopy(head)
+        candidate.load_state_dict(torch.load(path, map_location="cpu", weights_only=True))
+        heads[f"step{step}"] = candidate.eval().requires_grad_(False)
+        head_identity[f"step{step}"] = {"step": step, "sha256": spec["sha256"]}
 torch.cuda.synchronize()
 load_s = time.monotonic()-started
 with np.load(args.observation, allow_pickle=False) as data:
     raw = dict(data)
 prompt = "pick up the black bowl between the plate and the ramekin and place it on the plate"
-def predict(raw_observation, task_prompt):
+def predict(raw_observation, task_prompt, head_name="original"):
     inputs = observation(raw_observation, geometry)
     torch.cuda.synchronize()
     started = time.monotonic()
     actions = np.asarray(helpers.get_vla_action(cfg, model, processor, inputs, task_prompt,
-                                              action_head=head, proprio_projector=proprio))
+                                              action_head=heads[head_name],
+                                              proprio_projector=proprio))
     converted = native_actions(actions)
     torch.cuda.synchronize()
     return converted, (time.monotonic()-started)*1000
 
 
 warm_actions, warm_ms = predict(raw, prompt)
+warmup_by_head = {"original": warm_ms}
+for name in heads:
+    if name != "original":
+        _, warmup_by_head[name] = predict(raw, prompt, name)
 metadata = {**provenance, "checkpoint_revision": manifest["revision"],
+            "heads": head_identity, "warmup_ms_by_head": warmup_by_head,
             "actor_sha256": hashlib.sha256(actor_path.read_bytes()).hexdigest(),
             "bootstrap_sha256": hashlib.sha256(bootstrap_path.read_bytes()).hexdigest(),
             "preparation_sha256": hashlib.sha256((args.preparation/"preparation.json").read_bytes()
@@ -120,6 +143,8 @@ class Handler(BaseHTTPRequestHandler):
             assert 0 < size <= 2*1024*1024
             task_prompt = self.headers["X-Task-Prompt"]
             request_id = int(self.headers["X-Request-Id"])
+            head_name = self.headers.get("X-Action-Head", "original")
+            assert head_name in heads
             assert task_prompt and len(task_prompt) <= 256
             encoded = self.rfile.read(size)
             assert len(encoded) == size
@@ -128,8 +153,9 @@ class Handler(BaseHTTPRequestHandler):
             for key in ("agentview_image", "robot0_eye_in_hand_image"):
                 assert raw_request[key].shape == (256, 256, 3)
                 assert raw_request[key].dtype == np.uint8
-            actions, elapsed = predict(raw_request, task_prompt)
+            actions, elapsed = predict(raw_request, task_prompt, head_name)
             result = {"request_id": request_id, "actions": actions.tolist(), "server_ms": elapsed,
+                      "head": head_name, "head_sha256": head_identity[head_name]["sha256"],
                       "observation_sha256": hashlib.sha256(encoded).hexdigest()}
             trace.write(json.dumps({**result, "prompt": task_prompt})+"\n")
             self.reply(result)

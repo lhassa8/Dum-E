@@ -16,6 +16,7 @@ parser.add_argument("output", type=Path)
 parser.add_argument("--sim-port", type=int, default=8901)
 parser.add_argument("--policy-port", type=int, default=8900)
 parser.add_argument("--server-log", type=Path, required=True)
+parser.add_argument("--validation-state-index", type=int, choices=(5, 6))
 args = parser.parse_args()
 args.output.mkdir(parents=True, exist_ok=False)
 base = "http://127.0.0.1:" + str(args.sim_port)
@@ -33,16 +34,35 @@ def post(route, body):
     return json.load(urllib.request.urlopen(request, timeout=10))
 
 
+def record_frame(trial, frames, pixels, observed_sim_time):
+    digest = hashlib.sha256(pixels).hexdigest()
+    if frames and digest == frames[-1]["sha256"]:
+        return
+    name = f"{len(frames):05d}.jpg"
+    (trial/"frames"/name).write_bytes(pixels)
+    frames.append({"file": name, "wall_s": time.monotonic(), "sha256": digest,
+                   "observed_judge_sim_time": observed_sim_time})
+
+
 policy_url = f"http://127.0.0.1:{args.policy_port}"
 with urllib.request.urlopen(policy_url+"/metadata", timeout=10) as response:
     metadata = json.load(response)
 assert metadata["device"] == "cuda:0" and metadata["dtype"] == "torch.bfloat16"
 assert metadata["warmup_complete"] and metadata["discarded_warmup_actions"] == 8
 assert metadata["checkpoint_revision"] == "6d0231af0e48c5985f1ff86908f4674b84bc049b"
-frozen_path = Path(__file__).resolve().parents[1]/"docs/openvla-prospective-protocol.json"
+frozen_name = ("action-head-validation-protocol.json" if args.validation_state_index is not None
+               else "openvla-prospective-protocol.json")
+frozen_path = Path(__file__).resolve().parents[1]/"docs"/frozen_name
 protocol = json.loads(frozen_path.read_text())
 episodes = [{"task_id": task, "repeat": repeat}
             for task in (0, 1, 2) for repeat in (1, 2)]
+if args.validation_state_index is not None:
+    assert set(metadata["heads"]) == {"original", "step50", "step200"}
+    assert set(metadata["warmup_ms_by_head"]) == set(metadata["heads"])
+    episodes = [{"task_id": task, "repeat": args.validation_state_index-4,
+                 "initial_state_index": args.validation_state_index, "head": head}
+                for task in (0, 1, 2) for head in protocol["heads"]]
+    protocol["batch_initial_state_index"] = args.validation_state_index
 protocol.update(episodes=episodes,
                 server_trace_offset=len(args.server_log.read_text().splitlines()),
                 transport="Eight-action prediction submitted as bounded5+3 packets; clear on Stop",
@@ -57,7 +77,7 @@ for name in ("libero_runtime.py",):
 report = {"protocol": protocol, "metadata": metadata, "episodes": []}
 
 
-def infer(draw):
+def infer(draw, head_name="original"):
     before = get("/state")
     assert before["physics_ready"]
     assert before["native_init_epoch"] == before["scene_request_epoch"]
@@ -68,16 +88,21 @@ def infer(draw):
     request = urllib.request.Request(policy_url+"/infer", encoded,
                                      {"Content-Type": "application/octet-stream",
                                       "X-Task-Prompt": after["prompt"],
+                                      "X-Action-Head": head_name,
                                       "X-Request-Id": str(draw)})
     start = time.monotonic()
     with urllib.request.urlopen(request, timeout=30) as response:
         reply = json.load(response)
     assert reply["request_id"] == draw
     assert reply["observation_sha256"] == hashlib.sha256(encoded).hexdigest()
+    if args.validation_state_index is not None:
+        assert reply["head"] == head_name
+        assert reply["head_sha256"] == metadata["heads"][head_name]["sha256"]
     actions = np.asarray(reply["actions"])
     assert actions.shape == (8, 7)
     assert np.isfinite(actions).all()
     return {"actions": actions.tolist(), "draw": draw, "server_ms": reply["server_ms"],
+            "head": head_name, "head_sha256": reply.get("head_sha256"),
             "client_ms": (time.monotonic() - start) * 1000,
             "observation_sha256": hashlib.sha256(encoded).hexdigest(),
             "requested_at_wall_s": start}
@@ -86,11 +111,14 @@ def infer(draw):
 with concurrent.futures.ThreadPoolExecutor(max_workers=1) as worker:
     for spec in episodes:
         trial = args.output / f"task{spec['task_id']}-repeat{spec['repeat']}"
+        if args.validation_state_index is not None:
+            trial = args.output/f"task{spec['task_id']}-repeat{spec['repeat']}-{spec['head']}"
         trial.mkdir()
+        (trial/"frames").mkdir()
         result = {**spec, "error": None, "trigger_reached": False,
                   "hold_passed": False, "native_success": False,
                   "fresh_resume_inference": False}
-        rows, calls, submissions, held = [], [], [], []
+        rows, calls, submissions, held, frames = [], [], [], [], []
         future, future_epoch, draw = None, None, 0
         pending, pending_call, pending_epoch, part = [], None, None, 0
         try:
@@ -98,16 +126,27 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=1) as worker:
             assert initialized["motion_profile"] == "baseline"
             assert initialized["dense_hold_capture"]
             assert not initialized["carry_governor_experiment"]
+            if args.validation_state_index is not None:
+                assert initialized["initial_state_index"] == spec["initial_state_index"]
+                assert initialized["require_released_placement"]
             deadline = time.monotonic() + 120
             while time.monotonic() < deadline:
                 state, judge = get("/state"), get("/judge")
                 rows.append({"wall_s": time.monotonic(), "state": state, "judge": judge})
                 if judge and state["physics_ready"]:
-                    (trial / "latest.jpg").write_bytes(get("/frame.jpg", binary=True))
+                    pixels = get("/frame.jpg", binary=True)
+                    (trial / "latest.jpg").write_bytes(pixels)
+                    if args.validation_state_index is not None:
+                        record_frame(trial, frames, pixels, judge["sim_time"])
                 if state["phase"] in ("success", "failed"):
                     result["discarded_local_at_terminal"] = len(pending)
                     result["native_success"] = state["phase"] == "success"
                     result["terminal_state"] = state
+                    if args.validation_state_index is not None:
+                        release = get("/released-placement")
+                        result["released_placement_passed"] = bool(
+                            state["phase"] == "success" and release is not None)
+                        (trial/"released-placement.json").write_text(json.dumps(release, indent=2))
                     break
                 if (not result["trigger_reached"] and judge and state["phase"] == "running"
                         and state["physics_ready"]
@@ -129,6 +168,9 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=1) as worker:
                         assert time.monotonic() - started < 5, "Physics stalled during hold"
                         held.append(get("/judge"))
                         assert get("/state")["phase"] == "paused"
+                        if args.validation_state_index is not None:
+                            record_frame(trial, frames, get("/frame.jpg", binary=True),
+                                         held[-1]["sim_time"])
                         time.sleep(.025)
                     result["hold_wall_s"] = time.monotonic() - started
                     dense = [s for s in get("/dense-hold")
@@ -166,6 +208,12 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=1) as worker:
                     post("/resume", {})
                     result["resume_wall_s"] = time.monotonic()
                     result["resume_epoch"] = get("/state")["epoch"]
+                    try:
+                        post("/actions", {"epoch": old_epoch, "actions": [[0.]*7]})
+                        raise AssertionError("Stale generation accepted after resume")
+                    except urllib.error.HTTPError as caught:
+                        assert caught.code == 409
+                    result["stale_after_resume_rejected"] = True
                     continue
                 if future is not None and future.done():
                     call = future.result()
@@ -186,7 +234,7 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=1) as worker:
                 elif (future is None and state["phase"] == "running"
                       and not pending and state["physics_ready"] and not state["queued_actions"]):
                     future_epoch = state["epoch"]
-                    future = worker.submit(infer, draw)
+                    future = worker.submit(infer, draw, spec.get("head", "original"))
                     draw += 1
                 time.sleep(.015)
             else:
@@ -203,10 +251,13 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=1) as worker:
             post("/stop", {})
         for filename, data in (("trace.json", rows), ("calls.json", calls),
                                ("submissions.json", submissions), ("hold.json", held),
+                               ("frames.json", frames),
                                ("result.json", result)):
             (trial / filename).write_text(json.dumps(data, indent=2))
         report["episodes"].append(result)
         (args.output / "report.json").write_text(json.dumps(report, indent=2))
         print(json.dumps(result), flush=True)
         if result["error"]:
+            report["not_run"] = episodes[len(report["episodes"]):]
+            (args.output/"report.json").write_text(json.dumps(report, indent=2))
             raise SystemExit("Infrastructure failure retained; remaining episodes not attempted")

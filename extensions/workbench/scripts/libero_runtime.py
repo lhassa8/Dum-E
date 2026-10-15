@@ -21,6 +21,8 @@ parser.add_argument("--carry-governor-experiment", action="store_true",
                     help="Allow explicit experimental motion profiles and dense hold capture")
 parser.add_argument("--dense-hold-capture", action="store_true",
                     help="Record native hold samples without enabling experimental motion profiles")
+parser.add_argument("--initial-state-index", type=int, choices=range(9), default=0)
+parser.add_argument("--require-released-placement", action="store_true")
 args = parser.parse_args()
 if (args.carry_governor_experiment or args.dense_hold_capture) and args.hold_profile != "joint":
     parser.error("Dense hold capture requires the original joint hold")
@@ -75,6 +77,9 @@ class Runtime:
         self.scene_request_epoch = None
         self.native_init_epoch = None
         self.dense_samples = collections.deque(maxlen=2500)
+        self.release_samples = collections.deque(maxlen=1000)
+        self.released_placement = None
+        self.initial_plate_xyz = None
         self.dense_hold_capture = args.carry_governor_experiment or args.dense_hold_capture
         self.governor_trace = ((args.output / "governor.jsonl").open("w", buffering=1)
                                if args.carry_governor_experiment else None)
@@ -97,6 +102,8 @@ class Runtime:
                               and self.native_init_epoch == self.scene_request_epoch),
             "inflight_epoch": self.inflight_epoch,
             "active_steps": self.active_steps,
+            "initial_state_index": getattr(args, "initial_state_index", 0),
+            "require_released_placement": getattr(args, "require_released_placement", False),
             "hold_profile": args.hold_profile,
             "pause_joint_kp": 300 if args.hold_profile == "joint" else None,
             "pause_joint_damping_ratio": 2 if args.hold_profile == "joint" else None,
@@ -130,6 +137,7 @@ class Runtime:
         self.observation_bytes = None
         self.frame = b""
         self.judge_snapshot = self.stop_judge_snapshot = None
+        self.released_placement = None
         self.pending_init = (task_id, self.epoch)
         return self.state()
 
@@ -174,7 +182,7 @@ class Runtime:
         obj = native.objects_dict[name]
         robot = native.robots[0]
         grasp = native._check_grasp(robot.gripper, obj.contact_geoms)
-        return {
+        result = {
             "object": name,
             "xyz": xyz.tolist(),
             "initial_xyz": self.initial_xyz,
@@ -185,6 +193,31 @@ class Runtime:
             "sim_time": float(native.sim.data.time),
             "sampled_wall_s": time.monotonic(),
         }
+        if getattr(args, "require_released_placement", False):
+            pairs = [{int(c.geom1), int(c.geom2)} for c in
+                     native.sim.data.contact[:native.sim.data.ncon]]
+            result.update(
+                any_gripper_contact=any(p & self.bowl_ids and p & self.gripper_ids for p in pairs),
+                plate_contact=any(p & self.bowl_ids and p & self.plate_ids for p in pairs),
+                initial_plate_xyz=self.initial_plate_xyz)
+        return result
+
+    def placement_ready(self):
+        current = self.judge()
+        self.release_samples.append(current)
+        window = [s for s in self.release_samples if s["sim_time"] >=
+                  current["sim_time"]-.5-1e-10]
+        if not window or window[-1]["sim_time"]-window[0]["sim_time"] < .5-1e-9:
+            return False
+        xyz = np.asarray([s["xyz"] for s in window])
+        movement = float(np.linalg.norm(xyz-xyz[0], axis=1).max())
+        error = float(np.linalg.norm(xyz[-1, :2]-np.asarray(self.initial_plate_xyz)[:2]))
+        passed = (all(s["success"] and s["plate_contact"] and not s["any_gripper_contact"]
+                      for s in window) and movement <= .005 and error <= .035)
+        if passed:
+            self.released_placement = {"samples": window, "movement_m": movement,
+                                       "placement_xy_error_m": error}
+        return passed
 
     def tick(self):
         with self.lock:
@@ -200,13 +233,25 @@ class Runtime:
             self.env.env.ignore_done = True
             assert self.env.env.robots[0].controller.name == "OSC_POSE"
             self.env.reset()
-            self.obs = self.env.set_init_state(self.suite.get_task_init_states(task_id)[0])
+            self.obs = self.env.set_init_state(self.suite.get_task_init_states(task_id)[
+                getattr(args, "initial_state_index", 0)])
             for _ in range(10):
                 self.obs, _, _, _ = self.env.step(LIBERO_DUMMY_ACTION)
             self.task_id = task_id
             self.initial_xyz = self.env.env.sim.data.body_xpos[
                 self.env.env.obj_body_id["akita_black_bowl_1"]
             ].tolist()
+            native = self.env.env
+            self.initial_plate_xyz = native.sim.data.body_xpos[
+                native.obj_body_id["plate_1"]].copy().tolist()
+            self.bowl_ids = {native.sim.model.geom_name2id(g)
+                             for g in native.objects_dict["akita_black_bowl_1"].contact_geoms}
+            self.plate_ids = {native.sim.model.geom_name2id(g)
+                              for g in native.objects_dict["plate_1"].contact_geoms}
+            self.gripper_ids = {native.sim.model.geom_name2id(g)
+                                for g in native.robots[0].gripper.contact_geoms}
+            self.release_samples.clear()
+            self.released_placement = None
             self.grip = -1.0
             self.policy_steps = self.hold_steps = 0
             self.active_steps = 0
@@ -265,6 +310,8 @@ class Runtime:
                     # control rate, rather than an older rendered-frame tick.
                     # This stays on the sole physics-owning thread.
                     sensor = self.judge()
+                    if getattr(args, "require_released_placement", False):
+                        self.release_samples.append(sensor)
                     with self.lock:
                         if init_epoch == self.scene_request_epoch:
                             self.judge_snapshot = {**sensor, "native_init_epoch": init_epoch}
@@ -300,6 +347,11 @@ class Runtime:
             selected_at = time.monotonic()
             selected_phase = self.phase
             if selected_phase == "running":
+                if self.active_steps >= 220:
+                    self.phase = "failed"
+                    self.queue.clear()
+                    self.error = "Original 220 active-step limit reached before resumed motion"
+                    return
                 self.active_steps += 1
             if self.phase == "running" and self.queue:
                 action = self.queue.popleft()
@@ -336,12 +388,15 @@ class Runtime:
                                              "scene_request_epoch": self.scene_request_epoch})+"\n")
                 return
             self.inflight_epoch = None
-            if self.phase == "running" and done:
+            terminal_success = done
+            if getattr(args, "require_released_placement", False) and self.phase == "running":
+                terminal_success = self.placement_ready()
+            if self.phase == "running" and terminal_success:
                 if not self.env.env._check_success():
                     raise RuntimeError("Simulator done without task success")
                 self.phase = "success"
                 self.queue.clear()
-            if self.phase == "running" and self.active_steps >= 220 and not done:
+            if self.phase == "running" and self.active_steps >= 220 and not terminal_success:
                 self.phase = "failed"
                 self.queue.clear()
                 self.error = "Original 220 active-step limit reached (inference waits included)"
@@ -427,6 +482,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.reply(runtime.stop_judge_snapshot)
             if self.path == "/dense-hold" and runtime.dense_hold_capture:
                 return self.reply(list(runtime.dense_samples))
+            if self.path == "/released-placement":
+                return self.reply(runtime.released_placement)
             if self.path == "/frame.jpg":
                 return self.reply(runtime.frame, kind="image/jpeg")
             if self.path == "/observation" and runtime.observation_bytes is not None:

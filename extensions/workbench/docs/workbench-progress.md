@@ -1,5 +1,24 @@
 # Workbench goal progress
 
+October14 — full physical head selection rejects replacement:
+- Predeclared18GPU/nativeepisodes tasks0/1/2×states5/6×original/50/200 complete.
+  Eachhead4/6combined; tie rule retains original. Allheads6/6releasedplacements.
+  No candidate promoted; final7/8 untouched by training/policyrollouts.
+- Important integrationfinding: firstnativegoal stillgrippercontact in18/18.
+  Explicit releasedplacement evaluator continues throughrelease; legacydefault
+  remains nativegoal-only for old reproduction. Original220activebudget kept;
+  add pre-step guard against221afterpause. Private validation flags only.
+- Both9caseauditspass:286realGPUcalls,2148selectednativeactionvectors matched,
+  immutableheadSHA/sceneepochs/densehold/physicalrelease/freshresume verified.
+  Oneholdcontactfailure and5unobservedtriggers countfail despite18placements.
+- Clientallcalls112.324/203.678ms median/p95,max325.045,n286. ActualJPEG/walltime
+  videoslocal; pauseframegap disclosed and repaired forfuturecollector. Add
+  explicitpostresume staleprobe; existingrunningepochguard isolated in9tests.
+- 46upstream bytes unchanged. OwnedGPU/physicsjobs exit0; localGemma/Bonsai
+  restored4096/one slot/noTTL. Camera1470ms answersall3tools; Readyepoch0.
+  Nextbroaden independent supervision ratherthan moresteps on4examples or
+  tuningvalidation failures. See [validation audit](action-head-validation-audit.md).
+
 October14 — first real head-only adaptation pilot:
 - Same6human-action cases:5/6originalnative holds,5/6released placements,4/6
   combined. Task1/demo1 loses bilateralcontact duringhold;task2/demo0 remains

@@ -1,0 +1,22 @@
+{
+  "status": "Prospective physical model selection; no validation outcome yet",
+  "stage": "validation",
+  "heads": ["original","step50","step200"],
+  "tasks": [0,1,2],
+  "initial_state_indices": [5,6],
+  "planned_episodes": 18,
+  "case_order": "For each initialstate5 then6, task0 then1 then2, original thenstep50 thenstep200",
+  "checkpoint_revision": "6d0231af0e48c5985f1ff86908f4674b84bc049b",
+  "max_active_steps":220,
+  "inference_waits":"Count within220active steps; explicit pause excluded; warmed checkpoint before cases",
+  "action_schedule":"8actions per fresh replan, bounded5+3submissions; Stop discards every queued/local/pending old action",
+  "stop":"First observed native bilateral pad grasp and80mmlift; original jointkp300/damping2; at least2wallseconds and morethan1simsecond",
+  "hold_limits":{"minimum_lift_m":0.08,"maximum_translation_m":0.01,"maximum_joint_range_rad":0.02,"bilateral_contact_all_samples":true},
+  "resume":"Reject stale generation409 and require fresh postresume camera/proprio model inference from the same immutable action head",
+  "terminal":"Nativegoal plus physical plate support and zero grippercontact throughout final0.5simseconds;35mmXY and5mmmovement limits, within220active steps",
+  "selection":"Rank by complete combined passes; ties retain original, then earlier training step; no trainingloss selection",
+  "final":"Only after validation selection, paired original/selected evaluation on untouched7/8; never use final outcomes to retune",
+  "accounting":"Every planned case retained; task/budget/no-trigger failures count. Infrastructure errors retained with explicit not-run cases; no partial cohort promoted",
+  "scope":"Actual GPU policy inference and native physics, not human-action replay; no voice/hardware/generalization qualification",
+  "video":"Actual native JPEG stream frames captured during evaluation, with walltimestamps and framehashes; no replay labeled as fresh inference"
+}

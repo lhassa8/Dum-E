@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import subprocess
 from pathlib import Path
 
 import numpy as np
@@ -20,8 +21,10 @@ def read(path):
 
 report = read(args.folder/"report.json")
 protocol = read(args.folder/"protocol.json")
-assert report["protocol"] == protocol and len(report["episodes"]) == 6
-assert len(protocol["episodes"]) == 6 and protocol["max_active_steps"] == 220
+validation = protocol.get("stage") == "validation"
+expected_count = 9 if validation else 6
+assert report["protocol"] == protocol and len(report["episodes"]) == expected_count
+assert len(protocol["episodes"]) == expected_count and protocol["max_active_steps"] == 220
 for name, key in (("verify_openvla_physical.py", "actor_sha256"),
                   ("libero_runtime.py", "runtime_sha256")):
     assert hashlib.sha256((args.folder/name).read_bytes()).hexdigest() == protocol[key]
@@ -37,20 +40,41 @@ assert not any("error" in s for s in server)
 server = [s for s in server if s["request_id"] >= 0]
 all_calls, seen = [], set()
 selected_expected, terminal_steps = {}, 0
-counts = {"attempted": 6, "triggered": 0, "hold_passed": 0, "native_success": 0,
+counts = {"attempted": expected_count, "triggered": 0, "hold_passed": 0, "native_success": 0,
           "fresh_resume": 0, "combined_passed": 0}
 for spec, result in zip(protocol["episodes"], report["episodes"], strict=True):
     assert all(result[k] == v for k, v in spec.items())
-    key = (spec["task_id"], spec["repeat"])
+    key = (spec["task_id"], spec["repeat"], spec.get("head", "original"))
     assert key not in seen and result["error"] is None
     seen.add(key)
     folder = args.folder/f"task{key[0]}-repeat{key[1]}"
+    if validation:
+        folder = args.folder/f"task{key[0]}-repeat{key[1]}-{key[2]}"
     assert read(folder/"result.json") == result
     terminal = result["terminal_state"]
     terminal_steps += terminal["policy_steps"]
     scene = terminal["scene_request_epoch"]
     assert terminal["native_init_epoch"] == scene and terminal["active_steps"] <= 220
     assert terminal["motion_profile"] == "baseline" and not terminal["carry_governor_experiment"]
+    if validation:
+        assert terminal["initial_state_index"] == spec["initial_state_index"]
+        assert terminal["require_released_placement"]
+        release = read(folder/"released-placement.json")
+        assert result["released_placement_passed"] == (terminal["phase"] == "success")
+        if result["released_placement_passed"]:
+            assert release and release["samples"]
+            sample = release["samples"]
+            times = np.asarray([s["sim_time"] for s in sample])
+            assert times[-1]-times[0] >= .5-1e-9
+            assert np.diff(times).min() >= -1e-10 and np.diff(times).max() <= .00200001
+            xyz = np.asarray([s["xyz"] for s in sample])
+            movement = float(np.linalg.norm(xyz-xyz[0], axis=1).max())
+            error = float(np.linalg.norm(
+                xyz[-1, :2]-np.asarray(sample[0]["initial_plate_xyz"])[:2]))
+            assert all(s["success"] and s["plate_contact"] and not s["any_gripper_contact"]
+                       for s in sample)
+            assert movement == release["movement_m"] <= .005
+            assert error == release["placement_xy_error_m"] <= .035
     assert result["native_success"] == (terminal["phase"] == "success")
     for row in read(folder/"trace.json"):
         state = row["state"]
@@ -85,6 +109,9 @@ for spec, result in zip(protocol["episodes"], report["episodes"], strict=True):
     else:
         assert not held and not result["hold_passed"]
     calls = read(folder/"calls.json")
+    if validation:
+        assert all(c["head"] == spec["head"] and c["head_sha256"] ==
+                   metadata["heads"][spec["head"]]["sha256"] for c in calls)
     assert sorted(c["draw"] for c in calls) == list(range(len(calls)))
     all_calls.extend(calls)
     by_draw = {c["draw"]: c for c in calls}
@@ -119,12 +146,32 @@ for spec, result in zip(protocol["episodes"], report["episodes"], strict=True):
                            ("fresh_resume", "fresh_resume_inference"),
                            ("combined_passed", "development_passed")):
         counts[target] += int(result[source])
+    if validation:
+        import imageio_ffmpeg
+
+        frames = read(folder/"frames.json")
+        assert frames and all(b["wall_s"] >= a["wall_s"] for a, b in zip(frames, frames[1:]))
+        lines = []
+        for index, frame in enumerate(frames):
+            path = (folder/"frames"/frame["file"]).resolve()
+            assert hashlib.sha256(path.read_bytes()).hexdigest() == frame["sha256"]
+            assert "'" not in str(path)
+            lines.append(f"file '{path}'")
+            duration = frames[index+1]["wall_s"]-frame["wall_s"] if index+1 < len(frames) else .05
+            lines.append(f"duration {max(duration, .001):.9f}")
+        timeline = folder/"video-timeline.txt"
+        timeline.write_text("\n".join(lines)+"\n")
+        subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-v", "error", "-y", "-f", "concat",
+                        "-safe", "0", "-i", str(timeline), "-vsync", "vfr", "-pix_fmt", "yuv420p",
+                        str(folder/"actual-validation.mp4")], check=True)
 assert len(all_calls) == len(server)
 for call, reply in zip(all_calls, server, strict=True):
     assert call["draw"] == reply["request_id"]
     assert call["actions"] == reply["actions"]
     assert call["server_ms"] == reply["server_ms"]
     assert call["observation_sha256"] == reply["observation_sha256"]
+    if validation:
+        assert call["head"] == reply["head"] and call["head_sha256"] == reply["head_sha256"]
 native_selected = 0
 for line in (args.physics/"physics.jsonl").read_text().splitlines():
     row = json.loads(line)
@@ -146,5 +193,9 @@ audit = {"audit": "pass", "outcomes": counts, "client_ms": timing("client_ms"),
          "native_selected_policy_actions": native_selected,
          "server_ms": timing("server_ms"),
          "scope": "Six known-layout repetitions; no voice, workshop or hardware qualification"}
+if validation:
+    audit["scope"] = "Three immutable heads on one validation state; no final evaluation result"
+    audit["by_head"] = {head: sum(r["development_passed"] for r in report["episodes"]
+                                if r["head"] == head) for head in protocol["heads"]}
 (args.folder/"audit.json").write_text(json.dumps(audit, indent=2)+"\n")
 print(json.dumps(audit))

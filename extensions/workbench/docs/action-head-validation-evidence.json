@@ -1,0 +1,474 @@
+{
+  "selection": {
+    "stage": "validation_selection_only",
+    "planned": 18,
+    "cases": [
+      {
+        "state": 5,
+        "task_id": 0,
+        "head": "original",
+        "triggered": true,
+        "hold": false,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": false
+      },
+      {
+        "state": 5,
+        "task_id": 0,
+        "head": "step50",
+        "triggered": false,
+        "hold": false,
+        "fresh_resume": false,
+        "released_placement": true,
+        "combined": false
+      },
+      {
+        "state": 5,
+        "task_id": 0,
+        "head": "step200",
+        "triggered": false,
+        "hold": false,
+        "fresh_resume": false,
+        "released_placement": true,
+        "combined": false
+      },
+      {
+        "state": 5,
+        "task_id": 1,
+        "head": "original",
+        "triggered": true,
+        "hold": true,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": true
+      },
+      {
+        "state": 5,
+        "task_id": 1,
+        "head": "step50",
+        "triggered": true,
+        "hold": true,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": true
+      },
+      {
+        "state": 5,
+        "task_id": 1,
+        "head": "step200",
+        "triggered": true,
+        "hold": true,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": true
+      },
+      {
+        "state": 5,
+        "task_id": 2,
+        "head": "original",
+        "triggered": true,
+        "hold": true,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": true
+      },
+      {
+        "state": 5,
+        "task_id": 2,
+        "head": "step50",
+        "triggered": true,
+        "hold": true,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": true
+      },
+      {
+        "state": 5,
+        "task_id": 2,
+        "head": "step200",
+        "triggered": false,
+        "hold": false,
+        "fresh_resume": false,
+        "released_placement": true,
+        "combined": false
+      },
+      {
+        "state": 6,
+        "task_id": 0,
+        "head": "original",
+        "triggered": true,
+        "hold": true,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": true
+      },
+      {
+        "state": 6,
+        "task_id": 0,
+        "head": "step50",
+        "triggered": true,
+        "hold": true,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": true
+      },
+      {
+        "state": 6,
+        "task_id": 0,
+        "head": "step200",
+        "triggered": true,
+        "hold": true,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": true
+      },
+      {
+        "state": 6,
+        "task_id": 1,
+        "head": "original",
+        "triggered": false,
+        "hold": false,
+        "fresh_resume": false,
+        "released_placement": true,
+        "combined": false
+      },
+      {
+        "state": 6,
+        "task_id": 1,
+        "head": "step50",
+        "triggered": false,
+        "hold": false,
+        "fresh_resume": false,
+        "released_placement": true,
+        "combined": false
+      },
+      {
+        "state": 6,
+        "task_id": 1,
+        "head": "step200",
+        "triggered": true,
+        "hold": true,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": true
+      },
+      {
+        "state": 6,
+        "task_id": 2,
+        "head": "original",
+        "triggered": true,
+        "hold": true,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": true
+      },
+      {
+        "state": 6,
+        "task_id": 2,
+        "head": "step50",
+        "triggered": true,
+        "hold": true,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": true
+      },
+      {
+        "state": 6,
+        "task_id": 2,
+        "head": "step200",
+        "triggered": true,
+        "hold": true,
+        "fresh_resume": true,
+        "released_placement": true,
+        "combined": true
+      }
+    ],
+    "scores_out_of6": {
+      "original": 4,
+      "step50": 4,
+      "step200": 4
+    },
+    "selected": "original",
+    "head_identities": {
+      "original": {
+        "step": 0,
+        "sha256": "809858636cf0a65009dd567d2f4e116249442790f02b8fe31f24500ea6118908"
+      },
+      "step50": {
+        "step": 50,
+        "sha256": "072114bad5533c6f28cf4439d2fd393a27989b535a08a5cf97224791a830d46d"
+      },
+      "step200": {
+        "step": 200,
+        "sha256": "7482ff5aba87dc355dd35f43ceb2f315e8aba097f7e5e58260e294de72e0eeb6"
+      }
+    },
+    "tie_break": "Retain original, then earlier training step",
+    "candidate_promoted": false,
+    "final_states_7_8_used": false,
+    "source_audits": [
+      {
+        "state": 5,
+        "audit_sha256": "e21c749d7098b7db012c0f7bf37fe2efb4b6f3a4933893a34918649f55cf03a2"
+      },
+      {
+        "state": 6,
+        "audit_sha256": "330ec5d30aba261c402806f7b458f741008bc32c658b107f917bcbdd29842155"
+      }
+    ],
+    "next": "Retain original; pilot did not earn replacement. Keep final states unused."
+  },
+  "batches": [
+    {
+      "state": 5,
+      "audit": {
+        "audit": "pass",
+        "outcomes": {
+          "attempted": 9,
+          "triggered": 6,
+          "hold_passed": 5,
+          "native_success": 9,
+          "fresh_resume": 6,
+          "combined_passed": 5
+        },
+        "client_ms": {
+          "n": 144,
+          "median": 112.72322900003928,
+          "p95": 179.6635470000183,
+          "maximum": 289.5675809995737
+        },
+        "native_selected_policy_actions": 1076,
+        "server_ms": {
+          "n": 144,
+          "median": 109.8217235012271,
+          "p95": 177.18470600084402,
+          "maximum": 286.789426998439
+        },
+        "scope": "Three immutable heads on one validation state; no final evaluation result",
+        "by_head": {
+          "original": 2,
+          "step50": 2,
+          "step200": 1
+        }
+      }
+    },
+    {
+      "state": 6,
+      "audit": {
+        "audit": "pass",
+        "outcomes": {
+          "attempted": 9,
+          "triggered": 7,
+          "hold_passed": 7,
+          "native_success": 9,
+          "fresh_resume": 7,
+          "combined_passed": 7
+        },
+        "client_ms": {
+          "n": 142,
+          "median": 111.97068349792971,
+          "p95": 242.76863100021728,
+          "maximum": 325.04525600234047
+        },
+        "native_selected_policy_actions": 1072,
+        "server_ms": {
+          "n": 142,
+          "median": 109.44605599979695,
+          "p95": 240.45045499951812,
+          "maximum": 322.26873699983116
+        },
+        "scope": "Three immutable heads on one validation state; no final evaluation result",
+        "by_head": {
+          "original": 2,
+          "step50": 2,
+          "step200": 3
+        }
+      }
+    }
+  ],
+  "client_timing_all_calls": {
+    "n": 286,
+    "median_ms": 112.32350550108094,
+    "p95_ms": 203.67820100000245,
+    "maximum_ms": 325.04525600234047
+  },
+  "matched_selected_native_policy_actions": 2148,
+  "goal_timing": {
+    "cases": [
+      {
+        "state": 5,
+        "task": 0,
+        "head": "original",
+        "first_goal_active_step": 92,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 112
+      },
+      {
+        "state": 5,
+        "task": 0,
+        "head": "step50",
+        "first_goal_active_step": 94,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 121
+      },
+      {
+        "state": 5,
+        "task": 0,
+        "head": "step200",
+        "first_goal_active_step": 94,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 113
+      },
+      {
+        "state": 5,
+        "task": 1,
+        "head": "original",
+        "first_goal_active_step": 125,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 144
+      },
+      {
+        "state": 5,
+        "task": 1,
+        "head": "step50",
+        "first_goal_active_step": 118,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 136
+      },
+      {
+        "state": 5,
+        "task": 1,
+        "head": "step200",
+        "first_goal_active_step": 122,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 147
+      },
+      {
+        "state": 5,
+        "task": 2,
+        "head": "original",
+        "first_goal_active_step": 120,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 156
+      },
+      {
+        "state": 5,
+        "task": 2,
+        "head": "step50",
+        "first_goal_active_step": 114,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 158
+      },
+      {
+        "state": 5,
+        "task": 2,
+        "head": "step200",
+        "first_goal_active_step": 117,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 160
+      },
+      {
+        "state": 6,
+        "task": 0,
+        "head": "original",
+        "first_goal_active_step": 94,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 117
+      },
+      {
+        "state": 6,
+        "task": 0,
+        "head": "step50",
+        "first_goal_active_step": 90,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 110
+      },
+      {
+        "state": 6,
+        "task": 0,
+        "head": "step200",
+        "first_goal_active_step": 90,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 109
+      },
+      {
+        "state": 6,
+        "task": 1,
+        "head": "original",
+        "first_goal_active_step": 137,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 155
+      },
+      {
+        "state": 6,
+        "task": 1,
+        "head": "step50",
+        "first_goal_active_step": 128,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 145
+      },
+      {
+        "state": 6,
+        "task": 1,
+        "head": "step200",
+        "first_goal_active_step": 132,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 162
+      },
+      {
+        "state": 6,
+        "task": 2,
+        "head": "original",
+        "first_goal_active_step": 114,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 158
+      },
+      {
+        "state": 6,
+        "task": 2,
+        "head": "step50",
+        "first_goal_active_step": 115,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 146
+      },
+      {
+        "state": 6,
+        "task": 2,
+        "head": "step200",
+        "first_goal_active_step": 112,
+        "gripper_contact_at_first_native_goal": true,
+        "plate_contact_at_first_native_goal": true,
+        "terminal_active_step": 145
+      }
+    ],
+    "gripper_contact_at_first_native_goal": 18,
+    "total": 18
+  },
+  "resumed_generation_smoke": {
+    "passed": true,
+    "initial_state_index": 1,
+    "old_epoch": 1,
+    "resumed_epoch": 3,
+    "stale_after_resume_status": 409,
+    "current_epoch_neutral_packet_accepted": true,
+    "scope": "Separate neutral infrastructure test; no learned-policy or grasp qualification"
+  }
+}
