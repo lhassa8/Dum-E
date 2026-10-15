@@ -1,0 +1,10 @@
+{
+  "base_protocol": "published-replay-protocol.json",
+  "status": "Prospective supervision expansion after head-only pilot tied original; no outcomes yet",
+  "cases": [{"task_id":0,"demo":"demo_2"},{"task_id":0,"demo":"demo_3"},{"task_id":0,"demo":"demo_4"},{"task_id":0,"demo":"demo_5"},{"task_id":1,"demo":"demo_2"},{"task_id":1,"demo":"demo_3"},{"task_id":1,"demo":"demo_4"},{"task_id":1,"demo":"demo_5"},{"task_id":2,"demo":"demo_2"},{"task_id":2,"demo":"demo_3"},{"task_id":2,"demo":"demo_4"},{"task_id":2,"demo":"demo_5"}],
+  "rationale": "Broaden independent qualified human-demonstration coverage instead of optimizing the same four episodes or tuning validation failure poses",
+  "split": "Published demoIDs2–5 are distinct from benchmark initial-state IDs. Refuse prior inspection near-overlap flags; no benchmark validation/final policy observations or actions as supervision",
+  "parameters": "Inherit every original motion, grasp, interruption, release, budget and fidelity criterion unchanged; interrupt flag required",
+  "accounting": "All12cases retained. Only complete independently audited grasp/hold/resumed-placement demonstrations may supply labels. Keep failed samples and failure reasons local",
+  "promotion": "No new model promotion or training-loss qualification; actual native pre-action observations only"
+}

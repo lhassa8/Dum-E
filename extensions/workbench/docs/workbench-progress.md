@@ -143,6 +143,32 @@ October 14 — post-restart whole-assistant requalification:
   [restart report](pc-restart-requalification.md). Goal remains active: human room
   timing/echo, broader camera recovery and pretrained-policy Stop/holding open.
 
+October 14 — broader action-head training, physical qualification pending:
+- A fixed additional human-demonstration cohort (tasks0/1/2, demo2–5)
+  completed12/12 native replays. Eight passed combined lift/Stop/hold/resume/
+  released-placement gates; four failed and remain excluded. These are human
+  action replays, not learned-policy rollouts; exact source-state fidelity0/12.
+- Merged with the prior four qualified episodes:12episodes,1442unpadded
+  eight-action windows,6excluded source episodes. Task episode counts6/2/4.
+  Duplicate-source rejection and all1442 native source label boundaries checked.
+- Frozen cache:958fresh GPU computations,484hash-verified reused features;
+  a fresh current-model anchor exactly equals its prior BF16 feature tensor.
+  Original action-head reconstruction passed for every fresh computation.
+- Prospective expanded-action-head-protocol.json pins data identity, balanced
+  task/episode sampling,600updates and checkpoints0/200/600. Reset from original
+  publisher head;151117831trainable head parameters, backbone/proprio frozen.
+  Training L1:0.108214186/0.100038139/0.089867812. This does not establish physical
+  improvement. Independent audit reproduced all4800sampling draws, verified
+  original step0 SHA and all checkpoint hashes/finite tensors. Training25.19s.
+- No promotion. Next: original versus expanded200/600 on the same validation
+  states5/6 with all original physical gates; final7/8 remain reserved. If no
+  advantage, stop extending head-only optimization on this corpus. Data,
+  sampling and exposure changed together; no isolated data-effect claim.
+- Ruff passes for five changed scripts;46upstream files unchanged. Raw features,
+  actions, source videos and checkpoints remain local. Both local dialogue/
+  camera models restored; read-only camera answer1559.93ms, no motion/mic.
+  Aggregate integrity results: expanded-action-head-evidence.json.
+
 October 14 — local LFM2.5 comparison:
 - Verified the official QAD Q4_0 GGUF and its independent LM Studio import copy
   against pinned publisher bytes/SHA-256. Actual inference used the CUDA12 2.57.0

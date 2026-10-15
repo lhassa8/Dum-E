@@ -1,0 +1,36 @@
+{
+  "audit_completed": true,
+  "exact_reproduced_sampling_draws": 4800,
+  "sampled_windows_by_task": {
+    "0": 1531,
+    "2": 1616,
+    "1": 1653
+  },
+  "qualified_episodes": 12,
+  "excluded_episodes": 6,
+  "windows": 1442,
+  "fresh_features": 958,
+  "reused_features": 484,
+  "anchor_exact": true,
+  "original_step0_exact_sha256": true,
+  "all_checkpoint_hashes_and_weights_finite": true,
+  "checkpoints": [
+    {
+      "step": 0,
+      "training_l1": 0.10821418606198044,
+      "sha256": "4d1b7e37be4bfaa9769dc0d4c1396d9e7f67c350b79d36fe4f8bc132117d30d9"
+    },
+    {
+      "step": 200,
+      "training_l1": 0.10003813876240282,
+      "sha256": "38dbea975d9513f9a6b8ab59590129bad9fc3ea576e8e323a209daa7d9ad9bf8"
+    },
+    {
+      "step": 600,
+      "training_l1": 0.08986781150019946,
+      "sha256": "1aac3168ed71516557a33d48f9dfbd97665714be2825f570285a3e41e8baeeb6"
+    }
+  ],
+  "elapsed_s": 25.19331701700139,
+  "physical_validation": "Not yet run; no policy promotion"
+}

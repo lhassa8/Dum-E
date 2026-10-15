@@ -17,17 +17,26 @@ parser.add_argument("--openpi", type=Path, required=True)
 parser.add_argument("--config-dir", type=Path, required=True)
 parser.add_argument("--diagnose-first", action="store_true")
 parser.add_argument("--interrupt", action="store_true")
+parser.add_argument("--case-protocol", type=Path,
+                    help="Prospective case-only extension; physical parameters stay inherited")
 args = parser.parse_args()
 manifest = json.loads((args.preparation/"preparation.json").read_text())
 inspection = json.loads((args.inspection/"report.json").read_text())
 protocol_path = Path(__file__).resolve().parents[1]/"docs/published-replay-protocol.json"
 protocol = json.loads(protocol_path.read_text())
+if args.case_protocol:
+    extension = json.loads(args.case_protocol.read_text())
+    assert extension["base_protocol"] == protocol_path.name and args.interrupt
+    protocol.update(cases=extension["cases"], case_extension=extension)
+    assert len({(c["task_id"], c["demo"]) for c in protocol["cases"]}) == len(protocol["cases"])
 protocol["interrupt_enabled"] = args.interrupt
 if args.diagnose_first:
     protocol["cases"] = protocol["cases"][:1]
     protocol["diagnostic_scope"] = "First original case only; localize fidelity error"
 assert manifest["verified"] and manifest["revision"] == protocol["dataset_revision"]
 args.output.mkdir(parents=True, exist_ok=False)
+if args.case_protocol:
+    (args.output/"case-protocol.json").write_bytes(args.case_protocol.read_bytes())
 (args.output/"protocol.json").write_text(json.dumps(protocol, indent=2)+"\n")
 (args.output/Path(__file__).name).write_bytes(Path(__file__).read_bytes())
 os.environ["LIBERO_CONFIG_PATH"] = str(args.config_dir.resolve())

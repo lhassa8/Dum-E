@@ -1,0 +1,23 @@
+{
+  "status": "Prospective broader head-only pilot; no physical improvement claim",
+  "base_revision": "6d0231af0e48c5985f1ff86908f4674b84bc049b",
+  "supervision": "12independently qualified interrupted human-replay episodes across3tasks;1442unpadded8-action windows;6failed source episodes explicitly excluded",
+  "training_dataset": "merged-training-chunks-001; prior4qualified plus8new; no pause crossing or validation/final rollout supervision",
+  "dataset_manifest_sha256": "3a50e0c136b1cf0e9864fd7e18cf1f113119032121686d254f0534cdaa1152a0",
+  "expected_training_windows": 1442,
+  "expected_training_episodes": 12,
+  "labels": "Same invertible affineQ01/Q99 transformation and gripper mapping as firstpilot; original decoder/nativebounds unchanged",
+  "frozen": ["pretrained visual/language backbone", "proprioception projector"],
+  "trainable": "Existing original pretrained L1RegressionActionHead, reset from publisher checkpoint; no continuation from rejected pilot",
+  "sampling": "uniform_task_then_episode_then_window",
+  "sampling_reason": "Qualified episode counts are6/2/4 across tasks; balance tasks and episodes instead of letting long/common trajectories dominate. IDs affect sampling only, never actor inputs",
+  "optimizer": {"name":"AdamW","learning_rate":0.00001,"weight_decay":0.0001,"batch_size":8,"steps":600,"seed":7,"gradient_clip_norm":1.0},
+  "checkpoints": [0,200,600],
+  "exposure": "Step200 matches previous gradient-update budget; step600 gives3.33average window exposures vs3.30in firstpilot. Data/sampling/exposure change together; no isolated causal claim",
+  "precision": "FP32master head/optimizer, BF16autocast CUDA compute; verified frozen-feature reuse with exact current-model anchor",
+  "validation": "Same benchmark tasks0/1/2 states5/6, original versus expanded200/600 with original complete physical gates; no trainingloss selection",
+  "final_evaluation": "Untouched7/8 reserved for a candidate earning replacement; no final-state tuning",
+  "excluded": "Old benchmark evaluation0, allvalidation/final observations/actions and unqualified source episodes. DemoID is distinct from benchmark initial-stateID",
+  "decision": "If no complete-journey validation advantage, stop extending head-only optimization on this corpus and investigate representation/objective or another control strategy",
+  "promotion": "None from trainingloss. Original220active budget,80mmlift/bilateral contact, nativejointStop/hold10mm/20mrad, stale rejection/fresh resume and releasedrestingplacement35mm remain mandatory"
+}

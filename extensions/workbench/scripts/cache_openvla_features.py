@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import shutil
 import time
 from pathlib import Path
 
@@ -15,10 +16,28 @@ parser.add_argument("dataset", type=Path)
 parser.add_argument("output", type=Path)
 parser.add_argument("--source", type=Path, required=True)
 parser.add_argument("--preparation", type=Path, required=True)
+parser.add_argument("--reuse-dataset", type=Path)
+parser.add_argument("--reuse-cache", type=Path)
 args = parser.parse_args()
 dataset_path = args.dataset/"manifest.json"
 dataset = json.loads(dataset_path.read_text())
 preparation = json.loads((args.preparation/"preparation.json").read_text())
+assert bool(args.reuse_dataset) == bool(args.reuse_cache)
+reusable, reuse_manifest = {}, None
+if args.reuse_dataset:
+    old_path = args.reuse_dataset/"manifest.json"
+    old_data = json.loads(old_path.read_text())
+    reuse_manifest = json.loads((args.reuse_cache/"manifest.json").read_text())
+    assert reuse_manifest["complete"] and reuse_manifest["frozen"]
+    assert reuse_manifest["dataset_manifest_sha256"] == hashlib.sha256(
+        old_path.read_bytes()).hexdigest()
+    assert reuse_manifest["checkpoint_revision"] == preparation["revision"]
+    assert len(old_data["windows"]) == len(reuse_manifest["entries"])
+    assert (reuse_manifest["feature_head_identity_checks"]
+            +reuse_manifest.get("reused_features", 0)) == len(reuse_manifest["entries"])
+    for window, entry in zip(old_data["windows"], reuse_manifest["entries"]):
+        key = (window["observation_sha256"], window["task_prompt"])
+        reusable[key] = (args.reuse_cache/"features"/f"{entry['index']:05d}.pt", entry["sha256"])
 assert preparation["verified"] and torch.cuda.is_available()
 assert torch.cuda.get_device_capability() == (12, 0)
 assert {s["task_id"] for s in dataset["episode_sources"]} == {0, 1, 2}
@@ -35,6 +54,9 @@ for spec in preparation["verified_files"]:
             digest.update(block)
     assert path.stat().st_size == spec["bytes"] and digest.hexdigest() == spec["local_sha256"]
 helpers, geometry, provenance = load_helpers(args.source)
+if reuse_manifest:
+    assert all(reuse_manifest[k] == provenance[k]
+               for k in ("source_commit", "helpers_sha256", "geometry_sha256"))
 from prismatic.extern.hf.configuration_prismatic import OpenVLAConfig  # noqa: E402
 from prismatic.extern.hf.modeling_prismatic import OpenVLAForActionPrediction  # noqa: E402
 from prismatic.extern.hf.processing_prismatic import (  # noqa: E402
@@ -73,11 +95,23 @@ def capture(*positional, **keywords):
 
 
 model.predict_action = capture
-entries, predictions = [], []
+entries, predictions, prediction_indices = [], [], []
+reuse_count, fresh_count, anchor_verified = 0, 0, False
 (args.output/"features").mkdir()
 for index, window in enumerate(dataset["windows"]):
     path = Path(window["observation"])
     assert hashlib.sha256(path.read_bytes()).hexdigest() == window["observation_sha256"]
+    key = (window["observation_sha256"], window["task_prompt"])
+    reusable_feature = reusable.get(key)
+    if reusable_feature and anchor_verified:
+        old_feature, expected_sha = reusable_feature
+        assert hashlib.sha256(old_feature.read_bytes()).hexdigest() == expected_sha
+        feature_path = args.output/"features"/f"{index:05d}.pt"
+        shutil.copyfile(old_feature, feature_path)
+        entries.append({"index": index, "sha256": expected_sha, "inference_ms": None,
+                        "reused": True})
+        reuse_count += 1
+        continue
     with np.load(path, allow_pickle=False) as data:
         raw = dict(data)
     assert set(raw) == {"agentview_image", "robot0_eye_in_hand_image", "robot0_eef_pos",
@@ -95,18 +129,29 @@ for index, window in enumerate(dataset["windows"]):
     assert np.array_equal(native_actions(decoded), native_actions(actions))
     torch.cuda.synchronize()
     elapsed = (time.monotonic()-tick)*1000
+    fresh_count += 1
+    if reusable_feature:
+        old_feature, expected_sha = reusable_feature
+        assert hashlib.sha256(old_feature.read_bytes()).hexdigest() == expected_sha
+        prior = torch.load(old_feature, map_location="cpu", weights_only=True)
+        assert torch.equal(prior, hidden.detach().cpu()), "Frozen-feature anchor differs"
+        anchor_verified = True
     feature_path = args.output/"features"/f"{index:05d}.pt"
     torch.save(hidden.detach().cpu().contiguous(), feature_path)
     entries.append({"index": index, "sha256": hashlib.sha256(feature_path.read_bytes()).hexdigest(),
-                    "inference_ms": elapsed})
+                    "inference_ms": elapsed, "reused": False})
     predictions.append(native_actions(actions))
+    prediction_indices.append(index)
     if index == 0 or (index+1) % 50 == 0:
         print(json.dumps({"cached": index+1, "total": len(dataset["windows"])}), flush=True)
-np.savez(args.output/"base-native-actions.npz", actions=np.asarray(predictions))
+np.savez(args.output/"base-native-actions.npz", actions=np.asarray(predictions),
+         dataset_indices=np.asarray(prediction_indices))
 metadata = {**provenance, "checkpoint_revision": preparation["revision"], "load_s": load_s,
             "dataset_manifest_sha256": hashlib.sha256(dataset_path.read_bytes()).hexdigest(),
             "device": str(next(model.parameters()).device), "dtype": str(hidden.dtype),
-            "hidden_shape": list(hidden.shape), "feature_head_identity_checks": len(entries),
+            "hidden_shape": list(hidden.shape), "feature_head_identity_checks": fresh_count,
+            "reused_features": reuse_count, "anchor_verified": anchor_verified,
+            "base_action_scope": "Fresh rows only; explicit dataset_indices in NPZ",
             "frozen": True, "trained": False, "complete": True, "entries": entries}
 (args.output/"manifest.json").write_text(json.dumps(metadata, indent=2)+"\n")
 print(json.dumps({"complete": True, "features": len(entries), "load_s": load_s}), flush=True)

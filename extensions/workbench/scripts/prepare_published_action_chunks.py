@@ -17,7 +17,7 @@ report = json.loads((args.run/"report.json").read_text())
 audit = json.loads((args.run/"audit.json").read_text())
 inspection = json.loads((args.inspection/"report.json").read_text())
 assert audit["audit_completed"] and report["protocol"]["interrupt_enabled"]
-assert len(report["episodes"]) == len(audit["episodes"]) == 6
+assert len(report["episodes"]) == len(audit["episodes"]) == len(report["protocol"]["cases"])
 windows, chunks, sources, excluded = [], [], [], []
 for result, qualified in zip(report["episodes"], audit["episodes"]):
     assert all(result[k] == qualified[k] for k in ("task_id", "demo"))
