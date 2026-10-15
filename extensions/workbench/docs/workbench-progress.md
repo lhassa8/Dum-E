@@ -2354,3 +2354,30 @@ B17 — Windows migration, measured GPU speech and actual pretrained rollouts, O
 - Publish reproducible sources/dependency pins/helpers and aggregate evidence;
   rawweights/observations/wheels staylocal. Next frozen6-case physical cohort,
   no prospective controller promotion. Audit: openvla-gpu-qualification.md.
+
+### C — Real OpenVLA closed-loop Stop/resume cohort:5/6 combined (PC)
+
+- Freeze3 known layouts×2 deterministic reps, seed7/state0, original220active
+  budget,8-action model schedule and native grasp/80mm/10mm/20mrad/>1simsec gates.
+- Initialattempt001 aborts firstcase409: missednative max5 packet cap.0 policy
+  actions applied,5 cases notrun, retained. Verifyneutral5+3 transport/stalereject;
+  repairlocal8-action buffering, clearonStop, preservecap5 andmodel/criteria.
+- Freshphysical002 completes6/6 nativegoals and5/6 combined physicalStop/hold/
+  freshresume. Firstcase nativegoal butno observedqualifiedgrasp trigger staysfail.
+  480poll samples: maxlift118.612mm, no bilateralpadgrasp seen; not fulldensecoverage.
+- Fiveholds502–525 samples at2ms+polls, minlift80.166–89.282mm, worstmovement
+  3.275mm/range18.810mrad. All5 staleactions409 andfreshresume;3 clearlocal3actions.
+- 82 realcohortGPUcalls client111.80/270.98/284.47ms median/p95/max; originalactive
+  counts100–138. Modelcoldload70.194s/warm7.030s outsideepisodes. No speechclaim.
+- Independent6case/raw82serverreply/616nativeselectedaction audit,11coordinator,Ruff,46upstream
+  bytespass. Allterminal gripspositive; released/restingplacement unestablished.
+- Ownedpolicy/physics exit0; restorelocalGemma4096/1slot/noTTL,Bonsai unchanged,
+  public8996 preserved. No modelpromotion/workshop/hardware/generalizationclaim.
+- Next: frozenfirstfailure contactreplay, verifystate equivalence; no cohortretuning.
+  Full audit: openvla-physical-audit.md; rawdata remainlocal.
+
+- Contactreplay nowcompletes:100 recordedsteps exactlymatch position/joints/time,
+  allnativecontact/goal checksagree.2600 samples,365 lifted>=80mm: rightpad365,
+  leftpad0, bothfinger-body contacts present; no bilateralgrasp anywhere sampled.
+  Peakrender inspected; independentrawauditpasses. No freshinference or retuning.
+  Next: camera/proprioception grasp adaptation, not another brake/offset sweep.
