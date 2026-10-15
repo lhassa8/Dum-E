@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import sys
+import time
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -15,11 +16,13 @@ parser.add_argument("output", type=Path)
 parser.add_argument("--openpi", type=Path, required=True)
 parser.add_argument("--config-dir", type=Path, required=True)
 parser.add_argument("--diagnose-first", action="store_true")
+parser.add_argument("--interrupt", action="store_true")
 args = parser.parse_args()
 manifest = json.loads((args.preparation/"preparation.json").read_text())
 inspection = json.loads((args.inspection/"report.json").read_text())
 protocol_path = Path(__file__).resolve().parents[1]/"docs/published-replay-protocol.json"
 protocol = json.loads(protocol_path.read_text())
+protocol["interrupt_enabled"] = args.interrupt
 if args.diagnose_first:
     protocol["cases"] = protocol["cases"][:1]
     protocol["diagnostic_scope"] = "First original case only; localize fidelity error"
@@ -38,6 +41,7 @@ import robosuite  # noqa: E402
 from examples.libero.main import _get_libero_env  # noqa: E402
 from libero.libero import benchmark  # noqa: E402
 from PIL import Image  # noqa: E402
+from robosuite.controllers.joint_pos import JointPositionController  # noqa: E402
 
 suite = benchmark.get_benchmark_dict()["libero_spatial"]()
 report = {"protocol": protocol, "episodes": []}
@@ -57,8 +61,10 @@ for case in protocol["cases"]:
     directory = args.output/f"task{case['task_id']}-{case['demo']}"
     directory.mkdir()
     (directory/"observations").mkdir()
-    result = {**case, "error": None, "source_sha256": spec["sha256"]}
-    samples, records, checks, replay_states = [], [], [], []
+    (directory/"hold-observations").mkdir()
+    result = {**case, "error": None, "source_sha256": spec["sha256"],
+              "interruption_triggered": False}
+    samples, records, checks, replay_states, held = [], [], [], [], []
     env, _ = _get_libero_env(task, 256, 7)
     try:
         with h5py.File(path, "r") as data:
@@ -106,11 +112,20 @@ for case in protocol["cases"]:
                                   "joint_names": list(native.sim.model.joint_names),
                                   "qpos_addresses": native.sim.model.jnt_qposadr.tolist(),
                                   "qvel_addresses": native.sim.model.jnt_dofadr.tolist()}
+        hold_active = False
+        controller = robot.controller
+        joint = (JointPositionController(
+            sim=controller.sim, eef_name=controller.eef_name,
+            joint_indexes={"joints": controller.joint_index, "qpos": controller.qpos_index,
+                           "qvel": controller.qvel_index},
+            actuator_range=controller.actuator_limits, kp=300, damping_ratio=2)
+                 if args.interrupt else None)
 
         def measure():
             pairs = [{int(c.geom1), int(c.geom2)} for c in
                      native.sim.data.contact[:native.sim.data.ncon]]
             return {"xyz": native.sim.data.body_xpos[body].tolist(),
+                    "joints": robot._joint_positions.tolist(), "holding": hold_active,
                     "sim_time": float(native.sim.data.time),
                     "grasp": bool(native._check_grasp(robot.gripper, target)),
                     "any_gripper_contact": any(p & bowl and p & gripper for p in pairs),
@@ -120,8 +135,13 @@ for case in protocol["cases"]:
         original = robot.controller.run_controller
 
         def observe():
-            samples.append(measure())
-            return original()
+            sample = measure()
+            samples.append(sample)
+            torque = original()
+            if hold_active:
+                held.append(sample)
+                return joint.run_controller()
+            return torque
 
         robot.controller.run_controller = observe
         sequence = list(actions)+[[0.]*6+[float(actions[-1, -1])]]*protocol["settle_steps"]
@@ -159,6 +179,42 @@ for case in protocol["cases"]:
                                    pre_gripper-stored_gripper[index]).max()),
                                "post_gripper_error": float(np.abs(
                                    obs["robot0_gripper_qpos"]-stored_gripper[index]).max())})
+            if (args.interrupt and not result["interruption_triggered"]
+                    and index < len(actions) and measured["grasp"]
+                    and measured["xyz"][2]-initial[2] >= .08):
+                result.update(interruption_triggered=True, hold_insertion_index=index+1)
+                joint.update(force=True)
+                joint.set_goal(np.zeros(7), set_qpos=joint.joint_pos.copy())
+                hold_active = True
+                held.append(measure())
+                np.savez(directory/"hold-observations"/"0000.npz",
+                         **{k: obs[k] for k in fields})
+                started, origin = time.monotonic(), held[0]["sim_time"]
+                frame = 0
+                while time.monotonic()-started < 2 or held[-1]["sim_time"]-origin <= 1:
+                    tick = time.monotonic()
+                    obs, _, _, _ = env.step([0.]*6+[1.])
+                    sample = measure()
+                    held.append(sample)
+                    samples.append(sample)
+                    frame += 1
+                    np.savez(directory/"hold-observations"/f"{frame:04d}.npz",
+                             **{k: obs[k] for k in fields})
+                    time.sleep(max(0, .05-(time.monotonic()-tick)))
+                xyz_hold = np.asarray([s["xyz"] for s in held])
+                joints_hold = np.asarray([s["joints"] for s in held])
+                result.update(hold_min_lift_m=float(xyz_hold[:, 2].min()-initial[2]),
+                              hold_translation_m=float(np.linalg.norm(
+                                  xyz_hold-xyz_hold[0], axis=1).max()),
+                              hold_joint_range_rad=float(np.ptp(joints_hold, axis=0).max()),
+                              hold_all_grasp=all(s["grasp"] for s in held),
+                              hold_wall_s=time.monotonic()-started,
+                              hold_sim_s=held[-1]["sim_time"]-origin)
+                result["hold_passed"] = (result["hold_min_lift_m"] >= .08
+                                          and result["hold_translation_m"] <= .01
+                                          and result["hold_joint_range_rad"] <= .02
+                                          and result["hold_all_grasp"])
+                hold_active = False
         result.update(active_steps=len(records),
                       max_reference_state_error=max(c["pre_reference_state_error"] for c in checks),
                       pre_eef_error_median_m=float(np.median(
@@ -183,6 +239,8 @@ for case in protocol["cases"]:
                                      and result["placement_xy_error_m"] <= .035
                                      and result["rest_movement_m"] <= .005
                                      and result["rest_sim_s"] >= .5-1e-9)
+        result["interrupted_journey_passed"] = (result["physical_passed"]
+                                                and result.get("hold_passed", False))
         np.savez(directory/"terminal-observation.npz", **{k: obs[k] for k in fields})
         np.savez(directory/"replayed-states.npz", before=np.asarray(replay_states))
         Image.fromarray(np.ascontiguousarray(obs["agentview_image"][::-1, ::-1])).save(
@@ -192,7 +250,8 @@ for case in protocol["cases"]:
     finally:
         env.close()
     for filename, content in (("actions.json", records), ("samples.json", samples),
-                              ("checks.json", checks), ("result.json", result)):
+                              ("hold.json", held), ("checks.json", checks),
+                              ("result.json", result)):
         (directory/filename).write_text(json.dumps(content, indent=2)+"\n")
     report["episodes"].append(result)
     (args.output/"report.json").write_text(json.dumps(report, indent=2)+"\n")

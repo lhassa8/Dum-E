@@ -1,5 +1,23 @@
 # Workbench goal progress
 
+October14 — first real head-only adaptation pilot:
+- Same6human-action cases:5/6originalnative holds,5/6released placements,4/6
+  combined. Task1/demo1 loses bilateralcontact duringhold;task2/demo0 remains
+  grippercontact afterplacement. Preserve/exclude both. Independentdenseaudit
+  passes;3alteredholdwitnesses reject. No learnedresume/voice/APIstalenessclaim.
+- Fourqualifiedthree-task episodes supply485native preaction8x7chunks, no pause
+  crossing/padding. All485labels independentlymatch. Frozen originalCUDA
+  backbonefeatures1x56x4096BF16:485/485originalhead identitychecks pass.
+- Explicitaffine-only labelnormalization avoids quantileclipping up to9.6mm
+  commandedtranslation. Originaldecoder reconstructs allnative labels within1e-6.
+  Defaultclipping preserved; nativebounds/physicaljudges unchanged.
+- Train existing151,117,831parameter head only, no backbone/projector updates:
+  seed7/AdamW1e-5/batch8/200steps. TrainingL1 step0/50/200=.124160/.119340/.108766,
+  elapsed26.670s. Checkpoints local; no adaptedphysicalvalidation/promotion yet.
+- Originalhead/50/200 validation on benchmark5/6 next; final7/8 untouched. Models
+  restoredlocal4096/one slot/noTTL. Readonlycamera1477.4ms seesall3tools; Readyepoch0.
+  See [pilot audit](action-head-pilot-audit.md).
+
 October14 — native published-demonstration replay:
 - Freeze6cases task0/1/2demo0/1. Initialattempt001 fails all6beforeactions due
   Python3.9pathAPI inphysicsPy3.8; preserve. Correctonlypathcheck, fresh002.

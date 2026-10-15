@@ -1,0 +1,16 @@
+{
+  "status": "Prospective head-only pilot; physical improvement unproven",
+  "base_revision": "6d0231af0e48c5985f1ff86908f4674b84bc049b",
+  "supervision": "Only independently qualified interrupted human-action replays, actual native pre-action RGB/proprio, allthree tasks required; failedjourneys excluded",
+  "training_dataset": "published-training-chunks-001,4episodes/485overlapping8-action windows; no pause crossing or padding",
+  "labels": "Native OSC labels transformed affinely with publisherQ01/Q99 and gripper convention, without clipping; deliberate adaptation change, original decoder and native bounds retained",
+  "frozen": ["pretrained visual/language backbone", "proprioception projector"],
+  "trainable": "Existing pretrained L1RegressionActionHead only; no random initialization",
+  "optimizer": {"name":"AdamW","learning_rate":0.00001,"weight_decay":0.0001,"batch_size":8,"steps":200,"seed":7,"gradient_clip_norm":1.0},
+  "checkpoints": [0,50,200],
+  "precision": "FP32 master head parameters/optimizer, BF16 autocast CUDA compute; frozen cached features",
+  "validation": "Benchmark tasks0/1/2 initialstates5/6; select only by original complete physical journey gates, not trainingloss",
+  "final_evaluation": "Untouched benchmark initialstates7/8; paired original/adapted policy with matched actionschedule/budget and complete outcome accounting",
+  "excluded": "Old evaluation state0; no validation/final observations or outcomes in training; demoID is not benchmark initialstateID",
+  "promotion": "Original220active-step budget,80mmlift/bilateralcontact, nativejointStop/hold10mm/20mrad, staleaction rejection/fresh postresume inference, releasedrestingplacement35mm and original nativegoal; trainingloss alone cannot qualify"
+}

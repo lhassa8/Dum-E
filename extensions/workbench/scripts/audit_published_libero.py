@@ -57,8 +57,50 @@ for expected, result in zip(report["protocol"]["cases"], report["episodes"]):
                 and window[-1]["sim_time"]-window[0]["sim_time"] >= .5-1e-9)
     fidelity = reference <= report["protocol"]["reference_state_max_error"]
     assert physical == result["physical_passed"] and fidelity == result["fidelity_passed"]
+    hold_metrics = {}
+    if report["protocol"].get("interrupt_enabled"):
+        held = json.loads((directory/"hold.json").read_text())
+        if result["interruption_triggered"]:
+            insertion = result["hold_insertion_index"]
+            assert records[insertion-1]["judge"]["grasp"]
+            assert records[insertion-1]["judge"]["xyz"][2]-result["initial_xyz"][2] >= .08
+            assert not any(r["judge"]["grasp"] and r["judge"]["xyz"][2]
+                           -result["initial_xyz"][2] >= .08 for r in records[:insertion-1])
+            assert held and all(s["holding"] for s in held)
+            htime = np.asarray([s["sim_time"] for s in held])
+            assert np.diff(htime).min() >= -1e-10 and np.diff(htime).max() <= .00200001
+            assert htime[-1]-htime[0] > 1 and result["hold_wall_s"] >= 2
+            hxyz = np.asarray([s["xyz"] for s in held])
+            hjoints = np.asarray([s["joints"] for s in held])
+            hold_metrics = {
+                "hold_min_lift_m": float(hxyz[:, 2].min()-result["initial_xyz"][2]),
+                "hold_translation_m": float(np.linalg.norm(hxyz-hxyz[0], axis=1).max()),
+                "hold_joint_range_rad": float(np.ptp(hjoints, axis=0).max()),
+                "hold_all_grasp": all(s["grasp"] for s in held)}
+            for key, value in hold_metrics.items():
+                assert abs(value-result[key]) < 1e-10
+            hold_passed = (hold_metrics["hold_min_lift_m"] >= .08
+                           and hold_metrics["hold_translation_m"] <= .01
+                           and hold_metrics["hold_joint_range_rad"] <= .02
+                           and hold_metrics["hold_all_grasp"])
+            assert hold_passed == result["hold_passed"]
+            hold_metrics.update(hold_passed=hold_passed, dense_hold_samples=len(held),
+                                hold_wall_s=result["hold_wall_s"],
+                                hold_sim_s=float(htime[-1]-htime[0]))
+        else:
+            assert not held
+            hold_metrics["hold_passed"] = False
+        assert result["interrupted_journey_passed"] == (physical and hold_metrics["hold_passed"])
+        hold_metrics["interrupted_journey_passed"] = result["interrupted_journey_passed"]
     frames = sorted((directory/"observations").glob("*.npz"))
     assert len(frames) == len(records)
+    if result.get("interruption_triggered"):
+        insertion = result["hold_insertion_index"]
+        holding = sorted((directory/"hold-observations").glob("*.npz"))
+        with np.load(holding[-1], allow_pickle=False) as a:
+            with np.load(frames[insertion], allow_pickle=False) as b:
+                assert all(np.array_equal(a[k], b[k]) for k in a.files)
+        frames = frames[:insertion]+holding[:-1]+frames[insertion:]
     frames.append(directory/"terminal-observation.npz")
     writer = imageio_ffmpeg.write_frames(str(directory/"observed-replay.mp4"), (512, 256),
                                         fps=20, codec="libx264", pix_fmt_in="rgb24")
@@ -75,7 +117,7 @@ for expected, result in zip(report["protocol"]["cases"], report["episodes"]):
                     [im[::-1, ::-1] for im in images], axis=1)))
     finally:
         writer.close()
-    audited.append({**expected, **metrics, "physical_passed": physical,
+    audited.append({**expected, **metrics, **hold_metrics, "physical_passed": physical,
                     "fidelity_passed": fidelity, "max_reference_state_error": reference,
                     "source_actions": len(source), "active_steps": len(records),
                     "dense_samples": len(samples), "qualified_lift_samples": len(lift),
@@ -84,6 +126,9 @@ for expected, result in zip(report["protocol"]["cases"], report["episodes"]):
                     "video_sha256": hashlib.sha256(
                         (directory/"observed-replay.mp4").read_bytes()).hexdigest()})
 audit = {"audit_completed": True, "planned": len(audited), "episodes": audited,
+         "hold_passes": sum(r.get("hold_passed", False) for r in audited),
+         "interrupted_journey_passes": sum(r.get("interrupted_journey_passed", False)
+                                           for r in audited),
          "physical_passes": sum(r.get("physical_passed", False) for r in audited),
          "fidelity_passes": sum(r.get("fidelity_passed", False) for r in audited),
          "scope": "Recorded human-action replay; no learned-policy qualification"}
