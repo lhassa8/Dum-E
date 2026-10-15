@@ -1,5 +1,21 @@
 # Workbench goal progress
 
+October14 — native published-demonstration replay:
+- Freeze6cases task0/1/2demo0/1. Initialattempt001 fails all6beforeactions due
+  Python3.9pathAPI inphysicsPy3.8; preserve. Correctonlypathcheck, fresh002.
+- Actual683human7DOSC sourceactions exactlymatchHDF5;126settlingactions preserve
+  finalgrip. Sixnativegoals/lifttriggers,5/6releasedrestingplacements;task2/demo0
+  stillgrippercontact. Original220budget/80mmlift/35mmplacement remain.809steps.
+- Independent rawphysics/sourceaction auditpasses;3alteredcontact/goalwitnesses
+  reject. Actualorderedfront/wrist videoslocal; inspect terminalpass/failrenders.
+- Strictstatefidelity0/6. Onecasecomponentdiagnosis firststateerror0 thenworst
+  platevelocity error2.636296 atstep80; robotqposmax8.577mrad. Causeunresolved.
+  EEFstoredobservation errors pre7.929–11.395mm vs post0.319–0.543mm support
+  postactiontiming. RetainactualpreactionRGB/proprio; no shiftedpairassumptions.
+- No learnedweights/policy/voice/Stop-holdqualification. Nextsamecasesinterrupted
+  joint hold, then independentlyqualified adaptation data with statesplit.
+  See [replay audit](published-replay-audit.md).
+
 October14 — verified published human demonstrations:
 - Download only three pinned LIBERO task HDF5s, total1,769,993,928bytes; complete
   publisher SHA256/length checks and independent inspection rehash pass. No

@@ -1,0 +1,19 @@
+{
+  "status": "Prospective six-case native replay; no demonstration qualification yet",
+  "dataset_revision": "f13aa24a3da8c43c7225569f28c562979fa0e35a",
+  "cases": [{"task_id":0,"demo":"demo_0"},{"task_id":0,"demo":"demo_1"},{"task_id":1,"demo":"demo_0"},{"task_id":1,"demo":"demo_1"},{"task_id":2,"demo":"demo_0"},{"task_id":2,"demo":"demo_1"}],
+  "scope": "Replay published actions in native simulation, not fresh model inference or a trained policy",
+  "identity": "Refuse any case flagged as near duplicate of excluded benchmark states0/5/6/7/8 by inspection004; no raw benchmark-state actions",
+  "initialization": "Episode XML with asset-path relocation only; recorded first state; no extra dummy actions",
+  "motion": "Unmodified native7D OSC actions and original150kp/damping1/controller bounds; no object edits during trajectory",
+  "max_active_steps": 220,
+  "reference_state_max_error": 0.000001,
+  "grasp": "Dense native bilateral pad grasp and at least80mm lift",
+  "placement": "Native goal, physical plate contact and zero gripper contact over final0.5sim seconds;35mm center error and5mm movement limits",
+  "settle_steps": 21,
+  "settle_action": "Zero6D OSC, preserve final demonstration gripper command; do not invent a release",
+  "alignment": "Measure EEF position and gripper observation errors before and after each action; never silently shift labels",
+  "video": "Actual pre-action front/wrist256RGB observations plus terminal frame,20Hz simulation playback",
+  "retention": "Every case and failure retained, no tuning or skipping based on outcomes; after similar failures investigate contract assumptions",
+  "promotion": "No learned-policy promotion; fidelity and native physical criteria reported separately; interrupted hold/resume remains a subsequent experiment"
+}
